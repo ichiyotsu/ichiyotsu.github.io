@@ -1,0 +1,1 @@
+# ichiyotsu.github.io
