@@ -1809,3 +1809,49 @@
     transform: translateX(0);
   }
 }
+
+
+/* The glow is a page background, not a boxed container decoration. */
+.hero {
+  width: 100%;
+  max-width: none;
+  padding-inline: max(var(--gutter), calc((100vw - var(--page-max)) / 2));
+}
+
+.project__version {
+  color: var(--project-muted, var(--md-sys-color-on-surface-variant));
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.02em;
+  padding: 0.22rem 0.45rem;
+  border: 1px solid color-mix(in srgb, currentColor 22%, transparent);
+  border-radius: var(--r-full);
+}
+
+.button.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Darker TokiTodo / Luma cards in dark mode */
+:root[data-theme="dark"] .project--todo {
+  background: #1b2a21;
+  color: #e2eadf;
+  --project-muted: #a8b8a3;
+}
+
+:root[data-theme="dark"] .project--luma {
+  background: #211d35;
+  color: #e7e2f5;
+  --project-muted: #b5add3;
+}
+
+:root[data-theme="dark"] .project__media--todo {
+  background:
+    radial-gradient(circle at 70% 12%, rgb(255 255 255 / 0.1), transparent 42%),
+    linear-gradient(180deg, transparent 20%, #203229 100%);
+}
+
+:root[data-theme="dark"] .project__media--luma {
+  background: radial-gradient(circle at 50% 0%, rgb(255 255 255 / 0.08), transparent 65%);
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>软件 — ichiyotsu.</title>
+  <title>软件 — TokiPage.</title>
   <meta name="description" content="ichiyotsu 的软件、Material 3 Expressive 组件，以及正在制作的 TokiHarness。">
   <meta name="author" content="ichiyotsu">
   <meta name="theme-color" content="#FDF8F2" id="theme-color">
@@ -19,7 +19,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
   <meta property="og:locale" content="zh_CN">
-  <meta property="og:site_name" content="ichiyotsu.">
+  <meta property="og:site_name" content="TokiPage.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="软件 — ichiyotsu.">
   <meta name="twitter:description" content="软件、Material 3 Expressive 和正在制作的项目。">
@@ -93,7 +93,7 @@
 
   <header class="site-header">
     <div class="topbar container">
-      <a class="brand" href="/" aria-label="ichiyotsu. 首页">ichiyotsu<span class="brand__dot">.</span></a>
+      <a class="brand" href="/" aria-label="TokiPage. 首页">TokiPage<span class="brand__dot">.</span></a>
 
       <nav class="desktop-nav" aria-label="主导航">
         <div class="nav-item"><a class="nav-link" href="/">主页</a></div>
@@ -106,7 +106,7 @@
           </div>
         </div>
         <div class="nav-item" data-nav-item>
-          <a class="nav-link" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">花园</a>
+          <a class="nav-link" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">探索</a>
           <div class="nav-dropdown" id="dropdown-garden">
             <a href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
             <a href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
@@ -198,7 +198,7 @@
             <a class="project__link" href="/software/tokitodo/">
               <div class="project__top">
                 <span class="project__meta">
-
+                  <span class="project__version">v0.1.0-beta.1</span>
                   <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
                 </span>
               </div>
@@ -215,6 +215,7 @@
             <a class="project__link" href="/software/luma/">
               <div class="project__top">
                 <span class="project__meta">
+                  <span class="project__version">v0.1.0-beta.1</span>
                   <span class="project__downloads" title="GitHub Releases 累计下载"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg><span class="u-visually-hidden">下载</span> 1</span>
                   <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
                 </span>
@@ -232,6 +233,7 @@
             <a class="project__link" href="/software/tokinote/">
               <div class="project__top">
                 <span class="project__meta">
+                  <span class="project__version">v0.3.7-beta.2</span>
                   <span class="project__downloads" title="GitHub Releases 累计下载"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg><span class="u-visually-hidden">下载</span> 2</span>
                   <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
                 </span>
@@ -280,7 +282,6 @@
 
         <div class="design-grid">
           <article class="design-card design-card--color" data-reveal>
-            <div class="design-card__top"><span>COLOR</span><span class="design-card__hint">tonal roles</span></div>
             <div class="swatch-grid" aria-hidden="true">
               <span class="swatch swatch--primary"></span>
               <span class="swatch swatch--primary-container"></span>
@@ -294,7 +295,6 @@
           </article>
 
           <article class="design-card design-card--shape" data-reveal style="--reveal-delay: 80ms">
-            <div class="design-card__top"><span>SHAPE</span><span class="design-card__hint">28 → 48</span></div>
             <div class="shape-stage">
               <button class="shape-demo" id="shape-demo" type="button" aria-label="按一下，切换形状示例"><span>按一下</span></button>
             </div>
@@ -303,8 +303,8 @@
           </article>
 
           <article class="design-card design-card--motion" data-reveal style="--reveal-delay: 160ms">
-            <div class="design-card__top"><span>MOTION</span><span class="design-card__hint">spring</span></div>
             <div class="motion-stage">
+              <svg class="motion-curve" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M8 82 C 72 8 148 12 174 54 S 252 92 292 26"/></svg>
               <span class="motion-track" aria-hidden="true"></span>
               <button class="motion-ball" id="motion-demo" type="button" aria-label="PLAY，播放弹簧动效示例"><span>PLAY</span></button>
             </div>
@@ -315,7 +315,6 @@
 
         <div class="m3-kit" data-reveal>
           <div class="m3-kit__intro">
-            <span class="m3-kit__tag">M3 EXPRESSIVE / COMPONENTS</span>
             <h3>官方组件，在真实页面里试用。</h3>
             <p>按钮、chip、开关、进度与排版都来自同一套 M3E 角色和形状。它们不是示意图，而是这个页面正在使用的组件。</p>
           </div>
@@ -334,7 +333,6 @@
             <div class="m3-kit__row m3-kit__row--bottom">
               <span class="m3-progress" role="progressbar" aria-label="进度示例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><span></span></span>
               <span class="m3-fab-demo" aria-hidden="true"><svg class="icon"><use href="#i-star"></use></svg></span>
-              <span class="m3-kit__caption">Progress · FAB · Shape &amp; state layers</span>
             </div>
             <div class="m3-type-scale">
               <span class="m3-type-display">Display</span>
@@ -347,7 +345,6 @@
         </div>
         <div class="design-foot" data-reveal>
           <p>这些不是装饰性的原则，而是我写界面时的默认值：<strong>先有层级，再有表情。</strong></p>
-          <div class="design-tags"><span>Dynamic color</span><span>Shape scale</span><span>Spring motion</span><span>Editorial type</span></div>
         </div>
       </div>
     </section>
@@ -359,7 +356,7 @@
           <p class="section-head__note">还没做完，但已经值得先放上来。</p>
         </header>
         <a class="making-card" href="https://github.com/ichiyotsu/DeepSeek-Harness" target="_blank" rel="noopener noreferrer" data-reveal>
-          <div class="making-card__media"><img src="/assets/img/projects/dsh-1.webp" width="1200" height="550" alt="TokiHarness 的对话界面"></div>
+          <span class="making-card__mark" aria-hidden="true">DSH</span>
           <div class="making-card__body">
             <span class="making-card__tag">TOKIHARNESS</span>
             <h3>TokiHarness</h3>
@@ -373,9 +370,9 @@
 
   <footer class="site-footer">
     <div class="footer__inner container">
-      <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
+      <div class="footer__brand">TokiPage<span class="brand__dot">.</span></div>
       <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
-      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
+      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">探索</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
 
@@ -387,7 +384,7 @@
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
         <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
-        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="探索"><span class="sheet-group__title">探索</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
 
@@ -402,10 +399,10 @@
 
       <div class="nav-sheet__view" data-sheet-view="garden" hidden>
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
-        <p class="sheet-group-label">花园</p>
+        <p class="sheet-group-label">探索</p>
         <a class="sheet-link" href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
         <a class="sheet-link" href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
-        <a class="sheet-link sheet-link--home" href="/garden/">进入花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+        <a class="sheet-link sheet-link--home" href="/garden/">进入探索 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
       <div class="nav-sheet__view" data-sheet-view="about" hidden>
@@ -420,6 +417,7 @@
     </div>
   </dialog>
 
+  <script src="/assets/js/i18n.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

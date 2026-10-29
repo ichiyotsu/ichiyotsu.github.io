@@ -100,6 +100,21 @@
     document.body.append(bottomFrost);
   }
 
+  /* ---------- Cursor-following home portal glow ---------- */
+
+  document.querySelectorAll('.home-portal').forEach((portal) => {
+    portal.addEventListener('pointermove', (event) => {
+      if (event.pointerType === 'touch') return;
+      const rect = portal.getBoundingClientRect();
+      portal.style.setProperty('--glow-x', `${((event.clientX - rect.left) / rect.width) * 100}%`);
+      portal.style.setProperty('--glow-y', `${((event.clientY - rect.top) / rect.height) * 100}%`);
+    });
+    portal.addEventListener('pointerleave', () => {
+      portal.style.setProperty('--glow-x', '50%');
+      portal.style.setProperty('--glow-y', '50%');
+    });
+  });
+
   /* ---------- Button press feedback ---------- */
 
   document.addEventListener('pointerdown', (event) => {

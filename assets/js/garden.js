@@ -11,6 +11,7 @@
   const repository = 'ichiyotsu/ichiyotsu.github.io';
   const discussionsUrl = `https://github.com/${repository}/discussions`;
   const newDiscussionUrl = `${discussionsUrl}/new`;
+  const newIssueUrl = `https://github.com/${repository}/issues/new`;
   const dataUrl = '/garden/data/discussions.json';
   const discussionDialog = document.getElementById('discussion-dialog');
   const composeDialog = document.getElementById('compose-dialog');
@@ -27,6 +28,9 @@
     }
     return false;
   };
+
+  const isEnglish = () => document.documentElement.lang === 'en';
+  const unit = (zh, en) => (isEnglish() ? en : zh);
 
   let discussions = [];
   let activeCategory = 'all';
@@ -85,7 +89,7 @@
       button.classList.toggle('is-liked', next);
       button.setAttribute('aria-pressed', String(next));
       const number = button.querySelector('[data-like-count]');
-      if (number) number.textContent = String((Number(item?.upvotes) || 0) + (next ? 1 : 0));
+      if (number) number.textContent = `${(Number(item?.upvotes) || 0) + (next ? 1 : 0)} ${unit('点赞', 'likes')}`;
     });
     const modalLike = document.getElementById('discussion-like');
     if (modalLike && discussionDialog?.open) {
@@ -93,7 +97,7 @@
       modalLike.classList.toggle('is-liked', next);
       modalLike.setAttribute('aria-pressed', String(next));
       const number = modalLike.querySelector('[data-like-count]');
-      if (number) number.textContent = String(count);
+      if (number) number.textContent = `${count} ${unit('点赞', 'likes')}`;
     }
     toast(next ? '已在本机点赞' : '已取消本机点赞');
   }
@@ -194,16 +198,20 @@
     article.className = 'garden-card';
     const key = itemKey(item);
     article.dataset.id = key;
+    article.style.cursor = 'pointer';
 
     const meta = document.createElement('div');
     meta.className = 'garden-card__meta';
-    const category = document.createElement('span');
-    category.className = 'garden-category';
-    category.textContent = categoryLabel(item.category);
+    const author = document.createElement('span');
+    author.className = 'garden-author-name';
+    author.textContent = `@${item.author?.login || 'github'}`;
     const time = document.createElement('time');
     time.dateTime = item.updatedAt || item.createdAt || '';
     time.textContent = formatDate(item.updatedAt || item.createdAt);
-    meta.append(category, time);
+    const category = document.createElement('span');
+    category.className = 'garden-category';
+    category.textContent = categoryLabel(item.category);
+    meta.append(author, time, category);
 
     const title = document.createElement('h3');
     const titleLink = document.createElement('a');
@@ -217,29 +225,20 @@
     excerpt.className = 'garden-excerpt';
     excerpt.textContent = item.excerpt || '';
 
-    const author = document.createElement('div');
-    author.className = 'garden-author';
-    const authorName = document.createElement('span');
-    authorName.textContent = `@${item.author?.login || 'github'}`;
-    author.appendChild(authorName);
+    let media = null;
+    const image = item.image || item.images?.[0] || item.body?.match(/!\[[^\]]*\]\((https?:\/\/[^)\s]+)\)/)?.[1];
+    if (image) {
+      media = document.createElement('div');
+      media.className = 'garden-card__media';
+      const img = document.createElement('img');
+      img.src = image;
+      img.alt = '';
+      img.loading = 'lazy';
+      media.appendChild(img);
+    }
 
     const actions = document.createElement('div');
     actions.className = 'garden-actions';
-
-    const liked = isLiked(key);
-    const like = document.createElement('button');
-    like.type = 'button';
-    like.className = `garden-action${liked ? ' is-liked' : ''}`;
-    like.dataset.likeId = key;
-    like.setAttribute('aria-pressed', String(liked));
-    like.setAttribute('aria-label', `站内点赞，当前 ${(Number(item.upvotes) || 0) + (liked ? 1 : 0)} 个赞`);
-    like.title = '站内点赞，保存在本机';
-    like.append(makeIcon('i-heart'));
-    const likeCount = document.createElement('span');
-    likeCount.dataset.likeCount = '';
-    likeCount.textContent = String((Number(item.upvotes) || 0) + (liked ? 1 : 0));
-    like.appendChild(likeCount);
-    like.addEventListener('click', () => toggleLike(key));
 
     const views = document.createElement('span');
     views.className = 'garden-action garden-action--views';
@@ -248,31 +247,53 @@
     views.append(makeIcon('i-eye'));
     const viewCount = document.createElement('span');
     viewCount.dataset.viewCount = key;
-    viewCount.textContent = String(postViews(key));
+    viewCount.textContent = `${postViews(key)} ${unit('浏览', 'views')}`;
     views.appendChild(viewCount);
+
+    const liked = isLiked(key);
+    const like = document.createElement('button');
+    like.type = 'button';
+    like.className = `garden-action${liked ? ' is-liked' : ''}`;
+    like.dataset.likeId = key;
+    like.setAttribute('aria-pressed', String(liked));
+    like.title = '站内点赞，保存在本机';
+    like.append(makeIcon('i-heart'));
+    const likeCount = document.createElement('span');
+    likeCount.dataset.likeCount = '';
+    likeCount.textContent = `${(Number(item.upvotes) || 0) + (liked ? 1 : 0)} ${unit('点赞', 'likes')}`;
+    like.appendChild(likeCount);
+    like.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleLike(key);
+      const nextLiked = isLiked(key);
+      likeCount.textContent = `${(Number(item.upvotes) || 0) + (nextLiked ? 1 : 0)} ${unit('点赞', 'likes')}`;
+    });
 
     const comments = document.createElement('button');
     comments.type = 'button';
     comments.className = 'garden-action';
     comments.dataset.discussionIndex = String(index);
-    comments.setAttribute('aria-label', `在站内查看 ${item.comments || 0} 条评论`);
-    comments.append(makeIcon('i-comment'), document.createTextNode(String(item.comments || 0)));
+    comments.setAttribute('aria-label', `${item.comments || 0} 评论，在站内查看`);
+    comments.append(makeIcon('i-comment'), document.createTextNode(`${item.comments || 0} ${unit('评论', 'comments')}`));
+    comments.addEventListener('click', (event) => {
+      event.stopPropagation();
+      openDiscussion(index);
+    });
 
-    const copy = document.createElement('button');
-    copy.type = 'button';
-    copy.className = 'garden-action garden-action--copy';
-    copy.setAttribute('data-copy', item.url);
-    copy.setAttribute('aria-label', '分享讨论链接');
-    copy.append(makeIcon('i-copy'), document.createTextNode('分享'));
-    actions.append(like, views, comments, copy);
+    actions.append(views, like, comments);
 
     titleLink.addEventListener('click', (event) => {
       event.preventDefault();
       openDiscussion(index);
     });
-    comments.addEventListener('click', () => openDiscussion(index));
+    article.addEventListener('click', (event) => {
+      if (event.target.closest('button, a')) return;
+      openDiscussion(index);
+    });
 
-    article.append(meta, title, excerpt, author, actions);
+    article.append(meta, title, excerpt);
+    if (media) article.appendChild(media);
+    article.appendChild(actions);
     return article;
   }
 
@@ -358,9 +379,7 @@
   const previewMode = document.getElementById('preview-mode');
   const titleInput = document.getElementById('post-title');
   const categorySelect = document.getElementById('post-category');
-  const count = document.getElementById('post-count');
   const publishButton = document.getElementById('publish-post');
-  const copyButton = document.getElementById('copy-post');
 
   if (!composer || !markdownToggle || !textarea || !richEditor || !preview) return;
 
@@ -446,6 +465,10 @@
   const discussionClose = document.getElementById('discussion-close');
   const discussionLike = document.getElementById('discussion-like');
   const discussionReply = document.getElementById('discussion-reply');
+  const discussionViews = document.getElementById('discussion-views');
+  const discussionCommentsStat = document.getElementById('discussion-comments-stat');
+  const discussionCommentToggle = document.getElementById('discussion-comment-toggle');
+  const discussionPanel = discussionDialog?.querySelector('.discussion-dialog__panel');
   const replyBody = document.getElementById('reply-body');
   let activeDiscussion = null;
 
@@ -461,24 +484,27 @@
     author.textContent = `@${item.author?.login || 'github'}`;
     const time = document.createElement('span');
     time.textContent = formatDate(item.updatedAt || item.createdAt);
-    const viewed = document.createElement('span');
-    viewed.textContent = `${bumpPostViews(itemKey(item))} 次浏览`;
-    discussionMeta.append(author, time, viewed);
+    discussionMeta.append(author, time);
 
-    const viewsNode = document.querySelector(`[data-view-count="${CSS.escape(itemKey(item))}"]`);
-    if (viewsNode) viewsNode.textContent = String(postViews(itemKey(item)));
+    const key = itemKey(item);
+    const views = bumpPostViews(key);
+    const viewsNode = document.querySelector(`[data-view-count="${CSS.escape(key)}"]`);
+    if (viewsNode) viewsNode.textContent = `${postViews(key)} ${unit('浏览', 'views')}`;
+    if (discussionViews) discussionViews.textContent = `${views} ${unit('浏览', 'views')}`;
+    if (discussionCommentsStat) discussionCommentsStat.textContent = `${item.comments || 0} ${unit('评论', 'comments')}`;
 
     if (discussionLike) {
       const liked = isLiked(itemKey(item));
       discussionLike.classList.toggle('is-liked', liked);
       discussionLike.setAttribute('aria-pressed', String(liked));
       const number = discussionLike.querySelector('[data-like-count]');
-      if (number) number.textContent = String((Number(item.upvotes) || 0) + (liked ? 1 : 0));
+      if (number) number.textContent = `${(Number(item.upvotes) || 0) + (liked ? 1 : 0)} ${unit('点赞', 'likes')}`;
     }
 
     discussionBody.innerHTML = parseMarkdown(item.body || item.excerpt || '');
     const items = Array.isArray(item.commentItems) ? item.commentItems : [];
     discussionCommentCount.textContent = String(item.comments || items.length || 0);
+    if (discussionCommentsStat) discussionCommentsStat.textContent = `${item.comments || 0} ${unit('评论', 'comments')}`;
     discussionCommentList.replaceChildren();
 
     if (!items.length) {
@@ -515,6 +541,8 @@
     discussionGithub.href = item.url;
     discussionCopy.setAttribute('data-copy', item.url);
     discussionDialog.setAttribute('data-open-id', itemKey(item));
+    discussionDialog.classList.remove('is-replying');
+    if (discussionReply) discussionReply.hidden = true;
     activeDiscussion = item;
 
     if (typeof discussionDialog.showModal === 'function') {
@@ -533,6 +561,14 @@
   }
 
   if (discussionClose) discussionClose.addEventListener('click', closeDiscussion);
+  if (discussionCommentToggle) {
+    discussionCommentToggle.addEventListener('click', () => {
+      const open = discussionDialog?.classList.toggle('is-replying');
+      if (discussionReply) discussionReply.hidden = !open;
+      if (open) window.setTimeout(() => replyBody?.focus(), 60);
+    });
+  }
+
   if (discussionReply) {
     discussionReply.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -606,25 +642,19 @@
   function updatePreview() {
     if (isRich()) {
       composer.classList.add('is-rich');
+      composer.classList.remove('is-markdown');
       richEditor.hidden = false;
       textarea.hidden = true;
       if (previewMode) previewMode.textContent = '富文本';
-      updateCount();
       return;
     }
 
     composer.classList.remove('is-rich');
+    composer.classList.add('is-markdown');
     richEditor.hidden = true;
     textarea.hidden = false;
     preview.innerHTML = parseMarkdown(textarea.value);
     if (previewMode) previewMode.textContent = 'Markdown 预览';
-    updateCount();
-  }
-
-  function updateCount() {
-    if (!count) return;
-    const length = currentMarkdown().length;
-    count.textContent = `${length} 字`;
   }
 
   function syncMode() {
@@ -643,7 +673,6 @@
 
   markdownToggle.addEventListener('change', syncMode);
   textarea.addEventListener('input', updatePreview);
-  richEditor.addEventListener('input', updateCount);
 
   function insertMarkdown(before, after = '', placeholder = '文字') {
     const start = textarea.selectionStart;
@@ -679,7 +708,6 @@
     const next = document.createRange();
     next.selectNodeContents(wrapper);
     selection.addRange(next);
-    updateCount();
   }
 
   function runRichAction(action) {
@@ -709,7 +737,6 @@
       wrapSelection('small');
     }
 
-    updateCount();
   }
 
   function runMarkdownAction(action) {
@@ -735,18 +762,6 @@
     });
   });
 
-  if (copyButton) {
-    copyButton.addEventListener('click', async () => {
-      const markdown = currentMarkdown();
-      if (!markdown) {
-        toast('先写点什么再复制');
-        return;
-      }
-      const ok = await copyText(markdown).catch(() => false);
-      toast(ok ? 'Markdown 已复制' : '复制失败，请手动选择文本');
-    });
-  }
-
   if (publishButton) {
     publishButton.addEventListener('click', async () => {
       const title = titleInput ? titleInput.value.trim() : '';
@@ -763,14 +778,19 @@
         return;
       }
 
-      const category = categorySelect ? categorySelect.value : 'general';
-      const url = new URL(newDiscussionUrl);
-      url.searchParams.set('category', category);
+      const publishType = categorySelect ? categorySelect.value : 'discussion-general';
+      const isIssue = publishType.startsWith('issue-');
+      const url = new URL(isIssue ? newIssueUrl : newDiscussionUrl);
       url.searchParams.set('title', title);
       url.searchParams.set('body', markdown);
+      if (isIssue) {
+        url.searchParams.set('labels', publishType === 'issue-bug' ? 'bug' : 'enhancement');
+      } else {
+        url.searchParams.set('category', publishType.replace('discussion-', '') || 'general');
+      }
 
       const canPrefill = url.href.length < 7000;
-      window.open(canPrefill ? url.href : `${newDiscussionUrl}?category=${encodeURIComponent(category)}`, '_blank', 'noopener');
+      window.open(canPrefill ? url.href : (isIssue ? newIssueUrl : `${newDiscussionUrl}?category=general`), '_blank', 'noopener');
 
       const copied = await copyText(markdown).catch(() => false);
       toast(copied ? '已打开 GitHub；正文已复制，可直接粘贴' : '已打开 GitHub，请登录后发布');

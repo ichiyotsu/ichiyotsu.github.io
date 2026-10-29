@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Luma — ichiyotsu.</title>
+  <title>Luma — TokiPage.</title>
   <meta name="description" content="Luma：把地址栏做成悬浮玻璃胶囊。">
   <meta name="author" content="ichiyotsu">
   <meta name="theme-color" content="#FDF8F2" id="theme-color">
@@ -19,7 +19,7 @@
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
   <meta property="og:locale" content="zh_CN">
-  <meta property="og:site_name" content="ichiyotsu.">
+  <meta property="og:site_name" content="TokiPage.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Luma — ichiyotsu.">
   <meta name="twitter:description" content="把地址栏做成悬浮玻璃胶囊。">
@@ -93,7 +93,7 @@
 
   <header class="site-header">
     <div class="topbar container">
-      <a class="brand" href="/" aria-label="ichiyotsu. 首页">ichiyotsu<span class="brand__dot">.</span></a>
+      <a class="brand" href="/" aria-label="TokiPage. 首页">TokiPage<span class="brand__dot">.</span></a>
 
       <nav class="desktop-nav" aria-label="主导航">
         <div class="nav-item"><a class="nav-link" href="/">主页</a></div>
@@ -106,7 +106,7 @@
           </div>
         </div>
         <div class="nav-item" data-nav-item>
-          <a class="nav-link" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">花园</a>
+          <a class="nav-link" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">探索</a>
           <div class="nav-dropdown" id="dropdown-garden">
             <a href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
             <a href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
@@ -144,7 +144,8 @@
         <p class="project-hero__tagline" data-edit="luma-1" data-edit-label="luma · p.project-hero__tagline">悬浮胶囊浏览器。</p>
         <div class="project-hero__actions">
             <a class="button button--filled" href="https://github.com/ichiyotsu/Discover" target="_blank" rel="noopener noreferrer">GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-            <a class="button button--outlined" href="https://github.com/ichiyotsu/Discover/releases" target="_blank" rel="noopener noreferrer">Releases <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+            <button class="button button--outlined" type="button" disabled>正式版 未发布</button>
+            <a class="button button--outlined" href="https://github.com/ichiyotsu/Discover/releases/tag/0.1.0-beta.1" target="_blank" rel="noopener noreferrer">测试版 v0.1.0-beta.1 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
         </div>
       </div>
         <div class="project-hero__media project-hero__media--browser">
@@ -228,9 +229,9 @@
 
   <footer class="site-footer">
     <div class="footer__inner container">
-      <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
+      <div class="footer__brand">TokiPage<span class="brand__dot">.</span></div>
       <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
-      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
+      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">探索</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
 
@@ -242,7 +243,7 @@
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
         <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
-        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="探索"><span class="sheet-group__title">探索</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
 
@@ -257,10 +258,10 @@
 
       <div class="nav-sheet__view" data-sheet-view="garden" hidden>
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
-        <p class="sheet-group-label">花园</p>
+        <p class="sheet-group-label">探索</p>
         <a class="sheet-link" href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
         <a class="sheet-link" href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
-        <a class="sheet-link sheet-link--home" href="/garden/">进入花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+        <a class="sheet-link sheet-link--home" href="/garden/">进入探索 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
       <div class="nav-sheet__view" data-sheet-view="about" hidden>
@@ -275,6 +276,7 @@
     </div>
   </dialog>
 
+  <script src="/assets/js/i18n.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

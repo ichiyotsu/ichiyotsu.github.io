@@ -3,22 +3,22 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>花园 — ichiyotsu.</title>
-  <meta name="description" content="ichiyotsu 的花园：一个长在 GitHub Discussions 上的讨论区。站内看帖、点赞和浏览，发帖与评论在 GitHub 完成。">
+  <title>探索 — TokiPage.</title>
+  <meta name="description" content="ichiyotsu 的探索：一个长在 GitHub Discussions 上的讨论区。站内看帖、点赞和浏览，发帖与评论在 GitHub 完成。">
   <meta name="author" content="ichiyotsu">
   <meta name="theme-color" content="#FDF8F2" id="theme-color">
   <meta name="color-scheme" content="light dark">
   <link rel="canonical" href="https://ichiyotsu.github.io/garden/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ichiyotsu.github.io/garden/">
-  <meta property="og:title" content="花园 — ichiyotsu.">
+  <meta property="og:title" content="探索 — TokiPage.">
   <meta property="og:description" content="一个长在 GitHub Discussions 上的讨论区。站内看帖、点赞和浏览，发帖与评论在 GitHub 完成。">
   <meta property="og:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <meta property="og:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
   <meta property="og:locale" content="zh_CN">
-  <meta property="og:site_name" content="ichiyotsu.">
+  <meta property="og:site_name" content="TokiPage.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="花园 — ichiyotsu.">
+  <meta name="twitter:title" content="探索 — TokiPage.">
   <meta name="twitter:description" content="一个长在 GitHub Discussions 上的讨论区。站内看帖、点赞和浏览，发帖与评论在 GitHub 完成。">
   <meta name="twitter:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <link rel="me" href="https://github.com/ichiyotsu">
@@ -74,7 +74,7 @@
 
   <header class="site-header">
     <div class="topbar container">
-      <a class="brand" href="/" aria-label="ichiyotsu. 首页">ichiyotsu<span class="brand__dot">.</span></a>
+      <a class="brand" href="/" aria-label="TokiPage. 首页">TokiPage<span class="brand__dot">.</span></a>
       <nav class="desktop-nav" aria-label="主导航">
         <div class="nav-item"><a class="nav-link" href="/">主页</a></div>
         <div class="nav-item" data-nav-item>
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="nav-item" data-nav-item>
-          <a class="nav-link is-active" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">花园</a>
+          <a class="nav-link is-active" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">探索</a>
           <div class="nav-dropdown" id="dropdown-garden">
             <a href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
             <a href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
@@ -108,26 +108,26 @@
   </header>
 
   <main id="main" class="garden-main">
-    <h1 class="u-visually-hidden">花园</h1>
+    <h1 class="u-visually-hidden">探索</h1>
 
-    <div class="garden-statbar" id="garden-stats" aria-label="花园数据">
+    <div class="garden-statbar" id="garden-stats" aria-label="探索数据">
       <div><strong id="stat-topics">—</strong><span>讨论</span></div>
       <div><strong id="stat-questions">—</strong><span>问题</span></div>
       <div title="本机浏览计数"><strong id="stat-views">—</strong><span>浏览</span></div>
       <div><strong id="stat-comments">—</strong><span>回复</span></div>
     </div>
 
-    <section class="garden-intro container">
-      <span class="garden-kicker">GARDEN / DISCUSSIONS</span>
+    <div class="garden-layout container">
+      <section class="garden-intro">
+      <span class="garden-kicker">EXPLORE / DISCUSSIONS</span>
       <p class="garden-lede" data-edit="garden-1" data-edit-label="garden · intro">一个长在 GitHub Discussions 上的讨论区。<br>这里会有版本更新公告和软件功能交流...<br>可能还有一些还没想好放哪里的东西。</p>
       <div class="garden-hero__actions">
-        <a class="button button--filled button--sm" href="/garden/?compose=1">写点什么 <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg></a>
         <a class="button button--outlined button--sm" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">GitHub Discussions <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
-      <p class="garden-note"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发帖和评论在 GitHub 完成；站内点赞与浏览只保存在本机。</p>
-    </section>
+      <p class="garden-note"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发帖/评论在 GitHub 完成；点赞/浏览保存在本机。</p>
+      </section>
 
-    <section class="garden-board container" id="board" aria-label="花园讨论">
+      <section class="garden-board" id="board" aria-label="探索讨论">
       <h2 class="u-visually-hidden">最新讨论</h2>
       <div class="garden-toolbar">
         <span class="garden-feed-label">LATEST <span id="garden-sync-label">SYNC</span></span>
@@ -136,46 +136,32 @@
       </div>
 
       <div class="garden-list" id="garden-list" aria-live="polite" aria-busy="true">
-        <div class="garden-loading"><span class="status-dot" aria-hidden="true"></span> 正在从 GitHub 取回花园…</div>
+        <div class="garden-loading"><span class="status-dot" aria-hidden="true"></span> 正在从 GitHub 取回探索…</div>
       </div>
 
-      <noscript><p class="garden-empty">花园需要 JavaScript 才能在这里显示。<a href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions">直接去 GitHub Discussions ↗</a></p></noscript>
-    </section>
+        <noscript><p class="garden-empty">探索需要 JavaScript 才能在这里显示。<a href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions">直接去 GitHub Discussions ↗</a></p></noscript>
+      </section>
+    </div>
   </main>
 
   <footer class="site-footer">
     <div class="footer__inner container">
-      <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
+      <div class="footer__brand">TokiPage<span class="brand__dot">.</span></div>
       <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
-      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
+      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">探索</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
 
   <dialog class="compose-dialog" id="compose-dialog" aria-labelledby="compose-dialog-title">
     <div class="compose-dialog__panel">
       <div class="compose-dialog__head">
-        <div>
-          <p class="composer__kicker">TO GARDEN</p>
-          <h2 id="compose-dialog-title">写点什么。</h2>
-        </div>
+        <h2 id="compose-dialog-title">写点什么。</h2>
         <button class="icon-button" id="compose-close" type="button" aria-label="关闭编辑器"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
       </div>
         <div class="composer" id="composer">
-            <div class="composer__head">
-              <div>
-                <p class="composer__kicker">TO GARDEN</p>
-                <h3>一张新的帖子</h3>
-              </div>
-              <label class="switch">
-                <input type="checkbox" id="markdown-toggle" checked>
-                <span class="switch__track" aria-hidden="true"></span>
-                <span class="switch__label">Markdown 语法</span>
-              </label>
-            </div>
-
             <div class="composer__grid">
               <label class="field"><span>标题</span><input id="post-title" type="text" maxlength="120" placeholder="想聊点什么？" autocomplete="off"></label>
-              <label class="field field--category"><span>分类</span><select id="post-category"><option value="general">讨论</option><option value="q-a">问答</option><option value="ideas">想法</option><option value="show-and-tell">展示</option></select></label>
+              <label class="field field--category"><span>发布类型</span><select id="post-category"><option value="discussion-general">讨论</option><option value="discussion-q-a">讨论 · 问答</option><option value="discussion-ideas">讨论 · 想法</option><option value="issue-bug">Issue · 问题反馈</option><option value="issue-feature">Issue · 功能建议</option></select></label>
             </div>
 
             <div class="editor-toolbar" role="toolbar" aria-label="格式工具">
@@ -208,11 +194,14 @@
             </div>
 
             <div class="composer__footer">
-              <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发布会打开 GitHub 新建讨论页，用你的账号和头像发布。</p>
+              <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发布会打开 GitHub 新建内容页，用你的账号发布。</p>
               <div class="composer__actions">
-                <span class="composer__count" id="post-count">0 字</span>
-                <button class="button button--outlined button--sm" id="copy-post" type="button">复制 Markdown</button>
-                <button class="button button--filled button--sm" id="publish-post" type="button">发布到 GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></button>
+                <label class="switch composer__syntax">
+                  <input type="checkbox" id="markdown-toggle" checked>
+                  <span class="switch__track" aria-hidden="true"></span>
+                  <span class="switch__label">Markdown</span>
+                </label>
+                <button class="button button--filled button--sm" id="publish-post" type="button">发布 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></button>
               </div>
             </div>
           </div>
@@ -225,28 +214,34 @@
 
   <dialog class="discussion-dialog" id="discussion-dialog" aria-labelledby="discussion-dialog-title">
     <div class="discussion-dialog__panel">
-      <div class="discussion-dialog__top">
-        <span class="garden-category" id="discussion-category">讨论</span>
-        <button class="icon-button" id="discussion-close" type="button" aria-label="关闭讨论"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+      <button class="discussion-close-fab" id="discussion-close" type="button" aria-label="关闭讨论"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+      <div class="discussion-dialog__content" tabindex="0" aria-label="讨论正文">
+        <div class="discussion-dialog__top"><span class="garden-category" id="discussion-category">讨论</span></div>
+        <h2 id="discussion-dialog-title">讨论</h2>
+        <div class="discussion-dialog__meta" id="discussion-meta"></div>
+        <div class="markdown-body discussion-body" id="discussion-body"></div>
+        <div class="discussion-comments">
+          <h3>评论 <span id="discussion-comment-count">0</span></h3>
+          <div id="discussion-comment-list"></div>
+        </div>
       </div>
-      <h2 id="discussion-dialog-title">讨论</h2>
-      <div class="discussion-dialog__meta" id="discussion-meta"></div>
-      <div class="markdown-body discussion-body" id="discussion-body"></div>
-      <div class="discussion-comments">
-        <h3>评论 <span id="discussion-comment-count">0</span></h3>
-        <div id="discussion-comment-list"></div>
+
+      <div class="discussion-dialog__bottom">
+        <div class="discussion-dialog__metrics">
+          <span id="discussion-views">0 浏览</span>
+          <button class="garden-action" id="discussion-like" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg><span data-like-count>0 点赞</span></button>
+          <span id="discussion-comments-stat">0 评论</span>
+          <a id="discussion-github" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">在 GitHub 查看 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+          <button class="garden-action" id="discussion-copy" type="button"><svg class="icon" aria-hidden="true"><use href="#i-copy"></use></svg>复制链接</button>
+        </div>
+        <button class="button button--filled button--sm discussion-comment-toggle" id="discussion-comment-toggle" type="button">评论</button>
       </div>
-      <form class="discussion-reply" id="discussion-reply">
+
+      <form class="discussion-reply-panel" id="discussion-reply" hidden>
         <label for="reply-body">写评论</label>
-        <textarea id="reply-body" rows="3" maxlength="4000" placeholder="在这里写，发布时会打开 GitHub 并复制内容…"></textarea>
+        <textarea id="reply-body" rows="8" maxlength="4000" placeholder="在这里写，发布时会打开 GitHub 并复制内容…"></textarea>
         <div class="discussion-reply__foot"><span>发布仍在 GitHub 完成</span><button class="button button--filled button--sm" type="submit">复制并去回复 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></button></div>
       </form>
-
-      <div class="discussion-dialog__actions">
-        <button class="button button--outlined button--sm" id="discussion-like" type="button" aria-pressed="false" aria-label="站内点赞"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg> 赞 <span data-like-count>0</span></button>
-        <a class="button button--filled button--sm" id="discussion-github" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">在 GitHub 查看 / 回复 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-        <button class="button button--outlined button--sm" id="discussion-copy" type="button"><svg class="icon" aria-hidden="true"><use href="#i-copy"></use></svg> 复制链接</button>
-      </div>
     </div>
   </dialog>
 
@@ -257,7 +252,7 @@
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
         <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
-        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="探索"><span class="sheet-group__title">探索</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
       <div class="nav-sheet__view" data-sheet-view="software" hidden>
@@ -270,10 +265,10 @@
       </div>
       <div class="nav-sheet__view" data-sheet-view="garden" hidden>
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
-        <p class="sheet-group-label">花园</p>
+        <p class="sheet-group-label">探索</p>
         <a class="sheet-link" href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
         <a class="sheet-link" href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
-        <a class="sheet-link sheet-link--home" href="/garden/">进入花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+        <a class="sheet-link sheet-link--home" href="/garden/">进入探索 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
       <div class="nav-sheet__view" data-sheet-view="about" hidden>
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
@@ -289,6 +284,7 @@
   <script src="/assets/vendor/marked.umd.js" defer></script>
   <script src="/assets/vendor/purify.min.js" defer></script>
   <script src="/assets/vendor/turndown.js" defer></script>
+  <script src="/assets/js/i18n.js" defer></script>
   <script src="/assets/js/main.js" defer></script>
   <script src="/assets/js/garden.js" defer></script>
 </body>
