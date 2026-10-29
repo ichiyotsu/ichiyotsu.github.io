@@ -309,9 +309,12 @@
     }
   }
 
+  const LANGUAGE_ICON = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 12h17M12 3.5c3 3.4 3 13.6 0 17M12 3.5c-3 3.4-3 13.6 0 17" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
+
   function updateButton(button) {
-    button.textContent = lang === 'en' ? '中文' : 'EN';
-    button.setAttribute('aria-label', lang === 'en' ? '中文 · 切换到中文' : 'EN · Switch to English');
+    if (!button.querySelector('svg')) button.innerHTML = LANGUAGE_ICON;
+    button.dataset.lang = lang === 'en' ? 'en' : 'zh';
+    button.setAttribute('aria-label', lang === 'en' ? '切换到中文' : 'Switch to English');
     button.title = lang === 'en' ? '切换到中文' : 'Switch to English';
   }
 
