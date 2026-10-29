@@ -1159,12 +1159,14 @@
   z-index: 500;
   padding: 0.7rem 1rem;
   border: 1px solid color-mix(in srgb, var(--md-sys-color-inverse-on-surface) 18%, transparent);
+  max-width: min(90vw, 440px);
   border-radius: var(--r-full);
   background: var(--md-sys-color-inverse-surface);
   color: var(--md-sys-color-inverse-on-surface);
   box-shadow: var(--shadow-3);
   font-size: 0.8rem;
   line-height: 1.3;
+  text-align: center;
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, 12px);
