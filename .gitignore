@@ -1,0 +1,10 @@
+# Local working files — none of these are needed by the website.
+_source/
+_tools/
+_preview/
+*.zip
+
+# OS noise
+.DS_Store
+Thumbs.db
+desktop.ini
