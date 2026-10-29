@@ -85,6 +85,32 @@
     showToast(ok ? '链接已复制' : '复制失败，请手动选择链接');
   });
 
+  /* ---------- Page-edge frost ---------- */
+
+  if (!document.querySelector('.page-frost')) {
+    const topFrost = document.createElement('div');
+    topFrost.className = 'page-frost page-frost--top';
+    topFrost.setAttribute('aria-hidden', 'true');
+
+    const bottomFrost = document.createElement('div');
+    bottomFrost.className = 'page-frost page-frost--bottom';
+    bottomFrost.setAttribute('aria-hidden', 'true');
+
+    document.body.prepend(topFrost);
+    document.body.append(bottomFrost);
+  }
+
+  /* ---------- Button press feedback ---------- */
+
+  document.addEventListener('pointerdown', (event) => {
+    const target = event.target.closest('.button, .icon-button, .nav-link, .filter-chip, .sheet-group');
+    if (!target) return;
+    target.classList.remove('is-pressed');
+    void target.offsetWidth;
+    target.classList.add('is-pressed');
+    window.setTimeout(() => target.classList.remove('is-pressed'), 620);
+  });
+
   /* ---------- Theme ---------- */
 
   const currentTheme = () => (root.dataset.theme === 'dark' ? 'dark' : 'light');

@@ -102,7 +102,7 @@
           <div class="nav-dropdown" id="dropdown-software">
             <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
             <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-            <a href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+            <a href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
           </div>
         </div>
         <div class="nav-item" data-nav-item>
@@ -116,7 +116,7 @@
           <a class="nav-link" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
           <div class="nav-dropdown" id="dropdown-about">
             <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub</small></a>
           </div>
         </div>
       </nav>
@@ -134,21 +134,18 @@
   </header>
 
   <main id="main">
+    <a class="back-fab" href="/software/" aria-label="返回软件"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg><span>软件</span></a>
     <section class="project-hero container" id="top" aria-labelledby="tokinote-title">
       <div class="project-hero__copy">
-        <p class="project-hero__status"><span class="status-dot" aria-hidden="true"></span> 进行中 · 本地优先</p>
-        <h1 id="tokinote-title">TokiNote</h1>
-        <p class="project-hero__tagline" data-edit="tokinote-1" data-edit-label="tokinote · p.project-hero__tagline">笔记、相册和专注，全部留在本机。</p>
-        <p class="project-hero__lede" data-edit="tokinote-2" data-edit-label="tokinote · p.project-hero__lede">日记、图片、标签、个人资料和专注记录都保存在本机。除了检查更新，它不会主动联网。</p>
+        <div class="project-hero__heading">
+          <img class="project-hero__icon" src="/assets/img/projects/note-icon.webp" width="512" height="512" alt="">
+          <h1 id="tokinote-title">TokiNote</h1>
+        </div>
+        <p class="project-hero__tagline" data-edit="tokinote-1" data-edit-label="tokinote · p.project-hero__tagline">本地笔记软件<br>目前最完善的一个。</p>
         <div class="project-hero__actions">
             <a class="button button--filled" href="https://github.com/ichiyotsu/TokiNote" target="_blank" rel="noopener noreferrer">GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
             <a class="button button--outlined" href="https://github.com/ichiyotsu/TokiNote/releases" target="_blank" rel="noopener noreferrer">Releases <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
         </div>
-        <ul class="project-facts" aria-label="项目概况">
-          <li>本地优先</li>
-          <li>Material 3 Expressive</li>
-          <li>2026</li>
-        </ul>
       </div>
         <div class="project-hero__media">
           <div class="phone phone--detail">
@@ -165,15 +162,15 @@
           <p class="section-head__note" data-edit="tokinote-3" data-edit-label="tokinote · p.section-head__note">不是功能清单，更像是几个「为什么它要这样」的切片。</p>
         </header>
         <div class="feature-grid">
-          <article class="feature-card" data-reveal>
+          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/note-journal.webp" alt="" loading="lazy"></div>
             <h3>笔记</h3>
             <p data-edit="tokinote-feature-2" data-edit-label="tokinote · feature">列表 / 网格、置顶、搜索、日历视图和长按预览；编辑器从首图提取主色，让每篇日记有自己的气氛。</p>
           </article>
-          <article class="feature-card" data-reveal>
+          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/note-focus.webp" alt="" loading="lazy"></div>
             <h3>相册</h3>
             <p data-edit="tokinote-feature-4" data-edit-label="tokinote · feature">文件夹、多选、全屏查看器和双指缩放；文件夹只记录照片引用，不复制或删除原图。</p>
           </article>
-          <article class="feature-card" data-reveal>
+          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/note-editor.webp" alt="" loading="lazy"></div>
             <h3>专注</h3>
             <p data-edit="tokinote-feature-6" data-edit-label="tokinote · feature">专注 / 短休息 / 长休息，圆角进度环、可自定义时长和专注总结。</p>
           </article>
@@ -187,39 +184,46 @@
           </article>
         </div>
       </div>
+        <div class="detail-strip" data-reveal>
+          <div class="detail-strip__media"><img src="/assets/img/projects/note-bottom.webp" alt="" loading="lazy"></div>
+          <div class="detail-strip__body">
+            <span class="detail-strip__label">BOTTOM BAR</span>
+            <h3>底栏</h3>
+            <p>一块悬浮工具岛，写作、相册和专注随手切换。</p>
+          </div>
+        </div>
     </section>
 
     <section class="section project-note-section">
       <div class="container">
         <div class="project-note" data-reveal>
-          <span class="project-note__label">DESIGN NOTE</span>
           <p data-edit="tokinote-note-11" data-edit-label="tokinote · design note">TokiNote 想做的不是「又一个笔记 App」，而是一个你愿意把私人内容放进去的地方。所以它先解决本地、备份和断网可用，再谈同步。</p>
         </div>
       </div>
     </section>
-
-    <section class="section project-gallery-section" aria-labelledby="tokinote-gallery">
+    <section class="section other-projects-section">
       <div class="container">
         <header class="section-head" data-reveal>
-          <div class="section-head__main"><h2 id="tokinote-gallery">再看几张。</h2></div>
-          <p class="section-head__note" data-edit="tokinote-4" data-edit-label="tokinote · p.section-head__note">界面会变，但这些细节是它一直想保持的手感。</p>
+          <div class="section-head__main"><h2>再看看...</h2></div>
+          <p class="section-head__note">另外三个也在慢慢长大。</p>
         </header>
-        <div class="project-gallery">
-          <figure class="project-shot"><img src="/assets/img/projects/note-journal.webp" alt="TokiNote 日记列表" loading="lazy"><figcaption>TokiNote 日记列表</figcaption></figure>
-          <figure class="project-shot"><img src="/assets/img/projects/note-focus.webp" alt="TokiNote 专注页" loading="lazy"><figcaption>TokiNote 专注页</figcaption></figure>
-          <figure class="project-shot"><img src="/assets/img/projects/note-editor.webp" alt="TokiNote 编辑器" loading="lazy"><figcaption>TokiNote 编辑器</figcaption></figure>
+        <div class="other-projects">
+          <a class="other-project" href="/software/tokitodo/">
+            <span class="other-project__name">TokiTodo</span>
+            <p>待办，专注计时，手机锁与统计。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+          <a class="other-project" href="/software/luma/">
+            <span class="other-project__name">Luma</span>
+            <p>悬浮胶囊浏览器。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+          <a class="other-project" href="/software/tokifonts/">
+            <span class="other-project__name">TokiFonts</span>
+            <p>基于OneUI教程的字体资源库。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
         </div>
-      </div>
-    </section>
-
-    <section class="section project-next-section">
-      <div class="container">
-        <a class="project-next" href="/software/tokifonts/">
-          <span>下一个</span>
-          <strong>TokiFonts</strong>
-          <small>一个给 One UI 换字体的资源库，也是一份字体笔记。</small>
-          <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
-        </a>
       </div>
     </section>
   </main>
@@ -227,7 +231,7 @@
   <footer class="site-footer">
     <div class="footer__inner container">
       <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
-      <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
+      <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
       <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
@@ -239,7 +243,7 @@
 
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
@@ -249,7 +253,7 @@
         <p class="sheet-group-label">软件</p>
         <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
         <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-        <a class="sheet-link" href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link" href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
         <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
@@ -265,7 +269,7 @@
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">关于</p>
         <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub</small></a>
         <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 

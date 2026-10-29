@@ -2,7 +2,7 @@
 
 **Live:** <https://ichiyotsu.github.io/>
 
-一个 **Material 3 Expressive** 风格的个人网站：TokiPage 主页、软件详情页、一座长在 GitHub Discussions 上的花园，以及一个只用本地文本编辑的 studio。
+一个 **Material 3 Expressive** 风格的个人网站：TokiPage 主页、软件详情页、X 式花园信息流，以及一个只用本地文本编辑的 studio。
 
 纯静态 HTML / CSS / JS，零构建步骤。
 
@@ -24,32 +24,54 @@
 
 | 路径 | 内容 |
 | --- | --- |
-| `/` | **TokiPage**：欢迎页，软件 / 花园 / 关于三个入口 |
-| `/software/` | **软件**：作品、Material 3 Expressive 设计说明、待定（关于我 + 随手记） |
-| `/software/tokitodo/` | TokiTodo 详情：待办、专注、锁机、统计 |
-| `/software/luma/` | Luma 详情：悬浮地址栏、多标签、双端一致 |
-| `/software/tokinote/` | TokiNote 详情：笔记、相册、专注、本地数据 |
-| `/software/tokifonts/` | TokiFonts 详情：字体资源、Pro / CE、教程 |
-| `/garden/` | **花园**：站内查看讨论、GitHub Discussions 同步、FAB 写作器 |
-| `/about/` | **关于**：本站故事、使用说明、站点地图、联系 |
+| `/` | **TokiPage**：欢迎语 + 三张可点击的入口卡（软件 / 花园 / 关于），底部一行短句 |
+| `/software/` | **软件**：作品、Material 3 Expressive 组件试用、正在制作的项目（TokiHarness） |
+| `/software/tokitodo/` | TokiTodo：待办，专注计时，手机锁与统计 |
+| `/software/luma/` | Luma：悬浮胶囊浏览器 |
+| `/software/tokinote/` | TokiNote：本地笔记软件，目前最完善的一个 |
+| `/software/tokifonts/` | TokiFonts：基于OneUI教程的字体资源库 |
+| `/garden/` | **花园**：X 式讨论流、固定数据条、站内点赞 / 浏览 / 看评论、写作 FAB |
+| `/about/` | **关于**：安静的个人说明、或许会坚持的三件事、联系 |
 
-顶栏顺序是 **主页 / 软件 / 花园 / 关于**：
+顶栏顺序是 **主页 / 软件 / 花园 / 关于**。软件下有三项：作品 / 设计 / 制作中；花园下是讨论 / 发布；关于下是关于本站 / 联系。
 
-- 软件、花园、关于都有下拉小标题；主页是直接入口。
-- 桌面端悬停或键盘聚焦展开，移动端点击分组后标题上移、下面滑出小标题。
-- 顶栏使用滚动响应的实时 `backdrop-filter` 模糊：从 14px 逐渐加深到 26px。
+- 页面以 1920×1080 为主要设计视口，内容最大宽度 1800px，左右留出呼吸区。
+- 顶栏、页面顶部和底部都有轻量渐变磨砂；顶栏模糊随滚动从 14px 加深到 26px。
+- 顶栏按钮按下会轻微回弹，并有一次边缘线条扩散动画；品牌 `ichiyotsu.` 悬停时出现整圆角底色。
+- 页脚没有分隔线，直接用留白和磨砂渐变收尾。
+
+## 主页
+
+欢迎语右侧的三张浮动卡片本身就是入口，悬停时卡片上浮，并在背后出现同色发光。原来的「三个入口」列表已删除。
+
+底部只保留一行 **把复杂的事，做得轻一点。**
+
+## 软件与详情页
+
+- 作品卡片、设计说明和「正在制作的项目...」。
+- 四个详情页都有左上角悬浮返回按钮，滚动时保持可见。
+- TokiTodo / Luma / TokiNote 的标题左侧使用各自的原生自适应图标；TokiFonts 没有独立 app icon，因此保持纯标题。
+- 详情页的基础介绍统一为：
+
+  - TokiTodo：待办，专注计时，手机锁与统计。
+  - Luma：悬浮胶囊浏览器。
+  - TokiNote：本地笔记软件 / 目前最完善的一个。
+  - TokiFonts：基于OneUI教程的字体资源库
+
+- 功能卡片加入真实截图；其中 TokiTodo、Luma、TokiNote 额外的「底栏」条带直接裁切截图底栏。
+- 旧的 DESIGN NOTE 标签、截图画廊和「下一个」区块已移除；底部改为 **再看看...**，放另外三个软件的入口。
+- 设计区新增 M3E 组件试用：Filled / Outlined 按钮、Assist / Selected chip、Switch、Linear progress、FAB 和 type scale。
 
 ## 花园
 
-花园没有自己的服务器，也没有站内账号系统。它是 **GitHub Discussions 的只读镜像 + 原生写入**：
+花园没有自己的服务器，也没有站内账号系统：
 
-1. `.github/workflows/garden-sync.yml` 在讨论、评论、Release、定时任务时调用 GitHub API。
-2. `tools/garden-sync.mjs` 同步标题、正文、分类、作者头像、点赞、评论和评论正文到 `garden/data/discussions.json`。
-3. `/garden/` 读取 JSON，在站内用 dialog 展示帖子正文和评论；想看完整内容、点赞或回复时，再点「在 GitHub 查看 / 回复」。
-4. 发帖用右下角 / 手机底部中间的 **+** FAB 打开写作器：支持 Markdown / 富文本切换、预览、复制、带标题正文打开 GitHub 新建讨论。
-5. Release 发布时，脚本会在 `Announcements` 自动创建一条讨论，并随同步出现在「公告」里。
-
-写入为什么不在站内完成：静态站点无法安全保存 GitHub OAuth secret，也不应该把 token 放进浏览器。看板保持只读、快速；身份和写操作留在 GitHub。
+- **看**：帖子正文、评论、作者、点赞数、评论数都从 GitHub Discussions 同步到 JSON，在站内信息流和 dialog 里查看。
+- **站内互动**：点赞和浏览计数保存在浏览器本机（`localStorage`），点击即可切换 / 累加；不会伪造 GitHub 数据。
+- **写**：发帖与评论需要 GitHub 账号，点击会打开 GitHub Discussions 完成，使用你的 GitHub 身份。
+- **同步**：GitHub Actions 每 120 分钟同步一次；页面打开时也按同一节奏刷新。
+- **数据条**：固定在顶栏下方居中，显示讨论数、问题数、本机浏览数、回复数。
+- **信息流**：单列 X 式布局，不显示头像；标题、正文摘要、作者、时间、点赞、浏览、评论、分享都在同一条目里。
 
 ### 首次配置
 
@@ -73,9 +95,9 @@ node tools/garden-sync.mjs
 # http://127.0.0.1:4317/
 ```
 
-- 它扫描页面里带 `data-edit` 的元素，只替换这些元素的文字，不改 CSS、组件和布局。
+- 扫描页面里带 `data-edit` 的元素，只替换这些元素的文字，不改 CSS、组件和布局。
 - **保存修改** 写回 HTML；**发布到 GitHub** 执行本地 `git add / commit / push`，随后 Pages 自动更新。
-- 只绑定 `127.0.0.1`，不对局域网/公网开放。
+- 只绑定 `127.0.0.1`，不对局域网 / 公网开放。
 - `studio/` 在 `.gitignore` 中，只在当前机器上存在。
 
 ## 本地预览站点
@@ -91,22 +113,22 @@ studio 的「打开本地站点」链接默认指向这个 4173 端口。
 
 | 想改什么 | 去哪里 |
 | --- | --- |
-| 主页欢迎语 / 三个入口 | `index.html` |
-| 软件页 / 设计 / 待定 | `software/index.html` |
+| 主页欢迎语 / 三张入口卡 | `index.html` |
+| 软件页 / 设计组件 / TokiHarness | `software/index.html` |
 | 四个软件详情 | `software/tokitodo/`、`luma/`、`tokinote/`、`tokifonts/` |
-| 花园页 / 写作器 | `garden/index.html`、`assets/js/garden.js` |
+| 花园信息流 / 写作器 | `garden/index.html`、`assets/js/garden.js` |
 | 关于页与联系 | `about/index.html` |
 | 顶栏 / 移动端菜单（每个页面各一份） | 各页面的 `<header>` 与 `<nav-sheet>` |
 | 颜色、圆角、动效、字体 | `assets/css/tokens.css` |
 | 页面样式 | `assets/css/pages.css` 等 |
 | 花园数据 | `garden/data/discussions.json`（由脚本生成，不要手改） |
-| Release 公告 | `tools/garden-sync.mjs`、`.github/workflows/garden-sync.yml` |
+| 同步频率 | `.github/workflows/garden-sync.yml` |
 | 可编辑字段 | 搜索 `data-edit` |
 | 字体 | `assets/fonts/`，见 `assets/fonts/README.md` |
 
 ### 字体
 
-中文展示字体是 **得意黑（Smiley Sans）** 的子集，当前约 90 KB。新增中文标题后如果出现字形回退：
+中文展示字体是 **得意黑（Smiley Sans）** 的子集，当前约 80 KB。新增中文标题后如果出现字形回退：
 
 ```powershell
 node tools/update-chars.mjs
@@ -140,7 +162,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 │  ├─ js/ main, garden
 │  ├─ fonts/ 得意黑子集 + Bricolage + Instrument Sans + OFL
 │  ├─ img/ 截图、头像、图标、OG
-│  ├─ img/projects/ 详情页截图
+│  ├─ img/projects/ 详情页图标与截图
 │  └─ vendor/ marked, DOMPurify, Turndown
 ├─ tools/
 │  ├─ garden-sync.mjs
@@ -156,7 +178,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 
 - 主页 / 软件 / 四个详情 / 花园 / 关于 / 404：全部 200，内部资源链接全部可达。
 - axe 扫描 9 个页面状态为 0 违规；写作器和讨论弹窗打开时也为 0。
-- 320 / 360 / 390 / 768 / 1024 / 1440 宽度无横向溢出。
+- 320 / 390 / 768 / 1440 / 1920 宽度无横向溢出。
 - Garden 同步工作流手动运行成功；Release 公告逻辑本地验证过。
 - 讨论数据由 GitHub Actions 提交回仓库，Pages 随后重建。
 
@@ -165,7 +187,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 - 字体：[Smiley Sans / 得意黑](https://github.com/atelier-anchor/smiley-sans)、[Bricolage Grotesque](https://github.com/ateliertriay/bricolage)、[Instrument Sans](https://github.com/Instrument/instrument-sans)，均为 SIL OFL 1.1。
 - 图标：[IconPark](https://iconpark.oceanengine.com/) 的 `material` 图标，按本站配色重新上色。
 - 编辑器：[marked](https://github.com/markedjs/marked)、[DOMPurify](https://github.com/cure53/DOMPurify)、[Turndown](https://github.com/mixmark-io/turndown)。
-- 项目截图来自 [ichiyotsu](https://github.com/ichiyotsu) 的公开仓库。
+- 项目截图和自适应图标来自 [ichiyotsu](https://github.com/ichiyotsu) 的公开仓库。
 - 讨论数据来自 [GitHub Discussions](https://github.com/ichiyotsu/ichiyotsu.github.io/discussions)。
 
 ## License

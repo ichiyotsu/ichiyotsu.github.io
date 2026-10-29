@@ -102,7 +102,7 @@
           <div class="nav-dropdown" id="dropdown-software">
             <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
             <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-            <a href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+            <a href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
           </div>
         </div>
         <div class="nav-item" data-nav-item>
@@ -116,7 +116,7 @@
           <a class="nav-link" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
           <div class="nav-dropdown" id="dropdown-about">
             <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub</small></a>
           </div>
         </div>
       </nav>
@@ -134,21 +134,18 @@
   </header>
 
   <main id="main">
+    <a class="back-fab" href="/software/" aria-label="返回软件"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg><span>软件</span></a>
     <section class="project-hero container" id="top" aria-labelledby="luma-title">
       <div class="project-hero__copy">
-        <p class="project-hero__status"><span class="status-dot" aria-hidden="true"></span> Beta 0.1</p>
-        <h1 id="luma-title">Luma</h1>
-        <p class="project-hero__tagline" data-edit="luma-1" data-edit-label="luma · p.project-hero__tagline">把地址栏做成悬浮玻璃胶囊。</p>
-        <p class="project-hero__lede" data-edit="luma-2" data-edit-label="luma · p.project-hero__lede">网页住进一张圆角卡片，地址栏和工具栏可以停在窗口顶部或底部。它想证明浏览器也可以轻、安静、有一点自己的形状。</p>
+        <div class="project-hero__heading">
+          <img class="project-hero__icon" src="/assets/img/projects/luma-icon.webp" width="512" height="512" alt="">
+          <h1 id="luma-title">Luma</h1>
+        </div>
+        <p class="project-hero__tagline" data-edit="luma-1" data-edit-label="luma · p.project-hero__tagline">悬浮胶囊浏览器。</p>
         <div class="project-hero__actions">
             <a class="button button--filled" href="https://github.com/ichiyotsu/Discover" target="_blank" rel="noopener noreferrer">GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
             <a class="button button--outlined" href="https://github.com/ichiyotsu/Discover/releases" target="_blank" rel="noopener noreferrer">Releases <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
         </div>
-        <ul class="project-facts" aria-label="项目概况">
-          <li>桌面 + 移动端</li>
-          <li>Electron + WebView</li>
-          <li>Beta 0.1</li>
-        </ul>
       </div>
         <div class="project-hero__media project-hero__media--browser">
           <img src="/assets/img/luma.webp" width="1400" height="933" alt="">
@@ -163,15 +160,15 @@
           <p class="section-head__note" data-edit="luma-3" data-edit-label="luma · p.section-head__note">不是功能清单，更像是几个「为什么它要这样」的切片。</p>
         </header>
         <div class="feature-grid">
-          <article class="feature-card" data-reveal>
+          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/luma-android.webp" alt="" loading="lazy"></div>
             <h3 data-edit="luma-feature-1" data-edit-label="luma · feature">悬浮地址栏</h3>
             <p data-edit="luma-feature-2" data-edit-label="luma · feature">地址栏和工具栏是一组玻璃胶囊，可以在顶部和底部之间切换，网页会自动为它让位。</p>
           </article>
-          <article class="feature-card" data-reveal>
+          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/luma-settings.webp" alt="" loading="lazy"></div>
             <h3>多标签</h3>
             <p data-edit="luma-feature-4" data-edit-label="luma · feature">新建、关闭、重开、切换；每个标签有自己的标题、favicon 和加载状态。</p>
           </article>
-          <article class="feature-card" data-reveal>
+          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/luma-android.webp" alt="" loading="lazy"></div>
             <h3 data-edit="luma-feature-5" data-edit-label="luma · feature">本地新标签页</h3>
             <p data-edit="luma-feature-6" data-edit-label="luma · feature">时间、问候、快捷方式和搜索都在本地生成，不联网也能打开。</p>
           </article>
@@ -185,39 +182,46 @@
           </article>
         </div>
       </div>
+        <div class="detail-strip" data-reveal>
+          <div class="detail-strip__media"><img src="/assets/img/projects/luma-bottom.webp" alt="" loading="lazy"></div>
+          <div class="detail-strip__body">
+            <span class="detail-strip__label">BOTTOM BAR</span>
+            <h3>底栏</h3>
+            <p>标签、主页和设置都在手势区附近，单手也能完成大部分操作。</p>
+          </div>
+        </div>
     </section>
 
     <section class="section project-note-section">
       <div class="container">
         <div class="project-note" data-reveal>
-          <span class="project-note__label">DESIGN NOTE</span>
           <p data-edit="luma-note-11" data-edit-label="luma · design note">浏览器是最难「做得有性格」的软件之一，因为它必须先把网页放好。Luma 的取舍是：把界面收进一个胶囊，把空间还给网页，只在需要的时候浮出来。</p>
         </div>
       </div>
     </section>
-
-    <section class="section project-gallery-section" aria-labelledby="luma-gallery">
+    <section class="section other-projects-section">
       <div class="container">
         <header class="section-head" data-reveal>
-          <div class="section-head__main"><h2 id="luma-gallery">再看几张。</h2></div>
-          <p class="section-head__note" data-edit="luma-4" data-edit-label="luma · p.section-head__note">界面会变，但这些细节是它一直想保持的手感。</p>
+          <div class="section-head__main"><h2>再看看...</h2></div>
+          <p class="section-head__note">另外三个也在慢慢长大。</p>
         </header>
-        <div class="project-gallery">
-          <figure class="project-shot"><img src="/assets/img/luma.webp" alt="Luma 桌面新标签页" loading="lazy"><figcaption>Luma 桌面新标签页</figcaption></figure>
-          <figure class="project-shot"><img src="/assets/img/projects/luma-android.webp" alt="Luma Android 新标签页" loading="lazy"><figcaption>Luma Android 新标签页</figcaption></figure>
-          <figure class="project-shot"><img src="/assets/img/projects/luma-settings.webp" alt="Luma 设置页" loading="lazy"><figcaption>Luma 设置页</figcaption></figure>
+        <div class="other-projects">
+          <a class="other-project" href="/software/tokitodo/">
+            <span class="other-project__name">TokiTodo</span>
+            <p>待办，专注计时，手机锁与统计。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+          <a class="other-project" href="/software/tokinote/">
+            <span class="other-project__name">TokiNote</span>
+            <p>本地笔记软件，目前最完善的一个。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+          <a class="other-project" href="/software/tokifonts/">
+            <span class="other-project__name">TokiFonts</span>
+            <p>基于OneUI教程的字体资源库。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
         </div>
-      </div>
-    </section>
-
-    <section class="section project-next-section">
-      <div class="container">
-        <a class="project-next" href="/software/tokinote/">
-          <span>下一个</span>
-          <strong>TokiNote</strong>
-          <small>笔记、相册和专注，全部留在本机。</small>
-          <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
-        </a>
       </div>
     </section>
   </main>
@@ -225,7 +229,7 @@
   <footer class="site-footer">
     <div class="footer__inner container">
       <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
-      <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
+      <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
       <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
@@ -237,7 +241,7 @@
 
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
@@ -247,7 +251,7 @@
         <p class="sheet-group-label">软件</p>
         <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
         <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-        <a class="sheet-link" href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link" href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
         <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
@@ -263,7 +267,7 @@
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">关于</p>
         <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub</small></a>
         <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 

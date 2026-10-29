@@ -44,6 +44,8 @@
   align-items: center;
   gap: 0;
   flex: none;
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--r-full);
   color: var(--md-sys-color-on-surface);
   font-family: var(--font-display);
   font-size: 1.05rem;
@@ -51,6 +53,20 @@
   letter-spacing: -0.04em;
   line-height: 1;
   text-decoration: none;
+  transition:
+    background-color var(--dur-short) var(--ease-emphasized),
+    color var(--dur-short) var(--ease-emphasized),
+    transform var(--dur-med) var(--ease-spring);
+}
+
+.brand:hover {
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+  transform: translateY(-1px);
+}
+
+.brand:hover .brand__dot {
+  color: var(--md-sys-color-primary);
 }
 
 .brand__mark {
@@ -683,8 +699,7 @@
 
 .site-footer {
   margin-top: clamp(2rem, 6vw, 5rem);
-  border-top: 1px solid var(--md-sys-color-outline-variant);
-  padding-block: 2rem 2.5rem;
+  padding-block: 2.5rem 3rem;
 }
 
 .footer__inner {
@@ -764,4 +779,76 @@
     width: 33px;
     height: 33px;
   }
+}
+
+
+/* Page-edge frosted glass, injected by main.js. */
+.page-frost {
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 150;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.page-frost--top {
+  top: 0;
+  height: 98px;
+  background: linear-gradient(to bottom, color-mix(in srgb, var(--md-sys-color-surface) 78%, transparent), transparent);
+  mask-image: linear-gradient(to bottom, #000 48%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 48%, transparent);
+}
+
+.page-frost--bottom {
+  bottom: 0;
+  height: 58px;
+  background: linear-gradient(to top, color-mix(in srgb, var(--md-sys-color-surface) 72%, transparent), transparent);
+  mask-image: linear-gradient(to top, #000 48%, transparent);
+  -webkit-mask-image: linear-gradient(to top, #000 48%, transparent);
+}
+
+/* Press feedback: a tiny bounce plus a ring that expands and fades. */
+.button,
+.icon-button,
+.nav-link,
+.filter-chip,
+.sheet-group {
+  position: relative;
+}
+
+.button::after,
+.icon-button::after,
+.nav-link::after,
+.filter-chip::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border: 1px solid var(--md-sys-color-primary);
+  border-radius: inherit;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.88);
+}
+
+.is-pressed::after {
+  animation: edge-pulse 0.55s var(--ease-emphasized);
+}
+
+.is-pressed {
+  animation: press-bounce 0.42s var(--ease-spring);
+}
+
+@keyframes edge-pulse {
+  0% { opacity: 0; transform: scale(0.88); }
+  24% { opacity: 0.9; }
+  100% { opacity: 0; transform: scale(1.1); }
+}
+
+@keyframes press-bounce {
+  0% { transform: scale(1); }
+  38% { transform: scale(0.955); }
+  70% { transform: scale(1.025); }
+  100% { transform: scale(1); }
 }

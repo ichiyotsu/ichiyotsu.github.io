@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>软件 — ichiyotsu.</title>
-  <meta name="description" content="ichiyotsu 的软件：TokiTodo、Luma、TokiNote、TokiFonts，以及 Material 3 Expressive 的设计笔记。">
+  <meta name="description" content="ichiyotsu 的软件、Material 3 Expressive 组件，以及正在制作的 TokiHarness。">
   <meta name="author" content="ichiyotsu">
   <meta name="theme-color" content="#FDF8F2" id="theme-color">
   <meta name="color-scheme" content="light dark">
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ichiyotsu.github.io/software/">
   <meta property="og:title" content="软件 — ichiyotsu.">
-  <meta property="og:description" content="TokiTodo、Luma、TokiNote、TokiFonts，以及 Material 3 Expressive 的设计笔记。">
+  <meta property="og:description" content="软件、Material 3 Expressive 和正在制作的项目。">
   <meta property="og:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
   <meta property="og:site_name" content="ichiyotsu.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="软件 — ichiyotsu.">
-  <meta name="twitter:description" content="TokiTodo、Luma、TokiNote、TokiFonts，以及 Material 3 Expressive 的设计笔记。">
+  <meta name="twitter:description" content="软件、Material 3 Expressive 和正在制作的项目。">
   <meta name="twitter:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <meta name="twitter:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
   <link rel="me" href="https://github.com/ichiyotsu">
@@ -102,7 +102,7 @@
           <div class="nav-dropdown" id="dropdown-software">
             <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
             <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-            <a href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+            <a href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
           </div>
         </div>
         <div class="nav-item" data-nav-item>
@@ -116,7 +116,7 @@
           <a class="nav-link" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
           <div class="nav-dropdown" id="dropdown-about">
             <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub</small></a>
           </div>
         </div>
       </nav>
@@ -140,7 +140,7 @@
           <span class="hero__line"><span>把复杂的事，</span></span>
           <span class="hero__line"><span>做得<em>轻</em>一点。</span></span>
         </h1>
-        <p class="hero__lede">我是 <strong>ichiyotsu</strong>，一名 Android 与界面开发者。用 Kotlin 和 Jetpack Compose 做本地优先的小工具，也研究字体、动效，以及 Material 3 Expressive 里那些让人会心一笑的细节。</p>
+        <p class="hero__lede" data-edit="software-hero" data-edit-label="software · hero">哈喽呀我是ichiyotsu ! 目前在做一些有趣的 wibe-coding 软件喔 !</p>
         <div class="hero__actions">
           <a class="button button--filled" href="#work">看看作品 <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg></a>
           <a class="button button--outlined" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> GitHub</a>
@@ -190,7 +190,7 @@
       <div class="container">
         <header class="section-head" data-reveal>
           <div class="section-head__main"><h2 id="work-title">一些做给自己，<br>也用得上的东西。</h2></div>
-          <p class="section-head__note" data-edit="software-1" data-edit-label="software · p.section-head__note">从待办、浏览器到笔记与字体。每一个项目，都从一个很小的「不舒服」开始。</p>
+          <p class="section-head__note" data-edit="software-1" data-edit-label="software · p.section-head__note">目前尝试了笔记，专注和浏览器...都在不断优化中 !!</p>
         </header>
 
         <div class="work-grid">
@@ -198,12 +198,12 @@
             <a class="project__link" href="/software/tokitodo/">
               <div class="project__top">
                 <span class="project__meta">
-                  <span class="project__status"><span class="status-dot" aria-hidden="true"></span> 进行中</span>
+
                   <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
                 </span>
               </div>
               <h3 class="project__title" data-edit="software-2" data-edit-label="software · h3.project__title">TokiTodo</h3>
-              <p class="project__desc" data-edit="software-3" data-edit-label="software · p.project__desc">待办、专注计时、手机锁与统计。把一天收进一个安静、顺手的地方。</p>
+              <p class="project__desc" data-edit="software-3" data-edit-label="software · p.project__desc">待办，专注计时，手机锁与统计。</p>
               <div class="project__media project__media--todo">
                 <span class="media-note media-note--todo"><span>今天</span><strong>4</strong><span>件待办</span></span>
                 <div class="phone phone--project"><div class="phone__screen"><img src="/assets/img/toki-todo.webp" width="540" height="1170" alt="" loading="lazy"></div></div>
@@ -215,13 +215,12 @@
             <a class="project__link" href="/software/luma/">
               <div class="project__top">
                 <span class="project__meta">
-                  <span class="project__status"><span class="status-dot" aria-hidden="true"></span> Beta 0.1</span>
                   <span class="project__downloads" title="GitHub Releases 累计下载"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg><span class="u-visually-hidden">下载</span> 1</span>
                   <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
                 </span>
               </div>
               <h3 class="project__title" data-edit="software-4" data-edit-label="software · h3.project__title">Luma</h3>
-              <p class="project__desc" data-edit="software-5" data-edit-label="software · p.project__desc">把地址栏做成悬浮玻璃胶囊的浏览器。网页住进一张圆角卡片，工具栏在上下之间自由停靠。</p>
+              <p class="project__desc" data-edit="software-5" data-edit-label="software · p.project__desc">悬浮胶囊浏览器。</p>
               <div class="project__media project__media--luma">
                 <img class="luma-shot" src="/assets/img/luma.webp" width="1400" height="933" alt="" loading="lazy">
                 <span class="media-pill">悬浮地址栏 · 8 种主题色</span>
@@ -233,13 +232,12 @@
             <a class="project__link" href="/software/tokinote/">
               <div class="project__top">
                 <span class="project__meta">
-                  <span class="project__status"><span class="status-dot" aria-hidden="true"></span> 进行中</span>
                   <span class="project__downloads" title="GitHub Releases 累计下载"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg><span class="u-visually-hidden">下载</span> 2</span>
                   <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
                 </span>
               </div>
               <h3 class="project__title" data-edit="software-6" data-edit-label="software · h3.project__title">TokiNote</h3>
-              <p class="project__desc" data-edit="software-7" data-edit-label="software · p.project__desc">笔记、相册和专注，全部留在本机。除了检查更新，它不会主动联网。</p>
+              <p class="project__desc" data-edit="software-7" data-edit-label="software · p.project__desc">本地笔记软件<br>目前最完善的一个。</p>
               <div class="project__media project__media--note">
                 <div class="phone phone--note"><div class="phone__screen"><img src="/assets/img/toki-note.webp" width="540" height="1170" alt="" loading="lazy"></div></div>
               </div>
@@ -250,12 +248,12 @@
             <a class="project__link" href="/software/tokifonts/">
               <div class="project__top">
                 <span class="project__meta">
-                  <span class="project__status"><span class="status-dot" aria-hidden="true"></span> 持续更新</span>
+
                   <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
                 </span>
               </div>
               <h3 class="project__title" data-edit="software-8" data-edit-label="software · h3.project__title">TokiFonts</h3>
-              <p class="project__desc" data-edit="software-9" data-edit-label="software · p.project__desc">一个给 One UI 换字体的资源库，也是一份持续生长的字体笔记。</p>
+              <p class="project__desc" data-edit="software-9" data-edit-label="software · p.project__desc">基于OneUI教程的字体资源库</p>
               <div class="project__media project__media--type" aria-hidden="true">
                 <span class="type-big">字</span>
                 <span class="type-outline">Aa</span>
@@ -315,6 +313,38 @@
           </article>
         </div>
 
+        <div class="m3-kit" data-reveal>
+          <div class="m3-kit__intro">
+            <span class="m3-kit__tag">M3 EXPRESSIVE / COMPONENTS</span>
+            <h3>官方组件，在真实页面里试用。</h3>
+            <p>按钮、chip、开关、进度与排版都来自同一套 M3E 角色和形状。它们不是示意图，而是这个页面正在使用的组件。</p>
+          </div>
+          <div class="m3-kit__stage">
+            <div class="m3-kit__row">
+              <button class="button button--filled button--sm" type="button">Filled</button>
+              <button class="button button--outlined button--sm" type="button">Outlined</button>
+              <span class="m3-chip">Assist chip</span>
+              <span class="m3-chip m3-chip--selected">Selected</span>
+              <label class="switch m3-switch">
+                <input type="checkbox" checked aria-label="示例开关">
+                <span class="switch__track" aria-hidden="true"></span>
+                <span class="switch__label">Switch</span>
+              </label>
+            </div>
+            <div class="m3-kit__row m3-kit__row--bottom">
+              <span class="m3-progress" role="progressbar" aria-label="进度示例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><span></span></span>
+              <span class="m3-fab-demo" aria-hidden="true"><svg class="icon"><use href="#i-star"></use></svg></span>
+              <span class="m3-kit__caption">Progress · FAB · Shape &amp; state layers</span>
+            </div>
+            <div class="m3-type-scale">
+              <span class="m3-type-display">Display</span>
+              <span class="m3-type-headline">Headline</span>
+              <span class="m3-type-title">Title</span>
+              <span class="m3-type-body">Body</span>
+              <span class="m3-type-label">LABEL</span>
+            </div>
+          </div>
+        </div>
         <div class="design-foot" data-reveal>
           <p>这些不是装饰性的原则，而是我写界面时的默认值：<strong>先有层级，再有表情。</strong></p>
           <div class="design-tags"><span>Dynamic color</span><span>Shape scale</span><span>Spring motion</span><span>Editorial type</span></div>
@@ -322,81 +352,21 @@
       </div>
     </section>
 
-    <section class="section tbd" id="tbd" aria-labelledby="tbd-heading">
+    <section class="section making" id="making" aria-labelledby="making-title">
       <div class="container">
-        <h2 class="u-visually-hidden" id="tbd-heading">待定</h2>
-        <div class="about-panel" data-reveal>
-          <div class="about-panel__orbit" aria-hidden="true"></div>
-          <div class="about__grid">
-            <div class="about__intro">
-              <p class="about__statement" id="tbd-title">界面应该像好用的工具，<br>也像有性格的人。</p>
-              <p data-edit="software-intro-7" data-edit-label="software · intro one">我在 Android 上写 Kotlin 和 Jetpack Compose，喜欢把系统级的交互做得更有手感：大圆角、弹簧、动态色，还有能呼吸的留白。</p>
-              <p data-edit="software-intro-8" data-edit-label="software · intro two">我偏爱 local-first——数据先属于你，网络只是可选项。也花很多时间在字体和排版上，因为它们决定了界面开口说话的语气。</p>
-
-              <div class="about__identity">
-                <img class="about__avatar" src="/assets/img/avatar.webp" width="160" height="160" alt="ichiyotsu 的头像" loading="lazy">
-                <div><strong>ichiyotsu</strong><span>@ichiyotsu · Software / Interface / Type</span></div>
-              </div>
-
-              <ul class="about__chips" aria-label="常用技术与关注方向">
-                <li>Kotlin</li><li>Jetpack Compose</li><li>Material 3 Expressive</li><li>Type &amp; Motion</li><li>Local-first</li>
-              </ul>
-            </div>
-
-            <div class="principles">
-              <article class="principle">
-                <div><h3>先让它好用</h3><p>动效是标点，不是正文。所有弹性、形变和颜色，最后都要回到「这件事做完了没有」。</p></div>
-              </article>
-              <article class="principle">
-                <div><h3>把数据还给人</h3><p>默认本地、默认可导出、默认不登录。少一个服务器，用户就少一份担心。</p></div>
-              </article>
-              <article class="principle">
-                <div><h3>留一点玩心</h3><p>好的界面应该让人想多按一下。一个会回弹的按钮，有时比十行说明更有用。</p></div>
-              </article>
-            </div>
+        <header class="section-head" data-reveal>
+          <div class="section-head__main"><h2 id="making-title" data-edit="software-making-title" data-edit-label="software · making title">正在制作的项目...</h2></div>
+          <p class="section-head__note">还没做完，但已经值得先放上来。</p>
+        </header>
+        <a class="making-card" href="https://github.com/ichiyotsu/DeepSeek-Harness" target="_blank" rel="noopener noreferrer" data-reveal>
+          <div class="making-card__media"><img src="/assets/img/projects/dsh-1.webp" width="1200" height="550" alt="TokiHarness 的对话界面"></div>
+          <div class="making-card__body">
+            <span class="making-card__tag">TOKIHARNESS</span>
+            <h3>TokiHarness</h3>
+            <p data-edit="software-making" data-edit-label="software · making">正在尝试制作 DSH 手机版，基于 MD3E 设计的二创。敬请期待...</p>
+            <span class="making-card__link">在 GitHub 看看 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span>
           </div>
-
-          <div class="now">
-            <div class="now__head"><h3>最近在做</h3><span>2026.10</span></div>
-            <ul class="now__list">
-              <li><span class="now__dot" aria-hidden="true"></span><div><h4>TokiTodo 的专注统计</h4><p>让数据看起来不像报表，而像一天留下的痕迹。</p></div></li>
-              <li><span class="now__dot" aria-hidden="true"></span><div><h4>Luma 的悬浮底栏</h4><p>滚动收起的手感还差一点，正在试更慢的弹簧。</p></div></li>
-              <li><span class="now__dot" aria-hidden="true"></span><div><h4>TokiFonts 的字体索引</h4><p>下一款想认真研究的正文字体，还没有选好。</p></div></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="notes-grid">
-          <details class="note" data-reveal>
-            <summary>
-              <span class="note__top"><span class="note__date">2026.10</span></span>
-              <span class="note__title" role="heading" aria-level="3" data-edit="software-11" data-edit-label="software · span.note__title">圆角不是 Expressive</span>
-              <span class="note__teaser" data-edit="software-12" data-edit-label="software · span.note__teaser">Material 3 Expressive 真正改变的不是圆角大小，而是界面愿不愿意在正确的时刻夸张一下。</span>
-              <span class="note__toggle" aria-hidden="true">+</span>
-            </summary>
-            <div class="note__body"><p data-edit="software-note-body-1" data-edit-label="software · note body">把卡片从 16dp 调到 28dp，不会自动变成 Expressive。它更像一种态度：允许形状、颜色和动效在关键动作上「过一点」，而在阅读和输入时退回去。</p><p data-edit="software-note-body-2" data-edit-label="software · note body">所以我现在会先问：这个界面最想让人感受到什么？再决定哪里该安静，哪里可以像弹簧一样弹出来。</p></div>
-          </details>
-
-          <details class="note" data-reveal style="--reveal-delay: 80ms">
-            <summary>
-              <span class="note__top"><span class="note__date">2026.10</span></span>
-              <span class="note__title" role="heading" aria-level="3" data-edit="software-13" data-edit-label="software · span.note__title">Local-first 是一种礼貌</span>
-              <span class="note__teaser" data-edit="software-14" data-edit-label="software · span.note__teaser">不登录、不联网也能用，是对用户时间与数据最基本的尊重。</span>
-              <span class="note__toggle" aria-hidden="true">+</span>
-            </summary>
-            <div class="note__body"><p data-edit="software-note-body-3" data-edit-label="software · note body">「云同步」经常被当成默认答案，但它也意味着：多一个账号、多一次等待、多一个可能泄露的副本。对笔记和待办这种私人的东西，我宁愿先把本地做好。</p><p data-edit="software-note-body-4" data-edit-label="software · note body">网络应该是加速器，不是门槛。断网时还能不能打开、能不能导出、能不能删除干净，是我现在做每个功能都会先想的三件事。</p></div>
-          </details>
-
-          <details class="note" data-reveal style="--reveal-delay: 160ms">
-            <summary>
-              <span class="note__top"><span class="note__date">2026.10</span></span>
-              <span class="note__title" role="heading" aria-level="3" data-edit="software-15" data-edit-label="software · span.note__title">字体是界面的语气</span>
-              <span class="note__teaser" data-edit="software-16" data-edit-label="software · span.note__teaser">同一句话，换一套字，能从说明书变成朋友。</span>
-              <span class="note__toggle" aria-hidden="true">+</span>
-            </summary>
-            <div class="note__body"><p data-edit="software-note-body-5" data-edit-label="software · note body">字重、字宽、字距和收笔的弧度，都会偷偷决定一句话的情绪。工具类应用不一定都要「中性无表情」，它也可以有温度，只是不能牺牲可读性。</p><p data-edit="software-note-body-6" data-edit-label="software · note body">这也是我一直折腾 TokiFonts 的原因：换字体不只是换外观，而是在换一个应用说话的方式。</p></div>
-          </details>
-        </div>
+        </a>
       </div>
     </section>
   </main>
@@ -404,7 +374,7 @@
   <footer class="site-footer">
     <div class="footer__inner container">
       <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
-      <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
+      <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
       <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
@@ -416,7 +386,7 @@
 
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
@@ -426,7 +396,7 @@
         <p class="sheet-group-label">软件</p>
         <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
         <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-        <a class="sheet-link" href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link" href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
         <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
@@ -442,7 +412,7 @@
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">关于</p>
         <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub</small></a>
         <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 

@@ -102,7 +102,7 @@
           <div class="nav-dropdown" id="dropdown-software">
             <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
             <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-            <a href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+            <a href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
           </div>
         </div>
         <div class="nav-item" data-nav-item>
@@ -116,7 +116,7 @@
           <a class="nav-link" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
           <div class="nav-dropdown" id="dropdown-about">
             <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub</small></a>
           </div>
         </div>
       </nav>
@@ -143,67 +143,34 @@
           <a class="button button--outlined" href="/garden/">去花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg></a>
         </div>
       </div>
-      <div class="home-hero__art" aria-hidden="true">
-        <span class="home-orbit home-orbit--one"></span>
-        <span class="home-orbit home-orbit--two"></span>
-        <span class="home-star">✳</span>
-        <div class="home-portal home-portal--software">
-          <strong>软件</strong>
-          <small>作品 · 设计 · 待定</small>
-        </div>
-        <div class="home-portal home-portal--garden">
-          <strong>花园</strong>
+      <div class="home-hero__art">
+        <span class="home-orbit home-orbit--one" aria-hidden="true"></span>
+        <span class="home-orbit home-orbit--two" aria-hidden="true"></span>
+        <span class="home-star" aria-hidden="true">✳</span>
+        <a class="home-portal home-portal--software" href="/software/">
+          <strong data-edit="home-portal-title-软件" data-edit-label="home · portal title">软件</strong>
+          <small>作品 · 设计 · 制作中</small>
+        </a>
+        <a class="home-portal home-portal--garden" href="/garden/">
+          <strong data-edit="home-portal-title-花园" data-edit-label="home · portal title">花园</strong>
           <small>讨论 · 更新</small>
-        </div>
-        <div class="home-portal home-portal--about">
-          <strong>关于</strong>
+        </a>
+        <a class="home-portal home-portal--about" href="/about/">
+          <strong data-edit="home-portal-title-关于" data-edit-label="home · portal title">关于</strong>
           <small>本站 · 联系</small>
-        </div>
-      </div>
-    </section>
-
-    <section class="section home-portals" aria-labelledby="portals-title">
-      <div class="container">
-        <header class="section-head" data-reveal>
-          <div class="section-head__main"><h2 id="portals-title">三个入口。</h2></div>
-          <p class="section-head__note" data-edit="home-1" data-edit-label="home · p.section-head__note">想看东西、想说话，或者只是想认识一下，都可以从这里开始。</p>
-        </header>
-        <div class="portal-grid">
-          <a class="portal-card portal-card--software" href="/software/" data-reveal>
-            <span class="portal-card__tag">SOFTWARE</span>
-            <h3 data-edit="home-portal-title-软件" data-edit-label="home · portal title">软件</h3>
-            <p data-edit="home-portal-1" data-edit-label="home · portal">TokiTodo、Luma、TokiNote、TokiFonts，以及它们背后的设计决定。</p>
-            <span class="portal-card__link">进入软件 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span>
-          </a>
-          <a class="portal-card portal-card--garden" href="/garden/" data-reveal style="--reveal-delay: 80ms">
-            <span class="portal-card__tag">GARDEN</span>
-            <h3 data-edit="home-portal-title-花园" data-edit-label="home · portal title">花园</h3>
-            <p data-edit="home-portal-2" data-edit-label="home · portal">一个长在 GitHub Discussions 上的讨论区。看帖、点赞、评论，或者自己开一帖。</p>
-            <span class="portal-card__link">进入花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span>
-          </a>
-          <a class="portal-card portal-card--about" href="/about/" data-reveal style="--reveal-delay: 160ms">
-            <span class="portal-card__tag">ABOUT</span>
-            <h3 data-edit="home-portal-title-关于" data-edit-label="home · portal title">关于</h3>
-            <p data-edit="home-portal-3" data-edit-label="home · portal">这个网站怎么来的、用了什么，以及怎么找到我。</p>
-            <span class="portal-card__link">关于本站 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span>
-          </a>
-        </div>
+        </a>
       </div>
     </section>
 
     <section class="home-note container" data-reveal>
-      <p>把复杂的事，<br>做得<em>轻</em>一点。</p>
-      <div class="home-note__side">
-        <span>TOKIPAGE / 2026</span>
-        <p data-edit="home-note-side" data-edit-label="home · note side">一个还在长的个人站，慢慢来。</p>
-      </div>
+      <p>把复杂的事，做得<em>轻</em>一点。</p>
     </section>
   </main>
 
   <footer class="site-footer">
     <div class="footer__inner container">
       <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
-      <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
+      <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
       <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
@@ -215,7 +182,7 @@
 
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
@@ -225,7 +192,7 @@
         <p class="sheet-group-label">软件</p>
         <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
         <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-        <a class="sheet-link" href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link" href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
         <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
@@ -241,7 +208,7 @@
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">关于</p>
         <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub</small></a>
         <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 

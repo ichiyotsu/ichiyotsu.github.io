@@ -101,7 +101,7 @@
           <div class="nav-dropdown" id="dropdown-software">
             <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
             <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-            <a href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+            <a href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
           </div>
         </div>
         <div class="nav-item" data-nav-item>
@@ -115,7 +115,7 @@
           <a class="nav-link" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
           <div class="nav-dropdown" id="dropdown-about">
             <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub</small></a>
           </div>
         </div>
       </nav>
@@ -133,20 +133,14 @@
   </header>
 
   <main id="main">
+    <a class="back-fab" href="/software/" aria-label="返回软件"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg><span>软件</span></a>
     <section class="project-hero container" id="top" aria-labelledby="tokifonts-title">
       <div class="project-hero__copy">
-        <p class="project-hero__status"><span class="status-dot" aria-hidden="true"></span> 持续更新 · 社区资源</p>
         <h1 id="tokifonts-title">TokiFonts</h1>
-        <p class="project-hero__tagline" data-edit="tokifonts-1" data-edit-label="tokifonts · p.project-hero__tagline">一个给 One UI 换字体的资源库，也是一份字体笔记。</p>
-        <p class="project-hero__lede" data-edit="tokifonts-2" data-edit-label="tokifonts · p.project-hero__lede">它从三星 One UI 的系统字体教程长出来，慢慢变成一份持续收录字体、教程和社区投稿的索引。</p>
+        <p class="project-hero__tagline" data-edit="tokifonts-1" data-edit-label="tokifonts · p.project-hero__tagline">基于OneUI教程的字体资源库</p>
         <div class="project-hero__actions">
             <a class="button button--filled" href="https://github.com/ichiyotsu/TokiFonts" target="_blank" rel="noopener noreferrer">GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
         </div>
-        <ul class="project-facts" aria-label="项目概况">
-          <li>字体资源</li>
-          <li>One UI 教程</li>
-          <li>社区投稿</li>
-        </ul>
       </div>
         <div class="project-hero__media project-hero__media--type" aria-hidden="true">
           <span class="project-type-big">字</span>
@@ -190,21 +184,33 @@
     <section class="section project-note-section">
       <div class="container">
         <div class="project-note" data-reveal>
-          <span class="project-note__label">DESIGN NOTE</span>
           <p data-edit="tokifonts-note-11" data-edit-label="tokifonts · design note">字体是界面里最安静的品牌。TokiFonts 想做的，是把「换一套字」这件事讲清楚：它改变了什么，会坏在哪里，以及值不值得。</p>
         </div>
       </div>
     </section>
-
-
-    <section class="section project-next-section">
+    <section class="section other-projects-section">
       <div class="container">
-        <a class="project-next" href="/software/tokitodo/">
-          <span>下一个</span>
-          <strong>TokiTodo</strong>
-          <small>把一天收进一个安静、顺手的地方。</small>
-          <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
-        </a>
+        <header class="section-head" data-reveal>
+          <div class="section-head__main"><h2>再看看...</h2></div>
+          <p class="section-head__note">另外三个也在慢慢长大。</p>
+        </header>
+        <div class="other-projects">
+          <a class="other-project" href="/software/tokitodo/">
+            <span class="other-project__name">TokiTodo</span>
+            <p>待办，专注计时，手机锁与统计。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+          <a class="other-project" href="/software/luma/">
+            <span class="other-project__name">Luma</span>
+            <p>悬浮胶囊浏览器。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+          <a class="other-project" href="/software/tokinote/">
+            <span class="other-project__name">TokiNote</span>
+            <p>本地笔记软件，目前最完善的一个。</p>
+            <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+          </a>
+        </div>
       </div>
     </section>
   </main>
@@ -212,7 +218,7 @@
   <footer class="site-footer">
     <div class="footer__inner container">
       <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
-      <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
+      <p>© <span data-year>2026</span> ichiyotsu · 没有追踪。</p>
       <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
@@ -224,7 +230,7 @@
 
       <div class="nav-sheet__view" data-sheet-view="index">
         <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 制作中</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
       </div>
@@ -234,7 +240,7 @@
         <p class="sheet-group-label">软件</p>
         <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
         <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-        <a class="sheet-link" href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link" href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
         <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
@@ -250,7 +256,7 @@
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">关于</p>
         <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub</small></a>
         <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
 
