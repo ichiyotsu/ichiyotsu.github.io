@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>花园 — ichiyotsu.</title>
+  <meta name="description" content="ichiyotsu 的花园：一个长在 GitHub Discussions 上的讨论区。发帖、点赞、评论都在 GitHub 完成，登录后即可参与。">
+  <meta name="author" content="ichiyotsu">
+  <meta name="theme-color" content="#FDF8F2" id="theme-color">
+  <meta name="color-scheme" content="light dark">
+  <link rel="canonical" href="https://ichiyotsu.github.io/garden/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ichiyotsu.github.io/garden/">
+  <meta property="og:title" content="花园 — ichiyotsu.">
+  <meta property="og:description" content="一个长在 GitHub Discussions 上的讨论区。发帖、点赞、评论都在 GitHub 完成。">
+  <meta property="og:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
+  <meta property="og:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="ichiyotsu.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="花园 — ichiyotsu.">
+  <meta name="twitter:description" content="一个长在 GitHub Discussions 上的讨论区。发帖、点赞、评论都在 GitHub 完成。">
+  <meta name="twitter:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
+  <link rel="me" href="https://github.com/ichiyotsu">
+
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preload" href="/assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/smiley-sans-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/sections.css">
+  <link rel="stylesheet" href="/assets/css/pages.css">
+  <script>
+    document.documentElement.classList.replace('no-js', 'js');
+    (function () {
+      try {
+        var saved = localStorage.getItem('ichiyotsu-theme');
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved === 'light' || saved === 'dark' ? saved : (systemDark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        var meta = document.getElementById('theme-color');
+        if (meta) meta.content = theme === 'dark' ? '#151210' : '#FDF8F2';
+      } catch (error) {}
+    })();
+  </script>
+</head>
+<body data-page="garden">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="page-progress" aria-hidden="true"><span id="page-progress-bar"></span></div>
+
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V4m0 0-6 6m6-6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 4v16m0 0 6-6m-6 6-6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.1A8.5 8.5 0 0 1 9.9 3.8 8.5 8.5 0 1 0 20.2 14.1Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-comment" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H7l-4 3v-7a8 8 0 0 1 8-8h2a8 8 0 0 1 8 4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.7M20 4v7h-7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="topbar container">
+      <a class="brand" href="/" aria-label="ichiyotsu. 首页">ichiyotsu<span class="brand__dot">.</span></a>
+      <nav class="desktop-nav" aria-label="主导航">
+        <div class="nav-item" data-nav-item>
+          <a class="nav-link" href="/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-software">软件</a>
+          <div class="nav-dropdown" id="dropdown-software">
+            <a href="/#work"><span>作品</span><small>App 与小工具</small></a>
+            <a href="/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+            <a href="/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+          </div>
+        </div>
+        <div class="nav-item" data-nav-item>
+          <a class="nav-link is-active" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">花园</a>
+          <div class="nav-dropdown" id="dropdown-garden">
+            <a href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
+            <a href="/garden/#compose"><span>发布</span><small>写点什么</small></a>
+          </div>
+        </div>
+        <div class="nav-item" data-nav-item>
+          <a class="nav-link" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
+          <div class="nav-dropdown" id="dropdown-about">
+            <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+          </div>
+        </div>
+      </nav>
+      <div class="topbar__actions">
+        <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="切换到深色模式"><svg class="theme-toggle__sun icon" aria-hidden="true"><use href="#i-sun"></use></svg><svg class="theme-toggle__moon icon" aria-hidden="true"><use href="#i-moon"></use></svg></button>
+        <button class="icon-button menu-button" id="menu-button" type="button" aria-label="打开菜单" aria-haspopup="dialog" aria-controls="nav-sheet"><svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero garden-hero container" id="top" aria-labelledby="garden-title">
+      <div class="garden-hero__copy">
+        <h1 id="garden-title">花园。</h1>
+        <p class="page-lede">一个长在 GitHub Discussions 上的讨论区。这里会有更新、问题、想法，以及一些还没想好放哪里的东西。</p>
+        <div class="garden-hero__actions">
+          <a class="button button--filled" href="#compose">写点什么 <svg class="icon" aria-hidden="true"><use href="#i-arrow-down"></use></svg></a>
+          <a class="button button--outlined" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">GitHub Discussions <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+        </div>
+        <p class="garden-note"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发帖、点赞和评论都需要 GitHub 账号；同步是只读的，写入在 GitHub 完成。</p>
+      </div>
+      <div class="garden-hero__art" aria-hidden="true">
+        <span class="garden-orbit garden-orbit--one"></span>
+        <span class="garden-orbit garden-orbit--two"></span>
+        <span class="garden-glyph">✳</span>
+        <span class="garden-pill">OPEN · SLOW · FRIENDLY</span>
+      </div>
+      <div class="garden-stats" id="garden-stats" aria-live="polite">
+        <div><strong>—</strong><span>讨论</span></div>
+        <div><strong>—</strong><span>评论</span></div>
+        <div><strong>—</strong><span>点赞</span></div>
+      </div>
+    </section>
+
+    <section class="section garden-board" id="board" aria-labelledby="board-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <div class="section-head__main"><h2 id="board-title">最近的讨论。</h2></div>
+          <p class="section-head__note">数据来自 GitHub Discussions，由 Actions 定时同步。点开任意一条，会在 GitHub 上查看完整内容、点赞或评论。</p>
+        </header>
+
+        <div class="garden-toolbar" data-reveal>
+          <div class="filter-row" id="garden-filters" aria-label="按分类筛选"></div>
+          <button class="icon-button garden-refresh" id="garden-refresh" type="button" aria-label="刷新讨论列表"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></button>
+        </div>
+
+        <div class="garden-list" id="garden-list" aria-live="polite" aria-busy="true">
+          <div class="garden-loading"><span class="status-dot" aria-hidden="true"></span> 正在从 GitHub 取回花园…</div>
+        </div>
+
+        <noscript><p class="garden-empty">花园需要 JavaScript 才能在这里显示。<a href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions">直接去 GitHub Discussions ↗</a></p></noscript>
+      </div>
+    </section>
+
+    <section class="section garden-compose" id="compose" aria-labelledby="compose-title">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <div class="section-head__main"><h2 id="compose-title">写点什么。</h2></div>
+          <p class="section-head__note">先在这里写，再带到 GitHub 发布。支持 Markdown，也可以切到富文本模式直接排版。</p>
+        </header>
+
+        <div class="composer" id="composer" data-reveal>
+          <div class="composer__head">
+            <div>
+              <p class="composer__kicker">TO GARDEN</p>
+              <h3>一张新的帖子</h3>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="markdown-toggle" checked>
+              <span class="switch__track" aria-hidden="true"></span>
+              <span class="switch__label">Markdown 语法</span>
+            </label>
+          </div>
+
+          <div class="composer__grid">
+            <label class="field"><span>标题</span><input id="post-title" type="text" maxlength="120" placeholder="想聊点什么？" autocomplete="off"></label>
+            <label class="field field--category"><span>分类</span><select id="post-category"><option value="general">讨论</option><option value="q-a">问答</option><option value="ideas">想法</option><option value="show-and-tell">展示</option></select></label>
+          </div>
+
+          <div class="editor-toolbar" role="toolbar" aria-label="格式工具">
+            <button type="button" data-action="bold" aria-label="粗体" title="粗体"><strong>B</strong></button>
+            <button type="button" data-action="italic" aria-label="斜体" title="斜体"><em>I</em></button>
+            <button type="button" data-action="strike" aria-label="删除线" title="删除线"><s>S</s></button>
+            <span class="editor-toolbar__sep" aria-hidden="true"></span>
+            <button type="button" data-action="h2" aria-label="H2，标题" title="标题">H2</button>
+            <button type="button" data-action="quote" aria-label="引用" title="引用">”</button>
+            <button type="button" data-action="list" aria-label="列表" title="列表">≡</button>
+            <button type="button" data-action="link" aria-label="链接" title="链接">↗</button>
+            <span class="editor-toolbar__sep" aria-hidden="true"></span>
+            <button type="button" data-action="align-left" aria-label="左对齐" title="左对齐">⇤</button>
+            <button type="button" data-action="align-center" aria-label="居中" title="居中">↔</button>
+            <button type="button" data-action="align-right" aria-label="右对齐" title="右对齐">⇥</button>
+            <span class="editor-toolbar__sep" aria-hidden="true"></span>
+            <button type="button" data-action="big" aria-label="A+，增大字号" title="增大字号">A+</button>
+            <button type="button" data-action="small" aria-label="A−，减小字号" title="减小字号">A−</button>
+          </div>
+
+          <div class="editor-grid">
+            <div class="editor-pane">
+              <textarea id="post-body" rows="12" placeholder="用 Markdown 写，或者关掉 Markdown 用富文本工具栏排版…"></textarea>
+              <div class="rich-editor" id="rich-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="富文本编辑器" hidden></div>
+            </div>
+            <div class="preview-pane" id="preview-pane">
+              <div class="preview-pane__head"><span>预览</span><span id="preview-mode">Markdown</span></div>
+              <div class="markdown-body" id="post-preview"></div>
+            </div>
+          </div>
+
+          <div class="composer__footer">
+            <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发布会打开 GitHub 新建讨论页，用你的账号和头像发布。</p>
+            <div class="composer__actions">
+              <span class="composer__count" id="post-count">0 字</span>
+              <button class="button button--outlined button--sm" id="copy-post" type="button">复制 Markdown</button>
+              <button class="button button--filled button--sm" id="publish-post" type="button">发布到 GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer__inner container">
+      <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
+      <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
+      <div class="footer__links"><a href="/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
+    </div>
+  </footer>
+
+  <dialog class="nav-sheet" id="nav-sheet" aria-label="导航">
+    <div class="nav-sheet__panel">
+      <div class="nav-sheet__handle" aria-hidden="true"></div>
+      <div class="nav-sheet__head"><span class="nav-sheet__label">MENU</span><button class="icon-button" id="nav-close" type="button" aria-label="关闭菜单"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></div>
+      <div class="nav-sheet__view" data-sheet-view="index">
+        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+      </div>
+      <div class="nav-sheet__view" data-sheet-view="software" hidden>
+        <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
+        <p class="sheet-group-label">软件</p>
+        <a class="sheet-link" href="/#work"><span>作品</span><small>App 与小工具</small></a>
+        <a class="sheet-link" href="/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+        <a class="sheet-link" href="/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link sheet-link--home" href="/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      </div>
+      <div class="nav-sheet__view" data-sheet-view="garden" hidden>
+        <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
+        <p class="sheet-group-label">花园</p>
+        <a class="sheet-link" href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
+        <a class="sheet-link" href="/garden/#compose"><span>发布</span><small>写点什么</small></a>
+        <a class="sheet-link sheet-link--home" href="/garden/">进入花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      </div>
+      <div class="nav-sheet__view" data-sheet-view="about" hidden>
+        <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
+        <p class="sheet-group-label">关于</p>
+        <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      </div>
+      <a class="nav-sheet__github" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> github.com/ichiyotsu <svg class="icon nav-sheet__arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    </div>
+  </dialog>
+
+  <script src="/assets/vendor/marked.umd.js" defer></script>
+  <script src="/assets/vendor/purify.min.js" defer></script>
+  <script src="/assets/vendor/turndown.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
+  <script src="/assets/js/garden.js" defer></script>
+</body>
+</html>

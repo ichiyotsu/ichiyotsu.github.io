@@ -3,19 +3,20 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>404 — 这条路还没铺好 · Tokisakyo</title>
+  <title>404 — 这条路还没铺好 · ichiyotsu.</title>
   <meta name="robots" content="noindex">
   <meta name="theme-color" content="#FDF8F2" id="theme-color">
-  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="assets/css/tokens.css">
-  <link rel="stylesheet" href="assets/css/base.css">
-  <link rel="stylesheet" href="assets/css/components.css">
-  <link rel="stylesheet" href="assets/css/sections.css">
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/sections.css">
+  <link rel="stylesheet" href="/assets/css/pages.css">
   <script>
     document.documentElement.classList.replace('no-js', 'js');
     (function () {
       try {
-        var saved = localStorage.getItem('tokisakyo-theme');
+        var saved = localStorage.getItem('ichiyotsu-theme');
         var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         var theme = saved === 'light' || saved === 'dark' ? saved : (systemDark ? 'dark' : 'light');
         document.documentElement.dataset.theme = theme;
@@ -26,19 +27,16 @@
     })();
   </script>
 </head>
-<body>
+<body data-page="404">
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.1A8.5 8.5 0 0 1 9.9 3.8 8.5 8.5 0 1 0 20.2 14.1Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
   <header class="site-header">
     <div class="topbar container">
-      <a class="brand" href="index.html" aria-label="Tokisakyo，回到首页">
-        <span class="brand__mark" aria-hidden="true">
-          <svg viewBox="0 0 40 40">
-            <rect width="40" height="40" rx="13" fill="currentColor"/>
-            <path d="M10 10h20v5.2h-7.1V31h-5.8V15.2H10V10Z" fill="var(--md-sys-color-on-primary)"/>
-            <circle cx="30.5" cy="29" r="2.4" fill="var(--md-sys-color-tertiary-container)"/>
-          </svg>
-        </span>
-        <span class="brand__text">tokisakyo<span class="brand__dot">.</span></span>
-      </a>
+      <a class="brand" href="/" aria-label="ichiyotsu. 首页">ichiyotsu<span class="brand__dot">.</span></a>
       <div class="topbar__actions" style="margin-left:auto">
         <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="切换到深色模式">
           <svg class="theme-toggle__sun icon" aria-hidden="true"><use href="#i-sun"></use></svg>
@@ -48,31 +46,18 @@
     </div>
   </header>
 
-  <svg class="svg-sprite" aria-hidden="true" focusable="false">
-    <symbol id="i-sun" viewBox="0 0 24 24">
-      <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.9"/>
-      <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/>
-    </symbol>
-    <symbol id="i-moon" viewBox="0 0 24 24">
-      <path d="M20.2 14.1A8.5 8.5 0 0 1 9.9 3.8 8.5 8.5 0 1 0 20.2 14.1Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/>
-    </symbol>
-    <symbol id="i-arrow-up-right" viewBox="0 0 24 24">
-      <path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-    </symbol>
-  </svg>
-
   <main class="not-found">
     <div class="not-found__inner">
       <p class="not-found__code">404</p>
       <h1>这条路还没铺好。</h1>
       <p>你要找的页面可能被移动、删掉，或者从来就只存在于草稿里。先回首页吧。</p>
       <div class="not-found__actions">
-        <a class="button button--filled" href="index.html">回到首页</a>
+        <a class="button button--filled" href="/">回到首页</a>
         <a class="button button--outlined" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">去 GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
     </div>
   </main>
 
-  <script src="assets/js/main.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

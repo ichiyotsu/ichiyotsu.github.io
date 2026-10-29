@@ -1,0 +1,49 @@
+name: Sync garden
+
+on:
+  release:
+    types: [published]
+  discussion:
+    types: [created, edited, deleted, category_changed]
+  discussion_comment:
+    types: [created, edited, deleted]
+  workflow_dispatch:
+  schedule:
+    - cron: '17 */6 * * *'
+
+permissions:
+  contents: write
+  discussions: write
+
+concurrency:
+  group: garden-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync discussions and release announcements
+        run: node tools/garden-sync.mjs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_EVENT_NAME: ${{ github.event_name }}
+
+      - name: Commit the synced data
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add garden/data/discussions.json
+          if git diff --cached --quiet; then
+            echo "Garden data is already up to date."
+          else
+            git commit -m "chore: sync garden discussions"
+            git push
+          fi

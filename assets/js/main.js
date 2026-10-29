@@ -1,5 +1,5 @@
 /* =========================================================
-   Tokisakyo — small enhancements, no dependencies
+   ichiyotsu. — small enhancements, no dependencies
    ========================================================= */
 
 (() => {
@@ -9,7 +9,7 @@
   const body = document.body;
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
-  const themeKey = 'tokisakyo-theme';
+  const themeKey = 'ichiyotsu-theme';
   const themeToggle = document.getElementById('theme-toggle');
   const header = document.querySelector('.site-header');
   const progressBar = document.getElementById('page-progress-bar');
@@ -22,6 +22,68 @@
       try { window.localStorage.setItem(key, value); } catch (error) {}
     }
   };
+
+  /* ---------- Toast ---------- */
+
+  let toastEl = null;
+  let toastTimer = 0;
+
+  function showToast(message) {
+    if (!toastEl) {
+      toastEl = document.createElement('div');
+      toastEl.className = 'toast';
+      toastEl.setAttribute('role', 'status');
+      toastEl.setAttribute('aria-live', 'polite');
+      document.body.appendChild(toastEl);
+    }
+
+    toastEl.textContent = message;
+    toastEl.classList.remove('is-visible');
+    window.clearTimeout(toastTimer);
+
+    window.requestAnimationFrame(() => {
+      toastEl.classList.add('is-visible');
+    });
+
+    toastTimer = window.setTimeout(() => {
+      toastEl.classList.remove('is-visible');
+    }, 2600);
+  }
+
+  window.ichiyotsuToast = showToast;
+
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(text);
+      return true;
+    }
+
+    const helper = document.createElement('textarea');
+    helper.value = text;
+    helper.setAttribute('readonly', '');
+    helper.style.position = 'fixed';
+    helper.style.opacity = '0';
+    document.body.appendChild(helper);
+    helper.select();
+
+    let ok = false;
+    try { ok = document.execCommand('copy'); } catch (error) { ok = false; }
+    helper.remove();
+    return ok;
+  }
+
+  window.ichiyotsuCopy = copyText;
+
+  document.addEventListener('click', async (event) => {
+    const button = event.target.closest('[data-copy]');
+    if (!button) return;
+
+    const value = button.getAttribute('data-copy') || '';
+    if (!value) return;
+
+    const ok = await copyText(value).catch(() => false);
+    showToast(ok ? '链接已复制' : '复制失败，请手动选择链接');
+  });
 
   /* ---------- Theme ---------- */
 
@@ -73,7 +135,6 @@
 
   const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
   const handleSystemTheme = (event) => {
-    // Only follow the OS when the visitor has not made an explicit choice.
     if (safeStorage.get(themeKey)) return;
     const theme = event.matches ? 'dark' : 'light';
     root.dataset.theme = theme;
@@ -98,15 +159,9 @@
     const max = doc.scrollHeight - doc.clientHeight;
     const progress = max > 0 ? Math.min(1, doc.scrollTop / max) : 0;
 
-    if (progressBar) {
-      progressBar.style.transform = `scaleX(${progress})`;
-    }
+    if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
+    if (header) header.classList.toggle('is-scrolled', doc.scrollTop > 20);
 
-    if (header) {
-      header.classList.toggle('is-scrolled', doc.scrollTop > 20);
-    }
-
-    updateActiveSection();
     scrollQueued = false;
   }
 
@@ -120,14 +175,81 @@
   window.addEventListener('resize', queueScrollUpdate);
   window.requestAnimationFrame(updateScrollUI);
 
+  /* ---------- Desktop dropdowns ---------- */
+
+  document.querySelectorAll('[data-nav-item]').forEach((item) => {
+    const link = item.querySelector('.nav-link');
+    const dropdown = item.querySelector('.nav-dropdown');
+    if (!link || !dropdown) return;
+
+    const setOpen = (open) => {
+      link.setAttribute('aria-expanded', String(open));
+      item.classList.toggle('is-open', open);
+    };
+
+    item.addEventListener('mouseenter', () => setOpen(true));
+    item.addEventListener('mouseleave', () => setOpen(false));
+    item.addEventListener('focusin', () => setOpen(true));
+    item.addEventListener('focusout', (event) => {
+      if (!item.contains(event.relatedTarget)) setOpen(false);
+    });
+
+    link.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        link.blur();
+      }
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        setOpen(true);
+        const first = dropdown.querySelector('a');
+        if (first) first.focus();
+      }
+    });
+
+    item.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && item.contains(document.activeElement)) {
+        setOpen(false);
+        link.focus();
+      }
+    });
+
+    dropdown.querySelectorAll('a').forEach((subLink) => {
+      subLink.addEventListener('click', () => setOpen(false));
+    });
+  });
+
   /* ---------- Mobile navigation sheet ---------- */
 
   const menuButton = document.getElementById('menu-button');
   const navSheet = document.getElementById('nav-sheet');
   const navClose = document.getElementById('nav-close');
+  const sheetViews = navSheet ? Array.from(navSheet.querySelectorAll('[data-sheet-view]')) : [];
+  const groupButtons = navSheet ? Array.from(navSheet.querySelectorAll('[data-sheet-group]')) : [];
+  let lastGroupButton = null;
+
+  function showSheetView(name, { focus = true } = {}) {
+    if (!sheetViews.length) return;
+
+    sheetViews.forEach((view) => {
+      view.hidden = view.dataset.sheetView !== name;
+    });
+
+    if (focus) {
+      const target = name === 'index'
+        ? lastGroupButton
+        : navSheet.querySelector(`[data-sheet-view="${name}"] [data-sheet-back]`);
+      if (target) target.focus({ preventScroll: true });
+    }
+
+    const panel = navSheet.querySelector('.nav-sheet__panel');
+    if (panel) panel.scrollTop = 0;
+  }
 
   function openSheet() {
     if (!navSheet) return;
+
+    showSheetView('index', { focus: false });
 
     if (typeof navSheet.showModal === 'function') {
       navSheet.showModal();
@@ -135,9 +257,18 @@
       navSheet.setAttribute('open', '');
     }
 
-    if (menuButton) menuButton.setAttribute('aria-expanded', 'true');
+    if (menuButton) {
+      menuButton.setAttribute('aria-expanded', 'true');
+      menuButton.setAttribute('aria-label', '关闭菜单');
+    }
+
     body.classList.add('sheet-open');
     body.style.overflow = 'hidden';
+
+    window.setTimeout(() => {
+      const first = navSheet.querySelector('[data-sheet-view="index"] [data-sheet-group]');
+      if (first) first.focus({ preventScroll: true });
+    }, 50);
   }
 
   function closeSheet() {
@@ -148,10 +279,6 @@
     } else {
       navSheet.removeAttribute('open');
     }
-
-    if (menuButton) menuButton.setAttribute('aria-expanded', 'false');
-    body.classList.remove('sheet-open');
-    body.style.overflow = '';
   }
 
   if (menuButton) {
@@ -159,28 +286,37 @@
     menuButton.addEventListener('click', openSheet);
   }
 
-  if (navClose) {
-    navClose.addEventListener('click', closeSheet);
-  }
+  if (navClose) navClose.addEventListener('click', closeSheet);
 
   if (navSheet) {
+    groupButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        lastGroupButton = button;
+        showSheetView(button.dataset.sheetGroup);
+      });
+    });
+
+    navSheet.querySelectorAll('[data-sheet-back]').forEach((button) => {
+      button.addEventListener('click', () => showSheetView('index'));
+    });
+
     navSheet.addEventListener('close', () => {
       if (menuButton) {
         menuButton.setAttribute('aria-expanded', 'false');
+        menuButton.setAttribute('aria-label', '打开菜单');
         menuButton.focus({ preventScroll: true });
       }
       body.classList.remove('sheet-open');
       body.style.overflow = '';
+      showSheetView('index', { focus: false });
     });
 
     navSheet.addEventListener('click', (event) => {
       if (event.target === navSheet) closeSheet();
     });
 
-    navSheet.querySelectorAll('a[href^="#"]').forEach((link) => {
-      link.addEventListener('click', () => {
-        closeSheet();
-      });
+    navSheet.querySelectorAll('a[href]').forEach((link) => {
+      link.addEventListener('click', () => closeSheet());
     });
   }
 
@@ -207,40 +343,28 @@
     }
   }
 
-  /* ---------- Active section in the top bar ---------- */
+  /* ---------- Design playground ---------- */
 
-  const navLinks = Array.from(document.querySelectorAll('[data-nav]'));
-  const sections = navLinks
-    .map((link) => document.getElementById(link.dataset.nav))
-    .filter(Boolean);
-
-  function setActiveSection(id) {
-    navLinks.forEach((link) => {
-      const active = link.dataset.nav === id;
-      link.classList.toggle('is-active', active);
-      if (active) {
-        link.setAttribute('aria-current', 'true');
-      } else {
-        link.removeAttribute('aria-current');
-      }
+  const shapeDemo = document.getElementById('shape-demo');
+  if (shapeDemo) {
+    shapeDemo.dataset.shape = '0';
+    shapeDemo.addEventListener('click', () => {
+      const next = (Number(shapeDemo.dataset.shape || 0) + 1) % 3;
+      shapeDemo.dataset.shape = String(next);
     });
   }
 
-  function updateActiveSection() {
-    if (!sections.length) return;
-
-    const marker = window.scrollY + window.innerHeight * 0.38;
-    let activeId = '';
-
-    sections.forEach((section) => {
-      const top = section.getBoundingClientRect().top + window.scrollY;
-      if (top <= marker) activeId = section.id;
+  const motionDemo = document.getElementById('motion-demo');
+  if (motionDemo) {
+    const stage = motionDemo.closest('.motion-stage');
+    motionDemo.addEventListener('click', () => {
+      if (!stage) return;
+      stage.classList.remove('is-playing');
+      // Restart the transition even if the same button is pressed twice.
+      void stage.offsetWidth;
+      stage.classList.add('is-playing');
+      window.setTimeout(() => stage.classList.remove('is-playing'), 900);
     });
-
-    // At the very top the hero owns the stage; clear the nav pills.
-    if (window.scrollY < window.innerHeight * 0.35) activeId = '';
-
-    setActiveSection(activeId);
   }
 
   /* ---------- Subtle pointer parallax in the hero ---------- */

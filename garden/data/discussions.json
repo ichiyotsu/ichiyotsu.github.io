@@ -1,0 +1,63 @@
+{
+  "generatedAt": "2026-10-29T16:34:35.403Z",
+  "repository": "ichiyotsu/ichiyotsu.github.io",
+  "discussions": [
+    {
+      "number": 3,
+      "title": "站点更新 · 2026.10",
+      "url": "https://github.com/ichiyotsu/ichiyotsu.github.io/discussions/3",
+      "createdAt": "2026-10-29T16:30:38Z",
+      "updatedAt": "2026-10-29T16:30:38Z",
+      "excerpt": "新的软件页 作品：TokiTodo、Luma、TokiNote、TokiFonts 设计：为什么是 Material 3 Expressive 待定：关于我，以及一些随手记 新的花园 花园现在有独立的讨论区，数据来自 GitHub Discussions。发帖、点赞、评论都在 GitHub 完成，登录后即可参与。 一些细节 深色 / 浅色主题 本地字体与图片，不请求第三方资源 新的站点图标 更完整的键盘与减少动效支持 以后每次发布 Release，Actions 会自动把更新同步成「公告」讨论。",
+      "upvotes": 1,
+      "comments": 0,
+      "category": {
+        "name": "Announcements",
+        "slug": "announcements"
+      },
+      "author": {
+        "login": "ichiyotsu",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/252583327?v=4",
+        "url": "https://github.com/ichiyotsu"
+      }
+    },
+    {
+      "number": 2,
+      "title": "花园使用说明",
+      "url": "https://github.com/ichiyotsu/ichiyotsu.github.io/discussions/2",
+      "createdAt": "2026-10-29T16:28:10Z",
+      "updatedAt": "2026-10-29T16:28:10Z",
+      "excerpt": "花园不复杂，基本上只有四件事： 发帖：点「写点什么」，在编辑器里写，发布时会在 GitHub 新建一条讨论。 点赞：每条讨论右上角的向上箭头，点开后在 GitHub 点 👍 / upvote。 评论：点讨论标题或评论数，到 GitHub 回复。 更新：网站和 App 的 Release 会由 Actions 自动同步成「公告」讨论。 编辑器支持 Markdown，也可以关掉 Markdown 用富文本工具栏。发布和评论都需要 GitHub 账号，所以头像和 ID 会直接来自 GitHub。 如果只是想打个招呼，也…",
+      "upvotes": 1,
+      "comments": 0,
+      "category": {
+        "name": "General",
+        "slug": "general"
+      },
+      "author": {
+        "login": "ichiyotsu",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/252583327?v=4",
+        "url": "https://github.com/ichiyotsu"
+      }
+    },
+    {
+      "number": 1,
+      "title": "欢迎来到花园 🌱",
+      "url": "https://github.com/ichiyotsu/ichiyotsu.github.io/discussions/1",
+      "createdAt": "2026-10-29T16:19:28Z",
+      "updatedAt": "2026-10-29T16:19:28Z",
+      "excerpt": "这里是 ichiyotsu 的小花园。 发帖、评论、点赞都在 GitHub Discussions 上完成，登录 GitHub 即可参与。 网站和 App 的更新会同步发在这里。 也可以在这里提建议、问问题，或者单纯打个招呼。 发帖前请保持友善，尽量把问题写具体。",
+      "upvotes": 1,
+      "comments": 0,
+      "category": {
+        "name": "General",
+        "slug": "general"
+      },
+      "author": {
+        "login": "ichiyotsu",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/252583327?v=4",
+        "url": "https://github.com/ichiyotsu"
+      }
+    }
+  ]
+}

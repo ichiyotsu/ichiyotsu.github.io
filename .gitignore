@@ -2,6 +2,7 @@
 _source/
 _tools/
 _preview/
+_work/
 *.zip
 
 # OS noise

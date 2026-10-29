@@ -1,135 +1,160 @@
-# Tokisakyo — personal site
-
-一个 **Material 3 Expressive** 风格的个人网站，为 [ichiyotsu.github.io](https://ichiyotsu.github.io/) 而做。
+# ichiyotsu.
 
 **Live:** <https://ichiyotsu.github.io/>
 
-纯静态 HTML / CSS / JS，零构建步骤，直接推到 GitHub Pages 就能用。
+一个 **Material 3 Expressive** 风格的个人网站，也是一个长在 GitHub Discussions 上的小花园。
 
-| Desktop | Mobile |
+纯静态 HTML / CSS / JS，零构建步骤。软件、设计、关于在三个独立页面里；花园的讨论、点赞和评论由 GitHub 提供身份。
+
+| 软件 | 花园 |
 | --- | --- |
-| ![桌面首页](docs/preview-desktop.jpg) | ![移动端首页](docs/preview-mobile.jpg) |
+| ![软件首页](docs/preview-desktop.jpg) | ![花园](docs/preview-garden.jpg) |
 
-深色模式：
+移动端：
 
-![深色模式](docs/preview-dark.jpg)
+![移动端首页](docs/preview-mobile.jpg)
 
 ---
 
-## 里面有什么
+## 页面
 
-- **M3 Expressive 的视觉语言**：动态色角色、超大字号、不对称圆角、药丸按钮、状态层、弹簧动效。
-- **两套主题**：浅色 / 深色，跟随系统，也可手动切换；支持圆形揭开过渡与 `prefers-reduced-motion`。
-- **完整个人站结构**：Hero、精选作品、关于 / 现在、随手记、联系。
-- **移动端底部导航**：`<dialog>` 实现的 bottom sheet，带焦点管理与滚动锁定。
-- **真实项目截图**：TokiTodo、Luma（Discover）、TokiNote、TokiFonts，全部本地托管并压缩为 WebP。
-- **性能与隐私**：无框架、无追踪、无 Cookie；字体全部本地托管，页面不请求第三方资源。
-- **可访问性**：跳转链接、语义标题层级、键盘焦点、`aria-current`、reduced-motion 支持。
-- **GitHub Pages 就绪**：`.nojekyll`、`robots.txt`、`sitemap.xml`、`site.webmanifest`、`404.html`、OG 卡片。
+| 路径 | 内容 |
+| --- | --- |
+| `/` | **软件**：Hero、作品、Material 3 Expressive 设计说明、待定（关于我 + 随手记） |
+| `/garden/` | **花园**：GitHub Discussions 同步看板、发帖引导、Markdown / 富文本编辑器 |
+| `/about/` | **关于**：这个网站怎么来的、本站使用、站点地图、联系 |
+
+顶栏的「软件 / 花园 / 关于」各有下拉小标题：
+
+- 桌面端悬停或键盘聚焦展开。
+- 手机端点击分组后，标题上移，下面滑出该组的小标题。
+- 「软件」下的作品 / 设计 / 待定都是同一页的锚点。
+
+## 花园是怎么工作的
+
+花园没有自己的服务器，也没有站内账号系统。它是一层 **GitHub Discussions 的只读镜像**：
+
+1. `.github/workflows/garden-sync.yml` 在讨论 / 评论变化、Release 发布、每 6 小时定时运行时，调用 GitHub GraphQL API。
+2. `tools/garden-sync.mjs` 把公开讨论的标题、摘要、分类、作者头像、点赞数、评论数写入 `garden/data/discussions.json`。
+3. `/garden/` 读取这个 JSON 渲染看板；点开任意一条会去 GitHub 查看完整内容、点赞或评论。
+4. 发帖和评论都在 GitHub 完成：登录后使用你的 GitHub ID 和头像，不需要这个站保存任何 token。
+5. `Release` 发布时，脚本会在 `Announcements` 分类自动创建一条讨论，并随下一次同步出现在「公告」里。
+
+发布按钮会把编辑器里的 Markdown 复制到剪贴板，并打开 GitHub 的「新建讨论」页面（带 `title` / `body` 预填参数）。如果 GitHub 没有自动填入，直接粘贴即可。
+
+### 为什么不做站内登录 / 评论框
+
+一个纯静态站点无法安全地保存 GitHub OAuth secret，也不应该把访问令牌放进浏览器。把写入交回 GitHub 是刻意的取舍：**看板是只读的、快速的；身份和写操作留在 GitHub。**
+
+### 花园的首次配置
+
+1. 仓库 **Settings → General → Features** 勾选 **Discussions**。
+2. 默认分类里至少保留 `Announcements`、`General`、`Q&A`、`Ideas`、`Show and tell`（脚本会优先使用 `Announcements` 发 Release）。
+3. `.github/workflows/garden-sync.yml` 需要 `contents: write` 和 `discussions: write` 权限；工作流已经写好。
+4. 本地手动同步：
+
+```powershell
+$env:GITHUB_TOKEN = gh auth token
+$env:GITHUB_REPOSITORY = "ichiyotsu/ichiyotsu.github.io"
+node tools/garden-sync.mjs
+```
+
+5. 首次同步后，`garden/data/discussions.json` 会有内容；提交它即可。
 
 ## 本地预览
 
-任选一种：
-
 ```powershell
-# 推荐：本地静态服务器
 python -m http.server 4173
-# 然后打开 http://127.0.0.1:4173/
-
-# 或者直接双击 index.html
+# http://127.0.0.1:4173/
 ```
 
-> 建议用本地服务器，避免个别浏览器对 `file://` 字体加载的限制。
+> 页面使用根路径（`/assets/...`、`/garden/`），请用本地服务器打开，不要直接双击 HTML。
 
-## 部署到 GitHub Pages
+## 部署
 
 ```powershell
-git init
 git add .
-git commit -m "feat: personal site"
-git branch -M main
-git remote add origin https://github.com/ichiyotsu/ichiyotsu.github.io.git
-git push -u origin main
+git commit -m "update site"
+git push
 ```
 
-然后到仓库 **Settings → Pages**，选择 **Deploy from a branch**，分支 `main`、目录 `/ (root)`。
-
-几分钟后访问 <https://ichiyotsu.github.io/>。后续每次 push 会自动更新。
+GitHub Pages 会从 `main` 根目录构建。仓库里已经包含 `.nojekyll`、`sitemap.xml`、`robots.txt`、`site.webmanifest` 和自定义 `404.html`。
 
 ## 改内容
 
 | 想改什么 | 去哪里 |
 | --- | --- |
-| 标题、描述、OG / canonical | `index.html` 的 `<head>` |
-| 首屏文案、按钮 | `index.html` 的 `.hero` |
-| 项目卡片、链接、标签 | `index.html` 的 `.work-grid` |
-| 关于、最近在做 | `index.html` 的 `.about-panel` |
-| 随手记 | `index.html` 的 `.notes-grid`（原生 `<details>`，可展开） |
-| 联系方式 | `index.html` 的 `.contact` 与页脚 |
+| 首页 Hero / 作品 / 设计 / 待定 | `index.html` |
+| 花园页、编辑器、分类选项 | `garden/index.html`、`assets/js/garden.js` |
+| 关于页与联系 | `about/index.html` |
+| 顶栏、移动端菜单（三个页面各一份） | 每个页面的 `<header>` 与 `<nav-sheet>` |
 | 颜色、圆角、动效、字体 | `assets/css/tokens.css` |
-| 布局与组件 | `assets/css/*.css` |
-| 交互 | `assets/js/main.js` |
-| 头像 | 替换 `assets/img/avatar.webp` |
-| 项目截图 | 替换 `assets/img/*.webp`，同时更新 `width` / `height` |
-| 分享卡片 | 替换 `assets/img/og.jpg`（1200×630） |
+| 页面与组件样式 | `assets/css/*.css` |
+| 花园数据 | `garden/data/discussions.json`（由脚本生成，不要手改） |
+| 发帖同步 / Release 公告 | `tools/garden-sync.mjs`、`.github/workflows/garden-sync.yml` |
+| 下载量 | `index.html` 里的 `project__downloads`（当前来自 GitHub Releases 1 / 2 次） |
+| 头像 / 截图 / OG | `assets/img/` |
 
-### 如果换了域名
+### 字体
 
-全局搜索并替换：
+中文展示字体是 **得意黑（Smiley Sans）** 的子集，当前约 72 KB。新增中文标题后，如果出现字形回退：
 
-- `https://ichiyotsu.github.io/`（canonical、OG、JSON-LD、sitemap、robots）
-- 同时把 `CNAME` 文件放到根目录（使用自定义域名时）。
+```powershell
+node tools/update-chars.mjs
+python -m fontTools.subset "SmileySans-Oblique.ttf" `
+  --text-file=assets\fonts\chars.txt `
+  --flavor=woff2 `
+  --output-file=assets\fonts\smiley-sans-subset.woff2
+```
 
-### 如果改中文标题 / 文案
+`tools/update-chars.mjs` 会扫描 `index.html`、`garden/index.html`、`about/index.html` 和 `404.html`。详细说明在 [`assets/fonts/README.md`](assets/fonts/README.md)。
 
-展示用中文字体是 **得意黑（Smiley Sans）的字符子集**，当前只包含站内已用到的字，约 60 KB。新加的字如果不在子集里，会优雅回退到系统字体，但字形会不统一。
+### 设计页
 
-补充字库的步骤见 [`assets/fonts/README.md`](assets/fonts/README.md)。想省事也可以直接换成完整版 WOFF2（约 1.1 MB）。
+`#design` 是纯 CSS / 少量 JS 的 M3E 小实验：色调角色、可切换的形状、弹簧球。没有引入动效库。
 
 ## 目录
 
 ```text
 .
-├─ index.html
+├─ index.html                  # 软件
+├─ garden/
+│  ├─ index.html               # 花园
+│  └─ data/discussions.json    # 同步后的讨论数据
+├─ about/index.html            # 关于
 ├─ 404.html
-├─ site.webmanifest
-├─ robots.txt
-├─ sitemap.xml
-├─ .nojekyll
+├─ .github/workflows/garden-sync.yml
 ├─ assets/
-│  ├─ css/
-│  │  ├─ tokens.css        # 设计令牌、明暗色、字体
-│  │  ├─ base.css          # reset、排版、背景、动效基础
-│  │  ├─ components.css    # 顶栏、按钮、手机壳、bottom sheet、页脚
-│  │  └─ sections.css      # Hero、作品、关于、随手记、联系
-│  ├─ js/main.js
-│  ├─ fonts/               # 自托管字体 + OFL 授权
-│  └─ img/                 # WebP 截图、头像、图标、OG
-├─ docs/                   # README 预览图
-├─ tools/update-chars.mjs  # 从页面文案提取字体子集字符
-├─ CONTENT.md              # 内容规划与写作建议
+│  ├─ css/ tokens, base, components, sections, pages
+│  ├─ js/ main, garden
+│  ├─ fonts/ 得意黑子集 + Bricolage + Instrument Sans + OFL
+│  ├─ img/ 截图、头像、图标、OG
+│  └─ vendor/ marked, DOMPurify, Turndown
+├─ tools/
+│  ├─ garden-sync.mjs
+│  └─ update-chars.mjs
+├─ docs/                       # README 预览图
+├─ CONTENT.md                  # 内容规划与写作建议
 └─ README.md
 ```
 
-`_source/`、`_tools/`、`_preview/` 只用于这次制作的本地素材与截图，已在 `.gitignore` 中忽略；正常开发与部署只需要上面的站点文件。
+## 技术细节
 
-## 设计笔记
-
-- **颜色**：暖纸色背景 + 柿子橙主色 + 薰衣草紫 / 青柠点缀。所有前景 / 背景组合按 M3 角色成对定义，深色模式是独立的一套，不是简单反色。
-- **字体**：Bricolage Grotesque（拉丁展示）+ 得意黑（中文展示）+ Instrument Sans（正文拉丁）+ 系统中文字体。中文展示字刻意带一点斜度和不规则，和 M3 Expressive 的「有性格」对齐。
-- **形状**：卡片 28–48px 大圆角；Hero 的「轻」是一个有机形色块；作品卡片允许内容溢出、被裁切，制造海报感。
-- **动效**：弹簧只用在按钮、箭头、手机悬浮这些「可以玩」的地方；正文和导航保持克制。所有动效都可被系统「减少动态效果」关闭。
-
-## 内容建议
-
-站点结构和文案只是第一版。下一版可以加什么、每个项目怎么写、有哪些文章选题，见 **[CONTENT.md](CONTENT.md)**。
+- **零构建**：页面和脚本都是直接可部署的静态文件。
+- **主题**：浅色 / 深色，跟随系统；手动切换会写入 `localStorage`，并支持 View Transition 圆形揭开。
+- **无障碍**：跳转链接、可见焦点、`aria-expanded` / `aria-controls`、移动端 dialog 焦点管理、`prefers-reduced-motion`；axe 扫描 8 个页面状态为 0 违规。
+- **响应式**：320 / 360 / 390 / 768 / 1024 / 1440 宽度检查过，无横向溢出。
+- **第三方资源**：字体、图片、marked、DOMPurify、Turndown 都本地托管；只有花园卡片里的 GitHub 头像会从 `avatars.githubusercontent.com` 加载。
+- **Markdown 编辑器**：`marked` 渲染、`DOMPurify` 消毒、`Turndown` 把富文本转回 Markdown；发布时复制正文并打开 GitHub。
 
 ## Credits
 
-- 字体：[Bricolage Grotesque](https://github.com/ateliertriay/bricolage)、[Instrument Sans](https://github.com/Instrument/instrument-sans)、[得意黑 Smiley Sans](https://github.com/atelier-anchor/smiley-sans)，均为 SIL OFL 1.1，授权文件在 `assets/fonts/`。
-- 项目截图来自 [ichiyotsu](https://github.com/ichiyotsu) 的公开仓库：TokiTodo、Discover（Luma）、TokiNote、TokiFonts。
-- 页面代码为这个项目手写，未引入 UI 框架或第三方 JS。
+- 字体：[Smiley Sans / 得意黑](https://github.com/atelier-anchor/smiley-sans)、[Bricolage Grotesque](https://github.com/ateliertriay/bricolage)、[Instrument Sans](https://github.com/Instrument/instrument-sans)，均为 SIL OFL 1.1，授权文件在 `assets/fonts/`。
+- 图标：[IconPark](https://iconpark.oceanengine.com/) 的 `material` 图标，按本站配色重新上色。
+- 编辑器：[marked](https://github.com/markedjs/marked)（MIT）、[DOMPurify](https://github.com/cure53/DOMPurify)（Apache-2.0 / MPL-2.0）、[Turndown](https://github.com/mixmark-io/turndown)（MIT）。
+- 项目截图来自 [ichiyotsu](https://github.com/ichiyotsu) 的公开仓库。
+- 讨论数据来自 [GitHub Discussions](https://github.com/ichiyotsu/ichiyotsu.github.io/discussions)。
 
 ## License
 
-页面代码可自由参考和修改；项目截图、头像与个人内容的版权归 Tokisakyo 所有。若要把这个模板公开为开源项目，建议补一个 MIT / CC BY 许可证。
+页面代码可自由参考和修改；项目截图、头像与个人内容的版权归 ichiyotsu 所有。若要把这个模板公开为开源项目，建议补一个 MIT / CC BY 许可证。
