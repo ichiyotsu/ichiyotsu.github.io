@@ -2,6 +2,8 @@
 
 一个 **Material 3 Expressive** 风格的个人网站，为 [ichiyotsu.github.io](https://ichiyotsu.github.io/) 而做。
 
+**Live:** <https://ichiyotsu.github.io/>
+
 纯静态 HTML / CSS / JS，零构建步骤，直接推到 GitHub Pages 就能用。
 
 | Desktop | Mobile |
