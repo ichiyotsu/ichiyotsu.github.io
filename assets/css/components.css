@@ -13,6 +13,8 @@
 }
 
 .topbar {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: clamp(0.75rem, 2vw, 1.5rem);
@@ -20,10 +22,10 @@
   padding: 7px 8px 7px 16px;
   border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 72%, transparent);
   border-radius: var(--r-full);
-  background: var(--glass);
+  background: color-mix(in srgb, var(--md-sys-color-surface) 66%, transparent);
   box-shadow: var(--shadow-1);
-  backdrop-filter: blur(20px) saturate(1.5);
-  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  backdrop-filter: blur(var(--header-blur, 14px)) saturate(1.7);
+  -webkit-backdrop-filter: blur(var(--header-blur, 14px)) saturate(1.7);
   pointer-events: auto;
   transition:
     background-color var(--dur-med) var(--ease-emphasized),
@@ -32,7 +34,7 @@
 }
 
 .site-header.is-scrolled .topbar {
-  background: var(--glass-strong);
+  background: color-mix(in srgb, var(--md-sys-color-surface) 80%, transparent);
   box-shadow: var(--shadow-2);
   border-color: color-mix(in srgb, var(--md-sys-color-outline-variant) 52%, transparent);
 }
@@ -559,6 +561,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 0.2rem 0.8rem;
+  text-decoration: none;
   width: 100%;
   padding: 1.05rem 0;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);

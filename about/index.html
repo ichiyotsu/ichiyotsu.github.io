@@ -70,26 +70,27 @@
     <div class="topbar container">
       <a class="brand" href="/" aria-label="ichiyotsu. 首页">ichiyotsu<span class="brand__dot">.</span></a>
       <nav class="desktop-nav" aria-label="主导航">
+        <div class="nav-item"><a class="nav-link" href="/">主页</a></div>
         <div class="nav-item" data-nav-item>
-          <a class="nav-link" href="/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-software">软件</a>
+          <a class="nav-link" href="/software/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-software">软件</a>
           <div class="nav-dropdown" id="dropdown-software">
-            <a href="/#work"><span>作品</span><small>App 与小工具</small></a>
-            <a href="/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-            <a href="/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+            <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
+            <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+            <a href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
           </div>
         </div>
         <div class="nav-item" data-nav-item>
           <a class="nav-link" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">花园</a>
           <div class="nav-dropdown" id="dropdown-garden">
             <a href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
-            <a href="/garden/#compose"><span>发布</span><small>写点什么</small></a>
+            <a href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
           </div>
         </div>
         <div class="nav-item" data-nav-item>
           <a class="nav-link is-active" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
           <div class="nav-dropdown" id="dropdown-about">
             <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub</small></a>
           </div>
         </div>
       </nav>
@@ -103,7 +104,7 @@
   <main id="main">
     <section class="page-hero container" id="about-site" aria-labelledby="about-title">
       <h1 id="about-title">关于这个网站。</h1>
-      <p class="page-lede">一个用来放软件、设计和一些想法的安静角落。它没有数据库，也没有账号系统；能静态解决的事情，就交给静态文件。</p>
+      <p class="page-lede" data-edit="about-1" data-edit-label="about · p.page-lede">一个用来放软件、设计和一些想法的安静角落。它没有数据库，也没有账号系统；能静态解决的事情，就交给静态文件。</p>
       <div class="page-facts" aria-label="本站概况">
         <div class="page-fact"><strong>静态</strong><span>HTML / CSS / JS，零构建</span></div>
         <div class="page-fact"><strong>0</strong><span>追踪脚本 / Cookie</span></div>
@@ -146,7 +147,7 @@
             <div class="about-side__card about-side__card--accent">
               <h2>站点地图</h2>
               <div class="site-map">
-                <a href="/"><span>软件</span><small>作品 / 设计 / 待定</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+                <a href="/software/"><span>软件</span><small>作品 / 设计 / 待定</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
                 <a href="/garden/"><span>花园</span><small>讨论 / 发布</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
                 <a href="/about/"><span>关于</span><small>本站 / 联系</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
               </div>
@@ -156,6 +157,29 @@
       </div>
     </section>
 
+
+    <section class="section about-manifesto">
+      <div class="container">
+        <div class="project-note" data-reveal>
+          <span class="project-note__label">ABOUT THIS SITE</span>
+          <p data-edit="about-note-7" data-edit-label="about · design note">不追热点，不塞弹窗，不假装很忙。一个可以慢慢看、慢慢改的个人站。</p>
+        </div>
+        <div class="feature-grid about-values">
+          <article class="feature-card" data-reveal>
+            <h3>静态</h3>
+            <p data-edit="about-feature-2" data-edit-label="about · feature">没有数据库、没有账号系统、没有构建流水线。能在浏览器里完成的事，就交给浏览器。</p>
+          </article>
+          <article class="feature-card" data-reveal style="--reveal-delay: 80ms">
+            <h3>可维护</h3>
+            <p data-edit="about-feature-4" data-edit-label="about · feature">设计令牌、组件样式、页面各司其职；文本编辑器只在本地跑，发布仍然走 Git。</p>
+          </article>
+          <article class="feature-card" data-reveal style="--reveal-delay: 160ms">
+            <h3>有花园</h3>
+            <p data-edit="about-feature-6" data-edit-label="about · feature">讨论交给 GitHub Discussions，网站只负责把公开的讨论和更新整理得好看一点。</p>
+          </article>
+        </div>
+      </div>
+    </section>
     <section class="section contact" id="contact" aria-labelledby="contact-title">
       <div class="container">
         <div class="contact-panel" data-reveal>
@@ -163,10 +187,9 @@
           <div class="contact__content">
             <div>
               <h2 id="contact-title">有想法，<br>就聊聊。</h2>
-              <p class="contact__lede">无论是软件、界面、字体，还是单纯想聊聊 Material 3，都欢迎来打个招呼。</p>
+              <p class="contact__lede" data-edit="about-2" data-edit-label="about · p.contact__lede">无论是软件、界面、字体，还是单纯想聊聊 Material 3，都欢迎来打个招呼。</p>
               <div class="contact__actions">
                 <a class="button button--on-primary" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 在 GitHub 找我</a>
-                <a class="button button--ghost" href="https://www.coolapk.com/u/35156534" target="_blank" rel="noopener noreferrer">酷安 @ichiyotsu</a>
               </div>
             </div>
             <div class="contact__stamp" aria-hidden="true">
@@ -184,7 +207,7 @@
     <div class="footer__inner container">
       <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
       <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
-      <div class="footer__links"><a href="/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
+      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
     </div>
   </footer>
 
@@ -193,6 +216,7 @@
       <div class="nav-sheet__handle" aria-hidden="true"></div>
       <div class="nav-sheet__head"><span class="nav-sheet__label">MENU</span><button class="icon-button" id="nav-close" type="button" aria-label="关闭菜单"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></div>
       <div class="nav-sheet__view" data-sheet-view="index">
+        <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
         <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
         <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
@@ -200,23 +224,23 @@
       <div class="nav-sheet__view" data-sheet-view="software" hidden>
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">软件</p>
-        <a class="sheet-link" href="/#work"><span>作品</span><small>App 与小工具</small></a>
-        <a class="sheet-link" href="/#design"><span>设计</span><small>Material 3 Expressive</small></a>
-        <a class="sheet-link" href="/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
-        <a class="sheet-link sheet-link--home" href="/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+        <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
+        <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+        <a class="sheet-link" href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
       <div class="nav-sheet__view" data-sheet-view="garden" hidden>
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">花园</p>
         <a class="sheet-link" href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
-        <a class="sheet-link" href="/garden/#compose"><span>发布</span><small>写点什么</small></a>
+        <a class="sheet-link" href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
         <a class="sheet-link sheet-link--home" href="/garden/">进入花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
       <div class="nav-sheet__view" data-sheet-view="about" hidden>
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">关于</p>
         <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
-        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub</small></a>
         <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>
       <a class="nav-sheet__github" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> github.com/ichiyotsu <svg class="icon nav-sheet__arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>

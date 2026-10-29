@@ -162,6 +162,10 @@
     if (progressBar) progressBar.style.transform = `scaleX(${progress})`;
     if (header) header.classList.toggle('is-scrolled', doc.scrollTop > 20);
 
+    // Real-time blur: it deepens slightly as content slides under the bar.
+    const blur = 14 + Math.min(12, (doc.scrollTop / 160) * 12);
+    root.style.setProperty('--header-blur', `${blur.toFixed(1)}px`);
+
     scrollQueued = false;
   }
 

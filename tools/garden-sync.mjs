@@ -69,11 +69,21 @@ const DISCUSSIONS_QUERY = `
           url
           createdAt
           updatedAt
+          body
           bodyText
           upvoteCount
           category { name slug }
           author { login avatarUrl url }
-          comments { totalCount }
+          comments(first: 30) {
+            totalCount
+            nodes {
+              id
+              body
+              createdAt
+              upvoteCount
+              author { login avatarUrl url }
+            }
+          }
         }
       }
     }
@@ -123,8 +133,16 @@ async function fetchDiscussions() {
     createdAt: item.createdAt,
     updatedAt: item.updatedAt,
     excerpt: excerpt(item.bodyText),
+    body: item.body || '',
     upvotes: item.upvoteCount || 0,
     comments: item.comments?.totalCount || 0,
+    commentItems: (item.comments?.nodes || []).map((comment) => ({
+      id: comment.id,
+      body: comment.body || '',
+      createdAt: comment.createdAt,
+      upvotes: comment.upvoteCount || 0,
+      author: comment.author ? { login: comment.author.login, avatarUrl: comment.author.avatarUrl, url: comment.author.url } : null
+    })),
     category: item.category ? { name: item.category.name, slug: item.category.slug } : { name: '讨论', slug: 'general' },
     author: item.author ? { login: item.author.login, avatarUrl: item.author.avatarUrl, url: item.author.url } : null
   }));

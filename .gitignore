@@ -9,3 +9,6 @@ _work/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Local-only text studio
+studio/

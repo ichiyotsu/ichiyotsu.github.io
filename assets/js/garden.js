@@ -12,6 +12,8 @@
   const discussionsUrl = `https://github.com/${repository}/discussions`;
   const newDiscussionUrl = `${discussionsUrl}/new`;
   const dataUrl = '/garden/data/discussions.json';
+  const discussionDialog = document.getElementById('discussion-dialog');
+  const composeDialog = document.getElementById('compose-dialog');
 
   const toast = (message) => {
     if (window.ichiyotsuToast) window.ichiyotsuToast(message);
@@ -126,7 +128,7 @@
     });
   }
 
-  function makeCard(item) {
+  function makeCard(item, index) {
     const article = document.createElement('article');
     article.className = 'garden-card';
 
@@ -143,8 +145,8 @@
     const title = document.createElement('h3');
     const titleLink = document.createElement('a');
     titleLink.href = item.url;
-    titleLink.target = '_blank';
-    titleLink.rel = 'noopener noreferrer';
+    titleLink.dataset.discussionIndex = String(index);
+    titleLink.setAttribute('aria-label', `${item.title}，在站内查看`);
     titleLink.textContent = item.title;
     titleLink.appendChild(makeIcon('i-arrow-up-right'));
     title.appendChild(titleLink);
@@ -181,7 +183,8 @@
     comments.href = item.url;
     comments.target = '_blank';
     comments.rel = 'noopener noreferrer';
-    comments.setAttribute('aria-label', `去 GitHub 查看 ${item.comments || 0} 条评论`);
+    comments.dataset.discussionIndex = String(index);
+    comments.setAttribute('aria-label', `在站内查看 ${item.comments || 0} 条评论`);
     comments.append(makeIcon('i-comment'), document.createTextNode(String(item.comments || 0)));
 
     const copy = document.createElement('button');
@@ -191,6 +194,15 @@
     copy.setAttribute('aria-label', '复制讨论链接');
     copy.append(makeIcon('i-copy'), document.createTextNode('复制'));
     actions.append(upvote, comments, copy);
+
+    titleLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDiscussion(index);
+    });
+    comments.addEventListener('click', (event) => {
+      event.preventDefault();
+      openDiscussion(index);
+    });
 
     article.append(meta, title, excerpt, author, actions);
     return article;
@@ -220,7 +232,7 @@
       return;
     }
 
-    visible.forEach((item) => list.appendChild(makeCard(item)));
+    visible.forEach((item) => list.appendChild(makeCard(item, item.__index)));
     list.setAttribute('aria-busy', 'false');
   }
 
@@ -248,7 +260,7 @@
       const response = await fetch(`${dataUrl}?v=${Date.now()}`, { cache: 'no-store' });
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       const payload = await response.json();
-      discussions = Array.isArray(payload.discussions) ? payload.discussions : [];
+      discussions = Array.isArray(payload.discussions) ? payload.discussions.map((item, index) => ({ ...item, __index: index })) : [];
       renderStats(discussions);
       renderFilters(discussions);
       renderBoard();
@@ -347,6 +359,158 @@
       return turndown.turndown(richEditor.innerHTML).trim();
     }
     return textarea.value.trim();
+  }
+
+
+  /* ---------- In-page discussion view ---------- */
+
+  const discussionTitle = document.getElementById('discussion-dialog-title');
+  const discussionCategory = document.getElementById('discussion-category');
+  const discussionMeta = document.getElementById('discussion-meta');
+  const discussionBody = document.getElementById('discussion-body');
+  const discussionCommentCount = document.getElementById('discussion-comment-count');
+  const discussionCommentList = document.getElementById('discussion-comment-list');
+  const discussionGithub = document.getElementById('discussion-github');
+  const discussionCopy = document.getElementById('discussion-copy');
+  const discussionClose = document.getElementById('discussion-close');
+
+  function openDiscussion(index) {
+    const item = discussions[index];
+    if (!item || !discussionDialog) return;
+
+    discussionCategory.textContent = categoryLabel(item.category);
+    discussionTitle.textContent = item.title;
+
+    discussionMeta.replaceChildren();
+    if (item.author?.avatarUrl) {
+      const avatar = document.createElement('img');
+      avatar.src = item.author.avatarUrl;
+      avatar.alt = '';
+      avatar.width = 22;
+      avatar.height = 22;
+      discussionMeta.appendChild(avatar);
+    }
+    const author = document.createElement('span');
+    author.textContent = `@${item.author?.login || 'github'}`;
+    const time = document.createElement('span');
+    time.textContent = formatDate(item.updatedAt || item.createdAt);
+    const upvotes = document.createElement('span');
+    upvotes.textContent = `${item.upvotes || 0} 个赞`;
+    discussionMeta.append(author, time, upvotes);
+
+    discussionBody.innerHTML = parseMarkdown(item.body || item.excerpt || '');
+    const items = Array.isArray(item.commentItems) ? item.commentItems : [];
+    discussionCommentCount.textContent = String(item.comments || items.length || 0);
+    discussionCommentList.replaceChildren();
+
+    if (!items.length) {
+      const empty = document.createElement('p');
+      empty.className = 'garden-empty';
+      empty.style.border = '0';
+      empty.style.padding = '1rem 0';
+      empty.textContent = '还没有评论。去 GitHub 写下第一条。';
+      discussionCommentList.appendChild(empty);
+    } else {
+      items.forEach((comment) => {
+        const row = document.createElement('div');
+        row.className = 'discussion-comment';
+
+        const avatar = document.createElement('img');
+        avatar.src = comment.author?.avatarUrl || `https://github.com/${comment.author?.login || 'github'}.png?size=48`;
+        avatar.alt = '';
+        avatar.width = 28;
+        avatar.height = 28;
+        avatar.loading = 'lazy';
+
+        const content = document.createElement('div');
+        const head = document.createElement('div');
+        head.className = 'discussion-comment__head';
+        const name = document.createElement('strong');
+        name.textContent = `@${comment.author?.login || 'github'}`;
+        const when = document.createElement('span');
+        when.textContent = formatDate(comment.createdAt);
+        head.append(name, when);
+
+        const body = document.createElement('div');
+        body.className = 'discussion-comment__body markdown-body';
+        body.innerHTML = parseMarkdown(comment.body || '');
+
+        content.append(head, body);
+        row.append(avatar, content);
+        discussionCommentList.appendChild(row);
+      });
+    }
+
+    discussionGithub.href = item.url;
+    discussionCopy.setAttribute('data-copy', item.url);
+
+    if (typeof discussionDialog.showModal === 'function') {
+      discussionDialog.showModal();
+    } else {
+      discussionDialog.setAttribute('open', '');
+    }
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeDiscussion() {
+    if (!discussionDialog) return;
+    if (typeof discussionDialog.close === 'function' && discussionDialog.open) discussionDialog.close();
+    else discussionDialog.removeAttribute('open');
+    document.body.style.overflow = '';
+  }
+
+  if (discussionClose) discussionClose.addEventListener('click', closeDiscussion);
+  if (discussionDialog) {
+    discussionDialog.addEventListener('close', () => { document.body.style.overflow = ''; });
+    discussionDialog.addEventListener('click', (event) => {
+      if (event.target === discussionDialog) closeDiscussion();
+    });
+  }
+
+  /* ---------- Compose dialog & FAB ---------- */
+
+  const composeFab = document.getElementById('compose-fab');
+  const composeClose = document.getElementById('compose-close');
+
+  function openCompose() {
+    if (!composeDialog) return;
+    if (typeof composeDialog.showModal === 'function') composeDialog.showModal();
+    else composeDialog.setAttribute('open', '');
+    document.body.style.overflow = 'hidden';
+    window.setTimeout(() => { if (titleInput) titleInput.focus({ preventScroll: true }); }, 80);
+  }
+
+  function closeCompose() {
+    if (!composeDialog) return;
+    if (typeof composeDialog.close === 'function' && composeDialog.open) composeDialog.close();
+    else composeDialog.removeAttribute('open');
+    document.body.style.overflow = '';
+  }
+
+  if (composeFab) composeFab.addEventListener('click', openCompose);
+  if (composeClose) composeClose.addEventListener('click', closeCompose);
+  if (composeDialog) {
+    composeDialog.addEventListener('close', () => { document.body.style.overflow = ''; });
+    composeDialog.addEventListener('click', (event) => {
+      if (event.target === composeDialog) closeCompose();
+    });
+  }
+
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('a[href="/garden/?compose=1"]');
+    if (!trigger || !composeDialog) return;
+    if (window.location.pathname.replace(/\/$/, '') !== '/garden') return;
+    event.preventDefault();
+    openCompose();
+  });
+
+  if (new URLSearchParams(window.location.search).get('compose') === '1') {
+    window.setTimeout(() => {
+      openCompose();
+      const url = new URL(window.location.href);
+      url.searchParams.delete('compose');
+      window.history.replaceState({}, '', url.pathname + url.search + url.hash);
+    }, 150);
   }
 
   function updatePreview() {

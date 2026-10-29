@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Luma — ichiyotsu.</title>
+  <meta name="description" content="Luma：把地址栏做成悬浮玻璃胶囊。">
+  <meta name="author" content="ichiyotsu">
+  <meta name="theme-color" content="#FDF8F2" id="theme-color">
+  <meta name="color-scheme" content="light dark">
+
+  <link rel="canonical" href="https://ichiyotsu.github.io/software/luma/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ichiyotsu.github.io/software/luma/">
+  <meta property="og:title" content="Luma — ichiyotsu.">
+  <meta property="og:description" content="把地址栏做成悬浮玻璃胶囊。">
+  <meta property="og:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
+  <meta property="og:locale" content="zh_CN">
+  <meta property="og:site_name" content="ichiyotsu.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Luma — ichiyotsu.">
+  <meta name="twitter:description" content="把地址栏做成悬浮玻璃胶囊。">
+  <meta name="twitter:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
+  <meta name="twitter:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
+  <link rel="me" href="https://github.com/ichiyotsu">
+
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Luma",
+  "applicationCategory": "UtilitiesApplication",
+  "operatingSystem": "Cross-platform",
+  "description": "网页住进一张圆角卡片，地址栏和工具栏可以停在窗口顶部或底部。它想证明浏览器也可以轻、安静、有一点自己的形状。",
+  "url": "https://ichiyotsu.github.io/software/luma/",
+  "sameAs": [
+    "https://github.com/ichiyotsu/Discover",
+    "https://github.com/ichiyotsu/Discover/releases"
+  ]
+}
+  </script>
+
+  <link rel="icon" href="/assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+
+  <link rel="preload" href="/assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/smiley-sans-subset.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="/assets/css/tokens.css">
+  <link rel="stylesheet" href="/assets/css/base.css">
+  <link rel="stylesheet" href="/assets/css/components.css">
+  <link rel="stylesheet" href="/assets/css/sections.css">
+  <link rel="stylesheet" href="/assets/css/pages.css">
+
+  <script>
+    document.documentElement.classList.replace('no-js', 'js');
+    (function () {
+      try {
+        var saved = localStorage.getItem('ichiyotsu-theme');
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved === 'light' || saved === 'dark' ? saved : (systemDark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        var meta = document.getElementById('theme-color');
+        if (meta) meta.content = theme === 'dark' ? '#151210' : '#FDF8F2';
+      } catch (error) {}
+    })();
+  </script>
+</head>
+<body data-page="software">
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <div class="page-progress" aria-hidden="true"><span id="page-progress-bar"></span></div>
+
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 4v16m0 0 6-6m-6 6-6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.69-1.28-1.69-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.08 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.9"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20.2 14.1A8.5 8.5 0 0 1 9.9 3.8 8.5 8.5 0 1 0 20.2 14.1Z" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2c.8 6.4 3.6 9.2 10 10-6.4.8-9.2 3.6-10 10-.8-6.4-3.6-9.2-10-10 6.4-.8 9.2-3.6 10-10Z" fill="currentColor"/></symbol>
+    <symbol id="i-cloud-off" viewBox="0 0 24 24"><path d="M4 4l16 16M7.7 7.3A5 5 0 0 0 6 17h9M9.8 4.4A6 6 0 0 1 18 10a3.5 3.5 0 0 1 2.4 5.9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 5-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="topbar container">
+      <a class="brand" href="/" aria-label="ichiyotsu. 首页">ichiyotsu<span class="brand__dot">.</span></a>
+
+      <nav class="desktop-nav" aria-label="主导航">
+        <div class="nav-item"><a class="nav-link" href="/">主页</a></div>
+        <div class="nav-item" data-nav-item>
+          <a class="nav-link is-active" href="/software/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-software">软件</a>
+          <div class="nav-dropdown" id="dropdown-software">
+            <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
+            <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+            <a href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+          </div>
+        </div>
+        <div class="nav-item" data-nav-item>
+          <a class="nav-link" href="/garden/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-garden">花园</a>
+          <div class="nav-dropdown" id="dropdown-garden">
+            <a href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
+            <a href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
+          </div>
+        </div>
+        <div class="nav-item" data-nav-item>
+          <a class="nav-link" href="/about/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-about">关于</a>
+          <div class="nav-dropdown" id="dropdown-about">
+            <a href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
+            <a href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+          </div>
+        </div>
+      </nav>
+
+      <div class="topbar__actions">
+        <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="切换到深色模式">
+          <svg class="theme-toggle__sun icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+          <svg class="theme-toggle__moon icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+        </button>
+        <button class="icon-button menu-button" id="menu-button" type="button" aria-label="打开菜单" aria-haspopup="dialog" aria-controls="nav-sheet">
+          <svg class="icon" aria-hidden="true"><use href="#i-menu"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="project-hero container" id="top" aria-labelledby="luma-title">
+      <div class="project-hero__copy">
+        <p class="project-hero__status"><span class="status-dot" aria-hidden="true"></span> Beta 0.1</p>
+        <h1 id="luma-title">Luma</h1>
+        <p class="project-hero__tagline" data-edit="luma-1" data-edit-label="luma · p.project-hero__tagline">把地址栏做成悬浮玻璃胶囊。</p>
+        <p class="project-hero__lede" data-edit="luma-2" data-edit-label="luma · p.project-hero__lede">网页住进一张圆角卡片，地址栏和工具栏可以停在窗口顶部或底部。它想证明浏览器也可以轻、安静、有一点自己的形状。</p>
+        <div class="project-hero__actions">
+            <a class="button button--filled" href="https://github.com/ichiyotsu/Discover" target="_blank" rel="noopener noreferrer">GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+            <a class="button button--outlined" href="https://github.com/ichiyotsu/Discover/releases" target="_blank" rel="noopener noreferrer">Releases <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+        </div>
+        <ul class="project-facts" aria-label="项目概况">
+          <li>桌面 + 移动端</li>
+          <li>Electron + WebView</li>
+          <li>Beta 0.1</li>
+        </ul>
+      </div>
+        <div class="project-hero__media project-hero__media--browser">
+          <img src="/assets/img/luma.webp" width="1400" height="933" alt="">
+          <span class="project-browser-chip">悬浮地址栏 · 8 种主题色</span>
+        </div>
+    </section>
+
+    <section class="section project-features" aria-labelledby="luma-features">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <div class="section-head__main"><h2 id="luma-features">一些做进去的功能。</h2></div>
+          <p class="section-head__note" data-edit="luma-3" data-edit-label="luma · p.section-head__note">不是功能清单，更像是几个「为什么它要这样」的切片。</p>
+        </header>
+        <div class="feature-grid">
+          <article class="feature-card" data-reveal>
+            <h3 data-edit="luma-feature-1" data-edit-label="luma · feature">悬浮地址栏</h3>
+            <p data-edit="luma-feature-2" data-edit-label="luma · feature">地址栏和工具栏是一组玻璃胶囊，可以在顶部和底部之间切换，网页会自动为它让位。</p>
+          </article>
+          <article class="feature-card" data-reveal>
+            <h3>多标签</h3>
+            <p data-edit="luma-feature-4" data-edit-label="luma · feature">新建、关闭、重开、切换；每个标签有自己的标题、favicon 和加载状态。</p>
+          </article>
+          <article class="feature-card" data-reveal>
+            <h3 data-edit="luma-feature-5" data-edit-label="luma · feature">本地新标签页</h3>
+            <p data-edit="luma-feature-6" data-edit-label="luma · feature">时间、问候、快捷方式和搜索都在本地生成，不联网也能打开。</p>
+          </article>
+          <article class="feature-card" data-reveal>
+            <h3 data-edit="luma-feature-7" data-edit-label="luma · feature">主题与玻璃</h3>
+            <p data-edit="luma-feature-8" data-edit-label="luma · feature">8 种主题色种子，跟随系统 / 浅色 / 深色；玻璃强度可以自己调。</p>
+          </article>
+          <article class="feature-card" data-reveal>
+            <h3 data-edit="luma-feature-9" data-edit-label="luma · feature">双端一致</h3>
+            <p data-edit="luma-feature-10" data-edit-label="luma · feature">桌面用 Electron + Chromium，移动端用 Android WebView，尽量共用同一套视觉和交互。</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section project-note-section">
+      <div class="container">
+        <div class="project-note" data-reveal>
+          <span class="project-note__label">DESIGN NOTE</span>
+          <p data-edit="luma-note-11" data-edit-label="luma · design note">浏览器是最难「做得有性格」的软件之一，因为它必须先把网页放好。Luma 的取舍是：把界面收进一个胶囊，把空间还给网页，只在需要的时候浮出来。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section project-gallery-section" aria-labelledby="luma-gallery">
+      <div class="container">
+        <header class="section-head" data-reveal>
+          <div class="section-head__main"><h2 id="luma-gallery">再看几张。</h2></div>
+          <p class="section-head__note" data-edit="luma-4" data-edit-label="luma · p.section-head__note">界面会变，但这些细节是它一直想保持的手感。</p>
+        </header>
+        <div class="project-gallery">
+          <figure class="project-shot"><img src="/assets/img/luma.webp" alt="Luma 桌面新标签页" loading="lazy"><figcaption>Luma 桌面新标签页</figcaption></figure>
+          <figure class="project-shot"><img src="/assets/img/projects/luma-android.webp" alt="Luma Android 新标签页" loading="lazy"><figcaption>Luma Android 新标签页</figcaption></figure>
+          <figure class="project-shot"><img src="/assets/img/projects/luma-settings.webp" alt="Luma 设置页" loading="lazy"><figcaption>Luma 设置页</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section project-next-section">
+      <div class="container">
+        <a class="project-next" href="/software/tokinote/">
+          <span>下一个</span>
+          <strong>TokiNote</strong>
+          <small>笔记、相册和专注，全部留在本机。</small>
+          <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer__inner container">
+      <div class="footer__brand">ichiyotsu<span class="brand__dot">.</span></div>
+      <p>© <span data-year>2026</span> ichiyotsu · 手写 HTML / CSS / JS，没有追踪。</p>
+      <div class="footer__links"><a href="/software/">软件</a><a href="/garden/">花园</a><a href="/about/">关于</a><a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="#top">回到顶部 ↑</a></div>
+    </div>
+  </footer>
+
+  <dialog class="nav-sheet" id="nav-sheet" aria-label="导航">
+    <div class="nav-sheet__panel">
+      <div class="nav-sheet__handle" aria-hidden="true"></div>
+      <div class="nav-sheet__head"><span class="nav-sheet__label">MENU</span><button class="icon-button" id="nav-close" type="button" aria-label="关闭菜单"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button></div>
+
+      <div class="nav-sheet__view" data-sheet-view="index">
+        <a class="sheet-group" href="/"><span class="sheet-group__title">主页</span><span class="sheet-group__desc">欢迎来到 TokiPage</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
+        <button class="sheet-group" type="button" data-sheet-group="software" data-label="软件"><span class="sheet-group__title">软件</span><span class="sheet-group__desc">作品 / 设计 / 待定</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="garden" data-label="花园"><span class="sheet-group__title">花园</span><span class="sheet-group__desc">讨论 / 发布</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+        <button class="sheet-group" type="button" data-sheet-group="about" data-label="关于"><span class="sheet-group__title">关于</span><span class="sheet-group__desc">关于本站 / 联系</span><svg class="icon sheet-group__chevron" aria-hidden="true"><use href="#i-chevron-right"></use></svg></button>
+      </div>
+
+      <div class="nav-sheet__view" data-sheet-view="software" hidden>
+        <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
+        <p class="sheet-group-label">软件</p>
+        <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
+        <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+        <a class="sheet-link" href="/software/#tbd"><span>待定</span><small>关于我，以及随手记</small></a>
+        <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      </div>
+
+      <div class="nav-sheet__view" data-sheet-view="garden" hidden>
+        <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
+        <p class="sheet-group-label">花园</p>
+        <a class="sheet-link" href="/garden/#board"><span>讨论</span><small>来自 GitHub Discussions</small></a>
+        <a class="sheet-link" href="/garden/?compose=1"><span>发布</span><small>写点什么</small></a>
+        <a class="sheet-link sheet-link--home" href="/garden/">进入花园 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      </div>
+
+      <div class="nav-sheet__view" data-sheet-view="about" hidden>
+        <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
+        <p class="sheet-group-label">关于</p>
+        <a class="sheet-link" href="/about/#about-site"><span>关于本站</span><small>它是怎么长出来的</small></a>
+        <a class="sheet-link" href="/about/#contact"><span>联系</span><small>GitHub / 酷安</small></a>
+        <a class="sheet-link sheet-link--home" href="/about/">进入关于页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      </div>
+
+      <a class="nav-sheet__github" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> github.com/ichiyotsu <svg class="icon nav-sheet__arrow" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+    </div>
+  </dialog>
+
+  <script src="/assets/js/main.js" defer></script>
+</body>
+</html>

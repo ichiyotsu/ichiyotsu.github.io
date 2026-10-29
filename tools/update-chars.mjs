@@ -12,7 +12,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const pages = ['index.html', 'garden/index.html', 'about/index.html', '404.html'];
+const pages = ['index.html', 'software/index.html', 'software/tokitodo/index.html', 'software/luma/index.html', 'software/tokinote/index.html', 'software/tokifonts/index.html', 'garden/index.html', 'about/index.html', '404.html'];
 
 const stripped = pages
   .map((page) => readFileSync(join(root, page), 'utf8'))

@@ -10,7 +10,7 @@ All three families are self-hosted. No font request leaves the visitor's browser
 
 ## About the Chinese subset
 
-`smiley-sans-subset.woff2` is a **subset** of Smiley Sans Oblique containing the characters currently used on the site (≈72 KB instead of ≈1.1 MB). If you rewrite Chinese copy and see a character fall back to the system font, regenerate the subset:
+`smiley-sans-subset.woff2` is a **subset** of Smiley Sans Oblique containing the characters currently used on the site (≈90 KB instead of ≈1.1 MB). If you rewrite Chinese copy and see a character fall back to the system font, regenerate the subset:
 
 ```powershell
 # One-time tooling
