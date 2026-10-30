@@ -1072,17 +1072,17 @@ body {
     display: flex;
     align-items: stretch;
     justify-content: space-around;
-    height: 58px;
-    padding: 5px;
-    border: 1px solid rgb(255 255 255 / 0.16);
-    border-radius: 30px;
-    background: rgb(30 23 19 / 0.72);
+    height: 51px;
+    padding: 4px;
+    border: 1px solid rgb(255 255 255 / 0.14);
+    border-radius: 26px;
+    background: rgb(28 28 30 / 0.78);
     box-shadow: 0 18px 44px rgb(0 0 0 / 0.26);
-    backdrop-filter: blur(20px) saturate(1.5);
-    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    backdrop-filter: blur(24px) saturate(1.5);
+    -webkit-backdrop-filter: blur(24px) saturate(1.5);
   }
 
-  body[data-page="garden"] .mobile-dock { right: calc(var(--gutter) + 70px); }
+  body[data-page="garden"] .mobile-dock { right: calc(var(--gutter) + 63px); }
 
   .mobile-dock a {
     display: flex;
@@ -1093,30 +1093,71 @@ body {
     justify-content: center;
     gap: 2px;
     border-radius: 19px;
-    color: rgb(247 238 230 / 0.9);
+    color: rgb(255 255 255 / 0.68);
     font-family: var(--font-body);
     font-size: 0.58rem;
     line-height: 1;
     text-decoration: none;
   }
 
-  .mobile-dock a .icon { width: 18px; height: 18px; }
-  .mobile-dock a[aria-current="page"] { background: #f2c88f; color: #211915; }
+  .mobile-dock a .icon { width: 18px; height: 18px; color: rgb(242 200 143 / 0.9); }
+  .mobile-dock a[aria-current="page"] { border-radius: 20px; background: rgb(255 255 255 / 0.14); color: #fff; }
+  .mobile-dock a[aria-current="page"] .icon { color: #fff; }
 
   body[data-page="garden"] .compose-fab {
     left: auto;
     right: var(--gutter);
     bottom: calc(10px + env(safe-area-inset-bottom));
-    width: 58px;
-    height: 58px;
+    width: 51px;
+    height: 51px;
+    min-height: 51px;
+    max-height: 51px;
     padding: 0;
     justify-content: center;
     transform: none;
   }
 
+  body[data-page="garden"] .compose-fab .icon { width: 22px; height: 22px; }
   body[data-page="garden"] .compose-fab span { display: none; }
 }
 
 @media (max-width: 360px) {
   .mobile-dock a { font-size: 0.54rem; }
+}
+
+
+/* Mobile touch focus: no square tap highlight; keyboard focus keeps a rounded ring. */
+html { -webkit-tap-highlight-color: transparent; }
+
+:where(a, button, input, select, textarea, label, [role="button"]) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus:not(:focus-visible) { outline: none !important; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--md-sys-color-primary) 72%, transparent);
+  outline-offset: 3px;
+  border-radius: inherit;
+}
+
+@media (min-width: 400px) and (max-width: 860px) {
+  .mobile-dock {
+    left: 50%;
+    right: auto;
+    width: min(364px, calc(100% - 2 * var(--gutter)));
+    transform: translateX(-50%);
+  }
+
+  body[data-page="garden"] .mobile-dock {
+    left: auto;
+    right: calc(var(--gutter) + 63px);
+    width: min(364px, calc(100% - 2 * var(--gutter) - 63px));
+    transform: none;
+  }
 }
