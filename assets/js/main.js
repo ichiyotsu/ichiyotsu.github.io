@@ -327,9 +327,42 @@
   }
 
   if (menuButton) {
+    const menuLayer = document.createElement('div');
+    menuLayer.className = 'mobile-menu-layer';
+    menuLayer.hidden = true;
+    menuLayer.innerHTML = `
+      <div class="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="Menu">
+        <div class="mobile-menu-head">
+          <h2>Menu</h2>
+          <button class="mobile-menu-close" type="button" aria-label="关闭菜单"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg></button>
+        </div>
+        <nav class="mobile-menu-links" aria-label="站点菜单">
+          <a href="/"${window.location.pathname === '/' ? ' aria-current="page"' : ''}>主页</a>
+          <a href="/software/"${window.location.pathname.startsWith('/software') ? ' aria-current="page"' : ''}>软件</a>
+          <a href="/garden/"${window.location.pathname.startsWith('/garden') ? ' aria-current="page"' : ''}>探索</a>
+          <a href="/about/"${window.location.pathname.startsWith('/about') ? ' aria-current="page"' : ''}>关于</a>
+        </nav>
+      </div>`;
+    document.body.appendChild(menuLayer);
+    const menuClose = menuLayer.querySelector('.mobile-menu-close');
+    const setMenuOpen = (open) => {
+      menuLayer.hidden = !open;
+      document.body.classList.toggle('is-menu-open', open);
+      menuButton.setAttribute('aria-expanded', String(open));
+      menuButton.setAttribute('aria-label', open ? '关闭菜单' : '打开菜单');
+      if (open) window.setTimeout(() => menuClose.focus({ preventScroll: true }), 40);
+    };
     menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.addEventListener('click', () => {
-      window.location.href = window.location.pathname.startsWith('/menu') ? '/' : '/menu/';
+    menuButton.setAttribute('aria-label', '打开菜单');
+    menuButton.setAttribute('aria-haspopup', 'dialog');
+    menuButton.setAttribute('aria-controls', 'mobile-menu');
+    menuLayer.querySelector('.mobile-menu-panel').id = 'mobile-menu';
+    menuButton.addEventListener('click', () => setMenuOpen(menuLayer.hidden));
+    menuClose.addEventListener('click', () => setMenuOpen(false));
+    menuLayer.addEventListener('click', (event) => { if (event.target === menuLayer) setMenuOpen(false); });
+    menuLayer.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => setMenuOpen(false)));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menuLayer.hidden) setMenuOpen(false);
     });
   }
 
@@ -550,7 +583,6 @@
     { title: '作品', group: '软件', url: '/software/#work', text: 'TokiTodo Luna TokiNote TokiFonts 四个作品', keywords: 'work 作品 app' },
     { title: 'TokiUI 介绍', group: '设计', url: '/software/#design', text: 'Material Design3 Expressive TokiUI 设计语言 通用标准', keywords: 'tokiui design 设计 md3e' },
     { title: '正在制作 / TokiHarness', group: '软件', url: '/software/#making', text: 'DSH 手机版 二创 TokiHarness 正在制作', keywords: 'making toki harness dsh 制作中' },
-    { title: '菜单', group: '页面', url: '/menu/', text: 'Menu 导航 软件 探索 关于', keywords: 'menu 菜单 导航' },
     { title: '关于', group: '页面', url: '/about/', text: '关于本站 联系 GitHub 设计 字体', keywords: 'about 关于 contact 联系' },
     { title: '更新公告', group: '探索', url: '/garden/', text: 'GitHub Discussions 更新公告 Announcements', keywords: 'announcement 公告 更新' },
     { title: '设计建议', group: '探索', url: '/garden/', text: 'Ideas 设计建议 讨论', keywords: 'ideas 建议 设计' },
@@ -572,6 +604,7 @@
     layer.hidden = true;
     layer.innerHTML = `
       <div class="site-search-panel" role="dialog" aria-modal="true" aria-label="搜索全站">
+        <h2 class="site-search-heading">Search</h2>
         <div class="site-search-field">
           <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${meteor.searchIcon}</svg>
           <input id="site-search-input" type="search" placeholder="搜索 TokiPage…" autocomplete="off" spellcheck="false" aria-label="搜索全站">
