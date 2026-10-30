@@ -1,7 +1,28 @@
 {
-  "generatedAt": "2026-10-29T17:00:34.827Z",
+  "generatedAt": "2026-10-30T12:51:35.671Z",
   "repository": "ichiyotsu/ichiyotsu.github.io",
   "discussions": [
+    {
+      "number": 5,
+      "title": "你好",
+      "url": "https://github.com/ichiyotsu/ichiyotsu.github.io/discussions/5",
+      "createdAt": "2026-10-30T04:44:34Z",
+      "updatedAt": "2026-10-30T04:44:34Z",
+      "excerpt": "测试文本",
+      "body": "测试文本",
+      "upvotes": 0,
+      "comments": 0,
+      "commentItems": [],
+      "category": {
+        "name": "General",
+        "slug": "general"
+      },
+      "author": {
+        "login": "ichiyotsu",
+        "avatarUrl": "https://avatars.githubusercontent.com/u/252583327?v=4",
+        "url": "https://github.com/ichiyotsu"
+      }
+    },
     {
       "number": 3,
       "title": "站点更新 · 2026.10",
