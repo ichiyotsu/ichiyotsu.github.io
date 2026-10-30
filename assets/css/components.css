@@ -858,7 +858,7 @@
 
 .topbar {
   border-radius: var(--r-full);
-  corner-shape: superellipse(4);
+  corner-shape: round;
 }
 
 body {
@@ -961,11 +961,12 @@ body {
 }
 
 .lang-toggle {
-  border: 1px solid var(--md-sys-color-outline-variant);
-  background: color-mix(in srgb, var(--md-sys-color-surface) 62%, transparent);
-  border-radius: var(--r-full);
-  height: 38px;
-  min-width: 44px;
+  border: 0;
+  background: transparent;
+  border-radius: 50%;
+  height: 40px;
+  min-width: 40px;
+  width: 40px;
 }
 
 .lang-toggle:hover {

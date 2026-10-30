@@ -27,10 +27,10 @@
 | `/` | **TokiPage**：欢迎语 + 三张可点击的入口卡（软件 / 探索 / 关于），底部一行短句 |
 | `/software/` | **软件**：作品、Material 3 Expressive 组件试用、正在制作的项目（TokiHarness） |
 | `/software/tokitodo/` | TokiTodo：待办，专注计时，手机锁与统计 |
-| `/software/luma/` | Luma：悬浮胶囊浏览器 |
+| `/software/luna/` | Luna：悬浮胶囊浏览器 |
 | `/software/tokinote/` | TokiNote：本地笔记软件，目前最完善的一个 |
 | `/software/tokifonts/` | TokiFonts：基于OneUI教程的字体资源库 |
-| `/garden/` | **探索**：三栏 X 式布局（导航 / 讨论流 / 数据与推荐）、站内点赞 / 浏览 / 看评论 |
+| `/garden/` | **探索**：两栏 X 式布局（快速链接 / 置顶公告 + 可切换的帖子分区，3:7 可拖拽）、站内点赞 / 浏览 / 看评论 |
 | `/about/` | **关于**：安静的个人说明、或许会坚持的三件事、联系 |
 
 顶栏顺序是 **主页 / 软件 / 探索 / 关于**。软件下有三项：作品 / 设计 / 制作中；探索下是讨论 / 发布；关于下是关于本站 / 联系。
@@ -39,7 +39,7 @@
 - 顶栏、页面顶部和底部都有轻量渐变磨砂；顶栏模糊随滚动从 14px 加深到 26px。
 - 顶栏按钮按下会轻微回弹，并有一次边缘线条扩散动画；品牌 `TokiPage.` 悬停时出现整圆角底色。
 - 底栏常驻，带磨砂与渐隐过渡；高度 54px，页面内容不会被永久遮住。
-- 顶栏使用 G2 曲率连续（`corner-shape: superellipse(4)`），而不是普通圆角。
+- 顶栏是 999px 全圆角的胶囊形，避免显得方正。
 
 ## 主页
 
@@ -51,32 +51,33 @@
 
 - 作品卡片、设计说明和「正在制作的项目...」。
 - 四个详情页都有左上角悬浮返回按钮，滚动时保持可见。
-- TokiTodo / Luma / TokiNote 的标题左侧使用各自的原生自适应图标；TokiFonts 没有独立 app icon，因此保持纯标题。
+- TokiTodo / Luna / TokiNote 的标题左侧使用对应的线条图标；TokiFonts 没有独立 app icon，因此保持纯标题。
 - 详情页的基础介绍统一为：
 
   - TokiTodo：待办，专注计时，手机锁与统计。
-  - Luma：悬浮胶囊浏览器。
+  - Luna：悬浮胶囊浏览器。
   - TokiNote：本地笔记软件 / 目前最完善的一个。
   - TokiFonts：基于OneUI教程的字体资源库
 
-- 功能卡片加入真实截图；其中 TokiTodo、Luma、TokiNote 额外的「底栏」条带直接裁切截图底栏。
+- 详情页先保持纯文字介绍，不放大截图；标题左侧使用对应产品图标。
 - 旧的 DESIGN NOTE 标签、截图画廊和「下一个」区块已移除；底部改为 **再看看...**，放另外三个软件的入口。
-- 详情页顶部提供正式版 / 测试版两个 release 按钮，链接到最新 tag；TokiTodo 和 Luma 当前只有测试版。
+- 详情页顶部按 GitHub / 正式版 / 测试版三行排列，正式版和测试版直接下载 `.apk`；TokiTodo 和 Luna 当前只有测试版。
+- 测试版会包含部分正式版尚未提供的预览功能，页面里已标注。
 - 设计区新增 M3E 组件试用：Filled / Outlined 按钮、Assist / Selected chip、Switch、Linear progress、FAB 和 type scale；色块可悬停点亮，动效线会展开成 M3E 曲线。
 
 ## 探索
 
 探索没有自己的服务器，也没有站内账号系统：
 
-- **三栏**：左侧站点导航，中间 X 式讨论流，右侧搜索、数据、简介和推荐软件。
+- **两栏**：左侧快速链接、置顶公告和简介；右侧是更新公告 / 软件讨论帖子流，默认 3:7，可拖动中间分隔线在 2:8 到 4:6 间调整。
 - **看**：帖子正文、评论、作者、点赞数、评论数都从 GitHub Discussions 同步到 JSON，在站内信息流和 dialog 里查看。
 - **站内互动**：点赞和浏览计数保存在浏览器本机（`localStorage`）；卡片和详情底部都能看到「浏览 / 点赞 / 评论」。
 - **详情**：点击卡片打开 dialog；底部悬浮栏提供浏览、点赞、评论、在 GitHub 查看和复制链接；点「评论」后窗口向左展开，右侧出现评论编辑框。
 - **写**：发帖与评论需要 GitHub 账号，点击会打开 GitHub 完成，使用你的 GitHub 身份。
 - **同步**：GitHub Actions 每 120 分钟同步一次；页面打开时也按同一节奏刷新。
-- **数据**：右侧「探索数据」卡片显示讨论数、问题数、本机浏览数、回复数。
+- **悬浮控件**：左上角是更新公告 / 软件讨论下拉，中间是探索数据条，右侧是搜索框；刷新按钮在数据条右侧，点击刷新整个页面。
 - **信息流**：不显示头像；左上角是用户名和发布时间，下面是标题、正文，支持配图，底部是浏览 / 点赞 / 评论。
-- **写作**：桌面端用左栏「写点什么」，手机端用底部悬浮按钮；中间也有 X 式「有什么新鲜事？」入口。
+- **写作**：底部悬浮「写点什么」按钮居中放在常驻底栏上方。
 
 ### 首次配置
 
@@ -93,7 +94,7 @@ node tools/garden-sync.mjs
 
 ## 中英切换
 
-顶栏深色模式按钮左侧有语言图标切换。文案在 `assets/js/i18n.js` 里以中文原文映射到英文；切换状态写入 `localStorage`，页面标题和静态 UI 会同步更新。GitHub 帖子正文保持原文。
+顶栏深色模式按钮左侧有地球图标切换。文案在 `assets/js/i18n.js` 里以中文原文映射到英文；切换状态写入 `localStorage`，页面标题和静态 UI 会同步更新。GitHub 帖子正文保持原文。
 
 ## 本地文本编辑器（studio）
 
@@ -124,7 +125,7 @@ studio 的「打开本地站点」链接默认指向这个 4173 端口。
 | --- | --- |
 | 主页欢迎语 / 三张入口卡 | `index.html` |
 | 软件页 / 设计组件 / TokiHarness | `software/index.html` |
-| 四个软件详情 | `software/tokitodo/`、`luma/`、`tokinote/`、`tokifonts/` |
+| 四个软件详情 | `software/tokitodo/`、`luna/`、`tokinote/`、`tokifonts/` |
 | 探索信息流 / 写作器 | `garden/index.html`、`assets/js/garden.js` |
 | 关于页与联系 | `about/index.html` |
 | 顶栏 / 移动端菜单（每个页面各一份） | 各页面的 `<header>` 与 `<nav-sheet>` |
@@ -138,7 +139,7 @@ studio 的「打开本地站点」链接默认指向这个 4173 端口。
 
 ### 字体
 
-中文展示字体是 **得意黑（Smiley Sans）** 的子集，当前约 80 KB。新增中文标题后如果出现字形回退：
+中文展示字体是 **得意黑（Smiley Sans）** 的子集，当前约 78 KB。新增中文标题后如果出现字形回退：
 
 ```powershell
 node tools/update-chars.mjs
@@ -158,7 +159,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 ├─ software/
 │  ├─ index.html                 # 软件
 │  ├─ tokitodo/index.html
-│  ├─ luma/index.html
+│  ├─ luna/index.html
 │  ├─ tokinote/index.html
 │  └─ tokifonts/index.html
 ├─ garden/
@@ -172,7 +173,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 │  ├─ js/ main, garden
 │  ├─ fonts/ 得意黑子集 + Bricolage + Instrument Sans + OFL
 │  ├─ img/ 截图、头像、图标、OG
-│  ├─ img/projects/ 详情页图标与截图
+│  ├─ img/projects/ 详情页图标与资源
 │  └─ vendor/ marked, DOMPurify, Turndown
 ├─ tools/
 │  ├─ garden-sync.mjs
@@ -197,7 +198,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 - 字体：[Smiley Sans / 得意黑](https://github.com/atelier-anchor/smiley-sans)、[Bricolage Grotesque](https://github.com/ateliertriay/bricolage)、[Instrument Sans](https://github.com/Instrument/instrument-sans)，均为 SIL OFL 1.1。
 - 图标：[IconPark](https://iconpark.oceanengine.com/) 的 `material` 图标，按本站配色重新上色。
 - 编辑器：[marked](https://github.com/markedjs/marked)、[DOMPurify](https://github.com/cure53/DOMPurify)、[Turndown](https://github.com/mixmark-io/turndown)。
-- 项目截图和自适应图标来自 [ichiyotsu](https://github.com/ichiyotsu) 的公开仓库。
+- 详情页图标来自 [YesIcon](https://yesicon.app/)；项目截图与个人内容来自 [ichiyotsu](https://github.com/ichiyotsu) 的公开仓库。
 - 讨论数据来自 [GitHub Discussions](https://github.com/ichiyotsu/ichiyotsu.github.io/discussions)。
 
 ## License

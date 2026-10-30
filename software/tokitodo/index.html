@@ -12,7 +12,7 @@
   <link rel="canonical" href="https://ichiyotsu.github.io/software/tokitodo/">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ichiyotsu.github.io/software/tokitodo/">
-  <meta property="og:title" content="TokiTodo — ichiyotsu.">
+  <meta property="og:title" content="TokiTodo — TokiPage.">
   <meta property="og:description" content="把一天收进一个安静、顺手的地方。">
   <meta property="og:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
@@ -21,7 +21,7 @@
   <meta property="og:locale" content="zh_CN">
   <meta property="og:site_name" content="TokiPage.">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="TokiTodo — ichiyotsu.">
+  <meta name="twitter:title" content="TokiTodo — TokiPage.">
   <meta name="twitter:description" content="把一天收进一个安静、顺手的地方。">
   <meta name="twitter:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <meta name="twitter:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
@@ -135,26 +135,21 @@
 
   <main id="main">
     <a class="back-fab" href="/software/" aria-label="返回软件"><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg><span>软件</span></a>
-    <section class="project-hero container" id="top" aria-labelledby="tokitodo-title">
+    <section class="project-hero project-hero--text container" id="top" aria-labelledby="tokitodo-title">
       <div class="project-hero__copy">
         <div class="project-hero__heading">
-          <img class="project-hero__icon" src="/assets/img/projects/todo-icon.webp" width="512" height="512" alt="">
+          <span class="project-hero__icon project-hero__icon--todo" aria-hidden="true"></span>
           <h1 id="tokitodo-title">TokiTodo</h1>
         </div>
         <p class="project-hero__tagline" data-edit="tokitodo-1" data-edit-label="tokitodo · p.project-hero__tagline">待办，专注计时，手机锁与统计。</p>
-        <div class="project-hero__actions">
+        <div class="project-hero__actions project-hero__actions--stack">
             <a class="button button--filled" href="https://github.com/ichiyotsu/TokiTodo" target="_blank" rel="noopener noreferrer">GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
             <button class="button button--outlined" type="button" disabled>正式版 未发布</button>
-            <a class="button button--outlined" href="https://github.com/ichiyotsu/TokiTodo/releases/tag/0.1.0-beta.1" target="_blank" rel="noopener noreferrer">测试版 v0.1.0-beta.1 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-        </div>
-      </div>
-        <div class="project-hero__media">
-          <div class="phone phone--detail">
-            <div class="phone__screen"><img src="/assets/img/toki-todo.webp" width="540" height="1170" alt=""></div>
-            <span class="phone__gloss"></span>
+            <a class="button button--outlined" href="https://github.com/ichiyotsu/TokiTodo/releases/download/0.1.0-beta.1/TokiTodo-0.1.0-beta.1.apk" download>测试版 v0.1.0-beta.1 · APK <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg></a>
+            <p class="project-release-note">测试版包含部分正式版尚未提供的预览功能。</p>
           </div>
-        </div>
-    </section>
+      </div>
+        </section>
 
     <section class="section project-features" aria-labelledby="tokitodo-features">
       <div class="container">
@@ -163,16 +158,13 @@
           <p class="section-head__note" data-edit="tokitodo-3" data-edit-label="tokitodo · p.section-head__note">不是功能清单，更像是几个「为什么它要这样」的切片。</p>
         </header>
         <div class="feature-grid">
-          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/todo-list.webp" alt="" loading="lazy"></div>
-            <h3 data-edit="tokitodo-feature-1" data-edit-label="tokitodo · feature">待办，也可以是一组</h3>
+          <article class="feature-card feature-card--media" data-reveal><h3 data-edit="tokitodo-feature-1" data-edit-label="tokitodo · feature">待办，也可以是一组</h3>
             <p data-edit="tokitodo-feature-2" data-edit-label="tokitodo · feature">待办可以置顶、分组、设置时长；待办集让「今天要做什么」不至于摊成一地。</p>
           </article>
-          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/todo-focus.webp" alt="" loading="lazy"></div>
-            <h3 data-edit="tokitodo-feature-3" data-edit-label="tokitodo · feature">专注计时</h3>
+          <article class="feature-card feature-card--media" data-reveal><h3 data-edit="tokitodo-feature-3" data-edit-label="tokitodo · feature">专注计时</h3>
             <p data-edit="tokitodo-feature-4" data-edit-label="tokitodo · feature">大圆环、暂停 / 跳过 / 循环、背景音和可换字体。计时不是惩罚，是一段被保护起来的时间。</p>
           </article>
-          <article class="feature-card feature-card--media" data-reveal><div class="feature-card__media"><img src="/assets/img/projects/todo-profile.webp" alt="" loading="lazy"></div>
-            <h3 data-edit="tokitodo-feature-5" data-edit-label="tokitodo · feature">手机锁与强制学习</h3>
+          <article class="feature-card feature-card--media" data-reveal><h3 data-edit="tokitodo-feature-5" data-edit-label="tokitodo · feature">手机锁与强制学习</h3>
             <p data-edit="tokitodo-feature-6" data-edit-label="tokitodo · feature">把手机暂时锁住，或者进入强制学习模式。不是靠意志力，而是先把干扰拿走。</p>
           </article>
           <article class="feature-card" data-reveal>
@@ -186,9 +178,7 @@
         </div>
       </div>
         <div class="detail-strip" data-reveal>
-          <div class="detail-strip__media"><img src="/assets/img/projects/todo-bottom.webp" alt="" loading="lazy"></div>
           <div class="detail-strip__body">
-            <span class="detail-strip__label">BOTTOM BAR</span>
             <h3>底栏</h3>
             <p>待办、专注、锁机和统计收在同一条底栏里，拇指不用离开下半屏。</p>
           </div>
@@ -209,8 +199,8 @@
           <p class="section-head__note">另外三个也在慢慢长大。</p>
         </header>
         <div class="other-projects">
-          <a class="other-project" href="/software/luma/">
-            <span class="other-project__name">Luma</span>
+          <a class="other-project" href="/software/luna/">
+            <span class="other-project__name">Luna</span>
             <p>悬浮胶囊浏览器。</p>
             <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
           </a>

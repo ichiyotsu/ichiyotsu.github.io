@@ -33,7 +33,8 @@
   const unit = (zh, en) => (isEnglish() ? en : zh);
 
   let discussions = [];
-  let activeCategory = 'all';
+  let activeSection = 'all';
+  let splitPercent = 30;
   let searchQuery = '';
 
   const CATEGORY_LABELS = {
@@ -149,49 +150,6 @@
       const node = document.getElementById(id);
       if (node) node.textContent = new Intl.NumberFormat('zh-CN').format(value);
     });
-
-    const sync = document.getElementById('garden-sync-label');
-    if (sync) sync.textContent = 'AUTO · 2H';
-  }
-
-  function renderFilters(items) {
-    const target = document.getElementById('garden-filters');
-    if (!target) return;
-
-    const categories = new Map();
-    items.forEach((item) => {
-      const slug = item.category?.slug || 'general';
-      const name = categoryLabel(item.category);
-      if (!categories.has(slug)) categories.set(slug, name);
-    });
-
-    target.replaceChildren();
-
-    const all = document.createElement('button');
-    all.type = 'button';
-    all.className = 'filter-chip is-active';
-    all.dataset.category = 'all';
-    all.textContent = '全部';
-    target.appendChild(all);
-
-    categories.forEach((name, slug) => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'filter-chip';
-      button.dataset.category = slug;
-      button.textContent = name;
-      target.appendChild(button);
-    });
-
-    target.querySelectorAll('.filter-chip').forEach((button) => {
-      button.addEventListener('click', () => {
-        activeCategory = button.dataset.category;
-        target.querySelectorAll('.filter-chip').forEach((item) => {
-          item.classList.toggle('is-active', item === button);
-        });
-        renderBoard();
-      });
-    });
   }
 
   function makeCard(item, index) {
@@ -298,15 +256,67 @@
     return article;
   }
 
+  const sectionLabel = (section) => {
+    const labels = {
+      all: ['全部', 'All'],
+      announcements: ['更新公告', 'Announcements'],
+      general: ['软件讨论', 'Software talk']
+    };
+    const pair = labels[section] || labels.all;
+    return isEnglish() ? pair[1] : pair[0];
+  };
+
+  const inSection = (item, section) => {
+    const slug = item.category?.slug || 'general';
+    if (section === 'announcements') return slug === 'announcements';
+    if (section === 'general') return slug !== 'announcements';
+    return true;
+  };
+
+  function updateSectionUI() {
+    const current = document.getElementById('section-current');
+    if (current) current.textContent = sectionLabel(activeSection);
+    const title = document.getElementById('feed-title');
+    if (title) title.textContent = sectionLabel(activeSection);
+    document.querySelectorAll('.explore-select__option').forEach((option) => {
+      const selected = option.dataset.section === activeSection;
+      option.classList.toggle('is-selected', selected);
+      option.setAttribute('aria-selected', String(selected));
+    });
+  }
+
+  function renderPinned() {
+    const card = document.getElementById('pinned-card');
+    if (!card) return;
+    const pinned = discussions.find((item) => (item.category?.slug || '') === 'announcements');
+    if (!pinned) {
+      card.hidden = true;
+      return;
+    }
+    card.hidden = false;
+    document.getElementById('pinned-title').textContent = pinned.title;
+    document.getElementById('pinned-excerpt').textContent = pinned.excerpt || '';
+    document.getElementById('pinned-meta').textContent = `@${pinned.author?.login || 'github'} · ${unit('置顶', 'Pinned')}`;
+    const link = document.getElementById('pinned-link');
+    link.href = pinned.url || discussionsUrl;
+    link.onclick = (event) => {
+      event.preventDefault();
+      openDiscussion(pinned.__index);
+    };
+  }
+
   function renderBoard() {
     if (!list) return;
 
     const query = searchQuery.trim().toLowerCase();
     const visible = discussions.filter((item) => {
-      if (activeCategory !== 'all' && (item.category?.slug || 'general') !== activeCategory) return false;
+      if (!inSection(item, activeSection)) return false;
       if (!query) return true;
       return `${item.title} ${item.excerpt}`.toLowerCase().includes(query);
     });
+
+    const count = document.getElementById('feed-count');
+    if (count) count.textContent = `${visible.length} ${unit('条', 'posts')}`;
 
     list.replaceChildren();
     list.setAttribute('aria-busy', 'false');
@@ -334,7 +344,7 @@
     list.replaceChildren();
     const empty = document.createElement('p');
     empty.className = 'garden-empty';
-    empty.append('暂时没有取回花园的数据。');
+    empty.append('暂时没有取回探索的数据。');
     const link = document.createElement('a');
     link.href = discussionsUrl;
     link.target = '_blank';
@@ -355,9 +365,10 @@
       const payload = await response.json();
       discussions = Array.isArray(payload.discussions) ? payload.discussions.map((item, index) => ({ ...item, __index: index })) : [];
       renderStats(discussions);
-      renderFilters(discussions);
+      renderPinned();
+      updateSectionUI();
       renderBoard();
-      if (!quiet && discussions.length) toast('花园已更新');
+      if (!quiet && discussions.length) toast('探索已更新');
     } catch (error) {
       console.error('Garden sync data could not be loaded:', error);
       renderError();
@@ -367,7 +378,7 @@
   }
 
   const refresh = document.getElementById('garden-refresh');
-  if (refresh) refresh.addEventListener('click', () => loadBoard());
+  if (refresh) refresh.addEventListener('click', () => window.location.reload());
 
   const searchInput = document.getElementById('explore-search');
   if (searchInput) {
@@ -376,6 +387,76 @@
       renderBoard();
     });
   }
+
+  const sectionToggle = document.getElementById('section-toggle');
+  const sectionMenu = document.getElementById('section-menu');
+  if (sectionToggle && sectionMenu) {
+    const closeMenu = () => {
+      sectionMenu.hidden = true;
+      sectionToggle.setAttribute('aria-expanded', 'false');
+    };
+    sectionToggle.addEventListener('click', () => {
+      const open = sectionMenu.hidden;
+      sectionMenu.hidden = !open;
+      sectionToggle.setAttribute('aria-expanded', String(open));
+    });
+    sectionMenu.querySelectorAll('.explore-select__option').forEach((option) => {
+      option.addEventListener('click', () => {
+        activeSection = option.dataset.section || 'all';
+        updateSectionUI();
+        renderBoard();
+        closeMenu();
+      });
+    });
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('#section-select')) closeMenu();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeMenu();
+    });
+  }
+
+  const columns = document.getElementById('explore-columns');
+  const divider = document.getElementById('explore-divider');
+  if (columns && divider) {
+    const setSplit = (value) => {
+      splitPercent = Math.min(40, Math.max(20, Math.round(value)));
+      columns.style.setProperty('--split', splitPercent);
+      divider.setAttribute('aria-valuenow', String(splitPercent));
+    };
+    divider.addEventListener('pointerdown', (event) => {
+      event.preventDefault();
+      divider.setPointerCapture(event.pointerId);
+      divider.classList.add('is-dragging');
+      const move = (moveEvent) => {
+        const rect = columns.getBoundingClientRect();
+        setSplit(((moveEvent.clientX - rect.left) / rect.width) * 100);
+      };
+      const up = () => {
+        divider.classList.remove('is-dragging');
+        divider.removeEventListener('pointermove', move);
+        divider.removeEventListener('pointerup', up);
+        divider.removeEventListener('pointercancel', up);
+      };
+      divider.addEventListener('pointermove', move);
+      divider.addEventListener('pointerup', up);
+      divider.addEventListener('pointercancel', up);
+    });
+    divider.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); setSplit(splitPercent - 1); }
+      if (event.key === 'ArrowRight') { event.preventDefault(); setSplit(splitPercent + 1); }
+      if (event.key === 'Home') { event.preventDefault(); setSplit(20); }
+      if (event.key === 'End') { event.preventDefault(); setSplit(40); }
+    });
+    setSplit(30);
+  }
+
+  document.addEventListener('ichiyotsu:lang', () => {
+    updateSectionUI();
+    renderPinned();
+    renderBoard();
+  });
+
   loadBoard({ quiet: true });
 
   // Keep an open tab fresh; the Actions workflow uses the same 120 minute cadence.

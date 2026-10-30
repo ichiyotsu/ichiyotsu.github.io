@@ -73,6 +73,9 @@
     <symbol id="i-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/></symbol>
     <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 8.5-2.1 5-5 2.1 2.1-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c.6-3.4 3.1-5.2 7-5.2s6.4 1.8 7 5.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 10a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6Zm4 10h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 3 9 5-9 5-9-5 9-5Zm-7 9 7 4 7-4M5 16l7 4 7-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15 15 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 1 0-2.3 6.7M20 4v7h-7" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </svg>
@@ -115,38 +118,71 @@
   <main id="main" class="explore-main">
     <h1 class="u-visually-hidden">探索</h1>
 
-    <div class="explore-shell container">
-      <aside class="explore-rail" aria-label="站点导航">
-        <nav class="explore-rail-nav" aria-label="站点导航">
-          <a class="explore-rail-link" href="/"><svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg><span>主页</span></a>
-          <a class="explore-rail-link" href="/software/"><svg class="icon" aria-hidden="true"><use href="#i-grid"></use></svg><span>软件</span></a>
-          <a class="explore-rail-link is-active" href="/garden/" aria-current="page"><svg class="icon" aria-hidden="true"><use href="#i-compass"></use></svg><span>探索</span></a>
-          <a class="explore-rail-link" href="/about/"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg><span>关于</span></a>
-        </nav>
+    <div class="explore-controls">
+      <div class="explore-select" id="section-select">
+        <button class="explore-select__button" id="section-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="section-menu">
+          <svg class="icon" aria-hidden="true"><use href="#i-layers"></use></svg>
+          <span id="section-current">全部</span>
+          <svg class="icon explore-select__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+        </button>
+        <div class="explore-select__menu" id="section-menu" role="listbox" aria-label="探索分区" hidden>
+          <button class="explore-select__option is-selected" type="button" role="option" aria-selected="true" data-section="all"><svg class="icon" aria-hidden="true"><use href="#i-layers"></use></svg><span>全部</span></button>
+          <button class="explore-select__option" type="button" role="option" aria-selected="false" data-section="announcements"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg><span>更新公告</span></button>
+          <button class="explore-select__option" type="button" role="option" aria-selected="false" data-section="general"><svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg><span>软件讨论</span></button>
+        </div>
+      </div>
 
-        <a class="explore-rail-compose" href="/garden/?compose=1"><svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>写点什么</a>
-        <a class="explore-rail-meta" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg>GitHub Discussions</a>
+      <div class="explore-statbar" id="garden-stats" aria-label="探索数据">
+        <div><strong id="stat-topics">—</strong><span>讨论</span></div>
+        <div><strong id="stat-questions">—</strong><span>问题</span></div>
+        <div title="本机浏览计数"><strong id="stat-views">—</strong><span>浏览</span></div>
+        <div><strong id="stat-comments">—</strong><span>回复</span></div>
+        <button class="icon-button garden-refresh" id="garden-refresh" type="button" aria-label="刷新整个探索页面"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></button>
+      </div>
+
+      <label class="explore-search">
+        <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
+        <input id="explore-search" type="search" placeholder="搜索探索" aria-label="搜索探索" autocomplete="off">
+      </label>
+    </div>
+
+    <div class="explore-columns" id="explore-columns">
+      <aside class="explore-left" aria-label="快速链接和置顶公告">
+        <section class="explore-card explore-quick">
+          <h2>快速链接</h2>
+          <div class="explore-quick-list">
+            <a href="/software/"><span>软件</span><small>作品与制作中</small><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
+            <a href="/about/"><span>关于</span><small>关于本站</small><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
+            <a href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer"><span>GitHub Discussions</span><small>发帖 / 回复</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+            <a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><span>GitHub</span><small>@ichiyotsu</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+          </div>
+        </section>
+
+        <section class="explore-card explore-pinned" id="pinned-card">
+          <div class="explore-pinned__eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg>置顶公告</div>
+          <a class="explore-pinned__link" id="pinned-link" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">
+            <strong id="pinned-title">站点更新</strong>
+            <span id="pinned-excerpt">最新公告正在同步…</span>
+            <small id="pinned-meta">GitHub Discussions</small>
+          </a>
+        </section>
+
+        <section class="explore-card explore-about">
+          <span class="garden-kicker">EXPLORE / DISCUSSIONS</span>
+          <p class="garden-lede" data-edit="garden-1" data-edit-label="garden · intro">一个长在 GitHub Discussions 上的讨论区。<br>这里会有版本更新公告和软件功能交流...<br>可能还有一些还没想好放哪里的东西。</p>
+          <p class="garden-note"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发帖/评论在 GitHub 完成；点赞/浏览保存在本机。</p>
+        </section>
       </aside>
 
-      <section class="explore-feed" id="board" aria-label="探索讨论">
+      <div class="explore-divider" id="explore-divider" role="separator" aria-label="调整左右栏宽度" aria-orientation="vertical" aria-valuemin="20" aria-valuemax="40" aria-valuenow="30" tabindex="0"><span aria-hidden="true"></span></div>
+
+      <section class="explore-feed" aria-label="探索帖子">
         <header class="explore-feed-head">
           <div class="explore-feed-title">
-            <h2>探索</h2>
-            <span>GitHub Discussions · 120 min sync</span>
+            <h2 id="feed-title">全部</h2>
+            <span id="feed-count"></span>
           </div>
-          <div class="filter-row" id="garden-filters" aria-label="按分类筛选"></div>
         </header>
-
-        <a class="explore-prompt" href="/garden/?compose=1">
-          <span class="explore-prompt__mark" aria-hidden="true">✳</span>
-          <span class="explore-prompt__text">有什么新鲜事？</span>
-          <span class="explore-prompt__action">发布</span>
-        </a>
-
-        <div class="explore-feed-tools">
-          <span class="garden-feed-label">LATEST <span id="garden-sync-label">SYNC</span></span>
-          <button class="icon-button garden-refresh" id="garden-refresh" type="button" aria-label="刷新讨论列表"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></button>
-        </div>
 
         <div class="garden-list" id="garden-list" aria-live="polite" aria-busy="true">
           <div class="garden-loading"><span class="status-dot" aria-hidden="true"></span> 正在从 GitHub 取回探索…</div>
@@ -154,43 +190,6 @@
 
         <noscript><p class="garden-empty">探索需要 JavaScript 才能在这里显示。<a href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions">直接去 GitHub Discussions ↗</a></p></noscript>
       </section>
-
-      <aside class="explore-side" aria-label="探索侧栏">
-        <label class="explore-search">
-          <svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg>
-          <input id="explore-search" type="search" placeholder="搜索探索" aria-label="搜索探索" autocomplete="off">
-        </label>
-
-        <section class="explore-card explore-stats" id="garden-stats" aria-label="探索数据">
-          <h3>探索数据</h3>
-          <div class="explore-stat-grid">
-            <div><strong id="stat-topics">—</strong><span>讨论</span></div>
-            <div><strong id="stat-questions">—</strong><span>问题</span></div>
-            <div title="本机浏览计数"><strong id="stat-views">—</strong><span>浏览</span></div>
-            <div><strong id="stat-comments">—</strong><span>回复</span></div>
-          </div>
-        </section>
-
-        <section class="explore-card explore-about">
-          <span class="garden-kicker">EXPLORE / DISCUSSIONS</span>
-          <p class="garden-lede" data-edit="garden-1" data-edit-label="garden · intro">一个长在 GitHub Discussions 上的讨论区。<br>这里会有版本更新公告和软件功能交流...<br>可能还有一些还没想好放哪里的东西。</p>
-          <a class="button button--outlined button--sm" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">GitHub Discussions <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-          <p class="garden-note"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发帖/评论在 GitHub 完成；点赞/浏览保存在本机。</p>
-        </section>
-
-        <section class="explore-card explore-links">
-          <h3>推荐软件</h3>
-          <a href="/software/tokitodo/"><strong>TokiTodo</strong><span>待办，专注计时，手机锁与统计。</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-          <a href="/software/luma/"><strong>Luma</strong><span>悬浮胶囊浏览器。</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-          <a href="/software/tokinote/"><strong>TokiNote</strong><span>本地笔记软件，目前最完善的一个。</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-          <a href="/software/tokifonts/"><strong>TokiFonts</strong><span>基于OneUI教程的字体资源库。</span><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-        </section>
-
-        <section class="explore-card explore-making">
-          <h3>正在制作</h3>
-          <a href="https://github.com/ichiyotsu/DeepSeek-Harness" target="_blank" rel="noopener noreferrer"><strong>TokiHarness</strong><span>DSH 手机版，基于 M3E 的二创。</span><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-        </section>
-      </aside>
     </div>
   </main>
 
