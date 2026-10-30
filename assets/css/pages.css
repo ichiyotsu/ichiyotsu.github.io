@@ -4908,3 +4908,20 @@ body { overflow-x: clip; }
   from { opacity: 0.65; transform: translate3d(0, 18px, 0); }
   to { opacity: 1; transform: translate3d(0, 0, 0); }
 }
+
+/* Detail design note: body-size comment, uses the full callout width */
+.project-note {
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: 28px;
+}
+
+.project-note p {
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.15vw, 1.08rem);
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.85;
+}
