@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>软件 — TokiPage.</title>
-  <meta name="description" content="ichiyotsu 的软件、Material 3 Expressive 组件，以及正在制作的 TokiHarness。">
+  <meta name="description" content="ichiyotsu 的软件、TokiUI 设计系统，以及正在制作的 TokiHarness。">
   <meta name="author" content="ichiyotsu">
   <meta name="theme-color" content="#FDF8F2" id="theme-color">
   <meta name="color-scheme" content="light dark">
@@ -13,7 +13,7 @@
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://ichiyotsu.github.io/software/">
   <meta property="og:title" content="软件 — ichiyotsu.">
-  <meta property="og:description" content="软件、Material 3 Expressive 和正在制作的项目。">
+  <meta property="og:description" content="软件、TokiUI 设计系统和正在制作的项目。">
   <meta property="og:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -22,7 +22,7 @@
   <meta property="og:site_name" content="TokiPage.">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="软件 — ichiyotsu.">
-  <meta name="twitter:description" content="软件、Material 3 Expressive 和正在制作的项目。">
+  <meta name="twitter:description" content="软件、TokiUI 设计系统和正在制作的项目。">
   <meta name="twitter:image" content="https://ichiyotsu.github.io/assets/img/og.jpg">
   <meta name="twitter:image:alt" content="ichiyotsu 的个人网站：把复杂的事，做得轻一点。">
   <link rel="me" href="https://github.com/ichiyotsu">
@@ -36,7 +36,7 @@
     "url": "https://ichiyotsu.github.io/software/",
     "image": "https://ichiyotsu.github.io/assets/img/avatar.webp",
     "jobTitle": "Software & interface developer",
-    "knowsAbout": ["Kotlin", "Jetpack Compose", "Material 3 Expressive", "Local-first software", "Typography", "Motion design"],
+    "knowsAbout": ["Kotlin", "Jetpack Compose", "TokiUI", "Local-first software", "Typography", "Motion design"],
     "sameAs": [
       "https://github.com/ichiyotsu"
     ]
@@ -101,7 +101,7 @@
           <a class="nav-link is-active" href="/software/" aria-haspopup="true" aria-expanded="false" aria-controls="dropdown-software">软件</a>
           <div class="nav-dropdown" id="dropdown-software">
             <a href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
-            <a href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+            <a href="/software/#design"><span>设计</span><small>TokiUI</small></a>
             <a href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
           </div>
         </div>
@@ -263,70 +263,90 @@
       </div>
     </section>
 
-    <section class="section design" id="design" aria-labelledby="design-title">
+    <section class="section design tokiui" id="design" aria-labelledby="design-title">
       <div class="container">
         <header class="section-head" data-reveal>
-          <div class="section-head__main"><h2 id="design-title">Material 3 Expressive，<br>不只是圆角。</h2></div>
-          <p class="section-head__note" data-edit="software-10" data-edit-label="software · p.section-head__note">我把 M3E 当成一套「如何让界面有情绪」的方法：颜色有主次，形状会呼吸，动效在关键处才说话。</p>
+          <div class="section-head__main">
+            <span class="tokiui-kicker">TOKIUI / DESIGN SYSTEM</span>
+            <h2 id="design-title">基于 Material 3<br>Expressive 的 TokiUI。</h2>
+          </div>
+          <p class="section-head__note" data-edit="software-10" data-edit-label="software · p.section-head__note">把 TokiNote 里的颜色、圆角、层级和动效收成一套可复用的私人设计标准。</p>
         </header>
 
-        <div class="design-grid">
-          <article class="design-card design-card--color" data-reveal>
-            <div class="swatch-grid" aria-hidden="true">
-              <span class="swatch swatch--primary"></span>
-              <span class="swatch swatch--primary-container"></span>
-              <span class="swatch swatch--secondary"></span>
-              <span class="swatch swatch--tertiary"></span>
-              <span class="swatch swatch--surface"></span>
-              <span class="swatch swatch--ink"></span>
+        <div class="tokiui-intro" data-reveal>
+          <div class="tokiui-intro__copy">
+            <p class="tokiui-lead">TokiUI 不是一套公开组件库，而是我在做 TokiNote 时逐渐沉淀下来的界面规则：颜色有角色，形状有情绪，组件先服务内容。</p>
+            <div class="tokiui-badges">
+              <span>v0.1.0</span>
+              <span>TokiNote 0.3.7-beta.3</span>
+              <span>Private / internal</span>
             </div>
-            <h3>颜色先有角色，再有偏好。</h3>
-            <p>primary 负责行动，container 负责承载，tertiary 留给意外。深色不是简单反色，而是另一套关系。</p>
-          </article>
-
-          <article class="design-card design-card--shape" data-reveal style="--reveal-delay: 80ms">
-            <div class="shape-stage">
-              <button class="shape-demo" id="shape-demo" type="button" aria-label="按一下，切换形状示例"><span>按一下</span></button>
-            </div>
-            <h3>形状可以表达情绪。</h3>
-            <p>从 12 到 48 的圆角刻度不是随手调的数值。它决定一个界面是工具、玩具，还是两者之间。</p>
-          </article>
-
-          <article class="design-card design-card--motion" data-reveal style="--reveal-delay: 160ms">
-            <div class="motion-stage motion-stage--progress">
-              <div class="motion-progress" role="progressbar" aria-label="连续进度动效" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><span></span></div>
-              <button class="motion-play" id="motion-demo" type="button">播放连续曲线</button>
-            </div>
-            <h3>动效是连续曲线。</h3>
-            <p>用 MD3E 进度条的连续曲线表达进行中，而不是让等待变成一个来回弹的球。</p>
-          </article>
-        </div>
-
-        <div class="m3-kit" data-reveal>
-          <div class="m3-kit__intro">
-            <h3>官方组件，在真实页面里试用。</h3>
-            <p>按钮、chip、开关和进度都来自同一套 M3E 角色和形状。只保留真的能操作的部分，不做静态示意图。</p>
-          </div>
-          <div class="m3-kit__stage">
-            <div class="m3-kit__row">
-              <button class="button button--filled button--sm" id="m3-add" type="button">Filled</button>
-              <button class="button button--outlined button--sm" id="m3-reset" type="button">Outlined</button>
-              <button class="m3-chip" type="button" data-m3-chip>Assist chip</button>
-              <button class="m3-chip m3-chip--selected is-selected" type="button" data-m3-chip>Selected</button>
-              <label class="switch m3-switch">
-                <input type="checkbox" checked aria-label="示例开关">
-                <span class="switch__track" aria-hidden="true"></span>
-                <span class="switch__label">Switch</span>
-              </label>
-            </div>
-            <div class="m3-kit__row m3-kit__row--bottom">
-              <div class="m3-progress" id="m3-progress" role="progressbar" aria-label="进度示例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><span style="width:62%"></span></div>
+            <div class="tokiui-actions">
+              <a class="button button--outlined button--sm" href="/software/tokinote/">在 TokiNote 里看 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+              <span>只追加 token，不覆盖旧名字。</span>
             </div>
           </div>
+
+          <div class="tokiui-dock-preview" aria-label="TokiUI 悬浮底栏示意">
+            <div class="tokiui-dock-preview__row">
+              <div class="tokiui-dock-preview__bar">
+                <span class="is-active"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h9l3 3v13H6zM15 4v4h4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><small>笔记</small></span>
+                <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="13" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="m7 17 4-4 3 2 3-4 3 3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg><small>相册</small></span>
+                <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 8v4l3 2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><small>专注</small></span>
+                <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M12 3v3m0 12v3M3 12h3m12 0h3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg><small>设置</small></span>
+              </div>
+              <span class="tokiui-dock-preview__fab" aria-hidden="true">+</span>
+            </div>
+            <p>51dp dock · 51dp FAB · 26dp radius</p>
+          </div>
         </div>
-        <div class="design-foot" data-reveal>
-          <p>这些不是装饰性的原则，而是我写界面时的默认值：<strong>先有层级，再有表情。</strong></p>
+
+        <div class="tokiui-grid">
+          <article class="tokiui-card tokiui-card--wide" data-reveal>
+            <span class="tokiui-card__kicker">01 / FOUNDATIONS</span>
+            <h3>先有层级，再有表情。</h3>
+            <p>颜色、字体、间距、圆角和动效都从同一套角色出发。深色不是简单反色，而是另一套关系。</p>
+            <div class="tokiui-swatches" aria-hidden="true">
+              <span class="tokiui-swatch tokiui-swatch--primary"></span>
+              <span class="tokiui-swatch tokiui-swatch--container"></span>
+              <span class="tokiui-swatch tokiui-swatch--secondary"></span>
+              <span class="tokiui-swatch tokiui-swatch--tertiary"></span>
+              <span class="tokiui-swatch tokiui-swatch--surface"></span>
+              <span class="tokiui-swatch tokiui-swatch--ink"></span>
+            </div>
+          </article>
+
+          <article class="tokiui-card" data-reveal style="--reveal-delay: 80ms">
+            <span class="tokiui-card__kicker">02 / COMPONENTS</span>
+            <h3>一套界面语言。</h3>
+            <ul class="tokiui-list">
+              <li><strong>Floating Dock</strong><span>51dp · 26dp 圆角 · 白色 14% 选中胶囊</span></li>
+              <li><strong>FAB</strong><span>51dp 圆形，和 Dock 同高</span></li>
+              <li><strong>Collapsing Header</strong><span>226dp → 64dp，滚动驱动</span></li>
+              <li><strong>Floating Drawer</strong><span>86% 宽 · 30dp 圆角</span></li>
+              <li><strong>Settings List</strong><span>28dp 卡片 · 8dp 间距</span></li>
+              <li><strong>Context Menu</strong><span>24dp 圆角 · 48dp 行高</span></li>
+            </ul>
+          </article>
+
+          <article class="tokiui-card" data-reveal style="--reveal-delay: 160ms">
+            <span class="tokiui-card__kicker">03 / TOKENS</span>
+            <h3>Token 先于截图。</h3>
+            <p>颜色、形状、间距和组件尺寸都能直接复制，不靠口头描述，也不靠「照着这个做」。</p>
+            <code class="tokiui-token">tokiui.tokens.json</code>
+            <code class="tokiui-token">compose/TokiTokens.kt</code>
+            <p class="tokiui-token-note">图标按 108dp 画布 / 72dp 可见区 / 66dp 安全区。</p>
+          </article>
         </div>
+
+        <div class="tokiui-specs" data-reveal>
+          <div><span>DOCK</span><strong>51dp</strong><small>26dp radius · 364dp max</small></div>
+          <div><span>FAB</span><strong>51dp</strong><small>same row as dock</small></div>
+          <div><span>HEADER</span><strong>226 → 64</strong><small>scroll progress</small></div>
+          <div><span>ICON</span><strong>108dp</strong><small>72dp visible</small></div>
+        </div>
+
+        <p class="tokiui-note" data-reveal>TokiUI 0.1.0 目前是内部标准，不发布公开包，也不包含 TokiNote 源码。先服务 TokiNote，再复用到其他项目。</p>
       </div>
     </section>
 
@@ -372,7 +392,7 @@
         <button class="sheet-back" type="button" data-sheet-back><svg class="icon" aria-hidden="true"><use href="#i-chevron-left"></use></svg> 返回</button>
         <p class="sheet-group-label">软件</p>
         <a class="sheet-link" href="/software/#work"><span>作品</span><small>App 与小工具</small></a>
-        <a class="sheet-link" href="/software/#design"><span>设计</span><small>Material 3 Expressive</small></a>
+        <a class="sheet-link" href="/software/#design"><span>设计</span><small>TokiUI</small></a>
         <a class="sheet-link" href="/software/#making"><span>制作中</span><small>TokiHarness / 二创</small></a>
         <a class="sheet-link sheet-link--home" href="/software/">进入软件首页 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
       </div>

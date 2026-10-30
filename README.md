@@ -25,7 +25,7 @@
 | 路径 | 内容 |
 | --- | --- |
 | `/` | **TokiPage**：欢迎语 + 三张可点击的入口卡（软件 / 探索 / 关于），底部一行短句 |
-| `/software/` | **软件**：作品、Material 3 Expressive 组件试用、正在制作的项目（TokiHarness） |
+| `/software/` | **软件**：作品、基于 Material 3 Expressive 的 TokiUI、正在制作的项目（TokiHarness） |
 | `/software/tokitodo/` | TokiTodo：待办，专注计时，手机锁与统计 |
 | `/software/luna/` | Luna：悬浮胶囊浏览器 |
 | `/software/tokinote/` | TokiNote：本地笔记软件，目前最完善的一个 |
@@ -63,7 +63,7 @@
 - 旧的 DESIGN NOTE 标签、截图画廊和「下一个」区块已移除；底部改为 **再看看...**，放另外三个软件的入口。
 - 详情页顶部按 GitHub / 正式版 / 测试版三行排列，正式版和测试版直接下载 `.apk`；TokiTodo 和 Luna 当前只有测试版。
 - 测试版会包含部分正式版尚未提供的预览功能，页面里已标注。
-- 设计区只保留能真正操作的 M3E 组件：Filled / Outlined 按钮、chip、Switch 和可推进的 Linear progress；动效改成 MD3E 连续进度条。
+- 设计区改成 **TokiUI** 介绍：说明它和 Material 3 Expressive 的关系、v0.1.0 状态、Foundations / Components / Tokens 三块内容，并用 TokiUI 的 51dp Dock + 51dp FAB 做一张示意。
 - TokiTodo / TokiNote 的作品卡片里各有两个可互动小部件（待办勾选 / 专注按钮、笔记底栏 / 强调色），卡片不再显示版本号和下载数。
 
 ## 探索

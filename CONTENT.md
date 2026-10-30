@@ -36,18 +36,16 @@
 - **TokiNote**：为什么坚持本地优先；图片「只存引用不复制」意味着什么；备份 JSON 的格式怎么设计。
 - **TokiFonts**：Pro / CE 的区分；教程如何降低风险；为什么字体值得被认真对待。
 
-下载量现在是 GitHub Releases 的真实数字（Luna 1、TokiNote 2）。等数字大一点再放更显眼的位置；不要为了好看编数字。
+作品卡不展示版本号和下载数；正式版 / 测试版和 APK 放在详情页。
 
-### 设计：把「我用 M3E」变成「我怎样用 M3E」
+### 设计：TokiUI，基于 Material 3 Expressive 的私人设计标准
 
-现在有 Color / Shape / Motion 三张卡。可以继续补：
+设计区介绍 TokiUI：它是 TokiNote 的私人设计标准，不是公开组件库。内容包括：
 
-- 一组 **before / after**：同一个卡片在 16px 和 28px 圆角下的阅读感受。
-- 一段 **shape scale**：12 / 18 / 24 / 32 / 48 的用途标注，而不是只放圆角。
-- 一个 **动效时长表**：哪些交互用 180ms，哪些用 620ms，为什么。
-- 一段 **反例**：什么时候不该用 Expressive（长文、表格、密集设置页）。
-
-设计页不需要变成设计系统文档；它更像一篇「我为什么这样判断」的短文。
+- **Foundations**：颜色角色、字体、间距、圆角、动效。
+- **Components**：Floating Dock、FAB、Collapsing Header、Floating Drawer、Settings List、Context Menu。
+- **Tokens**：`tokiui.tokens.json`、`compose/TokiTokens.kt`、108dp 图标画布。
+- **状态**：v0.1.0，对应 TokiNote 0.3.7-beta.3；只追加 token，不覆盖旧名字。
 
 ### 制作中：TokiHarness
 

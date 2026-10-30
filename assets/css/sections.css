@@ -2037,3 +2037,261 @@
   pointer-events: auto;
 }
 .project__widgets button { pointer-events: auto; }
+
+/* ---------- TokiUI design section ---------- */
+
+.tokiui-kicker {
+  display: block;
+  margin-bottom: 0.65rem;
+  color: var(--md-sys-color-primary);
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+}
+
+.tokiui-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(280px, 0.92fr);
+  gap: clamp(18px, 3vw, 42px);
+  align-items: center;
+  padding: clamp(22px, 3.4vw, 42px);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 32px;
+  background: var(--md-sys-color-surface-container-low);
+}
+
+.tokiui-lead {
+  margin: 0;
+  max-width: 48ch;
+  color: var(--md-sys-color-on-surface);
+  font-size: clamp(1.05rem, 1.7vw, 1.35rem);
+  line-height: 1.65;
+}
+
+.tokiui-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
+}
+
+.tokiui-badges span,
+.tokiui-token {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--r-full);
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+}
+
+.tokiui-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.tokiui-actions > span {
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.68rem;
+}
+
+.tokiui-dock-preview {
+  position: relative;
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 24px 18px;
+  overflow: hidden;
+  border-radius: 30px;
+  background: #1c1c1e;
+  color: #f7eee6;
+}
+
+.tokiui-dock-preview__bar {
+  display: flex;
+  width: min(100%, 364px);
+  height: 51px;
+  padding: 4px;
+  border: 1px solid rgb(255 255 255 / 0.14);
+  border-radius: 26px;
+  background: rgb(28 28 30 / 0.78);
+  box-shadow: 0 18px 44px rgb(0 0 0 / 0.26);
+  backdrop-filter: blur(24px);
+}
+
+.tokiui-dock-preview__bar > span {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1px;
+  border-radius: 20px;
+  color: rgb(255 255 255 / 0.68);
+  font-size: 0.56rem;
+}
+
+.tokiui-dock-preview__bar svg { width: 17px; height: 17px; color: #f2c88f; }
+.tokiui-dock-preview__bar span.is-active { background: rgb(255 255 255 / 0.14); color: #fff; }
+.tokiui-dock-preview__bar span.is-active svg { color: #fff; }
+
+.tokiui-dock-preview__fab {
+  display: grid;
+  place-items: center;
+  width: 51px;
+  height: 51px;
+  border-radius: 50%;
+  background: #f2c88f;
+  color: #211915;
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.32);
+}
+
+.tokiui-dock-preview > p {
+  margin: 0;
+  color: rgb(255 255 255 / 0.56);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+}
+
+.tokiui-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr 1fr;
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.tokiui-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.6vw, 30px);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 28px;
+  background: var(--md-sys-color-surface-container-low);
+}
+
+.tokiui-card__kicker {
+  color: var(--md-sys-color-primary);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+}
+
+.tokiui-card h3 {
+  margin: 0.7rem 0 0.55rem;
+  font-size: clamp(1.2rem, 2vw, 1.55rem);
+  letter-spacing: -0.035em;
+}
+
+.tokiui-card p,
+.tokiui-list span {
+  margin: 0;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.78rem;
+  line-height: 1.65;
+}
+
+.tokiui-swatches {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.tokiui-swatch { height: 34px; border-radius: 10px; }
+.tokiui-swatch--primary { background: var(--md-sys-color-primary); }
+.tokiui-swatch--container { background: var(--md-sys-color-primary-container); }
+.tokiui-swatch--secondary { background: var(--md-sys-color-secondary); }
+.tokiui-swatch--tertiary { background: var(--md-sys-color-tertiary); }
+.tokiui-swatch--surface { background: var(--md-sys-color-surface-container-highest); border: 1px solid var(--md-sys-color-outline-variant); }
+.tokiui-swatch--ink { background: var(--md-sys-color-on-surface); }
+
+.tokiui-list {
+  display: grid;
+  gap: 10px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tokiui-list li { display: grid; gap: 1px; }
+.tokiui-list strong { font-size: 0.78rem; font-weight: 650; }
+.tokiui-list span { font-size: 0.68rem; line-height: 1.45; }
+
+.tokiui-token { align-self: flex-start; margin-top: 8px; font-family: var(--font-mono); }
+.tokiui-token + .tokiui-token { margin-top: 4px; }
+.tokiui-token-note { margin-top: 14px !important; font-size: 0.68rem !important; }
+
+.tokiui-specs {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.tokiui-specs > div {
+  display: grid;
+  gap: 2px;
+  padding: 14px 16px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 20px;
+  background: var(--md-sys-color-surface-container-low);
+}
+
+.tokiui-specs span { color: var(--md-sys-color-on-surface-variant); font-family: var(--font-mono); font-size: 0.55rem; }
+.tokiui-specs strong { font-family: var(--font-display); font-size: 1.1rem; }
+.tokiui-specs small { color: var(--md-sys-color-on-surface-variant); font-size: 0.62rem; }
+
+.tokiui-note {
+  max-width: 74ch;
+  margin-top: 18px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.72rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 1100px) {
+  .tokiui-intro { grid-template-columns: minmax(0, 1fr); }
+  .tokiui-dock-preview { min-height: 200px; }
+}
+
+@media (max-width: 900px) {
+  .tokiui-grid { grid-template-columns: 1fr; }
+  .tokiui-specs { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 600px) {
+  .tokiui-intro { padding: 18px; border-radius: 24px; }
+  .tokiui-dock-preview { padding-inline: 12px; }
+  .tokiui-dock-preview__bar > span { font-size: 0.52rem; }
+  .tokiui-specs { grid-template-columns: 1fr; }
+}
+
+.tokiui-dock-preview__row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.tokiui-dock-preview__bar {
+  flex: 1 1 auto;
+  width: auto;
+  max-width: 364px;
+  min-width: 0;
+}
+
+.tokiui-dock-preview__fab { flex: none; }
+
+#design { scroll-margin-top: calc(var(--header-height) + 24px); }
