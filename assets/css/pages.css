@@ -4925,3 +4925,15 @@ body { overflow-x: clip; }
   letter-spacing: -0.035em;
   line-height: 1.55;
 }
+
+/* Wider short text; keep long-form within readable measure. */
+.tokiui-intro__copy,
+.tokiui-lead,
+.project-hero__tagline,
+.making-card p,
+.other-project p { max-width: none; }
+
+.project-note p {
+  font-size: clamp(1.16rem, 1.45vw, 1.34rem);
+  line-height: 1.52;
+}
