@@ -29,6 +29,8 @@
   const githubCategoryNames = { announcements: 'Announcements', general: 'General', ideas: 'Ideas', 'q-a': 'Q&A' };
   let githubToken = '';
   let githubUser = '';
+  let publishMode = 'github';
+  let replyMode = 'github';
   let repoMetaCache = null;
   try {
     githubToken = window.sessionStorage.getItem(GITHUB_TOKEN_KEY) || '';
@@ -98,7 +100,10 @@
   function updateAuthUI() {
     if (authLabel) authLabel.textContent = githubUser ? `@${githubUser}` : (isEnglish() ? 'Sign in with GitHub' : 'GitHub 登录');
     if (authSignout) authSignout.hidden = !githubUser;
-    if (replyAuthHint) replyAuthHint.textContent = githubUser ? (isEnglish() ? `Posting as @${githubUser}` : `以 @${githubUser} 身份发布`) : (isEnglish() ? 'Sign in to GitHub first' : '需要先登录 GitHub');
+    if (replyAuthHint) {
+      if (replyMode === 'github') replyAuthHint.textContent = isEnglish() ? 'Reply on GitHub' : '默认去 GitHub 回复';
+      else replyAuthHint.textContent = githubUser ? (isEnglish() ? `Posting as @${githubUser}` : `以 @${githubUser} 身份发布`) : (isEnglish() ? 'Sign in for direct replies' : '站内直发需要登录');
+    }
     document.querySelectorAll('[data-requires-auth]').forEach((node) => {
       node.classList.toggle('is-authed', Boolean(githubUser));
     });
@@ -839,8 +844,15 @@
       event.preventDefault();
       const text = replyBody?.value.trim();
       if (!text) { toast('先写一点内容再回复。'); replyBody?.focus(); return; }
-      if (!githubToken) { openAuthDialog(); toast('先登录 GitHub 才能发布评论。'); return; }
-      if (!activeDiscussion?.number) { toast('这条讨论暂时不能回复。'); return; }
+      if (!activeDiscussion) { toast('这条讨论暂时不能回复。'); return; }
+      if (replyMode === 'github') {
+        window.open(activeDiscussion.url, '_blank', 'noopener');
+        const copied = await copyText(text).catch(() => false);
+        toast(copied ? '已打开 GitHub；评论已复制，可直接粘贴' : '已打开 GitHub，请手动粘贴评论');
+        return;
+      }
+      if (!githubToken) { openAuthDialog(); toast('先登录 GitHub 才能站内直发。'); return; }
+      if (!activeDiscussion.number) { toast('这条讨论暂时不能回复。'); return; }
       const submit = discussionReply.querySelector('button[type="submit"]');
       if (submit) submit.disabled = true;
       try {
@@ -1117,6 +1129,34 @@
 
   if (saveDraftButton) saveDraftButton.addEventListener('click', saveDraft);
 
+  const setPublishMode = (mode) => {
+    publishMode = mode === 'direct' ? 'direct' : 'github';
+    document.querySelectorAll('[data-publish-mode]').forEach((button) => {
+      const active = button.dataset.publishMode === publishMode;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+  };
+
+  const setReplyMode = (mode) => {
+    replyMode = mode === 'direct' ? 'direct' : 'github';
+    document.querySelectorAll('[data-reply-mode]').forEach((button) => {
+      const active = button.dataset.replyMode === replyMode;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    updateAuthUI();
+  };
+
+  document.querySelectorAll('[data-publish-mode]').forEach((button) => {
+    button.addEventListener('click', () => setPublishMode(button.dataset.publishMode));
+  });
+  document.querySelectorAll('[data-reply-mode]').forEach((button) => {
+    button.addEventListener('click', () => setReplyMode(button.dataset.replyMode));
+  });
+  setPublishMode('github');
+  setReplyMode('github');
+
   if (publishButton) {
     publishButton.addEventListener('click', async () => {
       const title = titleInput ? titleInput.value.trim() : '';
@@ -1133,13 +1173,24 @@
         return;
       }
 
-      if (!githubToken) {
-        toast('先登录 GitHub 才能直接发布。');
-        openAuthDialog();
+      const category = categorySelect?.value || 'general';
+
+      if (publishMode === 'github') {
+        const url = new URL(newDiscussionUrl);
+        url.searchParams.set('title', title);
+        url.searchParams.set('body', markdown);
+        url.searchParams.set('category', category);
+        window.open(url.href, '_blank', 'noopener');
+        const copied = await copyText(markdown).catch(() => false);
+        toast(copied ? '已打开 GitHub；正文已复制，可直接粘贴' : '已打开 GitHub，请手动粘贴正文');
         return;
       }
 
-      const category = categorySelect?.value || 'general';
+      if (!githubToken) {
+        toast('先登录 GitHub 才能站内直发。');
+        openAuthDialog();
+        return;
+      }
       const original = publishButton.innerHTML;
       publishButton.disabled = true;
       publishButton.textContent = '发布中…';

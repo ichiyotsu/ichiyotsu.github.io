@@ -249,6 +249,10 @@
             <div class="composer__footer">
               <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 登录 GitHub 后，发布会直接写入 Discussions；未登录时会先打开登录。</p>
               <div class="composer__actions">
+                <div class="publish-mode" role="group" aria-label="发布方式">
+                  <button class="publish-mode__button is-active" type="button" data-publish-mode="github" aria-pressed="true">GitHub 页面</button>
+                  <button class="publish-mode__button" type="button" data-publish-mode="direct" aria-pressed="false">站内直发</button>
+                </div>
                 <label class="switch composer__syntax">
                   <input type="checkbox" id="markdown-toggle">
                   <span class="switch__track" aria-hidden="true"></span>
@@ -306,7 +310,14 @@
       <form class="discussion-reply-panel" id="discussion-reply" hidden>
         <label for="reply-body">写评论</label>
         <textarea id="reply-body" rows="8" maxlength="4000" placeholder="登录 GitHub 后，这里会直接发布评论…"></textarea>
-        <div class="discussion-reply__foot"><span id="reply-auth-hint">需要先登录 GitHub</span><button class="button button--filled button--sm" type="submit">发布评论</button></div>
+        <div class="discussion-reply__foot">
+          <div class="publish-mode publish-mode--reply" role="group" aria-label="评论方式">
+            <button class="publish-mode__button is-active" type="button" data-reply-mode="github" aria-pressed="true">GitHub</button>
+            <button class="publish-mode__button" type="button" data-reply-mode="direct" aria-pressed="false">站内直发</button>
+          </div>
+          <span id="reply-auth-hint">默认去 GitHub 回复</span>
+          <button class="button button--filled button--sm" type="submit" id="reply-submit">发布评论</button>
+        </div>
       </form>
     </div>
   </dialog>

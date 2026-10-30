@@ -4728,3 +4728,37 @@ body { overflow-x: clip; }
   .compose-dialog__panel .composer__grid { grid-template-columns: minmax(0, 1fr); }
   .compose-type, .compose-type .explore-select__button, .compose-type .explore-select__menu { width: 100%; }
 }
+
+.publish-mode {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--r-full);
+  background: var(--md-sys-color-surface-container-high);
+}
+
+.publish-mode__button {
+  min-height: 30px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  font-weight: 550;
+  cursor: pointer;
+}
+
+.publish-mode__button:hover { background: var(--state-hover); color: var(--md-sys-color-on-surface); }
+.publish-mode__button.is-active { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+
+.publish-mode--reply { margin-right: auto; }
+.discussion-reply__foot { flex-wrap: wrap; gap: 8px; }
+
+@media (max-width: 600px) {
+  .publish-mode { order: -1; }
+  .composer__actions { justify-content: flex-start; }
+}
