@@ -1593,3 +1593,21 @@ body.is-menu-open { overflow: hidden; }
     transform: translateX(-50%);
   }
 }
+
+/* Mobile footer: reset the old static-footer overrides so the glass returns */
+@media (max-width: 860px) {
+  .site-footer {
+    background: color-mix(in srgb, var(--md-sys-color-surface) 72%, transparent) !important;
+    box-shadow: 0 -10px 32px rgb(0 0 0 / 0.05) !important;
+    backdrop-filter: blur(18px) saturate(1.45) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.45) !important;
+    isolation: isolate;
+    will-change: backdrop-filter;
+  }
+
+  .site-footer::before {
+    display: block !important;
+    height: 34px;
+    background: linear-gradient(to top, color-mix(in srgb, var(--md-sys-color-surface) 70%, transparent), transparent);
+  }
+}
