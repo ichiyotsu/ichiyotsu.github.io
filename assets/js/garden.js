@@ -835,7 +835,7 @@
     discussionCommentToggle.addEventListener('click', () => {
       const open = discussionDialog?.classList.toggle('is-replying');
       if (discussionReply) discussionReply.hidden = !open;
-      if (open) window.setTimeout(() => replyBody?.focus(), 60);
+      if (open && window.matchMedia('(min-width: 901px)').matches) window.setTimeout(() => replyBody?.focus(), 60);
     });
   }
 
@@ -894,7 +894,7 @@
     else composeDialog.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
     restoreDraft();
-    window.setTimeout(() => { if (titleInput) titleInput.focus({ preventScroll: true }); }, 80);
+    window.setTimeout(() => { if (titleInput && window.matchMedia('(min-width: 901px)').matches) titleInput.focus({ preventScroll: true }); }, 80);
   }
 
   function closeCompose() {
@@ -1134,7 +1134,8 @@
     document.querySelectorAll('[data-publish-mode]').forEach((button) => {
       const active = button.dataset.publishMode === publishMode;
       button.classList.toggle('is-active', active);
-      button.setAttribute('aria-pressed', String(active));
+      button.classList.toggle('is-selected', active);
+      button.setAttribute('aria-selected', String(active));
     });
   };
 
@@ -1143,17 +1144,56 @@
     document.querySelectorAll('[data-reply-mode]').forEach((button) => {
       const active = button.dataset.replyMode === replyMode;
       button.classList.toggle('is-active', active);
-      button.setAttribute('aria-pressed', String(active));
+      button.classList.toggle('is-selected', active);
+      button.setAttribute('aria-selected', String(active));
     });
     updateAuthUI();
   };
 
-  document.querySelectorAll('[data-publish-mode]').forEach((button) => {
-    button.addEventListener('click', () => setPublishMode(button.dataset.publishMode));
+  const publishModeToggle = document.getElementById('publish-mode-toggle');
+  const publishModeMenu = document.getElementById('publish-mode-menu');
+  const replyModeToggle = document.getElementById('reply-mode-toggle');
+  const replyModeMenu = document.getElementById('reply-mode-menu');
+
+  const closeModeMenu = (toggle, menu) => {
+    if (!toggle || !menu) return;
+    menu.hidden = true;
+    toggle.setAttribute('aria-expanded', 'false');
+  };
+
+  const bindModeMenu = (toggle, menu, setMode, readMode) => {
+    if (!toggle || !menu) return;
+    toggle.addEventListener('click', () => {
+      const open = menu.hidden;
+      closeModeMenu(publishModeToggle, publishModeMenu);
+      closeModeMenu(replyModeToggle, replyModeMenu);
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+    });
+    menu.querySelectorAll('[data-publish-mode],[data-reply-mode]').forEach((button) => {
+      button.addEventListener('click', () => {
+        setMode(button.dataset.publishMode || button.dataset.replyMode);
+        closeModeMenu(toggle, menu);
+      });
+    });
+  };
+
+  bindModeMenu(publishModeToggle, publishModeMenu, setPublishMode, () => publishMode);
+  bindModeMenu(replyModeToggle, replyModeMenu, setReplyMode, () => replyMode);
+
+  document.addEventListener('click', (event) => {
+    if (!event.target.closest('.publish-split')) {
+      closeModeMenu(publishModeToggle, publishModeMenu);
+      closeModeMenu(replyModeToggle, replyModeMenu);
+    }
   });
-  document.querySelectorAll('[data-reply-mode]').forEach((button) => {
-    button.addEventListener('click', () => setReplyMode(button.dataset.replyMode));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') {
+      closeModeMenu(publishModeToggle, publishModeMenu);
+      closeModeMenu(replyModeToggle, replyModeMenu);
+    }
   });
+
   setPublishMode('github');
   setReplyMode('github');
 

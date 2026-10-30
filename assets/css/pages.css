@@ -4762,3 +4762,149 @@ body { overflow-x: clip; }
   .publish-mode { order: -1; }
   .composer__actions { justify-content: flex-start; }
 }
+
+/* Publish mode attached to the publish button */
+.publish-split {
+  position: relative;
+  display: inline-flex;
+  align-items: stretch;
+  border-radius: var(--r-full);
+  background: var(--md-sys-color-primary);
+}
+
+.publish-split__main {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  box-shadow: none !important;
+}
+
+.publish-split__toggle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  border-left: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: 0 var(--r-full) var(--r-full) 0;
+  background: transparent;
+  color: var(--md-sys-color-on-primary);
+  cursor: pointer;
+}
+
+.publish-split__toggle:hover { background: rgb(255 255 255 / 0.12); }
+.publish-split__toggle .icon { width: 16px; height: 16px; transition: transform var(--dur-short) var(--ease-emphasized); }
+.publish-split__toggle[aria-expanded="true"] .icon { transform: rotate(180deg); }
+
+.publish-mode-menu {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 8px);
+  display: grid;
+  gap: 3px;
+  width: 154px;
+  padding: 6px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 18px;
+  background: var(--md-sys-color-surface-container);
+  box-shadow: var(--shadow-2);
+  z-index: 30;
+}
+
+.publish-mode-menu[hidden] { display: none; }
+
+.publish-mode-menu__option {
+  min-height: 34px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  text-align: left;
+  cursor: pointer;
+}
+
+.publish-mode-menu__option:hover { background: var(--state-hover); color: var(--md-sys-color-on-surface); }
+.publish-mode-menu__option.is-selected { background: var(--md-sys-color-primary-container); color: var(--md-sys-color-on-primary-container); }
+.publish-split--reply { margin-left: auto; }
+.publish-split--reply .publish-split__toggle { min-height: 34px; }
+
+@media (max-width: 600px) {
+  .publish-split { align-self: flex-end; }
+  .publish-mode-menu { right: 0; width: 146px; }
+}
+
+/* Floating editor toolbar */
+.compose-dialog__panel .editor-pane {
+  position: relative;
+  padding-bottom: 58px;
+}
+
+.compose-dialog__panel .editor-toolbar--floating {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  z-index: 6;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 2px;
+  width: max-content;
+  max-width: calc(100% - 20px);
+  margin: 0;
+  padding: 5px 6px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  transform: translateX(-50%);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--r-full);
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 90%, transparent);
+  box-shadow: var(--shadow-2);
+  backdrop-filter: blur(14px);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.compose-dialog__panel .editor-toolbar--floating::-webkit-scrollbar { display: none; }
+.compose-dialog__panel .editor-toolbar--floating button { flex: none; min-width: 32px; height: 32px; }
+.compose-dialog__panel .editor-toolbar--floating .editor-toolbar__sep { flex: none; }
+
+.compose-dialog__panel textarea,
+.compose-dialog__panel .rich-editor {
+  padding-bottom: 64px;
+}
+
+@media (max-width: 760px) {
+  .compose-dialog__panel .editor-toolbar--floating {
+    left: 8px;
+    right: 8px;
+    width: auto;
+    max-width: none;
+    transform: none;
+    justify-content: flex-start;
+  }
+}
+
+/* Mobile sheets: light, stable entrance without full-height transform jitter */
+@media (max-width: 900px) {
+  .compose-dialog__panel,
+  .discussion-dialog__panel,
+  .nav-sheet__panel {
+    animation: mobile-sheet-in 0.26s cubic-bezier(0.2, 0, 0, 1) both;
+    will-change: transform, opacity;
+    overscroll-behavior: contain;
+  }
+
+  .compose-dialog::backdrop,
+  .discussion-dialog::backdrop {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+@keyframes mobile-sheet-in {
+  from { opacity: 0.65; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: translate3d(0, 0, 0); }
+}

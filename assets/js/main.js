@@ -527,4 +527,22 @@
     m3Value = 0;
     setM3Progress(m3Value);
   });
+
+  /* ---------- Mobile TokiNote-style dock ---------- */
+
+  const dock = document.createElement('nav');
+  dock.className = 'mobile-dock';
+  dock.setAttribute('aria-label', '移动端导航');
+  const path = window.location.pathname;
+  const dockPage = path === '/' ? 'home' : path.startsWith('/software') ? 'software' : path.startsWith('/garden') ? 'garden' : path.startsWith('/about') ? 'about' : '';
+  const dockItems = [
+    ['home', '/', '主页', '<path d="m4 10 8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>'],
+    ['software', '/software/', '软件', '<rect x="4" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/>'],
+    ['garden', '/garden/', '探索', '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 8.5-2.1 5-5 2.1 2.1-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>'],
+    ['about', '/about/', '关于', '<circle cx="12" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c.6-3.4 3.1-5.2 7-5.2s6.4 1.8 7 5.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>']
+  ];
+  dock.innerHTML = dockItems.map(([key, href, label, icon]) =>
+    `<a href="${href}"${dockPage === key ? ' aria-current="page"' : ''}><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icon}</svg><span>${label}</span></a>`
+  ).join('');
+  document.body.appendChild(dock);
 })();

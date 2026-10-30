@@ -217,7 +217,11 @@
               </div>
             </div>
 
-            <div class="editor-toolbar" role="toolbar" aria-label="格式工具">
+            <div class="editor-grid">
+              <div class="editor-pane">
+                <textarea id="post-body" rows="12" placeholder="用 Markdown 写，或者关掉 Markdown 用富文本工具栏排版…"></textarea>
+                <div class="rich-editor" id="rich-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="富文本编辑器" hidden></div>
+            <div class="editor-toolbar editor-toolbar--floating" role="toolbar" aria-label="格式工具">
               <button type="button" data-action="bold" aria-label="粗体" title="粗体"><strong>B</strong></button>
               <button type="button" data-action="italic" aria-label="斜体" title="斜体"><em>I</em></button>
               <button type="button" data-action="strike" aria-label="删除线" title="删除线"><s>S</s></button>
@@ -235,10 +239,6 @@
               <button type="button" data-action="small" aria-label="A−，减小字号" title="减小字号">A−</button>
             </div>
 
-            <div class="editor-grid">
-              <div class="editor-pane">
-                <textarea id="post-body" rows="12" placeholder="用 Markdown 写，或者关掉 Markdown 用富文本工具栏排版…"></textarea>
-                <div class="rich-editor" id="rich-editor" contenteditable="true" role="textbox" aria-multiline="true" aria-label="富文本编辑器" hidden></div>
               </div>
               <div class="preview-pane" id="preview-pane">
                 <div class="preview-pane__head"><span>预览</span><span id="preview-mode">Markdown</span></div>
@@ -247,19 +247,22 @@
             </div>
 
             <div class="composer__footer">
-              <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 登录 GitHub 后，发布会直接写入 Discussions；未登录时会先打开登录。</p>
+              <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 默认打开 GitHub 页面发布；也可以登录后选择站内直发。</p>
               <div class="composer__actions">
-                <div class="publish-mode" role="group" aria-label="发布方式">
-                  <button class="publish-mode__button is-active" type="button" data-publish-mode="github" aria-pressed="true">GitHub 页面</button>
-                  <button class="publish-mode__button" type="button" data-publish-mode="direct" aria-pressed="false">站内直发</button>
-                </div>
                 <label class="switch composer__syntax">
                   <input type="checkbox" id="markdown-toggle">
                   <span class="switch__track" aria-hidden="true"></span>
                   <span class="switch__label">Markdown</span>
                 </label>
                 <button class="button button--outlined button--sm" id="save-draft" type="button">保存草稿</button>
-                <button class="button button--filled button--sm" id="publish-post" type="button">发布</button>
+                <div class="publish-split">
+                  <button class="button button--filled button--sm publish-split__main" id="publish-post" type="button">发布</button>
+                  <button class="publish-split__toggle" id="publish-mode-toggle" type="button" aria-label="选择发布方式" aria-haspopup="listbox" aria-expanded="false" aria-controls="publish-mode-menu"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"></use></svg></button>
+                  <div class="publish-mode-menu" id="publish-mode-menu" role="listbox" aria-label="发布方式" hidden>
+                    <button class="publish-mode-menu__option is-selected" type="button" role="option" aria-selected="true" data-publish-mode="github">GitHub 页面</button>
+                    <button class="publish-mode-menu__option" type="button" role="option" aria-selected="false" data-publish-mode="direct">站内直发</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -311,12 +314,15 @@
         <label for="reply-body">写评论</label>
         <textarea id="reply-body" rows="8" maxlength="4000" placeholder="登录 GitHub 后，这里会直接发布评论…"></textarea>
         <div class="discussion-reply__foot">
-          <div class="publish-mode publish-mode--reply" role="group" aria-label="评论方式">
-            <button class="publish-mode__button is-active" type="button" data-reply-mode="github" aria-pressed="true">GitHub</button>
-            <button class="publish-mode__button" type="button" data-reply-mode="direct" aria-pressed="false">站内直发</button>
-          </div>
           <span id="reply-auth-hint">默认去 GitHub 回复</span>
-          <button class="button button--filled button--sm" type="submit" id="reply-submit">发布评论</button>
+          <div class="publish-split publish-split--reply">
+            <button class="button button--filled button--sm publish-split__main" type="submit" id="reply-submit">发布评论</button>
+            <button class="publish-split__toggle" id="reply-mode-toggle" type="button" aria-label="选择评论方式" aria-haspopup="listbox" aria-expanded="false" aria-controls="reply-mode-menu"><svg class="icon" aria-hidden="true"><use href="#i-chevron-down"></use></svg></button>
+            <div class="publish-mode-menu" id="reply-mode-menu" role="listbox" aria-label="评论方式" hidden>
+              <button class="publish-mode-menu__option is-selected" type="button" role="option" aria-selected="true" data-reply-mode="github">GitHub</button>
+              <button class="publish-mode-menu__option" type="button" role="option" aria-selected="false" data-reply-mode="direct">站内直发</button>
+            </div>
+          </div>
         </div>
       </form>
     </div>
