@@ -1426,23 +1426,6 @@ body.is-searching { overflow: hidden; }
 @media (max-width: 340px) {
   .topbar .icon-button,
   .topbar .lang-toggle,
-  .topbar .site-search-toggle { width: 34px !important; min-width: 34px !important; height: 34px !important; }
-}
-
-/* YesIcon site mark beside the wordmark */
-.brand { gap: 7px; }
-.brand__mark--small { width: 26px; height: 26px; border-radius: 8px; filter: none; }
-.brand__mark--small svg { display: block; width: 100%; height: 100%; }
-
-@media (max-width: 360px) {
-  .brand { gap: 5px; padding: 0.35rem 0.55rem; font-size: 1.02rem; }
-  .brand__mark--small { width: 22px; height: 22px; border-radius: 7px; }
-}
-
-@media (max-width: 340px) {
-  .topbar .icon-button,
-  .topbar .lang-toggle,
   .topbar .site-search-toggle { width: 30px !important; min-width: 30px !important; height: 30px !important; }
-  .brand { font-size: 0.94rem; padding: 0.3rem 0.45rem; }
-  .brand__mark--small { width: 20px; height: 20px; }
+  .brand { font-size: 0.94rem; }
 }
