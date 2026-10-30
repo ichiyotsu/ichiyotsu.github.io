@@ -1034,16 +1034,39 @@ body {
 .mobile-dock { display: none; }
 
 @media (max-width: 860px) {
-  .site-footer { display: none !important; }
   .site-header .menu-button { display: none !important; }
   body {
     padding-bottom: calc(86px + env(safe-area-inset-bottom));
   }
 
+  .site-footer {
+    display: block !important;
+    position: static !important;
+    inset: auto !important;
+    z-index: auto !important;
+    height: auto !important;
+    margin: 18px 0 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .site-footer::before { display: none !important; }
+
+  .site-footer .footer__inner {
+    width: calc(100% - 2 * var(--gutter));
+    min-height: 0;
+    margin-inline: auto;
+    padding: 12px 0 8px;
+    border-top: 1px solid var(--md-sys-color-outline-variant);
+  }
+
   .mobile-dock {
     position: fixed;
-    left: 12px;
-    right: 12px;
+    left: var(--gutter);
+    right: var(--gutter);
     bottom: calc(10px + env(safe-area-inset-bottom));
     z-index: 175;
     display: flex;
@@ -1051,15 +1074,15 @@ body {
     justify-content: space-around;
     height: 58px;
     padding: 5px;
-    border: 1px solid rgb(255 255 255 / 0.14);
-    border-radius: 24px;
-    background: color-mix(in srgb, #211915 94%, transparent);
-    box-shadow: 0 16px 40px rgb(0 0 0 / 0.28);
-    backdrop-filter: blur(16px) saturate(1.3);
-    -webkit-backdrop-filter: blur(16px) saturate(1.3);
+    border: 1px solid rgb(255 255 255 / 0.16);
+    border-radius: 30px;
+    background: rgb(30 23 19 / 0.72);
+    box-shadow: 0 18px 44px rgb(0 0 0 / 0.26);
+    backdrop-filter: blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
   }
 
-  body[data-page="garden"] .mobile-dock { right: 86px; }
+  body[data-page="garden"] .mobile-dock { right: calc(var(--gutter) + 70px); }
 
   .mobile-dock a {
     display: flex;
@@ -1070,7 +1093,7 @@ body {
     justify-content: center;
     gap: 2px;
     border-radius: 19px;
-    color: rgb(247 238 230 / 0.66);
+    color: rgb(247 238 230 / 0.9);
     font-family: var(--font-body);
     font-size: 0.58rem;
     line-height: 1;
@@ -1082,7 +1105,7 @@ body {
 
   body[data-page="garden"] .compose-fab {
     left: auto;
-    right: 12px;
+    right: var(--gutter);
     bottom: calc(10px + env(safe-area-inset-bottom));
     width: 58px;
     height: 58px;
@@ -1095,6 +1118,5 @@ body {
 }
 
 @media (max-width: 360px) {
-  body[data-page="garden"] .mobile-dock { right: 80px; }
   .mobile-dock a { font-size: 0.54rem; }
 }
