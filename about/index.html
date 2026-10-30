@@ -30,11 +30,11 @@
   <link rel="preload" href="/assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/smiley-sans-subset.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261030k">
-  <link rel="stylesheet" href="/assets/css/base.css?v=20261030k">
-  <link rel="stylesheet" href="/assets/css/components.css?v=20261030k">
-  <link rel="stylesheet" href="/assets/css/sections.css?v=20261030k">
-  <link rel="stylesheet" href="/assets/css/pages.css?v=20261030k">
+  <link rel="stylesheet" href="/assets/css/tokens.css?v=20261030n">
+  <link rel="stylesheet" href="/assets/css/base.css?v=20261030n">
+  <link rel="stylesheet" href="/assets/css/components.css?v=20261030n">
+  <link rel="stylesheet" href="/assets/css/sections.css?v=20261030n">
+  <link rel="stylesheet" href="/assets/css/pages.css?v=20261030n">
   <script>
     document.documentElement.classList.replace('no-js', 'js');
     (function () {
@@ -118,12 +118,6 @@
             <h2>怎么做的</h2>
             <p>花园来自 Discussions 提供。其他的都是 AI agent 时代的产物。</p>
 
-            <h2>或许会坚持</h2>
-            <ul class="about-points">
-              <li><strong>先好用，再好玩。</strong>动效是标点，不是正文。</li>
-              <li><strong>数据先属于你。</strong>能本地完成的事，不默认上传。</li>
-              <li><strong>少即是多。</strong>没有追踪、没有弹窗、没有自动播放。</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -137,27 +131,24 @@
         </div>
 </div>
     </section>
-    <section class="section contact" id="contact" aria-labelledby="contact-title">
-      <div class="container">
-        <div class="contact-panel" data-reveal>
-          <div class="contact-panel__rings" aria-hidden="true"></div>
-          <div class="contact__content">
-            <div>
-              <h2 id="contact-title">有想法，<br>就聊聊。</h2>
-              <p class="contact__lede" data-edit="about-2" data-edit-label="about · p.contact__lede">欢迎提出你的想法和建议 !<br>开源软件 仅供娱乐 !</p>
-              <div class="contact__actions">
-                <a class="button button--on-primary" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 在 GitHub 找我</a>
-              </div>
-            </div>
-            <div class="contact__stamp" aria-hidden="true">
-              <svg class="contact__stamp-text" viewBox="0 0 120 120"><defs><path id="contact-circle" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0"/></defs><text><textPath href="#contact-circle">OPEN TO GOOD IDEAS • SAY HI • OPEN TO GOOD IDEAS •</textPath></text></svg>
-              <span class="contact__stamp-star">✳</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <a id="contact" aria-hidden="true"></a>
   </main>
+
+  <button class="contact-fab" id="contact-fab" type="button">
+    <span>有想法，就聊聊</span>
+    <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg>
+  </button>
+
+  <dialog class="contact-dialog" id="contact-dialog" aria-labelledby="contact-dialog-title">
+    <div class="contact-dialog__panel">
+      <button class="contact-dialog__close" id="contact-close" type="button" aria-label="关闭">
+        <svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+      <h2 id="contact-dialog-title">有想法，<br>就聊聊。</h2>
+      <p>欢迎提出你的想法和建议。<br>开源软件，仅供娱乐。</p>
+      <a class="button button--filled" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 在 GitHub 找我</a>
+    </div>
+  </dialog>
 
   <footer class="site-footer">
     <div class="footer__inner container">
@@ -203,7 +194,8 @@
     </div>
   </dialog>
 
-  <script src="/assets/js/i18n.js?v=20261030k" defer></script>
-  <script src="/assets/js/main.js?v=20261030k" defer></script>
+  <script src="/assets/js/i18n.js?v=20261030n" defer></script>
+  <script src="/assets/js/main.js?v=20261030n" defer></script>
+  <script src="/assets/js/about-page.js?v=20261030n" defer></script>
 </body>
 </html>

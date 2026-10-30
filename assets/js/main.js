@@ -331,10 +331,10 @@
     menuLayer.className = 'mobile-menu-layer';
     menuLayer.hidden = true;
     menuLayer.innerHTML = `
+      <button class="mobile-menu-close" type="button" aria-label="关闭菜单"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg></button>
       <div class="mobile-menu-panel" role="dialog" aria-modal="true" aria-label="Menu">
         <div class="mobile-menu-head">
           <h2>Menu</h2>
-          <button class="mobile-menu-close" type="button" aria-label="关闭菜单"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/></svg></button>
         </div>
         <nav class="mobile-menu-links" aria-label="站点菜单">
           <a href="/"${window.location.pathname === '/' ? ' aria-current="page"' : ''}>主页</a>

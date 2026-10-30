@@ -1517,3 +1517,79 @@ body.is-searching { overflow: hidden; }
 }
 .mobile-menu-links a[aria-current="page"] { color: var(--md-sys-color-primary); }
 body.is-menu-open { overflow: hidden; }
+
+/* Mobile menu close anchored to the page's top-right */
+.mobile-menu-close {
+  position: fixed;
+  top: calc(12px + env(safe-area-inset-top));
+  right: 16px;
+  z-index: 2;
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 72%, transparent);
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 70%, transparent);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+/* Keep the Search heading on mobile too */
+@media (max-width: 860px) {
+  .site-search-heading {
+    display: block;
+    margin-bottom: 4px;
+    font-size: clamp(2.8rem, 15vw, 4.2rem);
+    line-height: 0.9;
+  }
+}
+
+/* Mobile footer matches desktop; compose/contact float above it */
+@media (max-width: 860px) {
+  body { padding-bottom: calc(var(--bottom-bar-h) + env(safe-area-inset-bottom)); }
+
+  .site-footer {
+    display: block !important;
+    position: fixed !important;
+    inset: auto 0 0 !important;
+    z-index: 180 !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+  }
+
+  .site-footer::before { display: block !important; }
+
+  .site-footer .footer__inner {
+    width: calc(100% - 2 * var(--gutter));
+    min-height: var(--bottom-bar-h);
+    margin-inline: auto;
+    padding: 0;
+    border-top: 0;
+  }
+
+  body[data-page="garden"] .compose-fab,
+  .compose-fab {
+    right: auto;
+    left: 50%;
+    bottom: calc(var(--bottom-bar-h) + 12px + env(safe-area-inset-bottom));
+    width: auto;
+    height: 52px;
+    min-height: 52px;
+    padding: 0 18px;
+    transform: translateX(-50%);
+  }
+
+  body[data-page="garden"] .compose-fab span,
+  .compose-fab span { display: inline; }
+  body[data-page="garden"] .compose-fab .icon { width: 20px; height: 20px; }
+}
+
+@media (max-width: 860px) {
+  body[data-page="garden"] .compose-fab,
+  .compose-fab {
+    position: fixed;
+    right: auto;
+    left: 50%;
+    bottom: calc(var(--bottom-bar-h) + 12px + env(safe-area-inset-bottom));
+    z-index: 190;
+    transform: translateX(-50%);
+  }
+}
