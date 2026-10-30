@@ -34,6 +34,7 @@
 
   let discussions = [];
   let activeCategory = 'all';
+  let searchQuery = '';
 
   const CATEGORY_LABELS = {
     general: '讨论',
@@ -300,9 +301,12 @@
   function renderBoard() {
     if (!list) return;
 
-    const visible = activeCategory === 'all'
-      ? discussions
-      : discussions.filter((item) => (item.category?.slug || 'general') === activeCategory);
+    const query = searchQuery.trim().toLowerCase();
+    const visible = discussions.filter((item) => {
+      if (activeCategory !== 'all' && (item.category?.slug || 'general') !== activeCategory) return false;
+      if (!query) return true;
+      return `${item.title} ${item.excerpt}`.toLowerCase().includes(query);
+    });
 
     list.replaceChildren();
     list.setAttribute('aria-busy', 'false');
@@ -364,6 +368,14 @@
 
   const refresh = document.getElementById('garden-refresh');
   if (refresh) refresh.addEventListener('click', () => loadBoard());
+
+  const searchInput = document.getElementById('explore-search');
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+      searchQuery = searchInput.value;
+      renderBoard();
+    });
+  }
   loadBoard({ quiet: true });
 
   // Keep an open tab fresh; the Actions workflow uses the same 120 minute cadence.
