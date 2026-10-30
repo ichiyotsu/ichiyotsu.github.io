@@ -15,6 +15,154 @@
   const dataUrl = '/garden/data/discussions.json';
   const discussionDialog = document.getElementById('discussion-dialog');
   const composeDialog = document.getElementById('compose-dialog');
+  const authDialog = document.getElementById('github-auth-dialog');
+  const authStatus = document.getElementById('github-auth-status');
+  const authTokenInput = document.getElementById('github-token');
+  const authLabel = document.getElementById('github-auth-label');
+  const authSignout = document.getElementById('github-signout');
+  const replyAuthHint = document.getElementById('reply-auth-hint');
+
+  const GITHUB_TOKEN_KEY = 'ichiyotsu-github-token';
+  const GITHUB_USER_KEY = 'ichiyotsu-github-user';
+  const githubOwner = 'ichiyotsu';
+  const githubRepo = 'ichiyotsu.github.io';
+  const githubCategoryNames = { announcements: 'Announcements', general: 'General', ideas: 'Ideas', 'q-a': 'Q&A' };
+  let githubToken = '';
+  let githubUser = '';
+  let repoMetaCache = null;
+  try {
+    githubToken = window.sessionStorage.getItem(GITHUB_TOKEN_KEY) || '';
+    githubUser = window.sessionStorage.getItem(GITHUB_USER_KEY) || '';
+  } catch (error) { /* sessionStorage unavailable */ }
+
+  const authHeaders = () => ({ Authorization: `Bearer ${githubToken}`, Accept: 'application/vnd.github+json' });
+
+  async function githubRest(path) {
+    const response = await fetch(`https://api.github.com${path}`, { headers: authHeaders(), cache: 'no-store' });
+    if (!response.ok) throw new Error(response.status === 401 ? 'Token 无效或已过期' : `GitHub ${response.status}`);
+    return response.json();
+  }
+
+  async function githubGraphql(query, variables = {}) {
+    const response = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: { ...authHeaders(), 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query, variables })
+    });
+    const payload = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(payload.message || `GitHub ${response.status}`);
+    if (payload.errors?.length) throw new Error(payload.errors[0].message || 'GitHub GraphQL 出错');
+    return payload.data;
+  }
+
+  async function getRepoMeta() {
+    if (repoMetaCache) return repoMetaCache;
+    const data = await githubGraphql(
+      `query($owner:String!,$name:String!){repository(owner:$owner,name:$name){id discussionCategories(first:20){nodes{id name}}}}`,
+      { owner: githubOwner, name: githubRepo }
+    );
+    const repo = data.repository;
+    repoMetaCache = {
+      id: repo.id,
+      categories: new Map(repo.discussionCategories.nodes.map((category) => [category.name.toLowerCase(), category.id]))
+    };
+    return repoMetaCache;
+  }
+
+  async function createDiscussion({ title, body, category }) {
+    const meta = await getRepoMeta();
+    const categoryName = githubCategoryNames[category] || 'General';
+    const categoryId = meta.categories.get(categoryName.toLowerCase());
+    if (!categoryId) throw new Error(`找不到 ${categoryName} 分区`);
+    const data = await githubGraphql(
+      `mutation($repositoryId:ID!,$categoryId:ID!,$title:String!,$body:String!){createDiscussion(input:{repositoryId:$repositoryId,categoryId:$categoryId,title:$title,body:$body}){discussion{number url title}}}`,
+      { repositoryId: meta.id, categoryId, title, body }
+    );
+    return data.createDiscussion.discussion;
+  }
+
+  async function addDiscussionComment(number, body) {
+    const data = await githubGraphql(
+      `query($owner:String!,$name:String!,$number:Int!){repository(owner:$owner,name:$name){discussion(number:$number){id}}}`,
+      { owner: githubOwner, name: githubRepo, number }
+    );
+    const discussionId = data.repository.discussion?.id;
+    if (!discussionId) throw new Error('找不到这条讨论');
+    const result = await githubGraphql(
+      `mutation($discussionId:ID!,$body:String!){addDiscussionComment(input:{discussionId:$discussionId,body:$body}){comment{url}}}`,
+      { discussionId, body }
+    );
+    return result.addDiscussionComment.comment;
+  }
+
+  function updateAuthUI() {
+    if (authLabel) authLabel.textContent = githubUser ? `@${githubUser}` : (isEnglish() ? 'Sign in with GitHub' : 'GitHub 登录');
+    if (authSignout) authSignout.hidden = !githubUser;
+    if (replyAuthHint) replyAuthHint.textContent = githubUser ? (isEnglish() ? `Posting as @${githubUser}` : `以 @${githubUser} 身份发布`) : (isEnglish() ? 'Sign in to GitHub first' : '需要先登录 GitHub');
+    document.querySelectorAll('[data-requires-auth]').forEach((node) => {
+      node.classList.toggle('is-authed', Boolean(githubUser));
+    });
+  }
+
+  function openAuthDialog() {
+    if (!authDialog) return;
+    if (authStatus) authStatus.textContent = '';
+    if (typeof authDialog.showModal === 'function') authDialog.showModal();
+    else authDialog.setAttribute('open', '');
+    window.setTimeout(() => authTokenInput?.focus(), 80);
+  }
+
+  const authClose = document.getElementById('github-auth-close');
+  const authSave = document.getElementById('github-token-save');
+  const authTrigger = document.getElementById('github-signin');
+  if (authTrigger) authTrigger.addEventListener('click', openAuthDialog);
+  if (authClose) authClose.addEventListener('click', () => authDialog?.close());
+  if (authDialog) {
+    authDialog.addEventListener('click', (event) => {
+      if (event.target === authDialog) authDialog.close();
+    });
+  }
+  if (authSave) {
+    authSave.addEventListener('click', async () => {
+      const token = authTokenInput?.value.trim() || '';
+      if (!token) { if (authStatus) authStatus.textContent = '先粘贴一个 GitHub token。'; return; }
+      if (authStatus) authStatus.textContent = '正在验证…';
+      authSave.disabled = true;
+      try {
+        const response = await fetch('https://api.github.com/user', { headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' } });
+        if (!response.ok) throw new Error(response.status === 401 ? 'Token 无效或已过期' : `GitHub ${response.status}`);
+        const user = await response.json();
+        githubToken = token;
+        githubUser = user.login || 'github';
+        try {
+          window.sessionStorage.setItem(GITHUB_TOKEN_KEY, githubToken);
+          window.sessionStorage.setItem(GITHUB_USER_KEY, githubUser);
+        } catch (error) { /* sessionStorage unavailable */ }
+        updateAuthUI();
+        if (authStatus) authStatus.textContent = `已登录 @${githubUser}`;
+        authDialog?.close();
+        toast(`已登录 GitHub：@${githubUser}`);
+      } catch (error) {
+        if (authStatus) authStatus.textContent = `登录失败：${error.message}`;
+      } finally {
+        authSave.disabled = false;
+      }
+    });
+  }
+  if (authSignout) {
+    authSignout.addEventListener('click', () => {
+      githubToken = '';
+      githubUser = '';
+      repoMetaCache = null;
+      try {
+        window.sessionStorage.removeItem(GITHUB_TOKEN_KEY);
+        window.sessionStorage.removeItem(GITHUB_USER_KEY);
+      } catch (error) { /* sessionStorage unavailable */ }
+      updateAuthUI();
+      toast('已退出 GitHub');
+    });
+  }
+
 
   const toast = (message) => {
     if (window.ichiyotsuToast) window.ichiyotsuToast(message);
@@ -31,24 +179,26 @@
 
   const isEnglish = () => document.documentElement.lang === 'en';
   const unit = (zh, en) => (isEnglish() ? en : zh);
+  updateAuthUI();
 
   let discussions = [];
-  let activeSection = 'all';
+  let activeSection = 'general';
   let splitPercent = 30;
   let searchQuery = '';
 
   const CATEGORY_LABELS = {
-    general: '讨论',
-    announcements: '公告',
-    'q-a': '问答',
-    ideas: '想法',
-    polls: '投票',
-    'show-and-tell': '展示'
+    general: ['讨论', 'General'],
+    announcements: ['公告', 'Announcements'],
+    'q-a': ['问答', 'Q&A'],
+    ideas: ['想法', 'Ideas'],
+    polls: ['投票', 'Poll'],
+    'show-and-tell': ['展示', 'Show and tell']
   };
 
   const categoryLabel = (category) => {
-    if (!category) return '讨论';
-    return CATEGORY_LABELS[category.slug] || category.name || '讨论';
+    const pair = CATEGORY_LABELS[category?.slug] || null;
+    if (pair) return isEnglish() ? pair[1] : pair[0];
+    return category?.name || (isEnglish() ? 'General' : '讨论');
   };
 
   /* ---------- Small local state (likes / views) ---------- */
@@ -167,10 +317,11 @@
     const time = document.createElement('time');
     time.dateTime = item.updatedAt || item.createdAt || '';
     time.textContent = formatDate(item.updatedAt || item.createdAt);
+    meta.append(author, time);
+
     const category = document.createElement('span');
-    category.className = 'garden-category';
-    category.textContent = categoryLabel(item.category);
-    meta.append(author, time, category);
+    category.className = 'garden-card__category';
+    category.textContent = `#${categoryLabel(item.category)}`;
 
     const title = document.createElement('h3');
     const titleLink = document.createElement('a');
@@ -203,11 +354,12 @@
     views.className = 'garden-action garden-action--views';
     views.setAttribute('aria-label', `${postViews(key)} 次站内浏览`);
     views.title = '站内浏览，保存在本机';
-    views.append(makeIcon('i-eye'));
-    const viewCount = document.createElement('span');
+    const viewCount = document.createElement('strong');
     viewCount.dataset.viewCount = key;
-    viewCount.textContent = `${postViews(key)} ${unit('浏览', 'views')}`;
-    views.appendChild(viewCount);
+    viewCount.textContent = String(postViews(key));
+    const viewLabel = document.createElement('span');
+    viewLabel.textContent = unit('浏览', 'views');
+    views.append(viewCount, viewLabel);
 
     const liked = isLiked(key);
     const like = document.createElement('button');
@@ -216,16 +368,17 @@
     like.dataset.likeId = key;
     like.setAttribute('aria-pressed', String(liked));
     like.title = '站内点赞，保存在本机';
-    like.append(makeIcon('i-heart'));
-    const likeCount = document.createElement('span');
+    const likeCount = document.createElement('strong');
     likeCount.dataset.likeCount = '';
-    likeCount.textContent = `${(Number(item.upvotes) || 0) + (liked ? 1 : 0)} ${unit('点赞', 'likes')}`;
-    like.appendChild(likeCount);
+    likeCount.textContent = String((Number(item.upvotes) || 0) + (liked ? 1 : 0));
+    const likeLabel = document.createElement('span');
+    likeLabel.textContent = unit('点赞', 'likes');
+    like.append(likeCount, likeLabel);
     like.addEventListener('click', (event) => {
       event.stopPropagation();
       toggleLike(key);
       const nextLiked = isLiked(key);
-      likeCount.textContent = `${(Number(item.upvotes) || 0) + (nextLiked ? 1 : 0)} ${unit('点赞', 'likes')}`;
+      likeCount.textContent = String((Number(item.upvotes) || 0) + (nextLiked ? 1 : 0));
     });
 
     const comments = document.createElement('button');
@@ -233,7 +386,11 @@
     comments.className = 'garden-action';
     comments.dataset.discussionIndex = String(index);
     comments.setAttribute('aria-label', `${item.comments || 0} 评论，在站内查看`);
-    comments.append(makeIcon('i-comment'), document.createTextNode(`${item.comments || 0} ${unit('评论', 'comments')}`));
+    const commentCount = document.createElement('strong');
+    commentCount.textContent = String(item.comments || 0);
+    const commentLabel = document.createElement('span');
+    commentLabel.textContent = unit('评论', 'comments');
+    comments.append(commentCount, commentLabel);
     comments.addEventListener('click', (event) => {
       event.stopPropagation();
       openDiscussion(index);
@@ -250,7 +407,7 @@
       openDiscussion(index);
     });
 
-    article.append(meta, title, excerpt);
+    article.append(meta, category, title, excerpt);
     if (media) article.appendChild(media);
     article.appendChild(actions);
     return article;
@@ -258,27 +415,21 @@
 
   const sectionLabel = (section) => {
     const labels = {
-      all: ['全部', 'All'],
       announcements: ['更新公告', 'Announcements'],
-      general: ['软件讨论', 'Software talk']
+      general: ['说点什么', 'General'],
+      ideas: ['设计建议', 'Ideas'],
+      'q-a': ['社区问答', 'Q&A']
     };
-    const pair = labels[section] || labels.all;
+    const pair = labels[section] || labels.general;
     return isEnglish() ? pair[1] : pair[0];
   };
 
-  const inSection = (item, section) => {
-    const slug = item.category?.slug || 'general';
-    if (section === 'announcements') return slug === 'announcements';
-    if (section === 'general') return slug !== 'announcements';
-    return true;
-  };
+  const inSection = (item, section) => (item.category?.slug || 'general') === section;
 
   function updateSectionUI() {
     const current = document.getElementById('section-current');
     if (current) current.textContent = sectionLabel(activeSection);
-    const title = document.getElementById('feed-title');
-    if (title) title.textContent = sectionLabel(activeSection);
-    document.querySelectorAll('.explore-select__option').forEach((option) => {
+    document.querySelectorAll('.explore-select__option[data-section]').forEach((option) => {
       const selected = option.dataset.section === activeSection;
       option.classList.toggle('is-selected', selected);
       option.setAttribute('aria-selected', String(selected));
@@ -286,23 +437,39 @@
   }
 
   function renderPinned() {
-    const card = document.getElementById('pinned-card');
-    if (!card) return;
-    const pinned = discussions.find((item) => (item.category?.slug || '') === 'announcements');
-    if (!pinned) {
-      card.hidden = true;
+    const target = document.getElementById('pinned-list');
+    if (!target) return;
+    const pinned = discussions
+      .filter((item) => (item.category?.slug || '') === 'announcements')
+      .slice(0, 5);
+    target.replaceChildren();
+    if (!pinned.length) {
+      const empty = document.createElement('p');
+      empty.className = 'explore-pinned__empty';
+      empty.textContent = unit('还没有置顶公告。', 'No pinned announcements yet.');
+      target.appendChild(empty);
       return;
     }
-    card.hidden = false;
-    document.getElementById('pinned-title').textContent = pinned.title;
-    document.getElementById('pinned-excerpt').textContent = pinned.excerpt || '';
-    document.getElementById('pinned-meta').textContent = `@${pinned.author?.login || 'github'} · ${unit('置顶', 'Pinned')}`;
-    const link = document.getElementById('pinned-link');
-    link.href = pinned.url || discussionsUrl;
-    link.onclick = (event) => {
-      event.preventDefault();
-      openDiscussion(pinned.__index);
-    };
+    pinned.forEach((item) => {
+      const row = document.createElement('a');
+      row.className = 'explore-pinned__item';
+      row.href = item.url || discussionsUrl;
+      row.target = '_blank';
+      row.rel = 'noopener noreferrer';
+      row.addEventListener('click', (event) => {
+        event.preventDefault();
+        openDiscussion(item.__index);
+      });
+      const tag = document.createElement('span');
+      tag.className = 'explore-pinned__tag';
+      tag.textContent = unit('#公告', '#Announcements');
+      const title = document.createElement('strong');
+      title.textContent = item.title;
+      const time = document.createElement('small');
+      time.textContent = formatDate(item.updatedAt || item.createdAt);
+      row.append(tag, title, time);
+      target.appendChild(row);
+    });
   }
 
   function renderBoard() {
@@ -315,16 +482,13 @@
       return `${item.title} ${item.excerpt}`.toLowerCase().includes(query);
     });
 
-    const count = document.getElementById('feed-count');
-    if (count) count.textContent = `${visible.length} ${unit('条', 'posts')}`;
-
     list.replaceChildren();
     list.setAttribute('aria-busy', 'false');
 
     if (!visible.length) {
       const empty = document.createElement('p');
       empty.className = 'garden-empty';
-      empty.append('这个分类里还没有讨论。');
+      empty.append(unit('这个分类里还没有帖子。', 'No posts in this section yet.'));
       const link = document.createElement('a');
       link.href = discussionsUrl;
       link.target = '_blank';
@@ -453,6 +617,7 @@
 
   document.addEventListener('ichiyotsu:lang', () => {
     updateSectionUI();
+    updateAuthUI();
     renderPinned();
     renderBoard();
   });
@@ -472,7 +637,12 @@
   const previewMode = document.getElementById('preview-mode');
   const titleInput = document.getElementById('post-title');
   const categorySelect = document.getElementById('post-category');
+  const categoryToggle = document.getElementById('post-category-toggle');
+  const categoryMenu = document.getElementById('post-category-menu');
+  const postCategoryLabel = document.getElementById('post-category-label');
   const publishButton = document.getElementById('publish-post');
+  const saveDraftButton = document.getElementById('save-draft');
+  const DRAFT_KEY = 'ichiyotsu-explore-draft';
 
   if (!composer || !markdownToggle || !textarea || !richEditor || !preview) return;
 
@@ -569,7 +739,7 @@
     const item = discussions[index];
     if (!item || !discussionDialog) return;
 
-    discussionCategory.textContent = categoryLabel(item.category);
+    discussionCategory.textContent = `#${categoryLabel(item.category)}`;
     discussionTitle.textContent = item.title;
 
     discussionMeta.replaceChildren();
@@ -582,16 +752,16 @@
     const key = itemKey(item);
     const views = bumpPostViews(key);
     const viewsNode = document.querySelector(`[data-view-count="${CSS.escape(key)}"]`);
-    if (viewsNode) viewsNode.textContent = `${postViews(key)} ${unit('浏览', 'views')}`;
-    if (discussionViews) discussionViews.textContent = `${views} ${unit('浏览', 'views')}`;
-    if (discussionCommentsStat) discussionCommentsStat.textContent = `${item.comments || 0} ${unit('评论', 'comments')}`;
+    if (viewsNode) viewsNode.textContent = String(postViews(key));
+    if (discussionViews) discussionViews.innerHTML = `<strong>${views}</strong><span>${unit('浏览', 'views')}</span>`;
+    if (discussionCommentsStat) discussionCommentsStat.innerHTML = `<strong>${item.comments || 0}</strong><span>${unit('评论', 'comments')}</span>`;
 
     if (discussionLike) {
       const liked = isLiked(itemKey(item));
       discussionLike.classList.toggle('is-liked', liked);
       discussionLike.setAttribute('aria-pressed', String(liked));
       const number = discussionLike.querySelector('[data-like-count]');
-      if (number) number.textContent = `${(Number(item.upvotes) || 0) + (liked ? 1 : 0)} ${unit('点赞', 'likes')}`;
+      if (number) number.textContent = String((Number(item.upvotes) || 0) + (liked ? 1 : 0));
     }
 
     discussionBody.innerHTML = parseMarkdown(item.body || item.excerpt || '');
@@ -605,7 +775,7 @@
       empty.className = 'garden-empty';
       empty.style.border = '0';
       empty.style.padding = '1rem 0';
-      empty.textContent = '还没有评论。去 GitHub 写下第一条。';
+      empty.textContent = '还没有评论。登录 GitHub 后写下第一条。';
       discussionCommentList.appendChild(empty);
     } else {
       items.forEach((comment) => {
@@ -638,10 +808,12 @@
     if (discussionReply) discussionReply.hidden = true;
     activeDiscussion = item;
 
-    if (typeof discussionDialog.showModal === 'function') {
-      discussionDialog.showModal();
-    } else {
-      discussionDialog.setAttribute('open', '');
+    if (!discussionDialog.open) {
+      if (typeof discussionDialog.showModal === 'function') {
+        discussionDialog.showModal();
+      } else {
+        discussionDialog.setAttribute('open', '');
+      }
     }
     document.body.style.overflow = 'hidden';
   }
@@ -663,14 +835,27 @@
   }
 
   if (discussionReply) {
-    discussionReply.addEventListener('submit', (event) => {
+    discussionReply.addEventListener('submit', async (event) => {
       event.preventDefault();
       const text = replyBody?.value.trim();
       if (!text) { toast('先写一点内容再回复。'); replyBody?.focus(); return; }
-      if (activeDiscussion) window.open(activeDiscussion.url, '_blank', 'noopener');
-      copyText(text).then((copied) => {
-        toast(copied ? '评论已复制，粘贴到 GitHub 回复框。' : '已打开 GitHub，请手动粘贴评论。');
-      });
+      if (!githubToken) { openAuthDialog(); toast('先登录 GitHub 才能发布评论。'); return; }
+      if (!activeDiscussion?.number) { toast('这条讨论暂时不能回复。'); return; }
+      const submit = discussionReply.querySelector('button[type="submit"]');
+      if (submit) submit.disabled = true;
+      try {
+        const comment = await addDiscussionComment(activeDiscussion.number, text);
+        activeDiscussion.commentItems = Array.isArray(activeDiscussion.commentItems) ? activeDiscussion.commentItems : [];
+        activeDiscussion.commentItems.push({ author: { login: githubUser }, createdAt: new Date().toISOString(), body: text });
+        activeDiscussion.comments = (Number(activeDiscussion.comments) || 0) + 1;
+        replyBody.value = '';
+        openDiscussion(activeDiscussion.__index);
+        toast('评论已发布到 GitHub');
+      } catch (error) {
+        toast(`评论发布失败：${error.message}`);
+      } finally {
+        if (submit) submit.disabled = false;
+      }
     });
   }
   if (discussionLike) {
@@ -696,6 +881,7 @@
     if (typeof composeDialog.showModal === 'function') composeDialog.showModal();
     else composeDialog.setAttribute('open', '');
     document.body.style.overflow = 'hidden';
+    restoreDraft();
     window.setTimeout(() => { if (titleInput) titleInput.focus({ preventScroll: true }); }, 80);
   }
 
@@ -855,6 +1041,82 @@
     });
   });
 
+  const setPostCategory = (value) => {
+    if (!categorySelect) return;
+    categorySelect.value = value;
+    const option = categoryMenu?.querySelector(`[data-category="${CSS.escape(value)}"]`);
+    if (postCategoryLabel) postCategoryLabel.textContent = option?.querySelector('span')?.textContent || '说点什么';
+    categoryMenu?.querySelectorAll('[data-category]').forEach((node) => {
+      const active = node.dataset.category === value;
+      node.classList.toggle('is-selected', active);
+      node.setAttribute('aria-selected', String(active));
+    });
+  };
+
+  if (categoryToggle && categoryMenu) {
+    const closeCategory = () => {
+      categoryMenu.hidden = true;
+      categoryToggle.setAttribute('aria-expanded', 'false');
+    };
+    categoryToggle.addEventListener('click', () => {
+      const open = categoryMenu.hidden;
+      categoryMenu.hidden = !open;
+      categoryToggle.setAttribute('aria-expanded', String(open));
+    });
+    categoryMenu.querySelectorAll('[data-category]').forEach((option) => {
+      option.addEventListener('click', () => {
+        setPostCategory(option.dataset.category || 'general');
+        closeCategory();
+      });
+    });
+    document.addEventListener('click', (event) => {
+      if (!event.target.closest('#compose-type')) closeCategory();
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') closeCategory();
+    });
+  }
+  setPostCategory('general');
+
+  function saveDraft() {
+    const draft = {
+      title: titleInput?.value || '',
+      category: categorySelect?.value || 'general',
+      markdown: textarea.value,
+      rich: richEditor.innerHTML,
+      richMode: isRich(),
+      savedAt: new Date().toISOString()
+    };
+    try {
+      window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+      toast('草稿已保存');
+    } catch (error) {
+      toast('草稿保存失败');
+    }
+  }
+
+  function restoreDraft() {
+    try {
+      const raw = window.localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const draft = JSON.parse(raw);
+      if (!draft || (!draft.title && !draft.markdown && !draft.rich)) return;
+      if (titleInput && !titleInput.value) titleInput.value = draft.title || '';
+      if (draft.category) setPostCategory(draft.category);
+      if (draft.richMode) {
+        markdownToggle.checked = false;
+        richEditor.innerHTML = draft.rich || '';
+      } else {
+        markdownToggle.checked = true;
+        textarea.value = draft.markdown || '';
+      }
+      updatePreview();
+      toast('已恢复上次草稿');
+    } catch (error) { /* ignore broken draft */ }
+  }
+
+  if (saveDraftButton) saveDraftButton.addEventListener('click', saveDraft);
+
   if (publishButton) {
     publishButton.addEventListener('click', async () => {
       const title = titleInput ? titleInput.value.trim() : '';
@@ -871,22 +1133,43 @@
         return;
       }
 
-      const publishType = categorySelect ? categorySelect.value : 'discussion-general';
-      const isIssue = publishType.startsWith('issue-');
-      const url = new URL(isIssue ? newIssueUrl : newDiscussionUrl);
-      url.searchParams.set('title', title);
-      url.searchParams.set('body', markdown);
-      if (isIssue) {
-        url.searchParams.set('labels', publishType === 'issue-bug' ? 'bug' : 'enhancement');
-      } else {
-        url.searchParams.set('category', publishType.replace('discussion-', '') || 'general');
+      if (!githubToken) {
+        toast('先登录 GitHub 才能直接发布。');
+        openAuthDialog();
+        return;
       }
 
-      const canPrefill = url.href.length < 7000;
-      window.open(canPrefill ? url.href : (isIssue ? newIssueUrl : `${newDiscussionUrl}?category=general`), '_blank', 'noopener');
-
-      const copied = await copyText(markdown).catch(() => false);
-      toast(copied ? '已打开 GitHub；正文已复制，可直接粘贴' : '已打开 GitHub，请登录后发布');
+      const category = categorySelect?.value || 'general';
+      const original = publishButton.innerHTML;
+      publishButton.disabled = true;
+      publishButton.textContent = '发布中…';
+      try {
+        const discussion = await createDiscussion({ title, body: markdown, category });
+        try { window.localStorage.removeItem(DRAFT_KEY); } catch (error) { /* ignore */ }
+        const created = {
+          number: discussion.number,
+          title,
+          body: markdown,
+          excerpt: markdown.replace(/[#>*_`\[\]]/g, '').slice(0, 160),
+          url: discussion.url,
+          category: { slug: category, name: githubCategoryNames[category] || 'General' },
+          author: { login: githubUser || 'github' },
+          comments: 0,
+          upvotes: 0,
+          createdAt: new Date().toISOString()
+        };
+        discussions = [created, ...discussions].map((item, index) => ({ ...item, __index: index }));
+        renderStats(discussions);
+        renderPinned();
+        renderBoard();
+        toast(`已发布到 GitHub：${discussion.title}`);
+        closeCompose();
+      } catch (error) {
+        toast(`发布失败：${error.message}`);
+      } finally {
+        publishButton.disabled = false;
+        publishButton.innerHTML = original;
+      }
     });
   }
 

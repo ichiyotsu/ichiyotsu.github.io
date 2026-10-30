@@ -408,7 +408,7 @@
       // Restart the transition even if the same button is pressed twice.
       void stage.offsetWidth;
       stage.classList.add('is-playing');
-      window.setTimeout(() => stage.classList.remove('is-playing'), 900);
+      window.setTimeout(() => stage.classList.remove('is-playing'), 1900);
     });
   }
 
@@ -464,5 +464,67 @@
 
   window.requestAnimationFrame(() => {
     window.requestAnimationFrame(() => body.classList.add('is-loaded'));
+  });
+
+  /* ---------- Software page mini components ---------- */
+
+  document.querySelectorAll('[data-todo-task]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const next = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(next));
+    });
+  });
+
+  document.querySelectorAll('[data-todo-focus]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const next = button.getAttribute('aria-pressed') !== 'true';
+      button.setAttribute('aria-pressed', String(next));
+      const value = button.querySelector('strong');
+      if (value) value.textContent = next ? '专注中' : '25:00';
+    });
+  });
+
+  document.querySelectorAll('[data-note-tab]').forEach((button) => {
+    button.addEventListener('click', () => {
+      button.closest('.mini-notebar')?.querySelectorAll('[data-note-tab]').forEach((item) => {
+        item.classList.toggle('is-active', item === button);
+      });
+    });
+  });
+
+  document.querySelectorAll('[data-note-tone]').forEach((button) => {
+    const tones = ['', 'rose', 'blue', 'green'];
+    button.addEventListener('click', () => {
+      const card = button.closest('.project--note');
+      if (!card) return;
+      const current = tones.indexOf(card.dataset.tone || '');
+      card.dataset.tone = tones[(current + 1) % tones.length];
+    });
+  });
+
+  document.querySelectorAll('[data-m3-chip]').forEach((chip) => {
+    chip.addEventListener('click', () => {
+      const selected = chip.classList.contains('is-selected');
+      chip.classList.toggle('is-selected', !selected);
+      chip.setAttribute('aria-pressed', String(!selected));
+    });
+  });
+
+  const m3Progress = document.getElementById('m3-progress');
+  const setM3Progress = (value) => {
+    if (!m3Progress) return;
+    const next = Math.max(0, Math.min(100, value));
+    m3Progress.setAttribute('aria-valuenow', String(next));
+    const bar = m3Progress.querySelector('span');
+    if (bar) bar.style.width = `${next}%`;
+  };
+  let m3Value = 62;
+  document.getElementById('m3-add')?.addEventListener('click', () => {
+    m3Value = m3Value >= 100 ? 12 : m3Value + 12;
+    setM3Progress(m3Value);
+  });
+  document.getElementById('m3-reset')?.addEventListener('click', () => {
+    m3Value = 0;
+    setM3Progress(m3Value);
   });
 })();

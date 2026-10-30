@@ -195,66 +195,56 @@
 
         <div class="work-grid">
           <article class="project project--todo" data-reveal>
-            <a class="project__link" href="/software/tokitodo/">
-              <div class="project__top">
-                <span class="project__meta">
-                  <span class="project__version">v0.1.0-beta.1</span>
-                  <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
-                </span>
-              </div>
-              <h3 class="project__title" data-edit="software-2" data-edit-label="software · h3.project__title">TokiTodo</h3>
+            <div class="project__link">
+              <a class="project__card-link" href="/software/tokitodo/" aria-label="查看 TokiTodo"></a>
+              <div class="project__head"><h3 class="project__title" data-edit="software-2" data-edit-label="software · h3.project__title">TokiTodo</h3><span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span></div>
               <p class="project__desc" data-edit="software-3" data-edit-label="software · p.project__desc">待办，专注计时，手机锁与统计。</p>
+              <div class="project__widgets project__widgets--todo" data-widget-group="todo">
+                <button class="mini-task" type="button" data-todo-task aria-pressed="false"><span class="mini-task__check" aria-hidden="true"></span><span class="mini-task__label">整理今天的待办</span></button>
+                <button class="mini-focus" type="button" data-todo-focus aria-pressed="false"><span>专注</span><strong>25:00</strong></button>
+              </div>
               <div class="project__media project__media--todo">
                 <span class="media-note media-note--todo"><span>今天</span><strong>4</strong><span>件待办</span></span>
                 <div class="phone phone--project"><div class="phone__screen"><img src="/assets/img/toki-todo.webp" width="540" height="1170" alt="" loading="lazy"></div></div>
               </div>
-            </a>
+            </div>
           </article>
 
           <article class="project project--luma" data-reveal style="--reveal-delay: 80ms">
-            <a class="project__link" href="/software/luna/">
-              <div class="project__top">
-                <span class="project__meta">
-                  <span class="project__version">v0.1.0-beta.1</span>
-                  <span class="project__downloads" title="GitHub Releases 累计下载"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg><span class="u-visually-hidden">下载</span> 1</span>
-                  <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
-                </span>
-              </div>
-              <h3 class="project__title" data-edit="software-4" data-edit-label="software · h3.project__title">Luna</h3>
+            <div class="project__link">
+              <a class="project__card-link" href="/software/luna/" aria-label="查看 Luna"></a>
+              <div class="project__head"><h3 class="project__title" data-edit="software-4" data-edit-label="software · h3.project__title">Luna</h3><span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span></div>
               <p class="project__desc" data-edit="software-5" data-edit-label="software · p.project__desc">悬浮胶囊浏览器。</p>
               <div class="project__media project__media--luma">
                 <img class="luma-shot" src="/assets/img/luma.webp" width="1400" height="933" alt="" loading="lazy">
                 <span class="media-pill">悬浮地址栏 · 8 种主题色</span>
               </div>
-            </a>
+            </div>
           </article>
 
           <article class="project project--note" data-reveal>
-            <a class="project__link" href="/software/tokinote/">
-              <div class="project__top">
-                <span class="project__meta">
-                  <span class="project__version">v0.3.7-beta.3</span>
-                  <span class="project__downloads" title="GitHub Releases 累计下载"><svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg><span class="u-visually-hidden">下载</span> 2</span>
-                  <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
-                </span>
-              </div>
-              <h3 class="project__title" data-edit="software-6" data-edit-label="software · h3.project__title">TokiNote</h3>
+            <div class="project__link">
+              <a class="project__card-link" href="/software/tokinote/" aria-label="查看 TokiNote"></a>
+              <div class="project__head"><h3 class="project__title" data-edit="software-6" data-edit-label="software · h3.project__title">TokiNote</h3><span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span></div>
               <p class="project__desc" data-edit="software-7" data-edit-label="software · p.project__desc">本地笔记软件<br>目前最完善的一个。</p>
+              <div class="project__widgets project__widgets--note" data-widget-group="note">
+                <div class="mini-notebar" role="group" aria-label="TokiNote 底栏试用">
+                  <button class="is-active" type="button" data-note-tab="笔记">笔记</button>
+                  <button type="button" data-note-tab="相册">相册</button>
+                  <button type="button" data-note-tab="专注">专注</button>
+                </div>
+                <button class="mini-swatch" type="button" data-note-tone aria-label="切换 TokiNote 强调色"><span aria-hidden="true"></span>强调色</button>
+              </div>
               <div class="project__media project__media--note">
                 <div class="phone phone--note"><div class="phone__screen"><img src="/assets/img/toki-note.webp" width="540" height="1170" alt="" loading="lazy"></div></div>
               </div>
-            </a>
+            </div>
           </article>
 
           <article class="project project--fonts" data-reveal style="--reveal-delay: 80ms">
-            <a class="project__link" href="/software/tokifonts/">
-              <div class="project__top">
-                <span class="project__meta">
-
-                  <span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span>
-                </span>
-              </div>
-              <h3 class="project__title" data-edit="software-8" data-edit-label="software · h3.project__title">TokiFonts</h3>
+            <div class="project__link">
+              <a class="project__card-link" href="/software/tokifonts/" aria-label="查看 TokiFonts"></a>
+              <div class="project__head"><h3 class="project__title" data-edit="software-8" data-edit-label="software · h3.project__title">TokiFonts</h3><span class="project__arrow" aria-hidden="true"><svg class="icon"><use href="#i-chevron-right"></use></svg></span></div>
               <p class="project__desc" data-edit="software-9" data-edit-label="software · p.project__desc">基于OneUI教程的字体资源库</p>
               <div class="project__media project__media--type" aria-hidden="true">
                 <span class="type-big">字</span>
@@ -262,7 +252,7 @@
                 <span class="type-caption">永 和 九 年 · 横 竖 撇 捺</span>
                 <span class="type-tag">OFL · 持续收录</span>
               </div>
-            </a>
+            </div>
           </article>
         </div>
 
@@ -303,27 +293,26 @@
           </article>
 
           <article class="design-card design-card--motion" data-reveal style="--reveal-delay: 160ms">
-            <div class="motion-stage">
-              <svg class="motion-curve" viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true"><path pathLength="100" d="M8 82 C 72 8 148 12 174 54 S 252 92 292 26"/></svg>
-              <span class="motion-track" aria-hidden="true"></span>
-              <button class="motion-ball" id="motion-demo" type="button" aria-label="PLAY，播放弹簧动效示例"><span>PLAY</span></button>
+            <div class="motion-stage motion-stage--progress">
+              <div class="motion-progress" role="progressbar" aria-label="连续进度动效" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><span></span></div>
+              <button class="motion-play" id="motion-demo" type="button">播放连续曲线</button>
             </div>
-            <h3>动效是标点。</h3>
-            <p>弹簧只用在能被「按」的地方。它应该让动作更清楚，而不是让等待变得更长。</p>
+            <h3>动效是连续曲线。</h3>
+            <p>用 MD3E 进度条的连续曲线表达进行中，而不是让等待变成一个来回弹的球。</p>
           </article>
         </div>
 
         <div class="m3-kit" data-reveal>
           <div class="m3-kit__intro">
             <h3>官方组件，在真实页面里试用。</h3>
-            <p>按钮、chip、开关、进度与排版都来自同一套 M3E 角色和形状。它们不是示意图，而是这个页面正在使用的组件。</p>
+            <p>按钮、chip、开关和进度都来自同一套 M3E 角色和形状。只保留真的能操作的部分，不做静态示意图。</p>
           </div>
           <div class="m3-kit__stage">
             <div class="m3-kit__row">
-              <button class="button button--filled button--sm" type="button">Filled</button>
-              <button class="button button--outlined button--sm" type="button">Outlined</button>
-              <span class="m3-chip">Assist chip</span>
-              <span class="m3-chip m3-chip--selected">Selected</span>
+              <button class="button button--filled button--sm" id="m3-add" type="button">Filled</button>
+              <button class="button button--outlined button--sm" id="m3-reset" type="button">Outlined</button>
+              <button class="m3-chip" type="button" data-m3-chip>Assist chip</button>
+              <button class="m3-chip m3-chip--selected is-selected" type="button" data-m3-chip>Selected</button>
               <label class="switch m3-switch">
                 <input type="checkbox" checked aria-label="示例开关">
                 <span class="switch__track" aria-hidden="true"></span>
@@ -331,15 +320,7 @@
               </label>
             </div>
             <div class="m3-kit__row m3-kit__row--bottom">
-              <span class="m3-progress" role="progressbar" aria-label="进度示例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><span></span></span>
-              <span class="m3-fab-demo" aria-hidden="true"><svg class="icon"><use href="#i-star"></use></svg></span>
-            </div>
-            <div class="m3-type-scale">
-              <span class="m3-type-display">Display</span>
-              <span class="m3-type-headline">Headline</span>
-              <span class="m3-type-title">Title</span>
-              <span class="m3-type-body">Body</span>
-              <span class="m3-type-label">LABEL</span>
+              <div class="m3-progress" id="m3-progress" role="progressbar" aria-label="进度示例" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62"><span style="width:62%"></span></div>
             </div>
           </div>
         </div>
@@ -358,7 +339,6 @@
         <a class="making-card" href="https://github.com/ichiyotsu/DeepSeek-Harness" target="_blank" rel="noopener noreferrer" data-reveal>
           <span class="making-card__mark" aria-hidden="true">DSH</span>
           <div class="making-card__body">
-            <span class="making-card__tag">TOKIHARNESS</span>
             <h3>TokiHarness</h3>
             <p data-edit="software-making" data-edit-label="software · making">正在尝试制作 DSH 手机版，基于 MD3E 设计的二创。敬请期待...</p>
             <span class="making-card__link">在 GitHub 看看 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></span>

@@ -121,23 +121,26 @@
     <div class="explore-controls">
       <div class="explore-select" id="section-select">
         <button class="explore-select__button" id="section-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="section-menu">
-          <svg class="icon" aria-hidden="true"><use href="#i-layers"></use></svg>
-          <span id="section-current">全部</span>
+          <svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg>
+          <span id="section-current">说点什么</span>
           <svg class="icon explore-select__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
         </button>
         <div class="explore-select__menu" id="section-menu" role="listbox" aria-label="探索分区" hidden>
-          <button class="explore-select__option is-selected" type="button" role="option" aria-selected="true" data-section="all"><svg class="icon" aria-hidden="true"><use href="#i-layers"></use></svg><span>全部</span></button>
           <button class="explore-select__option" type="button" role="option" aria-selected="false" data-section="announcements"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg><span>更新公告</span></button>
-          <button class="explore-select__option" type="button" role="option" aria-selected="false" data-section="general"><svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg><span>软件讨论</span></button>
+          <button class="explore-select__option is-selected" type="button" role="option" aria-selected="true" data-section="general"><svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg><span>说点什么</span></button>
+          <button class="explore-select__option" type="button" role="option" aria-selected="false" data-section="ideas"><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg><span>设计建议</span></button>
+          <button class="explore-select__option" type="button" role="option" aria-selected="false" data-section="q-a"><svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg><span>社区问答</span></button>
         </div>
       </div>
 
-      <div class="explore-statbar" id="garden-stats" aria-label="探索数据">
-        <div><strong id="stat-topics">—</strong><span>讨论</span></div>
-        <div><strong id="stat-questions">—</strong><span>问题</span></div>
-        <div title="本机浏览计数"><strong id="stat-views">—</strong><span>浏览</span></div>
-        <div><strong id="stat-comments">—</strong><span>回复</span></div>
-        <button class="icon-button garden-refresh" id="garden-refresh" type="button" aria-label="刷新整个探索页面"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></button>
+      <div class="explore-center-controls">
+        <div class="explore-statbar" id="garden-stats" aria-label="探索数据">
+          <div><strong id="stat-topics">—</strong><span>讨论</span></div>
+          <div><strong id="stat-questions">—</strong><span>问题</span></div>
+          <div title="本机浏览计数"><strong id="stat-views">—</strong><span>浏览</span></div>
+          <div><strong id="stat-comments">—</strong><span>回复</span></div>
+        </div>
+        <button class="icon-button explore-refresh" id="garden-refresh" type="button" aria-label="刷新整个探索页面"><svg class="icon" aria-hidden="true"><use href="#i-refresh"></use></svg></button>
       </div>
 
       <label class="explore-search">
@@ -147,43 +150,28 @@
     </div>
 
     <div class="explore-columns" id="explore-columns">
-      <aside class="explore-left" aria-label="快速链接和置顶公告">
-        <section class="explore-card explore-quick">
-          <h2>快速链接</h2>
-          <div class="explore-quick-list">
-            <a href="/software/"><span>软件</span><small>作品与制作中</small><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-            <a href="/about/"><span>关于</span><small>关于本站</small><svg class="icon" aria-hidden="true"><use href="#i-chevron-right"></use></svg></a>
-            <a href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer"><span>GitHub Discussions</span><small>发帖 / 回复</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-            <a href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer"><span>GitHub</span><small>@ichiyotsu</small><svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-          </div>
-        </section>
-
-        <section class="explore-card explore-pinned" id="pinned-card">
-          <div class="explore-pinned__eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg>置顶公告</div>
-          <a class="explore-pinned__link" id="pinned-link" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">
-            <strong id="pinned-title">站点更新</strong>
-            <span id="pinned-excerpt">最新公告正在同步…</span>
-            <small id="pinned-meta">GitHub Discussions</small>
-          </a>
-        </section>
-
-        <section class="explore-card explore-about">
-          <span class="garden-kicker">EXPLORE / DISCUSSIONS</span>
+      <aside class="explore-left" aria-label="置顶公告">
+        <div class="explore-left-head">
+          <span class="garden-kicker">EXPLORE</span>
           <p class="garden-lede" data-edit="garden-1" data-edit-label="garden · intro">一个长在 GitHub Discussions 上的讨论区。<br>这里会有版本更新公告和软件功能交流...<br>可能还有一些还没想好放哪里的东西。</p>
-          <p class="garden-note"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发帖/评论在 GitHub 完成；点赞/浏览保存在本机。</p>
+          <div class="explore-auth">
+            <button class="explore-auth__button" id="github-signin" type="button"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg><span id="github-auth-label">GitHub 登录</span></button>
+            <button class="explore-auth__clear" id="github-signout" type="button" hidden>退出</button>
+          </div>
+        </div>
+
+        <section class="explore-pinned" id="pinned-section" aria-labelledby="pinned-heading">
+          <h2 id="pinned-heading">置顶公告</h2>
+          <div class="explore-pinned-list" id="pinned-list">
+            <p class="explore-pinned__empty">正在同步置顶公告…</p>
+          </div>
         </section>
       </aside>
 
       <div class="explore-divider" id="explore-divider" role="separator" aria-label="调整左右栏宽度" aria-orientation="vertical" aria-valuemin="20" aria-valuemax="40" aria-valuenow="30" tabindex="0"><span aria-hidden="true"></span></div>
 
-      <section class="explore-feed" aria-label="探索帖子">
-        <header class="explore-feed-head">
-          <div class="explore-feed-title">
-            <h2 id="feed-title">全部</h2>
-            <span id="feed-count"></span>
-          </div>
-        </header>
-
+      <section class="explore-feed" id="board" aria-label="探索帖子">
+        <h2 class="u-visually-hidden">探索帖子</h2>
         <div class="garden-list" id="garden-list" aria-live="polite" aria-busy="true">
           <div class="garden-loading"><span class="status-dot" aria-hidden="true"></span> 正在从 GitHub 取回探索…</div>
         </div>
@@ -210,7 +198,23 @@
         <div class="composer" id="composer">
             <div class="composer__grid">
               <label class="field"><span>标题</span><input id="post-title" type="text" maxlength="120" placeholder="想聊点什么？" autocomplete="off"></label>
-              <label class="field field--category"><span>发布类型</span><select id="post-category"><option value="discussion-general">讨论</option><option value="discussion-q-a">讨论 · 问答</option><option value="discussion-ideas">讨论 · 想法</option><option value="issue-bug">Issue · 问题反馈</option><option value="issue-feature">Issue · 功能建议</option></select></label>
+              <div class="field field--category">
+                <span>发布类型</span>
+                <div class="explore-select compose-type" id="compose-type">
+                  <button class="explore-select__button" id="post-category-toggle" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="post-category-menu">
+                    <svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg>
+                    <span id="post-category-label">说点什么</span>
+                    <svg class="icon explore-select__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                  </button>
+                  <div class="explore-select__menu" id="post-category-menu" role="listbox" aria-label="发布类型" hidden>
+                    <button class="explore-select__option" type="button" role="option" aria-selected="false" data-category="announcements"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg><span>更新公告</span></button>
+                    <button class="explore-select__option is-selected" type="button" role="option" aria-selected="true" data-category="general"><svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg><span>说点什么</span></button>
+                    <button class="explore-select__option" type="button" role="option" aria-selected="false" data-category="ideas"><svg class="icon" aria-hidden="true"><use href="#i-star"></use></svg><span>设计建议</span></button>
+                    <button class="explore-select__option" type="button" role="option" aria-selected="false" data-category="q-a"><svg class="icon" aria-hidden="true"><use href="#i-comment"></use></svg><span>社区问答</span></button>
+                  </div>
+                  <select id="post-category" class="u-visually-hidden" tabindex="-1" aria-hidden="true"><option value="announcements">更新公告</option><option value="general" selected>说点什么</option><option value="ideas">设计建议</option><option value="q-a">社区问答</option></select>
+                </div>
+              </div>
             </div>
 
             <div class="editor-toolbar" role="toolbar" aria-label="格式工具">
@@ -243,14 +247,15 @@
             </div>
 
             <div class="composer__footer">
-              <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 发布会打开 GitHub 新建内容页，用你的账号发布。</p>
+              <p class="composer__hint"><svg class="icon" aria-hidden="true"><use href="#i-github"></use></svg> 登录 GitHub 后，发布会直接写入 Discussions；未登录时会先打开登录。</p>
               <div class="composer__actions">
                 <label class="switch composer__syntax">
-                  <input type="checkbox" id="markdown-toggle" checked>
+                  <input type="checkbox" id="markdown-toggle">
                   <span class="switch__track" aria-hidden="true"></span>
                   <span class="switch__label">Markdown</span>
                 </label>
-                <button class="button button--filled button--sm" id="publish-post" type="button">发布 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></button>
+                <button class="button button--outlined button--sm" id="save-draft" type="button">保存草稿</button>
+                <button class="button button--filled button--sm" id="publish-post" type="button">发布</button>
               </div>
             </div>
           </div>
@@ -260,6 +265,18 @@
   <button class="compose-fab" id="compose-fab" type="button" aria-label="写点什么">
     <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg><span>写点什么</span>
   </button>
+
+  <dialog class="github-auth-dialog" id="github-auth-dialog" aria-labelledby="github-auth-title">
+    <div class="github-auth-dialog__panel">
+      <button class="icon-button github-auth-dialog__close" id="github-auth-close" type="button" aria-label="关闭 GitHub 登录"><svg class="icon" aria-hidden="true"><use href="#i-close"></use></svg></button>
+      <h2 id="github-auth-title">登录 GitHub</h2>
+      <p>使用 GitHub Token 直接在站内发布。Token 只保存在本标签页的 <code>sessionStorage</code>，不会写入代码或 localStorage。</p>
+      <label class="field"><span>Fine-grained token</span><input id="github-token" type="password" autocomplete="off" spellcheck="false" placeholder="github_pat_… 或 ghp_…"></label>
+      <p class="github-auth-dialog__note">需要该仓库的 <strong>Discussions: Read and write</strong> 权限；经典 token 可用 <code>public_repo</code>。</p>
+      <div class="github-auth-dialog__actions"><button class="button button--filled button--sm" id="github-token-save" type="button">登录</button><a class="text-link" href="https://github.com/settings/tokens?type=beta" target="_blank" rel="noopener noreferrer">去创建 token ↗</a></div>
+      <p class="github-auth-dialog__status" id="github-auth-status" role="status"></p>
+    </div>
+  </dialog>
 
   <dialog class="discussion-dialog" id="discussion-dialog" aria-labelledby="discussion-dialog-title">
     <div class="discussion-dialog__panel">
@@ -277,19 +294,19 @@
 
       <div class="discussion-dialog__bottom">
         <div class="discussion-dialog__metrics">
-          <span id="discussion-views">0 浏览</span>
-          <button class="garden-action" id="discussion-like" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-heart"></use></svg><span data-like-count>0 点赞</span></button>
-          <span id="discussion-comments-stat">0 评论</span>
-          <a id="discussion-github" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">在 GitHub 查看 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
-          <button class="garden-action" id="discussion-copy" type="button"><svg class="icon" aria-hidden="true"><use href="#i-copy"></use></svg>复制链接</button>
+          <span class="discussion-metric" id="discussion-views"><strong>0</strong><span>浏览</span></span>
+          <button class="garden-action discussion-metric" id="discussion-like" type="button" aria-pressed="false"><strong data-like-count>0</strong><span>点赞</span></button>
+          <span class="discussion-metric" id="discussion-comments-stat"><strong>0</strong><span>评论</span></span>
+          <a id="discussion-github" href="https://github.com/ichiyotsu/ichiyotsu.github.io/discussions" target="_blank" rel="noopener noreferrer">在 GitHub 查看</a>
+          <button class="garden-action" id="discussion-copy" type="button">复制链接</button>
         </div>
         <button class="button button--filled button--sm discussion-comment-toggle" id="discussion-comment-toggle" type="button">评论</button>
       </div>
 
       <form class="discussion-reply-panel" id="discussion-reply" hidden>
         <label for="reply-body">写评论</label>
-        <textarea id="reply-body" rows="8" maxlength="4000" placeholder="在这里写，发布时会打开 GitHub 并复制内容…"></textarea>
-        <div class="discussion-reply__foot"><span>发布仍在 GitHub 完成</span><button class="button button--filled button--sm" type="submit">复制并去回复 <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></button></div>
+        <textarea id="reply-body" rows="8" maxlength="4000" placeholder="登录 GitHub 后，这里会直接发布评论…"></textarea>
+        <div class="discussion-reply__foot"><span id="reply-auth-hint">需要先登录 GitHub</span><button class="button button--filled button--sm" type="submit">发布评论</button></div>
       </form>
     </div>
   </dialog>
