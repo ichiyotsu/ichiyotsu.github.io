@@ -2295,3 +2295,17 @@
 .tokiui-dock-preview__fab { flex: none; }
 
 #design { scroll-margin-top: calc(var(--header-height) + 24px); }
+
+
+.tokiui-intro { display: block; margin-bottom: 24px; }
+.tokiui-intro__copy { max-width: 86ch; }
+.tokiui .section-head { margin-bottom: 24px; }
+.tokiui-grid { margin-top: 0; gap: 16px; }
+.tokiui-card h3 { margin: 0 0 10px; }
+.tokiui-card > p { margin: 0 0 8px; }
+
+.tokiui .section-head__main h2 {
+  max-width: none;
+  font-size: clamp(2.6rem, 3.35vw + 1.35rem, 5.2rem);
+  letter-spacing: -0.055em;
+}

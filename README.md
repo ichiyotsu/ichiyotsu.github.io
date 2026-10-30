@@ -63,7 +63,7 @@
 - 旧的 DESIGN NOTE 标签、截图画廊和「下一个」区块已移除；底部改为 **再看看...**，放另外三个软件的入口。
 - 详情页顶部按 GitHub / 正式版 / 测试版三行排列，正式版和测试版直接下载 `.apk`；TokiTodo 和 Luna 当前只有测试版。
 - 测试版会包含部分正式版尚未提供的预览功能，页面里已标注。
-- 设计区改成 **TokiUI** 介绍：说明它和 Material 3 Expressive 的关系、v0.1.0 状态、Foundations / Components / Tokens 三块内容，并用 TokiUI 的 51dp Dock + 51dp FAB 做一张示意。
+- 设计区改成 **TokiUI** 介绍：说明它和 Material Design3 Expressive 的关系、v0.1.0 状态、Foundations / Components / Tokens 三块内容；TokiUI 是面向所有软件的通用标准，TokiNote 只是第一个示例，不展示 Dock / FAB 的具体尺寸数据。
 - TokiTodo / TokiNote 的作品卡片里各有两个可互动小部件（待办勾选 / 专注按钮、笔记底栏 / 强调色），卡片不再显示版本号和下载数。
 
 ## 探索

@@ -40,12 +40,12 @@
 
 ### 设计：TokiUI，基于 Material 3 Expressive 的私人设计标准
 
-设计区介绍 TokiUI：它是 TokiNote 的私人设计标准，不是公开组件库。内容包括：
+设计区介绍 TokiUI：它是面向所有软件的通用设计标准，不是公开组件库；TokiNote 只是第一个示例。只做介绍，不公布 Dock / FAB 的具体尺寸数据。内容包括：
 
 - **Foundations**：颜色角色、字体、间距、圆角、动效。
 - **Components**：Floating Dock、FAB、Collapsing Header、Floating Drawer、Settings List、Context Menu。
-- **Tokens**：`tokiui.tokens.json`、`compose/TokiTokens.kt`、108dp 图标画布。
-- **状态**：v0.1.0，对应 TokiNote 0.3.7-beta.3；只追加 token，不覆盖旧名字。
+- **Tokens**：`tokiui.tokens.json`、`compose/TokiTokens.kt`。
+- **状态**：v0.1.0，示例为 TokiNote 0.3.7-beta.3；只追加 token，不覆盖旧名字。
 
 ### 制作中：TokiHarness
 
