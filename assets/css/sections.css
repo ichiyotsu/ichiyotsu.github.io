@@ -2309,3 +2309,29 @@
   font-size: clamp(2.6rem, 3.35vw + 1.35rem, 5.2rem);
   letter-spacing: -0.055em;
 }
+
+.project__arrow {
+  width: auto;
+  height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.project__head:hover .project__arrow { transform: translateX(3px); }
+.project__arrow .icon { width: 20px; height: 20px; }
+
+.project--note[data-tone="rose"] .mini-notebar button.is-active { background: #f09a9a; color: #251c17; }
+.project--note[data-tone="blue"] .mini-notebar button.is-active { background: #9abcf0; color: #251c17; }
+.project--note[data-tone="green"] .mini-notebar button.is-active { background: #a5d6a7; color: #251c17; }
+
+.project:hover .project__arrow,
+.project:focus-visible .project__arrow {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  transform: translateX(3px);
+}

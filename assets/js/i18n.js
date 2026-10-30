@@ -375,7 +375,7 @@
     }
   }
 
-  const LANGUAGE_ICON = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M3.5 12h17M12 3.5c3 3.4 3 13.6 0 17M12 3.5c-3 3.4-3 13.6 0 17" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>';
+  const LANGUAGE_ICON = '<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 5h14M9 2v3m4 0q-2 8-9 11m2-7q2 4 6 6m1 7l5-11l5 11m-1.37-3h-7.26"/></svg>';
 
   function updateButton(button) {
     if (!button.querySelector('svg')) button.innerHTML = LANGUAGE_ICON;

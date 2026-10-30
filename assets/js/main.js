@@ -328,7 +328,9 @@
 
   if (menuButton) {
     menuButton.setAttribute('aria-expanded', 'false');
-    menuButton.addEventListener('click', openSheet);
+    menuButton.addEventListener('click', () => {
+      window.location.href = window.location.pathname.startsWith('/menu') ? '/' : '/menu/';
+    });
   }
 
   if (navClose) navClose.addEventListener('click', closeSheet);
@@ -528,21 +530,136 @@
     setM3Progress(m3Value);
   });
 
-  /* ---------- Mobile TokiNote-style dock ---------- */
+  /* ---------- Site-wide search (YesIcon / Meteor icons) ---------- */
 
-  const dock = document.createElement('nav');
-  dock.className = 'mobile-dock';
-  dock.setAttribute('aria-label', '移动端导航');
-  const path = window.location.pathname;
-  const dockPage = path === '/' ? 'home' : path.startsWith('/software') ? 'software' : path.startsWith('/garden') ? 'garden' : path.startsWith('/about') ? 'about' : '';
-  const dockItems = [
-    ['home', '/', '主页', '<path d="m4 10 8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>'],
-    ['software', '/software/', '软件', '<rect x="4" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="4" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="4" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="14" y="14" width="6" height="6" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.8"/>'],
-    ['garden', '/garden/', '探索', '<circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="m15.5 8.5-2.1 5-5 2.1 2.1-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>'],
-    ['about', '/about/', '关于', '<circle cx="12" cy="8" r="3.2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M5 20c.6-3.4 3.1-5.2 7-5.2s6.4 1.8 7 5.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>']
+  const meteor = {
+    search: '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 5h14M9 2v3m4 0q-2 8-9 11m2-7q2 4 6 6m1 7l5-11l5 11m-1.37-3h-7.26"/>',
+    searchIcon: '<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="10" cy="10" r="7"/><path d="m21 21l-6.05-6.05"/></g>',
+    close: '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 6L6 18M6 6l12 12"/>'
+  };
+
+  const searchIndex = [
+    { title: 'TokiPage 主页', group: '页面', url: '/', text: '欢迎来到 TokiPage 首页 入口 软件 探索 关于', keywords: 'home tokipage 主页' },
+    { title: '软件', group: '页面', url: '/software/', text: '作品 设计 TokiUI 制作中 TokiHarness', keywords: 'software app 软件 作品' },
+    { title: '探索', group: '页面', url: '/garden/', text: 'GitHub Discussions 更新公告 说点什么 设计建议 社区问答', keywords: 'explore garden discussion 探索 讨论' },
+    { title: 'TokiUI Design', group: '设计', url: '/tokiui/', text: 'Material Design3 Expressive 底栏 交互 磨砂玻璃 通用设计语言', keywords: 'tokiui design md3e material expressive 设计' },
+    { title: 'TokiTodo', group: '软件', url: '/software/tokitodo/', text: '待办 专注计时 手机锁 统计 APK 下载', keywords: 'todo 待办 专注 计时 tokitodo' },
+    { title: 'Luna', group: '软件', url: '/software/luna/', text: '悬浮胶囊浏览器 APK 下载', keywords: 'luna browser 浏览器' },
+    { title: 'TokiNote', group: '软件', url: '/software/tokinote/', text: '本地笔记软件 备份 底栏 APK 下载', keywords: 'note 笔记 tokinote 本地' },
+    { title: 'TokiFonts', group: '软件', url: '/software/tokifonts/', text: '字体资源库 OneUI 教程 字体', keywords: 'font 字体 tokifonts' },
+    { title: '作品', group: '软件', url: '/software/#work', text: 'TokiTodo Luna TokiNote TokiFonts 四个作品', keywords: 'work 作品 app' },
+    { title: 'TokiUI 介绍', group: '设计', url: '/software/#design', text: 'Material Design3 Expressive TokiUI 设计语言 通用标准', keywords: 'tokiui design 设计 md3e' },
+    { title: '正在制作 / TokiHarness', group: '软件', url: '/software/#making', text: 'DSH 手机版 二创 TokiHarness 正在制作', keywords: 'making toki harness dsh 制作中' },
+    { title: '菜单', group: '页面', url: '/menu/', text: 'Menu 导航 软件 探索 关于', keywords: 'menu 菜单 导航' },
+    { title: '关于', group: '页面', url: '/about/', text: '关于本站 联系 GitHub 设计 字体', keywords: 'about 关于 contact 联系' },
+    { title: '更新公告', group: '探索', url: '/garden/', text: 'GitHub Discussions 更新公告 Announcements', keywords: 'announcement 公告 更新' },
+    { title: '设计建议', group: '探索', url: '/garden/', text: 'Ideas 设计建议 讨论', keywords: 'ideas 建议 设计' },
+    { title: '社区问答', group: '探索', url: '/garden/', text: 'Q&A 社区问答 提问 回答', keywords: 'q&a qa 问答 社区' }
   ];
-  dock.innerHTML = dockItems.map(([key, href, label, icon]) =>
-    `<a href="${href}"${dockPage === key ? ' aria-current="page"' : ''}><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${icon}</svg><span>${label}</span></a>`
-  ).join('');
-  document.body.appendChild(dock);
+
+  const brandEl = document.querySelector('.site-header .brand');
+  if (brandEl && !document.querySelector('.site-search-toggle')) {
+    const searchButton = document.createElement('button');
+    searchButton.className = 'icon-button site-search-toggle';
+    searchButton.type = 'button';
+    searchButton.setAttribute('aria-label', '搜索全站');
+    searchButton.setAttribute('aria-expanded', 'false');
+    searchButton.innerHTML = `<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${meteor.searchIcon}</svg>`;
+    brandEl.insertAdjacentElement('afterend', searchButton);
+
+    const layer = document.createElement('div');
+    layer.className = 'site-search-layer';
+    layer.hidden = true;
+    layer.innerHTML = `
+      <div class="site-search-panel" role="dialog" aria-modal="true" aria-label="搜索全站">
+        <div class="site-search-field">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${meteor.searchIcon}</svg>
+          <input id="site-search-input" type="search" placeholder="搜索 TokiPage…" autocomplete="off" spellcheck="false" aria-label="搜索全站">
+          <button class="site-search-close" type="button" aria-label="关闭搜索"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true">${meteor.close}</svg></button>
+        </div>
+        <div class="site-search-results" id="site-search-results" role="region" aria-label="搜索建议"></div>
+      </div>`;
+    document.body.appendChild(layer);
+    const input = layer.querySelector('#site-search-input');
+    const results = layer.querySelector('#site-search-results');
+    const close = layer.querySelector('.site-search-close');
+    let activeIndex = -1;
+
+    const setSearchOpen = (open) => {
+      layer.hidden = !open;
+      document.body.classList.toggle('is-searching', open);
+      searchButton.setAttribute('aria-expanded', String(open));
+      if (open) {
+        activeIndex = -1;
+        input.value = '';
+        renderResults('');
+        window.setTimeout(() => input.focus({ preventScroll: true }), 40);
+      }
+    };
+
+    const makeRow = (item, index) => {
+      const row = document.createElement('a');
+      row.className = 'site-search-result';
+      row.href = item.url;
+      row.dataset.index = String(index);
+      row.innerHTML = `<span class="site-search-result__group">${item.group}</span><strong>${item.title}</strong><small>${item.text}</small>`;
+      row.addEventListener('click', () => setSearchOpen(false));
+      return row;
+    };
+
+    const renderResults = (query) => {
+      const q = query.trim().toLowerCase();
+      results.replaceChildren();
+      if (!q) {
+        const hint = document.createElement('div');
+        hint.className = 'site-search-suggest';
+        hint.innerHTML = '<span>试试</span>';
+        ['TokiUI', 'TokiNote', '更新公告', '下载'].forEach((word) => {
+          const chip = document.createElement('button');
+          chip.type = 'button';
+          chip.textContent = word;
+          chip.addEventListener('click', () => { input.value = word; renderResults(word); input.focus(); });
+          hint.appendChild(chip);
+        });
+        results.appendChild(hint);
+      }
+      const list = q
+        ? searchIndex.filter((item) => `${item.title} ${item.text} ${item.keywords}`.toLowerCase().includes(q)).slice(0, 8)
+        : searchIndex.slice(0, 5);
+      if (q && !list.length) {
+        const empty = document.createElement('p');
+        empty.className = 'site-search-empty';
+        empty.textContent = '没有找到相关内容。';
+        results.appendChild(empty);
+      }
+      list.forEach((item, index) => results.appendChild(makeRow(item, index)));
+      activeIndex = -1;
+    };
+
+    const moveActive = (direction) => {
+      const rows = [...results.querySelectorAll('.site-search-result')];
+      if (!rows.length) return;
+      activeIndex = (activeIndex + direction + rows.length) % rows.length;
+      rows.forEach((row, index) => row.classList.toggle('is-active', index === activeIndex));
+      rows[activeIndex].scrollIntoView({ block: 'nearest' });
+    };
+
+    searchButton.addEventListener('click', () => setSearchOpen(layer.hidden));
+    close.addEventListener('click', () => setSearchOpen(false));
+    layer.addEventListener('click', (event) => { if (event.target === layer) setSearchOpen(false); });
+    input.addEventListener('input', () => renderResults(input.value));
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') { setSearchOpen(false); searchButton.focus(); }
+      if (event.key === 'ArrowDown') { event.preventDefault(); moveActive(1); }
+      if (event.key === 'ArrowUp') { event.preventDefault(); moveActive(-1); }
+      if (event.key === 'Enter') {
+        const rows = [...results.querySelectorAll('.site-search-result')];
+        if (rows[activeIndex]) rows[activeIndex].click();
+        else if (rows[0]) rows[0].click();
+      }
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !layer.hidden) { setSearchOpen(false); searchButton.focus(); }
+    });
+  }
 })();

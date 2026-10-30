@@ -1,0 +1,310 @@
+/* =========================================================
+   TokiUI Design — standalone system page
+   ========================================================= */
+
+.tokiui-page {
+  padding-top: calc(var(--header-height) + clamp(4rem, 9vw, 8rem));
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+.tokiui-page-hero {
+  max-width: 980px;
+}
+
+.tokiui-page-hero h1 {
+  margin: 0;
+  font-size: var(--text-5xl);
+  line-height: 0.92;
+  letter-spacing: -0.075em;
+}
+
+.tokiui-page-lede {
+  max-width: 74ch;
+  margin-top: 1.35rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: var(--text-lg);
+  line-height: 1.8;
+}
+
+.tokiui-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 1.8rem;
+}
+
+.tokiui-showcase {
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+.tokiui-panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  padding: clamp(24px, 4vw, 44px);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 36px;
+  background: var(--md-sys-color-surface-container-low);
+}
+
+.tokiui-panel--dock {
+  background:
+    radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--md-sys-color-tertiary-container) 52%, transparent), transparent 42%),
+    var(--md-sys-color-surface-container-low);
+}
+
+.tokiui-panel__copy h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 3.4vw, 3.1rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
+
+.tokiui-panel__copy p {
+  max-width: 46ch;
+  margin-top: 0.9rem;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.92rem;
+  line-height: 1.8;
+}
+
+.tokiui-dock-stage {
+  position: relative;
+  display: flex;
+  min-height: 230px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 26px;
+  overflow: hidden;
+  border-radius: 30px;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--md-sys-color-primary-container) 40%, transparent), transparent 45%),
+    color-mix(in srgb, var(--md-sys-color-surface-container-highest) 74%, transparent);
+}
+
+.tokiui-demo-dock {
+  display: flex;
+  width: min(364px, 100%);
+  height: 56px;
+  padding: 4px;
+  align-items: center;
+  gap: 2px;
+  border: 1px solid color-mix(in srgb, var(--md-sys-color-outline-variant) 72%, transparent);
+  border-radius: 36px;
+  background: color-mix(in srgb, var(--md-sys-color-surface-container-high) 68%, transparent);
+  box-shadow: 0 18px 44px rgb(0 0 0 / 0.18);
+  backdrop-filter: blur(24px) saturate(1.4);
+  -webkit-backdrop-filter: blur(24px) saturate(1.4);
+}
+
+.tokiui-demo-dock button {
+  display: flex;
+  min-width: 44px;
+  flex: 0 1 auto;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 8px;
+  border: 0;
+  border-radius: 28px;
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  cursor: pointer;
+  transition: background-color 0.26s var(--ease-emphasized), color 0.26s var(--ease-emphasized), transform 0.18s var(--ease-spring);
+}
+
+.tokiui-demo-dock button svg { width: 20px; height: 20px; flex: none; }
+.tokiui-demo-dock button span { max-width: 0; overflow: hidden; opacity: 0; white-space: nowrap; transition: max-width 0.3s var(--ease-spring), opacity 0.2s var(--ease-emphasized); }
+.tokiui-demo-dock button.is-active { min-width: 76px; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+.tokiui-demo-dock button.is-active span { max-width: 72px; opacity: 1; }
+.tokiui-demo-dock button:active { transform: scale(0.94); }
+
+.tokiui-demo-fab {
+  display: grid;
+  width: 64px;
+  height: 64px;
+  flex: none;
+  place-items: center;
+  border: 0;
+  border-radius: 18px;
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  line-height: 1;
+  box-shadow: 0 12px 28px rgb(0 0 0 / 0.22);
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-spring);
+}
+
+.tokiui-demo-fab:active { transform: scale(0.92); }
+
+/* Interaction */
+.tokiui-interaction-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.tokiui-press {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 20px;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.16s var(--ease-spring), background-color 0.2s var(--ease-emphasized);
+}
+
+.tokiui-press span { font-family: var(--font-mono); }
+.tokiui-press:active { transform: scale(0.96); background: var(--md-sys-color-primary-container); }
+
+.tokiui-switch-demo {
+  display: flex;
+  min-height: 56px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 20px;
+  color: var(--md-sys-color-on-surface);
+  font-size: 0.88rem;
+}
+
+.tokiui-toggle {
+  position: relative;
+  width: 52px;
+  height: 30px;
+  border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--r-full);
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.25s var(--ease-emphasized), border-color 0.25s var(--ease-emphasized);
+}
+
+.tokiui-toggle span {
+  position: absolute;
+  top: 50%;
+  left: 5px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--md-sys-color-outline);
+  transform: translateY(-50%);
+  transition: left 0.28s var(--ease-spring), width 0.2s var(--ease-spring), background-color 0.2s var(--ease-emphasized);
+}
+
+.tokiui-toggle.is-on { border-color: var(--md-sys-color-primary); background: var(--md-sys-color-primary); }
+.tokiui-toggle.is-on span { left: 25px; background: var(--md-sys-color-on-primary); }
+
+.tokiui-chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.tokiui-chip {
+  min-height: 38px;
+  padding: 0 14px;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  cursor: pointer;
+  transition: background-color 0.22s var(--ease-emphasized), color 0.22s var(--ease-emphasized), transform 0.16s var(--ease-spring);
+}
+
+.tokiui-chip:active { transform: scale(0.95); }
+.tokiui-chip.is-active { border-color: transparent; background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+
+/* Glass */
+.tokiui-panel--glass { display: block; padding: 14px; }
+
+.tokiui-glass-stage {
+  position: relative;
+  display: grid;
+  min-height: 480px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 30px;
+  background: #1d1713;
+}
+
+.tokiui-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(56px);
+  opacity: 0.65;
+  animation: tokiui-drift 12s ease-in-out infinite alternate;
+}
+.tokiui-blob--one { width: 300px; height: 300px; top: 8%; left: 10%; background: #e46e55; }
+.tokiui-blob--two { width: 380px; height: 380px; right: 4%; bottom: 2%; background: #6e8cf0; animation-delay: -4s; }
+.tokiui-blob--three { width: 240px; height: 240px; left: 44%; top: 36%; background: #8fc59a; animation-delay: -8s; }
+
+@keyframes tokiui-drift {
+  from { transform: translate3d(-10px, 8px, 0) scale(0.96); }
+  to { transform: translate3d(18px, -12px, 0) scale(1.06); }
+}
+
+.tokiui-glass-card {
+  position: relative;
+  z-index: 1;
+  width: min(560px, calc(100% - 36px));
+  padding: clamp(24px, 4vw, 38px);
+  border: 1px solid rgb(255 255 255 / 0.22);
+  border-radius: 30px;
+  background: rgb(255 255 255 / 0.12);
+  box-shadow: 0 24px 80px rgb(0 0 0 / 0.28);
+  color: #fff8f1;
+  backdrop-filter: blur(22px) saturate(1.35);
+  -webkit-backdrop-filter: blur(22px) saturate(1.35);
+}
+
+.tokiui-glass-card h2 { margin: 0; font-size: clamp(1.7rem, 3vw, 2.6rem); line-height: 1.02; letter-spacing: -0.05em; }
+.tokiui-glass-card p { max-width: 44ch; margin-top: 0.9rem; color: rgb(255 248 241 / 0.76); font-size: 0.9rem; line-height: 1.8; }
+.tokiui-glass-card .text-link { color: #f2c88f; }
+
+.tokiui-page-note {
+  margin-top: 28px;
+  color: var(--md-sys-color-on-surface-variant);
+  font-size: 0.72rem;
+  line-height: 1.7;
+}
+
+@media (max-width: 900px) {
+  .tokiui-panel { grid-template-columns: 1fr; }
+  .tokiui-dock-stage { min-height: 180px; padding: 16px 10px; }
+  .tokiui-demo-dock { width: auto; max-width: calc(100% - 74px); }
+  .tokiui-glass-stage { min-height: 420px; }
+}
+
+@media (max-width: 600px) {
+  .tokiui-page-hero h1 { font-size: clamp(3rem, 15vw, 5rem); }
+  .tokiui-page { padding-top: calc(var(--header-height) + 3.5rem); }
+  .tokiui-panel { padding: 18px; border-radius: 28px; }
+  .tokiui-panel__copy h2 { font-size: 2rem; }
+  .tokiui-page-actions .button { width: 100%; justify-content: space-between; }
+  .tokiui-dock-stage { flex-wrap: wrap; }
+  .tokiui-demo-dock { max-width: 100%; }
+  .tokiui-demo-fab { position: absolute; right: 12px; bottom: 12px; }
+  .tokiui-glass-stage { min-height: 400px; }
+}
+
+.tokiui-glass-card .text-link {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  padding: 0 12px;
+  border-radius: var(--r-full);
+  background: #f2c88f;
+  color: #211915;
+  text-decoration: none;
+}

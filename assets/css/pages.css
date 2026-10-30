@@ -2726,7 +2726,7 @@
 
 .garden-statbar {
   position: fixed;
-  top: calc(var(--header-height) + 12px);
+  top: calc(var(--header-height) + 24px);
   left: 50%;
   z-index: 190;
   display: flex;
@@ -4087,7 +4087,7 @@
 
 .explore-controls {
   position: fixed;
-  top: calc(var(--header-height) + 12px);
+  top: calc(var(--header-height) + 24px);
   left: 50%;
   transform: translateX(-50%);
   z-index: 180;
@@ -4937,3 +4937,21 @@ body { overflow-x: clip; }
   font-size: clamp(1.16rem, 1.45vw, 1.34rem);
   line-height: 1.52;
 }
+
+/* Like is a count + arrow, never a highlighted pill. */
+.like-arrow { font-family: var(--font-body); font-size: 0.82rem; font-weight: 700; line-height: 1; }
+.garden-action.is-liked,
+#discussion-like.is-liked,
+.discussion-metric.is-liked {
+  border-radius: 14px;
+  background: transparent;
+  color: var(--md-sys-color-on-surface-variant);
+}
+.garden-action.is-liked strong,
+#discussion-like.is-liked strong,
+.discussion-metric.is-liked strong { color: var(--md-sys-color-on-surface); }
+
+.discussion-dialog__metrics .discussion-comment-toggle { margin-left: 4px; }
+
+/* Explore controls sit exactly at the detail back-button offset. */
+.explore-controls { top: calc(var(--header-height) + 24px); }

@@ -246,7 +246,10 @@
       button.classList.toggle('is-liked', next);
       button.setAttribute('aria-pressed', String(next));
       const number = button.querySelector('[data-like-count]');
-      if (number) number.textContent = `${(Number(item?.upvotes) || 0) + (next ? 1 : 0)} ${unit('点赞', 'likes')}`;
+      if (number) number.textContent = String((Number(item?.upvotes) || 0) + (next ? 1 : 0));
+      const arrow = button.querySelector('.like-arrow');
+      if (arrow) arrow.hidden = !next;
+      button.setAttribute('aria-label', `${(Number(item?.upvotes) || 0) + (next ? 1 : 0)} 点赞`);
     });
     const modalLike = document.getElementById('discussion-like');
     if (modalLike && discussionDialog?.open) {
@@ -254,7 +257,10 @@
       modalLike.classList.toggle('is-liked', next);
       modalLike.setAttribute('aria-pressed', String(next));
       const number = modalLike.querySelector('[data-like-count]');
-      if (number) number.textContent = `${count} ${unit('点赞', 'likes')}`;
+      if (number) number.textContent = String(count);
+      const arrow = modalLike.querySelector('.like-arrow');
+      if (arrow) arrow.hidden = !next;
+      modalLike.setAttribute('aria-label', `${count} 点赞`);
     }
     toast(next ? '已在本机点赞' : '已取消本机点赞');
   }
@@ -326,7 +332,7 @@
 
     const category = document.createElement('span');
     category.className = 'garden-card__category';
-    category.textContent = `#${categoryLabel(item.category)}`;
+    category.textContent = `#${sectionLabel(item.category?.slug || 'general')}`;
 
     const title = document.createElement('h3');
     const titleLink = document.createElement('a');
@@ -376,14 +382,18 @@
     const likeCount = document.createElement('strong');
     likeCount.dataset.likeCount = '';
     likeCount.textContent = String((Number(item.upvotes) || 0) + (liked ? 1 : 0));
-    const likeLabel = document.createElement('span');
-    likeLabel.textContent = unit('点赞', 'likes');
-    like.append(likeCount, likeLabel);
+    const likeArrow = document.createElement('span');
+    likeArrow.className = 'like-arrow';
+    likeArrow.textContent = '↑';
+    likeArrow.hidden = !liked;
+    like.append(likeCount, likeArrow);
+    like.setAttribute('aria-label', `${(Number(item.upvotes) || 0) + (liked ? 1 : 0)} 点赞`);
     like.addEventListener('click', (event) => {
       event.stopPropagation();
       toggleLike(key);
       const nextLiked = isLiked(key);
       likeCount.textContent = String((Number(item.upvotes) || 0) + (nextLiked ? 1 : 0));
+      likeArrow.hidden = !nextLiked;
     });
 
     const comments = document.createElement('button');
@@ -467,7 +477,7 @@
       });
       const tag = document.createElement('span');
       tag.className = 'explore-pinned__tag';
-      tag.textContent = unit('#公告', '#Announcements');
+      tag.textContent = unit('#更新公告', '#Announcements');
       const title = document.createElement('strong');
       title.textContent = item.title;
       const time = document.createElement('small');
@@ -729,7 +739,6 @@
   const discussionCommentCount = document.getElementById('discussion-comment-count');
   const discussionCommentList = document.getElementById('discussion-comment-list');
   const discussionGithub = document.getElementById('discussion-github');
-  const discussionCopy = document.getElementById('discussion-copy');
   const discussionClose = document.getElementById('discussion-close');
   const discussionLike = document.getElementById('discussion-like');
   const discussionReply = document.getElementById('discussion-reply');
@@ -744,7 +753,7 @@
     const item = discussions[index];
     if (!item || !discussionDialog) return;
 
-    discussionCategory.textContent = `#${categoryLabel(item.category)}`;
+    discussionCategory.textContent = `#${sectionLabel(item.category?.slug || 'general')}`;
     discussionTitle.textContent = item.title;
 
     discussionMeta.replaceChildren();
@@ -767,6 +776,9 @@
       discussionLike.setAttribute('aria-pressed', String(liked));
       const number = discussionLike.querySelector('[data-like-count]');
       if (number) number.textContent = String((Number(item.upvotes) || 0) + (liked ? 1 : 0));
+      const arrow = discussionLike.querySelector('.like-arrow');
+      if (arrow) arrow.hidden = !liked;
+      discussionLike.setAttribute('aria-label', `${(Number(item.upvotes) || 0) + (liked ? 1 : 0)} 点赞`);
     }
 
     discussionBody.innerHTML = parseMarkdown(item.body || item.excerpt || '');
@@ -807,7 +819,6 @@
     }
 
     discussionGithub.href = item.url;
-    discussionCopy.setAttribute('data-copy', item.url);
     discussionDialog.setAttribute('data-open-id', itemKey(item));
     discussionDialog.classList.remove('is-replying');
     if (discussionReply) discussionReply.hidden = true;
