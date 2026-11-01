@@ -1424,7 +1424,18 @@
 
 @media (max-width: 1120px) {
   .hero {
-    grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+    grid-template-columns: minmax(0, 1fr);
+    min-height: auto;
+    padding-bottom: 2.5rem;
+  }
+
+  .hero__art {
+    min-height: 520px;
+    margin-top: 0.5rem;
+  }
+
+  .hero__squircle {
+    right: 4%;
   }
 
   .hero__note {
@@ -1439,10 +1450,6 @@
 
   .hero__badge-text text {
     font-size: 8.8px;
-  }
-
-  .hero__squircle {
-    right: -1%;
   }
 }
 
@@ -1558,13 +1565,13 @@
   }
 
   .hero__ring {
-    width: min(98vw, 500px);
+    width: min(92%, 420px);
   }
 
   .hero__squircle {
     width: 135px;
     bottom: 7%;
-    right: -2%;
+    right: 4%;
   }
 
   .hero__dot {
