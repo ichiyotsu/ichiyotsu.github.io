@@ -141,6 +141,80 @@
   color-scheme: light;
 }
 
+/* TokiUI layer. Names sit on top of the M3 roles above and always resolve to those
+   same values, including after the dark scheme overrides them. */
+:root {
+  --toki-font-display: var(--font-display);
+  --toki-font-body: var(--font-body);
+  --toki-font-mono: var(--font-mono);
+
+  --toki-type-xs: var(--text-xs);
+  --toki-type-sm: var(--text-sm);
+  --toki-type-base: var(--text-base);
+  --toki-type-lg: var(--text-lg);
+  --toki-type-xl: var(--text-xl);
+  --toki-type-2xl: var(--text-2xl);
+  --toki-type-3xl: var(--text-3xl);
+  --toki-type-4xl: var(--text-4xl);
+  --toki-type-5xl: var(--text-5xl);
+
+  --toki-shape-xs: var(--r-xs);
+  --toki-shape-sm: var(--r-sm);
+  --toki-shape-md: var(--r-md);
+  --toki-shape-lg: var(--r-lg);
+  --toki-shape-xl: var(--r-xl);
+  --toki-shape-2xl: var(--r-2xl);
+  --toki-shape-3xl: var(--r-3xl);
+  --toki-shape-full: var(--r-full);
+  --toki-shape-portal: 26px;
+
+  --toki-ease-emphasized: var(--ease-emphasized);
+  --toki-ease-decelerate: var(--ease-emphasized-decelerate);
+  --toki-ease-spring: var(--ease-spring);
+  --toki-dur-short: var(--dur-short);
+  --toki-dur-med: var(--dur-med);
+  --toki-dur-long: var(--dur-long);
+
+  --toki-page-max: var(--page-max);
+  --toki-gutter: var(--gutter);
+  --toki-section-space: var(--section-space);
+  --toki-header-height: var(--header-height);
+  --toki-bar-height: var(--bottom-bar-h);
+
+  --toki-color-primary: var(--md-sys-color-primary);
+  --toki-color-on-primary: var(--md-sys-color-on-primary);
+  --toki-color-primary-container: var(--md-sys-color-primary-container);
+  --toki-color-on-primary-container: var(--md-sys-color-on-primary-container);
+  --toki-color-secondary: var(--md-sys-color-secondary);
+  --toki-color-on-secondary: var(--md-sys-color-on-secondary);
+  --toki-color-secondary-container: var(--md-sys-color-secondary-container);
+  --toki-color-on-secondary-container: var(--md-sys-color-on-secondary-container);
+  --toki-color-tertiary: var(--md-sys-color-tertiary);
+  --toki-color-on-tertiary: var(--md-sys-color-on-tertiary);
+  --toki-color-tertiary-container: var(--md-sys-color-tertiary-container);
+  --toki-color-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
+  --toki-color-background: var(--md-sys-color-background);
+  --toki-color-on-background: var(--md-sys-color-on-background);
+  --toki-color-surface: var(--md-sys-color-surface);
+  --toki-color-on-surface: var(--md-sys-color-on-surface);
+  --toki-color-on-surface-variant: var(--md-sys-color-on-surface-variant);
+  --toki-color-outline: var(--md-sys-color-outline);
+  --toki-color-outline-variant: var(--md-sys-color-outline-variant);
+  --toki-color-accent-lime: var(--accent-lime);
+  --toki-color-accent-lilac: var(--accent-lilac);
+  --toki-color-accent-sky: var(--accent-sky);
+  --toki-color-accent-peach: var(--accent-peach);
+
+  --toki-elevation-1: var(--shadow-1);
+  --toki-elevation-2: var(--shadow-2);
+  --toki-elevation-3: var(--shadow-3);
+  --toki-glass: var(--glass);
+  --toki-glass-strong: var(--glass-strong);
+  --toki-state-hover: var(--state-hover);
+  --toki-state-press: var(--state-press);
+  --toki-focus-ring: var(--focus-ring);
+}
+
 :root[data-theme="dark"] {
   --md-sys-color-primary: #ffb4a2;
   --md-sys-color-on-primary: #5e1600;
