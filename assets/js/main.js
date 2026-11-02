@@ -220,6 +220,76 @@
   window.addEventListener('resize', queueScrollUpdate);
   window.requestAnimationFrame(updateScrollUI);
 
+  /* ---------- Desktop nav capsule indicator ---------- */
+
+  document.querySelectorAll('.desktop-nav').forEach((nav) => {
+    const links = Array.from(nav.querySelectorAll(':scope > .nav-item > .nav-link'));
+    if (!links.length) return;
+
+    links.forEach((link) => {
+      if (link.classList.contains('is-active') && !link.hasAttribute('aria-current')) {
+        link.setAttribute('aria-current', 'page');
+      }
+    });
+
+    const indicator = document.createElement('span');
+    indicator.className = 'nav-indicator';
+    indicator.setAttribute('aria-hidden', 'true');
+    nav.prepend(indicator);
+
+    const currentLink = () => links.find((link) => link.getAttribute('aria-current') === 'page' || link.classList.contains('is-active')) || links[0];
+
+    let indicated = currentLink();
+
+    const place = (link, animate) => {
+      if (!link) return;
+      indicated = link;
+      const navRect = nav.getBoundingClientRect();
+      const rect = link.getBoundingClientRect();
+      const border = parseFloat(getComputedStyle(nav).borderLeftWidth) || 0;
+      const x = rect.left - navRect.left - border;
+
+      if (!animate) indicator.style.transition = 'none';
+      indicator.style.width = `${rect.width}px`;
+      indicator.style.transform = `translate3d(${x}px, 0, 0)`;
+      links.forEach((item) => item.classList.toggle('is-indicated', item === link));
+      if (!animate) {
+        indicator.getBoundingClientRect();
+        indicator.style.transition = '';
+      }
+    };
+
+    const settle = () => {
+      const focused = nav.contains(document.activeElement)
+        ? document.activeElement.closest('.nav-item')?.querySelector(':scope > .nav-link')
+        : null;
+      place(focused || currentLink(), true);
+    };
+
+    place(indicated, false);
+    nav.classList.add('is-ready');
+
+    nav.addEventListener('pointerover', (event) => {
+      const item = event.target.closest('.nav-item');
+      const link = item && nav.contains(item) ? item.querySelector(':scope > .nav-link') : null;
+      if (link) place(link, true);
+    });
+
+    nav.addEventListener('pointerleave', () => {
+      if (!nav.contains(document.activeElement)) place(currentLink(), true);
+    });
+
+    nav.addEventListener('focusin', () => settle());
+    nav.addEventListener('focusout', (event) => {
+      if (!nav.contains(event.relatedTarget)) place(currentLink(), true);
+    });
+
+    window.addEventListener('resize', () => place(indicated, false));
+    document.addEventListener('ichiyotsu:lang', () => {
+      window.requestAnimationFrame(() => place(indicated, false));
+    });
+  });
+
   /* ---------- Desktop dropdowns ---------- */
 
   document.querySelectorAll('[data-nav-item]').forEach((item) => {
