@@ -170,7 +170,7 @@ em {
 
 .section-head {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(250px, 350px);
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
   align-items: end;
   gap: clamp(1.5rem, 4vw, 4.5rem);
 }
@@ -183,7 +183,7 @@ em {
 }
 
 .section-head__note {
-  max-width: 37ch;
+  max-width: none;
   padding-bottom: 0.5rem;
   color: var(--md-sys-color-on-surface-variant);
   font-size: 0.97rem;

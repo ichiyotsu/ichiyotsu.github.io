@@ -167,6 +167,7 @@
   --toki-shape-3xl: var(--r-3xl);
   --toki-shape-full: var(--r-full);
   --toki-shape-portal: 26px;
+  --toki-shape-shot: 14px;
 
   --toki-ease-emphasized: var(--ease-emphasized);
   --toki-ease-decelerate: var(--ease-emphasized-decelerate);
@@ -273,4 +274,10 @@
   --focus-ring: 0 0 0 3px var(--md-sys-color-surface), 0 0 0 6px var(--md-sys-color-primary);
 
   color-scheme: dark;
+}
+
+@media (max-width: 600px) {
+  :root {
+    --toki-shape-shot: 12px;
+  }
 }
