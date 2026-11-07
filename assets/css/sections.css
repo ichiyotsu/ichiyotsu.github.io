@@ -89,7 +89,7 @@
 }
 
 .hero__lede {
-  max-width: 53ch;
+  max-width: none;
   color: var(--md-sys-color-on-surface-variant);
   font-size: var(--text-lg);
   line-height: 1.75;
@@ -186,17 +186,9 @@
   box-shadow: 0 18px 40px -16px color-mix(in srgb, var(--accent-lime) 70%, transparent);
 }
 
-.hero__phone {
+.hero__shot {
   position: relative;
   z-index: 3;
-  transform: rotate(7deg);
-  animation: phone-float 7s ease-in-out infinite;
-  will-change: transform;
-}
-
-@keyframes phone-float {
-  0%, 100% { transform: translateY(0) rotate(6.5deg); }
-  50% { transform: translateY(-13px) rotate(8deg); }
 }
 
 @keyframes spin-slow {
@@ -428,6 +420,12 @@
   min-height: 475px;
 }
 
+.project--live {
+  grid-column: span 12;
+  min-height: 0;
+  background: var(--md-sys-color-surface-container);
+}
+
 .project__link {
   position: relative;
   z-index: 1;
@@ -536,7 +534,7 @@
 }
 
 .project__desc {
-  max-width: 39ch;
+  max-width: none;
   color: var(--project-muted, var(--md-sys-color-on-surface-variant));
   font-size: 0.95rem;
   line-height: 1.7;
@@ -562,9 +560,9 @@
 .project__media {
   position: relative;
   flex: 1;
-  min-height: 200px;
-  margin: 1.4rem -26px -26px;
-  overflow: hidden;
+  min-height: 0;
+  margin-top: 1.2rem;
+  overflow: visible;
 }
 
 /* TokiTodo */
@@ -580,10 +578,19 @@
 }
 
 .project__media--todo {
-  height: 355px;
+  min-height: 0;
   background:
     radial-gradient(circle at 70% 12%, rgb(255 255 255 / 0.55), transparent 40%),
     linear-gradient(180deg, transparent 20%, #d8e7d2 100%);
+}
+
+.project__media .app-shot {
+  max-height: 420px;
+  max-width: min(100%, 260px);
+}
+
+.project:hover .app-shot {
+  transform: translateY(-8px);
 }
 
 .media-note {
@@ -618,17 +625,8 @@
   letter-spacing: -0.05em;
 }
 
-.project--todo .phone {
-  position: absolute;
-  right: 7%;
-  bottom: -155px;
-  z-index: 1;
-  transform: rotate(6deg);
-  transition: transform 0.65s var(--ease-spring);
-}
-
-.project--todo:hover .phone {
-  transform: translateY(-8px) rotate(3deg);
+.project--todo .app-shot {
+  max-width: min(100%, 240px);
 }
 
 /* Luma */
@@ -643,23 +641,13 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  height: 320px;
+  min-height: 0;
   background: radial-gradient(circle at 50% 0%, rgb(255 255 255 / 0.45), transparent 65%);
 }
 
-.luma-shot {
-  width: 116%;
-  max-width: none;
-  flex: none;
-  border: 1px solid rgb(30 26 51 / 0.09);
-  border-radius: 18px;
-  box-shadow: 0 32px 60px -26px rgb(40 29 70 / 0.55), 0 2px 0 rgb(255 255 255 / 0.4) inset;
-  transform: rotate(-2.5deg) translateY(14px);
-  transition: transform 0.65s var(--ease-spring);
-}
-
-.project--luma:hover .luma-shot {
-  transform: rotate(-0.8deg) translateY(7px) scale(1.015);
+.project__media--luma .app-shot {
+  max-width: 100%;
+  max-height: 280px;
 }
 
 .media-pill {
@@ -688,42 +676,27 @@
   color: #f7eee6;
 }
 
-.project--note .project__link {
-  padding-bottom: 0;
-}
-
 .project--note .project__link > :not(.project__media--note) {
   position: relative;
   z-index: 2;
 }
 
-.project--note .project__title,
-.project--note .project__desc {
-  max-width: 60%;
+.project--note .project__title {
+  max-width: 12em;
 }
 
 .project__media--note {
-  position: absolute;
-  right: -42px;
-  bottom: -128px;
-  z-index: 1;
-  width: 320px;
-  margin: 0;
+  position: relative;
+  right: auto;
+  bottom: auto;
+  width: auto;
+  margin-top: 1.2rem;
   pointer-events: none;
   background: radial-gradient(circle at 45% 28%, rgb(255 181 126 / 0.14), transparent 58%);
 }
 
-.project__media--note .phone {
-  width: 258px;
-  box-shadow:
-    var(--shadow-phone),
-    0 0 0 1px rgb(255 255 255 / 0.14);
-  transform: rotate(6deg);
-  transition: transform 0.65s var(--ease-spring);
-}
-
-.project--note:hover .project__media--note .phone {
-  transform: translateY(-8px) rotate(3deg);
+.project--note .project__link {
+  padding-bottom: 26px;
 }
 
 /* TokiFonts */
@@ -1589,8 +1562,8 @@
     bottom: 16%;
   }
 
-  .phone--hero {
-    width: min(62vw, 255px);
+  .app-shot--hero {
+    width: min(52vw, 220px);
   }
 
   .principles {
@@ -1617,27 +1590,12 @@
     gap: 0.8rem;
   }
 
-  .project--note .project__title,
-  .project--note .project__desc {
-    max-width: 100%;
+  .project--note .project__title {
+    max-width: none;
   }
 
   .project__media--note {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    display: flex;
-    justify-content: flex-end;
-    width: auto;
-    height: 250px;
-    margin: 1rem -26px -26px;
-    overflow: hidden;
-  }
-
-  .project__media--note .phone {
-    width: 205px;
-    margin-right: 18px;
-    transform: rotate(4deg) translateY(24px);
+    margin-inline: 0;
   }
 
   .project--note {
@@ -1683,8 +1641,8 @@
     font-size: 0.68rem;
   }
 
-  .phone--hero {
-    width: min(60vw, 225px);
+  .app-shot--hero {
+    width: min(48vw, 200px);
   }
 
   .project {
@@ -1702,25 +1660,16 @@
   }
 
   .project__media {
-    margin: 1.2rem -22px -22px;
+    margin-top: 1rem;
   }
 
-  .project__media--todo {
-    height: 300px;
+  .project__media .app-shot,
+  .project--todo .app-shot {
+    max-height: 320px;
   }
 
-  .project--todo .phone {
-    right: 4%;
-    bottom: -140px;
-    width: 215px;
-  }
-
-  .project__media--luma {
-    height: 240px;
-  }
-
-  .luma-shot {
-    width: 132%;
+  .project__media--luma .app-shot {
+    max-height: 200px;
   }
 
   .media-pill {
@@ -1733,9 +1682,8 @@
     min-height: 0;
   }
 
-  .project__media--note {
-    margin-inline: -22px;
-    height: 220px;
+  .project__media--note .app-shot {
+    max-height: 280px;
   }
 
   .project__media--type {
@@ -1791,9 +1739,7 @@
     transform: none;
   }
 
-  .project--todo:hover .phone,
-  .project--note:hover .project__media--note .phone,
-  .project--luma:hover .luma-shot,
+  .project:hover .app-shot,
   .project--fonts:hover .type-big {
     transform: none;
   }
@@ -1802,7 +1748,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero__blob,
   .hero__ring,
-  .hero__phone,
+  .hero__shot,
   .hero__badge,
   .hero__badge-star,
   .status-dot::after,

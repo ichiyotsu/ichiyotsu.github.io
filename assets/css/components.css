@@ -1,5 +1,5 @@
 /* =========================================================
-   Components — app bar, buttons, chips, phone, sheet, footer
+   Components — app bar, buttons, chips, screenshots, sheet, footer
    ========================================================= */
 
 /* ---------- Floating top app bar ---------- */
@@ -434,75 +434,33 @@
   border-color: currentColor;
 }
 
-/* ---------- Phone mockup ---------- */
+/* ---------- Frameless app screenshots ---------- */
 
-.phone {
+.app-shot {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: auto;
+  margin-inline: auto;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: var(--toki-shape-shot);
+  box-shadow: var(--shadow-1);
+  transition: transform 0.55s var(--toki-ease-emphasized);
+}
+
+.app-shot--hero {
+  width: min(220px, 42vw);
+}
+
+.hero__shot {
   position: relative;
-  padding: 7px;
-  border-radius: 44px;
-  background: #0e0c0b;
-  box-shadow:
-    var(--shadow-phone),
-    inset 0 0 0 1px rgb(255 255 255 / 0.14);
+  z-index: 3;
+  animation: shot-float 7s var(--toki-ease-emphasized) infinite;
 }
 
-.phone::before {
-  content: "";
-  position: absolute;
-  top: 126px;
-  left: -9px;
-  width: 3px;
-  height: 52px;
-  border-radius: 3px;
-  background: #282320;
-}
-
-.phone::after {
-  content: "";
-  position: absolute;
-  top: 192px;
-  left: -9px;
-  width: 3px;
-  height: 82px;
-  border-radius: 3px;
-  background: #282320;
-}
-
-.phone__screen {
-  position: relative;
-  overflow: hidden;
-  border-radius: 38px;
-  background: #000;
-  aspect-ratio: 9 / 20;
-}
-
-.phone__screen img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: top center;
-}
-
-.phone__gloss {
-  position: absolute;
-  inset: 7px;
-  z-index: 2;
-  border-radius: 38px;
-  pointer-events: none;
-  background: linear-gradient(116deg, rgb(255 255 255 / 0.2), transparent 26%, transparent 72%, rgb(255 255 255 / 0.05));
-  mix-blend-mode: screen;
-}
-
-.phone--hero {
-  width: clamp(240px, 21vw, 292px);
-}
-
-.phone--project {
-  width: 244px;
-}
-
-.phone--note {
-  width: 258px;
+@keyframes shot-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 
 /* ---------- Mobile navigation sheet ---------- */
