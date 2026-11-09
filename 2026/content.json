@@ -10,22 +10,6 @@
     "visible": true,
     "items": [
       {
-        "title": "TokiPage.",
-        "line": "软件、设计与探索",
-        "href": "/tokipage/",
-        "year": "2026",
-        "tags": "站点",
-        "image": "/tokipage/assets/img/og.jpg"
-      },
-      {
-        "title": "Fortress City",
-        "line": "围城市政官方网站",
-        "href": "/forcity/",
-        "year": "2026",
-        "tags": "站点",
-        "image": "/forcity/assets/img/og.png"
-      },
-      {
         "title": "TokiTodo",
         "line": "待办，专注计时，手机锁与统计。",
         "href": "/tokipage/software/tokitodo/",
@@ -51,10 +35,26 @@
       },
       {
         "title": "TokiLive",
-        "line": "介绍还在整理。",
+        "line": "直播弹幕。",
         "href": "https://github.com/ichiyotsu",
         "year": "2026",
-        "tags": "占位",
+        "tags": "软件",
+        "image": ""
+      },
+      {
+        "title": "Tokifont",
+        "line": "字体。",
+        "href": "/tokipage/software/tokifonts/",
+        "year": "2026",
+        "tags": "软件",
+        "image": ""
+      },
+      {
+        "title": "Tokimusic",
+        "line": "网易云音乐。",
+        "href": "https://github.com/ichiyotsu",
+        "year": "2026",
+        "tags": "软件",
         "image": ""
       }
     ]
@@ -67,9 +67,7 @@
   "links": {
     "visible": true,
     "items": [
-      { "label": "GitHub", "href": "https://github.com/ichiyotsu" },
-      { "label": "TokiPage.", "href": "/tokipage/" },
-      { "label": "围城市政", "href": "/forcity/" }
+      { "label": "GitHub", "href": "https://github.com/ichiyotsu" }
     ]
   },
   "footer": "ichiyotsu"
