@@ -1,113 +1,14 @@
-<!DOCTYPE html>
-<html lang="zh-CN" class="no-js">
+<!doctype html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>ichiyotsu</title>
-  <meta name="description" content="ichiyotsu 的个人入口。TokiPage. 与围城市政。">
-  <meta name="author" content="ichiyotsu">
-  <meta name="theme-color" content="#FDF8F2" id="theme-color">
-  <meta name="color-scheme" content="light dark">
-  <link rel="canonical" href="https://ichiyotsu.github.io/">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://ichiyotsu.github.io/">
-  <meta property="og:title" content="ichiyotsu">
-  <meta property="og:description" content="ichiyotsu 的个人入口。TokiPage. 与围城市政。">
-  <meta property="og:locale" content="zh_CN">
-  <link rel="icon" href="/tokipage/assets/icons/site-logo-light.svg" type="image/svg+xml">
-  <link rel="icon" href="/tokipage/assets/icons/site-logo-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
-  <link rel="preload" href="/tokipage/assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/tokipage/assets/fonts/smiley-sans-subset.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/tokipage/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/tokipage/assets/css/tokens.css?v=20261107b">
-  <link rel="stylesheet" href="/hub.css?v=20261109a">
-  <script>
-    document.documentElement.classList.replace('no-js', 'js');
-    (function () {
-      try {
-        var saved = localStorage.getItem('ichiyotsu-theme');
-        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        var theme = saved === 'light' || saved === 'dark' ? saved : (systemDark ? 'dark' : 'light');
-        document.documentElement.dataset.theme = theme;
-        document.documentElement.style.colorScheme = theme;
-        var meta = document.getElementById('theme-color');
-        if (meta) meta.content = theme === 'dark' ? '#151210' : '#FDF8F2';
-      } catch (error) {}
-    })();
-  </script>
+  <link rel="canonical" href="https://ichiyotsu.github.io/2026/">
+  <meta http-equiv="refresh" content="0; url=/2026/">
+  <script>location.replace('/2026/' + location.search + location.hash);</script>
 </head>
 <body>
-  <a class="skip" href="#entries" style="position:absolute;left:-999px">跳到入口</a>
-  <div class="hub">
-    <header class="hub-bar">
-      <a class="hub-mark" href="/">ichiyotsu<span>.</span></a>
-      <button class="theme-btn" id="theme-btn" type="button" aria-label="切换到深色模式">
-        <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 1 1-9-9a1 1 0 0 0 9 9"/></svg>
-        <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="m6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M2 12h2m16 0h2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M12 2v2m0 16v2"/></g></svg>
-      </button>
-    </header>
-
-    <main class="hub-hero">
-      <p class="hub-kicker">Tokisakyo</p>
-      <h1 class="hub-name" aria-label="ichiyotsu"><span style="--i:0">i</span><span style="--i:1">c</span><span style="--i:2">h</span><span style="--i:3">i</span><span style="--i:4">y</span><span style="--i:5">o</span><span style="--i:6">t</span><span style="--i:7">s</span><span style="--i:8">u</span></h1>
-      <p class="hub-aka">也叫 Tokisakyo。</p>
-      <p class="hub-note">个人介绍还没写。</p>
-      <div class="hub-stage" aria-hidden="true">
-        <span class="blob blob--a"></span>
-        <span class="blob blob--b"></span>
-        <span class="blob blob--c"></span>
-      </div>
-    </main>
-
-    <nav class="hub-entries" id="entries" aria-label="入口">
-      <a class="entry entry--page" href="/tokipage/">
-        <strong>TokiPage.</strong>
-        <span>软件、设计与探索</span>
-      </a>
-      <a class="entry entry--city" href="/forcity/">
-        <strong>Fortress City</strong>
-        <span>围城市政官方网站</span>
-      </a>
-      <a class="entry" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">
-        <strong>GitHub</strong>
-        <span>github.com/ichiyotsu</span>
-      </a>
-    </nav>
-
-    <footer class="hub-foot">
-      <span>© <span id="year">2026</span> ichiyotsu</span>
-      <a href="/tokipage/about/">关于 TokiPage.</a>
-    </footer>
-  </div>
-  <script>
-    document.getElementById('year').textContent = String(new Date().getFullYear());
-    var root = document.documentElement;
-    var btn = document.getElementById('theme-btn');
-    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    function theme() { return root.dataset.theme === 'dark' ? 'dark' : 'light'; }
-    function paint(next) {
-      root.dataset.theme = next;
-      root.style.colorScheme = next;
-      try { localStorage.setItem('ichiyotsu-theme', next); } catch (error) {}
-      btn.setAttribute('aria-label', next === 'dark' ? '切换到浅色模式' : '切换到深色模式');
-      var meta = document.getElementById('theme-color');
-      if (meta) meta.content = next === 'dark' ? '#151210' : '#FDF8F2';
-    }
-    paint(theme());
-    btn.addEventListener('click', function (event) {
-      var next = theme() === 'dark' ? 'light' : 'dark';
-      if (!document.startViewTransition || reduce.matches) { paint(next); return; }
-      root.style.setProperty('--vt-x', event.clientX + 'px');
-      root.style.setProperty('--vt-y', event.clientY + 'px');
-      try { document.startViewTransition(function () { paint(next); }); }
-      catch (error) { paint(next); }
-    });
-    if (!reduce.matches) {
-      window.addEventListener('pointermove', function (event) {
-        root.style.setProperty('--hx', ((event.clientX / window.innerWidth) - 0.5).toFixed(3));
-        root.style.setProperty('--hy', ((event.clientY / window.innerHeight) - 0.5).toFixed(3));
-      }, { passive: true });
-    }
-  </script>
+  <p><a href="/2026/">进入 2026</a></p>
 </body>
 </html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>编辑 2026 — ichiyotsu</title>
+  <link rel="stylesheet" href="/tokipage/assets/css/tokens.css?v=20261107b">
+  <link rel="stylesheet" href="/2026/edit/editor.css?v=20261109a">
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('ichiyotsu-theme');
+        var dark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved === 'light' || saved === 'dark' ? saved : (dark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch (error) {}
+    })();
+  </script>
+</head>
+<body>
+  <div class="edit">
+    <form class="panel" id="editor">
+      <h1>编辑 2026</h1>
+      <p class="lede">改完会立刻出现在右边。发布才会写进仓库。</p>
+      <p class="hint">令牌只保存在这台浏览器。创建时打开 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">GitHub 细粒度令牌</a>，只选仓库 ichiyotsu/ichiyotsu.github.io，Contents 设为读写。</p>
+      <label>访问令牌<input id="token" type="password" autocomplete="off" placeholder="github_pat_…"></label>
+      <div class="row">
+        <button type="button" id="forget">忘记令牌</button>
+        <button type="button" id="theme">预览深色</button>
+      </div>
+      <fieldset>
+        <legend>首页</legend>
+        <label class="check"><input id="hero-visible" type="checkbox"> 显示这段</label>
+        <label>小标题<input id="kicker"></label>
+        <label>名字<input id="name"></label>
+        <label>一句介绍<input id="tagline"></label>
+        <label>强调色<input id="accent" type="color"></label>
+      </fieldset>
+      <fieldset>
+        <legend>作品</legend>
+        <label class="check"><input id="projects-visible" type="checkbox"> 显示这段</label>
+        <div id="projects"></div>
+        <button type="button" id="add-project">添加作品</button>
+      </fieldset>
+      <fieldset>
+        <legend>关于</legend>
+        <label class="check"><input id="about-visible" type="checkbox"> 显示这段</label>
+        <label>标题<input id="about-title"></label>
+        <label>正文<textarea id="about-body"></textarea></label>
+      </fieldset>
+      <fieldset>
+        <legend>链接</legend>
+        <label class="check"><input id="links-visible" type="checkbox"> 显示这段</label>
+        <div id="links"></div>
+        <button type="button" id="add-link">添加链接</button>
+      </fieldset>
+      <label>页脚名字<input id="footer"></label>
+      <div class="row">
+        <button class="primary" type="button" id="publish">发布到 main</button>
+        <button type="button" id="download">下载 JSON</button>
+        <button type="button" id="import">导入 JSON</button>
+        <input id="import-file" type="file" accept="application/json" hidden>
+      </div>
+      <p class="status" id="status" role="status"></p>
+      <p class="hint">发布成功后，GitHub Pages 大约一分钟才会更新。</p>
+    </form>
+    <div class="preview"><iframe id="frame" title="实时预览" src="/2026/?preview=1"></iframe></div>
+  </div>
+  <script type="module" src="/2026/edit/editor.js?v=20261109a"></script>
+</body>
+</html>

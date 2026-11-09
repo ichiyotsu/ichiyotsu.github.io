@@ -1,0 +1,76 @@
+{
+  "accent": "#b33613",
+  "hero": {
+    "visible": true,
+    "kicker": "Tokisakyo",
+    "name": "ichiyotsu",
+    "tagline": "把复杂的事，做得轻一点。"
+  },
+  "projects": {
+    "visible": true,
+    "items": [
+      {
+        "title": "TokiPage.",
+        "line": "软件、设计与探索",
+        "href": "/tokipage/",
+        "year": "2026",
+        "tags": "站点",
+        "image": "/tokipage/assets/img/og.jpg"
+      },
+      {
+        "title": "Fortress City",
+        "line": "围城市政官方网站",
+        "href": "/forcity/",
+        "year": "2026",
+        "tags": "站点",
+        "image": "/forcity/assets/img/og.png"
+      },
+      {
+        "title": "TokiTodo",
+        "line": "待办，专注计时，手机锁与统计。",
+        "href": "/tokipage/software/tokitodo/",
+        "year": "2026",
+        "tags": "软件",
+        "image": "/tokipage/assets/img/toki-todo.webp"
+      },
+      {
+        "title": "Luna",
+        "line": "悬浮胶囊浏览器。",
+        "href": "/tokipage/software/luna/",
+        "year": "2026",
+        "tags": "软件",
+        "image": "/tokipage/assets/img/luma.webp"
+      },
+      {
+        "title": "TokiNote",
+        "line": "本地笔记软件，目前最完善的一个。",
+        "href": "/tokipage/software/tokinote/",
+        "year": "2026",
+        "tags": "软件",
+        "image": "/tokipage/assets/img/toki-note.webp"
+      },
+      {
+        "title": "TokiLive",
+        "line": "介绍还在整理。",
+        "href": "https://github.com/ichiyotsu",
+        "year": "2026",
+        "tags": "占位",
+        "image": ""
+      }
+    ]
+  },
+  "about": {
+    "visible": true,
+    "title": "关于",
+    "body": "个人介绍还没写。"
+  },
+  "links": {
+    "visible": true,
+    "items": [
+      { "label": "GitHub", "href": "https://github.com/ichiyotsu" },
+      { "label": "TokiPage.", "href": "/tokipage/" },
+      { "label": "围城市政", "href": "/forcity/" }
+    ]
+  },
+  "footer": "ichiyotsu"
+}

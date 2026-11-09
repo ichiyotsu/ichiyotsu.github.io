@@ -1,0 +1,90 @@
+body {
+  margin: 0;
+  background: var(--md-sys-color-background);
+  color: var(--md-sys-color-on-background);
+  font-family: var(--font-body);
+}
+
+.edit {
+  display: grid;
+  grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
+  min-height: 100svh;
+}
+
+.panel {
+  overflow: auto;
+  max-height: 100svh;
+  padding: 1.2rem 1.2rem 3rem;
+  border-right: 1px solid var(--md-sys-color-outline-variant);
+}
+
+.preview {
+  background: var(--md-sys-color-surface-container-low);
+}
+
+.preview iframe {
+  width: 100%;
+  height: 100svh;
+  border: 0;
+  background: var(--md-sys-color-background);
+}
+
+h1 {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  letter-spacing: -0.04em;
+}
+
+.lede, .hint, .status { color: var(--md-sys-color-on-surface-variant); font-size: 0.86rem; }
+.hint a { color: var(--md-sys-color-primary); }
+
+fieldset {
+  margin: 1rem 0;
+  padding: 0.8rem;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 16px;
+}
+
+legend { padding: 0 0.3rem; font-weight: 650; }
+
+label { display: grid; gap: 0.25rem; margin: 0.45rem 0; font-size: 0.78rem; color: var(--md-sys-color-on-surface-variant); }
+
+input, textarea {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--md-sys-color-outline-variant);
+  border-radius: 10px;
+  padding: 0.45rem 0.55rem;
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  font: inherit;
+  font-size: 0.9rem;
+}
+
+textarea { min-height: 4.5rem; resize: vertical; }
+
+.row { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+button, .file {
+  border: 0;
+  border-radius: var(--toki-shape-full);
+  padding: 0.4rem 0.75rem;
+  background: var(--md-sys-color-surface-container-high);
+  color: var(--md-sys-color-on-surface);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+button.primary { background: var(--md-sys-color-primary); color: var(--md-sys-color-on-primary); }
+button.danger { background: transparent; color: var(--md-sys-color-error); }
+.card { margin: 0.6rem 0; padding: 0.6rem; border-radius: 12px; background: var(--md-sys-color-surface-container-low); }
+.status.ok { color: var(--md-sys-color-primary); }
+.status.bad { color: var(--md-sys-color-error); }
+.check { display: flex; gap: 0.4rem; align-items: center; font-size: 0.86rem; color: var(--md-sys-color-on-surface); }
+.card[draggable="true"] { cursor: grab; }
+
+@media (max-width: 900px) {
+  .edit { grid-template-columns: 1fr; }
+  .panel { max-height: none; border-right: 0; }
+  .preview iframe { height: 70svh; }
+}
