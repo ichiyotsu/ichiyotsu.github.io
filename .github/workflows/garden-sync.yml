@@ -40,7 +40,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add garden/data/discussions.json
+          git add tokipage/garden/data/discussions.json
           if git diff --cached --quiet; then
             echo "Garden data is already up to date."
           else

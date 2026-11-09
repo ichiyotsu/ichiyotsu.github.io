@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 640" role="img" aria-label="交通部彩色色带">
+  <defs>
+    <linearGradient id="band1" x1="0" y1="0.1" x2="1" y2="0.9">
+      <stop offset="0" stop-color="#e8402f"/>
+      <stop offset="0.35" stop-color="#f08c26"/>
+      <stop offset="0.7" stop-color="#f5c62c"/>
+      <stop offset="1" stop-color="#4fbf6a"/>
+    </linearGradient>
+    <linearGradient id="band2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2ba9a6"/>
+      <stop offset="0.5" stop-color="#3f7fd0"/>
+      <stop offset="1" stop-color="#8a5cd0"/>
+    </linearGradient>
+    <linearGradient id="band3" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#d257a8"/>
+      <stop offset="0.5" stop-color="#f0874f"/>
+      <stop offset="1" stop-color="#f5c62c"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="9" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <g fill="none" stroke-linecap="round" filter="url(#soft)">
+    <path d="M60 470 C 170 470 215 320 330 320 C 445 320 490 470 600 458 C 700 447 760 404 840 404"
+          stroke="url(#band1)" stroke-width="32"/>
+    <path d="M70 526 C 180 526 228 372 343 372 C 458 372 502 526 612 514 C 712 503 772 458 846 458"
+          stroke="url(#band2)" stroke-width="21" opacity="0.92"/>
+    <path d="M110 246 C 210 246 250 140 360 146 C 470 152 512 262 620 250 C 710 240 760 196 836 196"
+          stroke="url(#band3)" stroke-width="17" opacity="0.86"/>
+    <path d="M150 180 C 240 180 288 96 386 102 C 484 108 520 190 606 184 C 690 178 730 146 800 146"
+          stroke="#f5c62c" stroke-width="8" opacity="0.7"/>
+    <path d="M80 384 C 190 380 240 250 348 254 C 456 258 500 392 606 380 C 700 370 754 330 840 330"
+          stroke="#4fbf6a" stroke-width="10" opacity="0.75"/>
+    <path d="M120 590 C 240 584 300 470 410 474 C 520 478 566 590 670 584 C 750 580 800 552 860 552"
+          stroke="#d257a8" stroke-width="11" opacity="0.6"/>
+  </g>
+</svg>

@@ -1,0 +1,10 @@
+# local render checks
+_shots/
+
+# generator scratch files (not part of the published site)
+_build/
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store

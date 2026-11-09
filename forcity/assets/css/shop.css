@@ -1,0 +1,359 @@
+/* ==========================================================================
+   Fortress City Gov. Gift Mall — standalone site
+   ========================================================================== */
+
+/* ------------------------------------------------------------------- header */
+
+.shop-header {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: rgba(8, 7, 9, 0.62);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
+  backdrop-filter: blur(20px) saturate(150%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.shop-header.is-stuck {
+  background: rgba(6, 5, 7, 0.8);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.shop-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: var(--header-h);
+  padding-block: 10px;
+}
+
+.shop-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.shop-brand__mark { width: clamp(24px, 2vw, 34px); flex: none; }
+.shop-brand__mark img { width: 100%; height: auto; }
+
+.shop-brand__text { display: flex; flex-direction: column; line-height: 1.26; }
+
+.shop-brand__en {
+  font-size: clamp(17px, 1.5vw, 26px);
+  font-weight: 700;
+  letter-spacing: -0.014em;
+}
+
+.shop-brand__cn {
+  font-size: clamp(12px, 0.92vw, 15px);
+  color: var(--ink-2);
+}
+
+.shop-home-link {
+  font-size: clamp(13px, 0.98vw, 16px);
+  color: var(--ink-2);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  white-space: nowrap;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+
+.shop-home-link:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+  background: var(--fill);
+}
+
+/* -------------------------------------------------------------- anniversary */
+
+.yr { padding-top: clamp(26px, 3vw, 52px); }
+
+.yr-8 {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding-block: clamp(22px, 2.6vw, 40px);
+  margin-top: clamp(-16px, -1vw, -6px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.14) 0 3px, transparent 3px),
+    linear-gradient(180deg, #1a1a1a, #0d0d0d);
+  overflow: hidden;
+}
+
+.yr-8::before,
+.yr-8::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: clamp(10px, 1.4vw, 20px);
+  background: linear-gradient(90deg, #000 0%, #2b2b2b 26%, #5a5a5a 50%, #2b2b2b 74%, #000 100%);
+  opacity: 0.85;
+}
+
+.yr-8::before { top: 0; }
+.yr-8::after { bottom: 0; }
+
+.yr-8__num {
+  position: relative;
+  z-index: 1;
+  width: clamp(32px, 2.8vw, 48px);
+  height: clamp(48px, 4.2vw, 74px);
+  display: grid;
+  place-items: center;
+  background: #b9b2ad;
+  color: #111;
+  font-size: clamp(24px, 2.1vw, 38px);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.yr-head {
+  text-align: center;
+  padding-top: clamp(26px, 3vw, 52px);
+}
+
+.yr-head__title {
+  font-size: clamp(23px, 2.4vw, 42px);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+.yr-head__sub {
+  margin-top: 4px;
+  font-size: clamp(16px, 1.5vw, 26px);
+  color: var(--ink-2);
+  font-weight: 700;
+}
+
+.yr-head__store { margin-top: clamp(8px, 1vw, 14px); font-size: clamp(13px, 0.95vw, 17px); color: var(--ink-2); }
+
+.yr-head__date {
+  margin-top: 2px;
+  font-size: clamp(14px, 1.05vw, 18px);
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+/* ----------------------------------------------------------------- products */
+
+.products {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(40px, 5.4vw, 96px);
+  padding-block: clamp(34px, 4vw, 70px);
+  max-width: 1040px;
+  margin-inline: auto;
+}
+
+.product {
+  display: grid;
+  grid-template-columns: minmax(0, 380px) minmax(0, 1fr);
+  gap: clamp(24px, 5vw, 96px);
+  align-items: center;
+}
+
+.product__media { width: 100%; max-width: 380px; justify-self: center; }
+.product__media img { width: 100%; height: auto; }
+
+.product__badges { display: flex; gap: 10px; margin-bottom: clamp(12px, 1.4vw, 20px); }
+
+.badge {
+  width: clamp(56px, 4.8vw, 74px);
+  aspect-ratio: 1;
+  border: 3px solid #ffffff;
+  background: #d9d5d2;
+  color: #1a1a1a;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  line-height: 1.05;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
+  padding: 4px;
+}
+
+.badge__top { font-size: clamp(11px, 0.92vw, 15px); font-weight: 700; }
+.badge__top--wide { font-size: clamp(7px, 0.6vw, 9.5px); line-height: 1.12; }
+.badge__bottom { font-size: clamp(7px, 0.58vw, 9px); margin-top: 2px; }
+
+.product__kicker { font-size: clamp(12px, 0.88vw, 15px); color: var(--ink-3); letter-spacing: 0.02em; }
+
+.product__name {
+  margin-top: 2px;
+  font-size: clamp(17px, 1.42vw, 26px);
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.product__price {
+  margin-top: 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.product__amount {
+  font-size: clamp(24px, 2.4vw, 42px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.product__amount .cur { font-size: 0.62em; vertical-align: 0.22em; margin-right: 1px; }
+
+.product__buy {
+  font-size: clamp(12px, 0.86vw, 15px);
+  color: var(--ink-2);
+  border-bottom: 1px solid transparent;
+  transition: color 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+
+.product__buy:hover { color: #fff; border-color: rgba(255, 255, 255, 0.45); }
+
+/* ------------------------------------------------------------ anniversary 7 */
+
+.yr-7 {
+  position: relative;
+  margin-top: clamp(24px, 3vw, 56px);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.yr-7__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.9;
+  z-index: -1;
+}
+
+.yr-7__inner {
+  min-height: clamp(220px, 24vw, 360px);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding-block: clamp(38px, 4.6vw, 76px);
+}
+
+.yr-7__title { font-size: clamp(21px, 2vw, 36px); font-weight: 700; }
+
+.yr-7__title .grad,
+.yr-6__title .grad,
+.yr-5__title .grad {
+  background: linear-gradient(100deg, #8fa8ff, #b48cff 55%, #f0a0e0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.yr-7__sub { margin-top: 6px; font-size: clamp(13px, 1.05vw, 18px); color: var(--ink-2); line-height: 1.6; }
+.yr-7__date { margin-top: 6px; font-size: clamp(12px, 0.9vw, 15px); color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+/* -------------------------------------------------- anniversary 6 / 5 marks */
+
+.yr-mark {
+  padding-top: clamp(44px, 5.4vw, 96px);
+  text-align: center;
+}
+
+.yr-mark__date {
+  font-size: clamp(13px, 1vw, 17px);
+  color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
+}
+
+.yr-mark__art {
+  margin: clamp(6px, 1.4vw, 18px) auto 0;
+  font-family: var(--font-graffiti);
+  font-size: clamp(58px, 9.4vw, 168px);
+  line-height: 1;
+  letter-spacing: 0.01em;
+  background: linear-gradient(96deg, #6f8cf5 0%, #a06ef0 42%, #e07ae0 72%, #f087c0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  filter: drop-shadow(0 0 22px rgba(140, 110, 240, 0.45))
+          drop-shadow(0 0 60px rgba(190, 120, 230, 0.28));
+  transform: rotate(-3deg);
+  user-select: none;
+}
+
+.yr-mark__art--cold {
+  background: linear-gradient(96deg, #4f8ef0 0%, #4fc4d8 45%, #7fe0b0 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  filter: drop-shadow(0 0 22px rgba(70, 150, 230, 0.45))
+          drop-shadow(0 0 60px rgba(80, 200, 190, 0.26));
+  transform: rotate(2deg);
+}
+
+.yr-mark__title {
+  margin-top: clamp(8px, 1.2vw, 16px);
+  font-size: clamp(19px, 1.8vw, 32px);
+  font-weight: 700;
+}
+
+.yr-mark__sub { margin-top: 4px; font-size: clamp(13px, 1.05vw, 18px); color: var(--ink-2); }
+
+.yr-mark__en {
+  margin-top: 2px;
+  font-size: clamp(12px, 0.9vw, 15px);
+  color: var(--ink-3);
+  letter-spacing: 0.02em;
+}
+
+.shop-note {
+  margin-top: clamp(44px, 5.4vw, 92px);
+  padding-top: 20px;
+  border-top: 1px solid var(--line-soft);
+  font-size: var(--fs-small);
+  color: var(--ink-3);
+  text-align: center;
+  line-height: 1.7;
+}
+
+.shop-footer {
+  margin-top: clamp(36px, 4.4vw, 70px);
+  padding-block: clamp(22px, 2.6vw, 38px);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.025);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  backdrop-filter: blur(16px) saturate(130%);
+}
+
+.shop-footer__inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  font-size: clamp(12.5px, 0.94vw, 16px);
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* -------------------------------------------------------------- responsive */
+
+@media (max-width: 760px) {
+  .shop-brand__en { font-size: 17px; }
+
+  .product { grid-template-columns: 1fr; gap: 20px; }
+  .product__media { max-width: 260px; }
+  .product__info { text-align: center; }
+  .product__badges { justify-content: center; }
+  .product__price { justify-content: center; }
+
+  .yr-7__inner { min-height: 180px; }
+}

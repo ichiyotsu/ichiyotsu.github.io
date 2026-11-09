@@ -16,7 +16,7 @@ const repository = process.env.GITHUB_REPOSITORY || 'ichiyotsu/ichiyotsu.github.
 const [owner, name] = repository.split('/');
 const token = process.env.GITHUB_TOKEN;
 const api = 'https://api.github.com';
-const dataFile = join(root, 'garden', 'data', 'discussions.json');
+const dataFile = join(root, 'tokipage', 'garden', 'data', 'discussions.json');
 
 if (!token) {
   console.error('GITHUB_TOKEN is required.');
