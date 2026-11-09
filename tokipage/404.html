@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>404 — 这条路还没铺好 · TokiPage.</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#FDF8F2" id="theme-color">
+  <link rel="icon" href="/tokipage/assets/icons/site-logo-light.svg" type="image/svg+xml">
+  <link rel="icon" href="/tokipage/assets/icons/site-logo-dark.svg" type="image/svg+xml" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" href="/tokipage/assets/css/tokens.css?v=20261107b">
+  <link rel="stylesheet" href="/tokipage/assets/css/base.css?v=20261107b">
+  <link rel="stylesheet" href="/tokipage/assets/css/components.css?v=20261107b">
+  <link rel="stylesheet" href="/tokipage/assets/css/sections.css?v=20261107b">
+  <link rel="stylesheet" href="/tokipage/assets/css/pages.css?v=20261107b">
+  <script>
+    document.documentElement.classList.replace('no-js', 'js');
+    (function () {
+      try {
+        var saved = localStorage.getItem('ichiyotsu-theme');
+        var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        var theme = saved === 'light' || saved === 'dark' ? saved : (systemDark ? 'dark' : 'light');
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        var meta = document.getElementById('theme-color');
+        if (meta) meta.content = theme === 'dark' ? '#151210' : '#FDF8F2';
+      } catch (error) {}
+    })();
+  </script>
+</head>
+<body data-page="404">
+  <svg class="svg-sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="m6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41M2 12h2m16 0h2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M12 2v2m0 16v2"/></g></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 1 1-9-9a1 1 0 0 0 9 9"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7M8 7h9v9"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="topbar container">
+      <a class="brand" href="/tokipage/" aria-label="TokiPage. 首页">TokiPage<span class="brand__dot">.</span></a>
+      <div class="topbar__actions" style="margin-left:auto">
+        <button class="icon-button theme-toggle" id="theme-toggle" type="button" aria-label="切换到深色模式">
+          <svg class="theme-toggle__sun icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+          <svg class="theme-toggle__moon icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="not-found">
+    <div class="not-found__inner">
+      <p class="not-found__code">404</p>
+      <h1>这条路还没铺好。</h1>
+      <p>你要找的页面可能被移动、删掉，或者从来就只存在于草稿里。先回首页吧。</p>
+      <div class="not-found__actions">
+        <a class="button button--filled" href="/tokipage/">回到首页</a>
+        <a class="button button--outlined" href="https://github.com/ichiyotsu" target="_blank" rel="noopener noreferrer">去 GitHub <svg class="icon" aria-hidden="true"><use href="#i-arrow-up-right"></use></svg></a>
+      </div>
+    </div>
+  </main>
+
+  <script src="/tokipage/assets/js/i18n.js?v=20261107b" defer></script>
+  <script src="/tokipage/assets/js/main.js?v=20261107b" defer></script>
+</body>
+</html>

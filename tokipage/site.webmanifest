@@ -1,0 +1,31 @@
+{
+  "name": "TokiPage. — software, design & explore",
+  "short_name": "TokiPage.",
+  "description": "TokiPage：软件、设计与探索。",
+  "lang": "zh-CN",
+  "start_url": "/tokipage/",
+  "scope": "/tokipage/",
+  "display": "standalone",
+  "background_color": "#FDF8F2",
+  "theme_color": "#FDF8F2",
+  "icons": [
+    {
+      "src": "/tokipage/assets/img/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tokipage/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/tokipage/assets/img/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

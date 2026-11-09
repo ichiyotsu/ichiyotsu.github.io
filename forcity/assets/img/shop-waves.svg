@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" preserveAspectRatio="xMidYMid slice" role="img" aria-label="七周年蓝色波浪装饰">
+  <defs>
+    <linearGradient id="w1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0a1330"/><stop offset="1" stop-color="#050a1c"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="420" fill="#000"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M-40 300 C 120 300 180 150 360 150 C 540 150 600 300 780 300 C 960 300 1020 150 1240 150" stroke="#050b22" stroke-width="190" opacity="0.9"/>
+    <path d="M-40 300 C 120 300 180 150 360 150 C 540 150 600 300 780 300 C 960 300 1020 150 1240 150" stroke="#081334" stroke-width="150"/>
+    <path d="M-40 300 C 120 300 180 150 360 150 C 540 150 600 300 780 300 C 960 300 1020 150 1240 150" stroke="#0b1d4c" stroke-width="112"/>
+    <path d="M-40 300 C 120 300 180 150 360 150 C 540 150 600 300 780 300 C 960 300 1020 150 1240 150" stroke="#123070" stroke-width="76"/>
+    <path d="M-40 300 C 120 300 180 150 360 150 C 540 150 600 300 780 300 C 960 300 1020 150 1240 150" stroke="#1b4795" stroke-width="44"/>
+    <path d="M-40 300 C 120 300 180 150 360 150 C 540 150 600 300 780 300 C 960 300 1020 150 1240 150" stroke="#2a63bd" stroke-width="18"/>
+  </g>
+</svg>

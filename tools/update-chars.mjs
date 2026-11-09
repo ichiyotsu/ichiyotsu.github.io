@@ -12,7 +12,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const pages = ['index.html', 'software/index.html', 'software/tokitodo/index.html', 'software/luma/index.html', 'software/tokinote/index.html', 'software/tokifonts/index.html', 'garden/index.html', 'about/index.html', '404.html'];
+const pages = ['tokipage/index.html', 'tokipage/software/index.html', 'tokipage/software/tokitodo/index.html', 'tokipage/software/luma/index.html', 'tokipage/software/tokinote/index.html', 'tokipage/software/tokifonts/index.html', 'tokipage/garden/index.html', 'tokipage/about/index.html', 'tokipage/404.html', 'index.html'];
 
 const stripped = pages
   .map((page) => readFileSync(join(root, page), 'utf8'))
@@ -29,5 +29,5 @@ for (let code = 0x20; code <= 0x7e; code += 1) chars.add(String.fromCharCode(cod
 });
 
 const output = [...chars].sort().join('');
-writeFileSync(join(root, 'assets/fonts/chars.txt'), output, 'utf8');
+writeFileSync(join(root, 'tokipage/assets/fonts/chars.txt'), output, 'utf8');
 console.log(`Wrote assets/fonts/chars.txt — ${[...chars].length} unique characters.`);
