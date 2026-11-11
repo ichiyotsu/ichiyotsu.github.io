@@ -1,0 +1,74 @@
+{
+  "accent": "#b33613",
+  "hero": {
+    "visible": true,
+    "kicker": "Tokisakyo",
+    "name": "ichiyotsu",
+    "tagline": "把复杂的事，做得轻一点。"
+  },
+  "projects": {
+    "visible": true,
+    "items": [
+      {
+        "title": "TokiTodo",
+        "line": "待办，专注计时，手机锁与统计。",
+        "href": "/tokipage/software/tokitodo/",
+        "year": "2026",
+        "tags": "软件",
+        "image": "/tokipage/assets/img/toki-todo.webp"
+      },
+      {
+        "title": "Luna",
+        "line": "悬浮胶囊浏览器。",
+        "href": "/tokipage/software/luna/",
+        "year": "2026",
+        "tags": "软件",
+        "image": "/tokipage/assets/img/luma.webp"
+      },
+      {
+        "title": "TokiNote",
+        "line": "本地笔记软件，目前最完善的一个。",
+        "href": "/tokipage/software/tokinote/",
+        "year": "2026",
+        "tags": "软件",
+        "image": "/tokipage/assets/img/toki-note.webp"
+      },
+      {
+        "title": "TokiLive",
+        "line": "直播弹幕。",
+        "href": "https://github.com/ichiyotsu",
+        "year": "2026",
+        "tags": "软件",
+        "image": ""
+      },
+      {
+        "title": "Tokifont",
+        "line": "字体。",
+        "href": "/tokipage/software/tokifonts/",
+        "year": "2026",
+        "tags": "软件",
+        "image": ""
+      },
+      {
+        "title": "Tokimusic",
+        "line": "网易云音乐。",
+        "href": "https://github.com/ichiyotsu",
+        "year": "2026",
+        "tags": "软件",
+        "image": ""
+      }
+    ]
+  },
+  "about": {
+    "visible": true,
+    "title": "关于",
+    "body": "个人介绍还没写。"
+  },
+  "links": {
+    "visible": true,
+    "items": [
+      { "label": "GitHub", "href": "https://github.com/ichiyotsu" }
+    ]
+  },
+  "footer": "ichiyotsu"
+}

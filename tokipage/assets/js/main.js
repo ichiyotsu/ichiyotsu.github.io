@@ -288,6 +288,23 @@
     document.addEventListener('ichiyotsu:lang', () => {
       window.requestAnimationFrame(() => place(indicated, false));
     });
+
+    nav.addEventListener('ichiyotsu:section', (event) => {
+      const id = event.detail && event.detail.id;
+      if (!id) return;
+      const link = links.find((item) => {
+        const href = item.getAttribute('href') || '';
+        return href === `#${id}` || href.endsWith(`#${id}`);
+      });
+      if (!link) return;
+      links.forEach((item) => {
+        const on = item === link;
+        item.classList.toggle('is-active', on);
+        if (on) item.setAttribute('aria-current', 'page');
+        else item.removeAttribute('aria-current');
+      });
+      if (!nav.matches(':hover') && !nav.contains(document.activeElement)) place(link, true);
+    });
   });
 
   /* ---------- Desktop dropdowns ---------- */
@@ -407,10 +424,10 @@
           <h2>Menu</h2>
         </div>
         <nav class="mobile-menu-links" aria-label="站点菜单">
-          <a href="/tokipage/"${window.location.pathname === '/tokipage/' ? ' aria-current="page"' : ''}>主页</a>
-          <a href="/tokipage/software/"${window.location.pathname.startsWith('/tokipage/software') ? ' aria-current="page"' : ''}>软件</a>
-          <a href="/tokipage/garden/"${window.location.pathname.startsWith('/tokipage/garden') ? ' aria-current="page"' : ''}>探索</a>
-          <a href="/tokipage/about/"${window.location.pathname.startsWith('/tokipage/about') ? ' aria-current="page"' : ''}>关于</a>
+          <a href="/tokipage/#home">主页</a>
+          <a href="/tokipage/#software">软件</a>
+          <a href="/tokipage/#explore">探索</a>
+          <a href="/tokipage/#about">关于</a>
         </nav>
       </div>`;
     document.body.appendChild(menuLayer);
