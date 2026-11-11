@@ -10,17 +10,9 @@
     "visible": true,
     "items": [
       {
-        "title": "TokiTodo",
-        "line": "待办，专注计时，手机锁与统计。",
-        "href": "/tokipage/software/tokitodo/",
-        "year": "2026",
-        "tags": "软件",
-        "image": "/tokipage/assets/img/toki-todo.webp"
-      },
-      {
         "title": "TokiNote",
         "line": "日记。",
-        "href": "https://github.com/ichiyotsu/TokiNote",
+        "href": "https://github.com/ichiyotsu/Tokinote",
         "year": "2026",
         "tags": "软件",
         "image": "/tokipage/assets/img/toki-note.webp"
@@ -28,7 +20,7 @@
       {
         "title": "TokiLive",
         "line": "直播弹幕。",
-        "href": "https://github.com/ichiyotsu/tokilive",
+        "href": "https://github.com/ichiyotsu/Tokilive",
         "year": "2026",
         "tags": "软件",
         "image": ""

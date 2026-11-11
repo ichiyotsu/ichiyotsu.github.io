@@ -401,11 +401,6 @@
   box-shadow: var(--shadow-3);
 }
 
-.project--todo,
-.project--luma {
-  grid-column: span 7;
-}
-
 .project--luma {
   grid-column: span 5;
 }
@@ -565,25 +560,6 @@
   overflow: visible;
 }
 
-/* TokiTodo */
-
-.project--todo {
-  --project-muted: #526251;
-  background: #e4eee0;
-  color: #17251a;
-}
-
-.project--todo .project__title {
-  font-size: clamp(2.1rem, 3vw, 2.8rem);
-}
-
-.project__media--todo {
-  min-height: 0;
-  background:
-    radial-gradient(circle at 70% 12%, rgb(255 255 255 / 0.55), transparent 40%),
-    linear-gradient(180deg, transparent 20%, #d8e7d2 100%);
-}
-
 .project__media .app-shot {
   max-height: 420px;
   max-width: min(100%, 260px);
@@ -591,42 +567,6 @@
 
 .project:hover .app-shot {
   transform: translateY(-8px);
-}
-
-.media-note {
-  position: absolute;
-  bottom: 38px;
-  left: 28px;
-  z-index: 3;
-  display: grid;
-  padding: 0.75rem 1rem;
-  border: 1px solid rgb(255 255 255 / 0.5);
-  border-radius: 20px;
-  background: rgb(255 255 255 / 0.56);
-  box-shadow: 0 18px 40px -20px rgb(41 68 38 / 0.42);
-  color: #17251a;
-  line-height: 1.1;
-  transform: rotate(-3deg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.media-note span {
-  font-size: 0.64rem;
-  letter-spacing: 0.06em;
-  opacity: 0.7;
-}
-
-.media-note strong {
-  margin-block: 0.1rem;
-  font-family: var(--font-display);
-  font-size: 2.1rem;
-  font-weight: 700;
-  letter-spacing: -0.05em;
-}
-
-.project--todo .app-shot {
-  max-width: min(100%, 240px);
 }
 
 /* Luma */
@@ -1443,7 +1383,6 @@
     margin-top: 1rem;
   }
 
-  .project--todo,
   .project--luma,
   .project--note,
   .project--fonts {
@@ -1650,7 +1589,6 @@
     min-height: 0;
   }
 
-  .project--todo,
   .project--luma {
     min-height: 560px;
   }
@@ -1663,8 +1601,7 @@
     margin-top: 1rem;
   }
 
-  .project__media .app-shot,
-  .project--todo .app-shot {
+  .project__media .app-shot {
     max-height: 320px;
   }
 
@@ -1786,23 +1723,11 @@
   cursor: not-allowed;
 }
 
-/* Darker TokiTodo / Luma cards in dark mode */
-:root[data-theme="dark"] .project--todo {
-  background: #1b2a21;
-  color: #e2eadf;
-  --project-muted: #a8b8a3;
-}
-
+/* Darker Luma cards in dark mode */
 :root[data-theme="dark"] .project--luma {
   background: #211d35;
   color: #e7e2f5;
   --project-muted: #b5add3;
-}
-
-:root[data-theme="dark"] .project__media--todo {
-  background:
-    radial-gradient(circle at 70% 12%, rgb(255 255 255 / 0.1), transparent 42%),
-    linear-gradient(180deg, transparent 20%, #203229 100%);
 }
 
 :root[data-theme="dark"] .project__media--luma {
@@ -1843,8 +1768,6 @@
   pointer-events: auto;
 }
 
-.mini-task,
-.mini-focus,
 .mini-notebar,
 .mini-swatch {
   border: 1px solid color-mix(in srgb, currentColor 18%, transparent);
@@ -1853,42 +1776,6 @@
   font-family: var(--font-body);
   cursor: pointer;
 }
-
-.mini-task {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: var(--r-full);
-  font-size: 0.7rem;
-}
-.mini-task__check {
-  width: 15px;
-  height: 15px;
-  border: 1.5px solid currentColor;
-  border-radius: 5px;
-  transition: background-color var(--dur-short) var(--ease-emphasized);
-}
-.mini-task[aria-pressed="true"] .mini-task__check {
-  background: currentColor;
-  box-shadow: inset 0 0 0 3px var(--project-bg, transparent);
-}
-.mini-task[aria-pressed="true"] .mini-task__label { text-decoration: line-through; opacity: 0.62; }
-
-.mini-focus {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-  min-height: 34px;
-  padding: 0 12px;
-  border-radius: var(--r-full);
-  font-size: 0.7rem;
-}
-.mini-focus strong { font-family: var(--font-mono); font-size: 0.76rem; font-weight: 650; }
-.mini-focus[aria-pressed="true"] { background: currentColor; }
-.mini-focus[aria-pressed="true"] span,
-.mini-focus[aria-pressed="true"] strong { color: var(--project-bg, var(--md-sys-color-surface)); }
 
 .mini-notebar {
   display: inline-flex;
@@ -1923,7 +1810,6 @@
 .project--note[data-tone="blue"] .mini-swatch span { background: #9abcf0; }
 .project--note[data-tone="green"] .mini-swatch span { background: #a5d6a7; }
 
-.project--todo { --project-bg: #d6f0de; }
 .project--note { --project-bg: #251c17; }
 
 /* M3E: only real interactive controls */

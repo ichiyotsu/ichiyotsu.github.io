@@ -590,22 +590,6 @@
 
   /* ---------- Software page mini components ---------- */
 
-  document.querySelectorAll('[data-todo-task]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const next = button.getAttribute('aria-pressed') !== 'true';
-      button.setAttribute('aria-pressed', String(next));
-    });
-  });
-
-  document.querySelectorAll('[data-todo-focus]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const next = button.getAttribute('aria-pressed') !== 'true';
-      button.setAttribute('aria-pressed', String(next));
-      const value = button.querySelector('strong');
-      if (value) value.textContent = next ? '专注中' : '25:00';
-    });
-  });
-
   document.querySelectorAll('[data-note-tab]').forEach((button) => {
     button.addEventListener('click', () => {
       button.closest('.mini-notebar')?.querySelectorAll('[data-note-tab]').forEach((item) => {
@@ -663,13 +647,12 @@
     { title: '软件', group: '页面', url: '/tokipage/software/', text: '作品 设计 TokiUI 制作中 TokiHarness', keywords: 'software app 软件 作品' },
     { title: '探索', group: '页面', url: '/tokipage/garden/', text: 'GitHub Discussions 更新公告 说点什么 设计建议 社区问答', keywords: 'explore garden discussion 探索 讨论' },
     { title: 'TokiUI Design', group: '设计', url: '/tokipage/tokiui/', text: 'Material Design3 Expressive 底栏 交互 磨砂玻璃 通用设计语言', keywords: 'tokiui design md3e material expressive 设计' },
-    { title: 'TokiTodo', group: '软件', url: '/tokipage/software/tokitodo/', text: '待办 专注计时 手机锁 统计 APK 下载', keywords: 'todo 待办 专注 计时 tokitodo' },
     { title: 'TokiNote', group: '软件', url: '/tokipage/software/tokinote/', text: '本地笔记软件 备份 底栏 APK 下载', keywords: 'note 笔记 tokinote 本地' },
     { title: 'TokiFonts', group: '软件', url: '/tokipage/software/tokifonts/', text: '字体资源库 OneUI 教程 字体', keywords: 'font 字体 tokifonts' },
     { title: 'TokiLive', group: '软件', url: '/tokipage/software/#tokilive', text: '介绍还在整理', keywords: 'tokilive live' },
     { title: '作品', group: '软件', url: '/tokipage/#software', text: 'TokiNote TokiLive TokiDiscover TokiMusic TokiFont', keywords: 'work 作品 app' },
     { title: 'TokiUI 介绍', group: '设计', url: '/tokipage/software/#design', text: 'Material Design3 Expressive TokiUI 设计语言 通用标准', keywords: 'tokiui design 设计 md3e' },
-    { title: '正在制作 / TokiHarness', group: '软件', url: '/tokipage/software/#making', text: 'DSH 手机版 二创 TokiHarness 正在制作', keywords: 'making toki harness dsh 制作中' },
+    { title: '正在制作 / TokiHarness', group: '软件', url: '/tokipage/#software', text: 'DSH 手机版 二创 TokiHarness 正在制作', keywords: 'making toki harness dsh 制作中' },
     { title: '关于', group: '页面', url: '/tokipage/about/', text: '关于本站 联系 GitHub 设计 字体', keywords: 'about 关于 contact 联系' },
     { title: '更新公告', group: '探索', url: '/tokipage/garden/', text: 'GitHub Discussions 更新公告 Announcements', keywords: 'announcement 公告 更新' },
     { title: '设计建议', group: '探索', url: '/tokipage/garden/', text: 'Ideas 设计建议 讨论', keywords: 'ideas 建议 设计' },

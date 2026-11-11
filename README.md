@@ -1,6 +1,6 @@
 # TokiPage.
 
-**Live:** <https://ichiyotsu.github.io/> · TokiPage. 在 <https://ichiyotsu.github.io/tokipage/> · 围城市政在 <https://ichiyotsu.github.io/forcity/>
+**Live:** <https://ichiyotsu.github.io/> · TokiPage. 在 <https://ichiyotsu.github.io/tokipage/>
 
 一个 **Material 3 Expressive** 风格的个人网站：TokiPage 主页、软件详情页、X 式探索信息流，以及一个只用本地文本编辑的 studio。
 
@@ -10,9 +10,9 @@
 | --- | --- |
 | ![TokiPage](docs/preview-home.jpg) | ![软件页](docs/preview-software.jpg) |
 
-| 探索 | 软件详情 |
-| --- | --- |
-| ![探索](docs/preview-garden.jpg) | ![TokiTodo](docs/preview-tokitodo.jpg) |
+| 探索 |
+| --- |
+| ![探索](docs/preview-garden.jpg) |
 
 移动端：
 
@@ -27,7 +27,6 @@
 | `/` | **TokiPage**：欢迎语 + 三张可点击的入口卡（软件 / 探索 / 关于），底部一行短句 |
 | `/software/` | **软件**：作品、TokiUI Design、正在制作的项目（TokiHarness） |
 | `/tokiui/` | **TokiUI Design**：底栏、交互和磨砂玻璃的独立展示页 |
-| `/software/tokitodo/` | TokiTodo：待办，专注计时，手机锁与统计 |
 | `/software/luna/` | Luna：悬浮胶囊浏览器 |
 | `/software/tokinote/` | TokiNote：本地笔记软件，目前最完善的一个 |
 | `/software/tokifonts/` | TokiFonts：基于OneUI教程的字体资源库 |
@@ -52,21 +51,20 @@
 ## 软件与详情页
 
 - 作品卡片、设计说明和「正在制作的项目...」。
-- 四个详情页都有左上角悬浮返回按钮，滚动时保持可见。
-- TokiTodo / Luna / TokiNote 的标题左侧使用对应的线条图标；TokiFonts 没有独立 app icon，因此保持纯标题。
+- 三个详情页都有左上角悬浮返回按钮，滚动时保持可见。
+- Luna / TokiNote 的标题左侧使用对应的线条图标；TokiFonts 没有独立 app icon，因此保持纯标题。
 - 详情页的基础介绍统一为：
 
-  - TokiTodo：待办，专注计时，手机锁与统计。
   - Luna：悬浮胶囊浏览器。
   - TokiNote：本地笔记软件 / 目前最完善的一个。
   - TokiFonts：基于OneUI教程的字体资源库
 
 - 详情页先保持纯文字介绍，不放大截图；标题左侧使用对应产品图标。
-- 旧的 DESIGN NOTE 标签、截图画廊和「下一个」区块已移除；底部改为 **再看看...**，放另外三个软件的入口。
-- 详情页顶部按 GitHub / 正式版 / 测试版三行排列，正式版和测试版直接下载 `.apk`；TokiTodo 和 Luna 当前只有测试版。
+- 旧的 DESIGN NOTE 标签、截图画廊和「下一个」区块已移除；底部改为 **再看看...**，放其他软件的入口。
+- 详情页顶部按 GitHub / 正式版 / 测试版排列，有安装包时直接下载 `.apk`。Luna 的安装包仍挂在 Tokidiscover 仓库的旧 Release 上。
 - 测试版会包含部分正式版尚未提供的预览功能，页面里已标注。
 - 设计区标题是 **TokiUI Design**，只做介绍：它基于 Material Design3 Expressive，是面向所有软件的通用标准，TokiNote 只是第一个示例；不展示 Dock / FAB 的具体尺寸数据。独立页面 `/tokiui/` 用可操作的底栏、交互和磨砂玻璃展示设计思路。
-- TokiTodo / TokiNote 的作品卡片各有一个可互动小部件（待办勾选、笔记底栏 / 强调色）；点击强调色会同步改变底栏选中项。卡片不再显示版本号和下载数。
+- TokiNote 的作品卡片有一个可互动小部件（笔记底栏 / 强调色）；点击强调色会同步改变底栏选中项。卡片不再显示版本号和下载数。
 
 ## 探索
 
@@ -136,7 +134,7 @@ studio 的「打开本地站点」链接默认指向这个 4173 端口。
 | --- | --- |
 | 主页欢迎语 / 三张入口卡 | `index.html` |
 | 软件页 / 设计组件 / TokiHarness | `software/index.html` |
-| 四个软件详情 | `software/tokitodo/`、`luna/`、`tokinote/`、`tokifonts/` |
+| 三个软件详情 | `software/luna/`、`software/tokinote/`、`software/tokifonts/` |
 | 探索信息流 / 写作器 | `garden/index.html`、`assets/js/garden.js` |
 | 关于页与联系 | `about/index.html` |
 | 顶栏 / 移动端菜单（每个页面各一份） | 各页面的 `<header>` 与 `<nav-sheet>` |
@@ -160,7 +158,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
   --output-file=assets\fonts\smiley-sans-subset.woff2
 ```
 
-`tools/update-chars.mjs` 会扫描主页、软件页、四个详情页、探索页、关于页和 404。
+`tools/update-chars.mjs` 会扫描主页、软件页、三个详情页、探索页、关于页和 404。
 
 ## 目录
 
@@ -169,7 +167,6 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 ├─ index.html                    # TokiPage
 ├─ software/
 │  ├─ index.html                 # 软件
-│  ├─ tokitodo/index.html
 │  ├─ luna/index.html
 │  ├─ tokinote/index.html
 │  └─ tokifonts/index.html
@@ -198,7 +195,7 @@ python -m fontTools.subset "SmileySans-Oblique.ttf" `
 
 ## 验证
 
-- 主页 / 软件 / 四个详情 / 探索 / 关于 / 404：全部 200，内部资源链接全部可达。
+- 主页 / 软件 / 三个详情 / 探索 / 关于 / 404：全部 200，内部资源链接全部可达。
 - axe 扫描 9 个页面状态为 0 违规；写作器和讨论弹窗打开时也为 0。
 - 320 / 390 / 768 / 1440 / 1920 宽度无横向溢出。
 - Explore 同步工作流手动运行成功；Release 公告逻辑本地验证过。

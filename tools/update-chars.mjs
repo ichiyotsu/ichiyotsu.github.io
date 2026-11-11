@@ -12,7 +12,7 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
-const pages = ['tokipage/index.html', 'tokipage/software/index.html', 'tokipage/software/tokitodo/index.html', 'tokipage/software/luma/index.html', 'tokipage/software/tokinote/index.html', 'tokipage/software/tokifonts/index.html', 'tokipage/garden/index.html', 'tokipage/about/index.html', 'tokipage/404.html', 'index.html'];
+const pages = ['tokipage/index.html', 'tokipage/software/index.html', 'tokipage/software/luma/index.html', 'tokipage/software/luna/index.html', 'tokipage/software/tokinote/index.html', 'tokipage/software/tokifonts/index.html', 'tokipage/garden/index.html', 'tokipage/about/index.html', 'tokipage/404.html', 'index.html'];
 
 const stripped = pages
   .map((page) => readFileSync(join(root, page), 'utf8'))
