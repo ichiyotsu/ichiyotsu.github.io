@@ -18,8 +18,26 @@
       } catch (error) {}
     })();
   </script>
+  <style>
+    #gate { min-height: 100svh; display: grid; place-items: center; }
+    #gate form { width: min(18rem, calc(100% - 2rem)); display: grid; gap: 0.6rem; }
+    #gate input, #gate button { font: inherit; min-height: 40px; }
+    .edit { display: none; }
+    html[data-edit="open"] #gate { display: none; }
+    html[data-edit="open"] .edit { display: grid; }
+  </style>
+  <script>
+    try { if (sessionStorage.getItem('ichiyotsu-2026-edit') === '1') document.documentElement.dataset.edit = 'open'; } catch (error) {}
+  </script>
 </head>
 <body>
+  <div id="gate">
+    <form id="gate-form">
+      <label>密码<input id="pw" type="password" autocomplete="current-password"></label>
+      <button type="submit">进入</button>
+      <p id="gate-msg" role="status"></p>
+    </form>
+  </div>
   <div class="edit">
     <form class="panel" id="editor">
       <h1>编辑 2026</h1>
@@ -68,6 +86,24 @@
     </form>
     <div class="preview"><iframe id="frame" title="实时预览" src="/2026/?preview=1"></iframe></div>
   </div>
+  <script>
+    const HASH = 'REPLACE_ME';
+    const KEY = 'ichiyotsu-2026-edit';
+    const openEditor = () => { document.documentElement.dataset.edit = 'open'; };
+    if (sessionStorage.getItem(KEY) === '1') openEditor();
+    document.getElementById('gate-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const bytes = new TextEncoder().encode(document.getElementById('pw').value);
+      const digest = await crypto.subtle.digest('SHA-256', bytes);
+      const hex = [...new Uint8Array(digest)].map((b) => b.toString(16).padStart(2, '0')).join('');
+      if (hex === HASH) {
+        sessionStorage.setItem(KEY, '1');
+        openEditor();
+      } else {
+        document.getElementById('gate-msg').textContent = '密码不对';
+      }
+    });
+  </script>
   <script type="module" src="/2026/edit/editor.js?v=20261109a"></script>
 </body>
 </html>

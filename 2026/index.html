@@ -1,25 +1,16 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>ichiyotsu — 2026</title>
-  <meta name="description" content="ichiyotsu 的 2026 个人页。软件、设计与探索。">
-  <meta name="author" content="ichiyotsu">
-  <meta name="theme-color" content="#FDF8F2" id="theme-color">
+  <title>ichiyotsu</title>
   <meta name="color-scheme" content="light dark">
-  <link rel="canonical" href="https://ichiyotsu.github.io/2026/">
-  <meta property="og:title" content="ichiyotsu — 2026">
-  <meta property="og:description" content="把复杂的事，做得轻一点。">
-  <meta property="og:url" content="https://ichiyotsu.github.io/2026/">
-  <link rel="icon" href="/tokipage/assets/icons/site-logo-light.svg" type="image/svg+xml">
-  <link rel="preload" href="/tokipage/assets/fonts/bricolage-grotesque.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/tokipage/assets/fonts/smiley-sans-subset.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="/tokipage/assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="/tokipage/assets/css/tokens.css?v=20261107b">
-  <link rel="stylesheet" href="/2026/site.css?v=20261109a">
+  <meta name="theme-color" content="#FDF8F2" id="theme-color">
+  <style>
+    html, body { margin: 0; min-height: 100%; background: #FDF8F2; }
+    html[data-theme="dark"], html[data-theme="dark"] body { background: #151210; }
+  </style>
   <script>
-    document.documentElement.classList.replace('no-js', 'js');
     (function () {
       try {
         var saved = localStorage.getItem('ichiyotsu-theme');
@@ -27,36 +18,24 @@
         var theme = saved === 'light' || saved === 'dark' ? saved : (dark ? 'dark' : 'light');
         document.documentElement.dataset.theme = theme;
         document.documentElement.style.colorScheme = theme;
+        var meta = document.getElementById('theme-color');
+        if (meta) meta.content = theme === 'dark' ? '#151210' : '#FDF8F2';
       } catch (error) {}
     })();
   </script>
 </head>
 <body>
-  <main class="page" id="app">
-    <header class="bar"><a href="/2026/">ichiyotsu</a></header>
-    <section class="hero">
-      <p class="kicker">Tokisakyo</p>
-      <h1>ichiyotsu</h1>
-      <p class="tagline">把复杂的事，做得轻一点。</p>
-    </section>
-    <section class="works" id="works">
-      <a class="work" href="/tokipage/software/tokitodo/"><h2>TokiTodo</h2><p>待办，专注计时，手机锁与统计。</p></a>
-      <a class="work" href="/tokipage/software/luna/"><h2>Luna</h2><p>悬浮胶囊浏览器。</p></a>
-      <a class="work" href="/tokipage/software/tokinote/"><h2>TokiNote</h2><p>本地笔记软件，目前最完善的一个。</p></a>
-      <a class="work" href="https://github.com/ichiyotsu"><h2>TokiLive</h2><p>直播弹幕。</p></a>
-      <a class="work" href="/tokipage/software/tokifonts/"><h2>Tokifont</h2><p>字体。</p></a>
-      <a class="work" href="https://github.com/ichiyotsu"><h2>Tokimusic</h2><p>网易云音乐。</p></a>
-    </section>
-    <section class="about" id="about"><h2>关于</h2><p>个人介绍还没写。</p></section>
-    <section class="links" id="links"><h2>链接</h2><ul>
-      <li><a href="https://github.com/ichiyotsu">GitHub</a></li>
-    </ul></section>
-  </main>
+  <main id="app"></main>
   <script type="module">
-    import { renderPage } from './render.js';
-    const root = document.getElementById('app');
-    const preview = new URLSearchParams(location.search).has('preview');
-    if (preview) {
+    if (new URLSearchParams(location.search).has('preview')) {
+      for (const href of ['/tokipage/assets/css/tokens.css', '/2026/site.css']) {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = href;
+        document.head.appendChild(link);
+      }
+      const { renderPage } = await import('./render.js');
+      const root = document.getElementById('app');
       window.addEventListener('message', (event) => {
         if (event.origin !== location.origin) return;
         if (event.data?.type === 'ichiyotsu-2026') renderPage(root, event.data.content);
@@ -66,8 +45,6 @@
         }
       });
       parent.postMessage({ type: 'ichiyotsu-2026-ready' }, location.origin);
-    } else {
-      fetch('/2026/content.json').then((res) => res.json()).then((data) => renderPage(root, data)).catch(() => {});
     }
   </script>
 </body>

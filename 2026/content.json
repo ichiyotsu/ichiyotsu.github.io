@@ -18,17 +18,9 @@
         "image": "/tokipage/assets/img/toki-todo.webp"
       },
       {
-        "title": "Luna",
-        "line": "悬浮胶囊浏览器。",
-        "href": "/tokipage/software/luna/",
-        "year": "2026",
-        "tags": "软件",
-        "image": "/tokipage/assets/img/luma.webp"
-      },
-      {
         "title": "TokiNote",
-        "line": "本地笔记软件，目前最完善的一个。",
-        "href": "/tokipage/software/tokinote/",
+        "line": "日记。",
+        "href": "https://github.com/ichiyotsu/TokiNote",
         "year": "2026",
         "tags": "软件",
         "image": "/tokipage/assets/img/toki-note.webp"
@@ -36,7 +28,7 @@
       {
         "title": "TokiLive",
         "line": "直播弹幕。",
-        "href": "https://github.com/ichiyotsu",
+        "href": "https://github.com/ichiyotsu/tokilive",
         "year": "2026",
         "tags": "软件",
         "image": ""
