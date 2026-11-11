@@ -27,3 +27,45 @@
   fromHash();
   window.addEventListener('hashchange', fromHash);
 })();
+
+(() => {
+  // Release notes can set the platform with one line: 平台: Android 15+ / Windows 10+ (or Platform:). Slashes display as spaces.
+  const hour = 60 * 60 * 1000;
+  const platformLine = /^(平台|Platform)\s*[:：]\s*(.+)$/im;
+  const apply = (row, data) => {
+    const version = row.querySelector('.plan-ver');
+    const platform = row.querySelector('.plan-plat');
+    if (version && data.version) version.textContent = data.version;
+    if (platform && data.platform) platform.textContent = data.platform;
+    if (data.url && row.matches('a')) row.href = data.url;
+  };
+  document.querySelectorAll('.plan-row[data-repo]').forEach((row) => {
+    const repo = row.getAttribute('data-repo');
+    if (!repo) return;
+    const key = `tokipage-release:${repo}`;
+    try {
+      const cached = JSON.parse(localStorage.getItem(key) || 'null');
+      if (cached && Date.now() - cached.at < hour) {
+        apply(row, cached);
+        return;
+      }
+    } catch (error) {}
+    fetch(`https://api.github.com/repos/${encodeURI(repo)}/releases/latest`)
+      .then((response) => (response.ok ? response.json() : null))
+      .then((release) => {
+        if (!release) return;
+        const version = String(release.tag_name || '').replace(/^[vV]/, '');
+        if (!version) return;
+        const found = String(release.body || '').match(platformLine);
+        const data = {
+          at: Date.now(),
+          version,
+          platform: found ? found[2].trim().split(' / ').join(' ') : '',
+          url: release.html_url || ''
+        };
+        apply(row, data);
+        localStorage.setItem(key, JSON.stringify(data));
+      })
+      .catch(() => {});
+  });
+})();
