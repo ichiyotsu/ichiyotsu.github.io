@@ -1,0 +1,1855 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="data:," />
+<title>学习网站 · 机械设计基础</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+:root{
+  color-scheme:dark;
+  --bg:#131211; --bg-oat:#1A1917; --card:#1F1D1B; --warm:#272420; --warm2:#302B26;
+  --ink:#F4F1EA; --ink2:#E7E3D9; --muted:#B5B1A7; --muted2:#918D84;
+  --line:#38352F; --line-dark:#4B4740;
+  --accent:#D97757; --accent2:#E08D6B; --accent-soft:#34231B;
+  --good:#8FBC6B; --bad:#E07A5F;
+  --glass:rgba(24,23,21,.86); --glass-line:#38352F;
+  --right-bg:#26331F; --wrong-bg:#3A231B;
+  --solid-bg:#F4F1EA; --solid-ink:#171512;
+  --bot-bg:rgba(22,21,19,.62);
+  /* capsule top bar — frosted glass (tokipage style): dark translucent in dark mode */
+  --bar-bg:rgba(30,28,25,.62); --bar-ink:#F4F1EA; --bar-line:rgba(244,241,234,.15);
+  --nav-track:rgba(244,241,234,.09); --nav-ink:#B5B1A7;
+  --nav-on-bg:#F4F1EA; --nav-on-ink:#171512;
+  --bar-shadow:0 14px 34px rgba(0,0,0,.38);
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#FAF9F5; --bg-oat:#F4F3EE; --card:#FFFFFF; --warm:#EFECE6; --warm2:#E9E4D8;
+  --ink:#191919; --ink2:#2D2D2D; --muted:#6B6A65; --muted2:#8C8A84;
+  --line:#E5E2DC; --line-dark:#CFC9BC;
+  --accent:#D97757; --accent2:#C05F3C; --accent-soft:#F9E9E1;
+  --good:#4E7D32; --bad:#C2502E;
+  --glass:rgba(255,255,255,.88); --glass-line:#E5E2DC;
+  --right-bg:#EAF2DF; --wrong-bg:#F9E4DB;
+  --solid-bg:#191919; --solid-ink:#FAF9F5;
+  --bot-bg:rgba(255,255,255,.68);
+  --bar-bg:rgba(255,255,255,.64); --bar-ink:#191919; --bar-line:rgba(25,25,25,.09);
+  --nav-track:rgba(25,25,25,.05); --nav-ink:#6B6A65;
+  --nav-on-bg:#191919; --nav-on-ink:#FAF9F5;
+  --bar-shadow:0 10px 28px rgba(60,50,35,.13);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--ink);background:var(--bg);font-family:Inter,"Noto Sans SC","Source Han Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-weight:700;line-height:1.75;-webkit-font-smoothing:antialiased}
+button,[role="button"],select,input,summary{min-height:2.25rem}
+button{font:inherit;cursor:pointer}
+a,button,select,input{transition:color .2s ease,background-color .2s ease,border-color .2s ease}
+.serif{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif}
+.hand{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;color:var(--accent2);font-weight:700;letter-spacing:.02em}
+/* floating top bar — centred capsule with a max width, brand left, nav + theme toggle right */
+.topbar{position:fixed;top:calc(14px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:880px;z-index:50;display:flex;align-items:center;gap:10px;padding:8px 10px 8px 24px;background:var(--bar-bg);color:var(--bar-ink);border:1px solid var(--bar-line);border-radius:999px;box-shadow:var(--bar-shadow);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--bar-bg:rgba(30,28,25,.95)}:root[data-theme="light"]{--bar-bg:rgba(255,255,255,.97)}}
+.topbar .brand{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:800;font-size:1.16rem;letter-spacing:.01em;white-space:nowrap;line-height:1.2;color:var(--bar-ink)}
+.topbar .spacer{flex:1}
+.topnav{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:4px;padding:4px;background:var(--nav-track);border:1px solid var(--bar-line);border-radius:999px;flex:none}
+.topnav button{border:0;background:transparent;color:var(--nav-ink);border-radius:999px;padding:7px 20px;font-size:.9rem;font-weight:700;white-space:nowrap;min-height:2.5rem}
+.topnav button:hover{color:var(--bar-ink)}
+.topnav button.on{background:var(--nav-on-bg);color:var(--nav-on-ink)}
+.theme-toggle{flex:none;width:2.75rem;height:2.75rem;min-height:2.75rem;border-radius:999px;border:0;background:transparent;color:var(--bar-ink);display:grid;place-items:center;padding:0}
+.theme-toggle:hover{color:var(--accent)}
+.theme-toggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.theme-toggle svg{display:block}
+:root[data-theme="dark"] .theme-toggle .icon-moon{display:none}
+:root[data-theme="light"] .theme-toggle .icon-sun{display:none}
+@media(max-width:680px){.topbar{flex-wrap:wrap;row-gap:8px;border-radius:28px;padding:10px 12px 10px 18px}.topnav{order:3;width:100%;position:static;transform:none}.topnav button{flex:1;padding:7px 6px}.topbar .brand{font-size:1.05rem}main{padding-top:calc(204px + env(safe-area-inset-top))}}
+main{width:min(1040px,calc(100% - 36px));margin:0 auto;padding:calc(104px + env(safe-area-inset-top)) 0 72px}
+.view{display:none}.view.active{display:block}
+/* section heads — editorial numbering */
+.sec-head{position:relative;display:flex;align-items:flex-end;gap:16px;margin:52px 0 8px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+#view-knowledge .sec-head{margin-top:10px}
+.sec-head h2{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-size:clamp(1.55rem,3vw,1.95rem);font-weight:700;margin:0;line-height:1.2;color:var(--ink)}
+/* knowledge tools */
+.tools{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 20px}
+@media(min-width:860px){.tools{margin-left:64px}}
+.search{flex:1 1 260px;display:flex;align-items:center;gap:9px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:4px 16px;color:var(--muted2)}
+.search input{border:0;outline:0;background:transparent;color:var(--ink);width:100%;font:inherit;font-size:.94rem}
+.search input::placeholder{color:var(--muted2)}
+.ghost-btn{border:1px solid var(--line);background:transparent;color:var(--ink2);border-radius:999px;padding:8px 18px;font-size:.87rem;font-weight:700}
+.ghost-btn:hover{border-color:var(--ink);color:var(--ink);background:var(--warm)}
+/* chapters — aligned grid, uniform large radius, two columns on wide screens */
+#chapList{display:grid;gap:16px;grid-template-columns:1fr;align-items:start}
+.chap{background:var(--card);border:1px solid var(--line);border-radius:24px;overflow:hidden}
+@media(min-width:860px){
+  #chapList{grid-template-columns:1fr 1fr;gap:18px}
+}
+.chap-head{width:100%;display:flex;align-items:center;gap:16px;text-align:left;background:transparent;border:0;color:var(--ink);padding:18px 20px;min-height:3.6rem}
+.chap-head:hover{background:var(--bg)}
+.chap-num{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:700;font-size:1.55rem;color:var(--accent2);width:2.1rem;flex:none;text-align:center;line-height:1}
+.chap-head .t{flex:1;font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:700;font-size:1.08rem;line-height:1.35}
+.chap-head .t small{display:block;font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:700;color:var(--muted);font-size:.76rem;margin-top:3px;line-height:1.5}
+.chap-head .chev{color:var(--muted2);transition:transform .25s;flex:none}
+.chap.open .chev{transform:rotate(180deg)}
+.chap-body{display:none;padding:4px 22px 22px 4.4rem;border-top:1px dashed var(--line);margin:0 0}
+.chap.open .chap-body{display:block}
+@media(max-width:560px){.chap-body{padding-left:22px}}
+.chap-body h4{margin:18px 0 8px;font-size:.74rem;letter-spacing:.14em;color:var(--muted);font-weight:700}
+.chap-body h4:first-child{margin-top:14px}
+.chap-body ul{margin:0;padding-left:1.15em;line-height:1.9;font-size:.93rem;color:var(--ink2)}
+.chap-body li{margin-bottom:3px}
+.chap-body li::marker{color:var(--accent)}
+.formula{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;background:var(--warm);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.96rem;line-height:1.85;margin-top:6px;color:var(--ink)}
+.trap{color:var(--ink2);font-size:.9rem;line-height:1.9;margin:0}
+.trap::first-letter{color:var(--accent2)}
+.empty{display:none;color:var(--muted);padding:22px 4px}
+/* quiz — editorial card, offset */
+.quiz-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px 26px;width:100%;margin:0}
+@media(min-width:860px){.quiz-card{padding:34px 36px}}
+/* quiz stack — cards fill the content width, equal gaps; very wide: 2:8 split (narrow start card left, wide workbench right) */
+.quiz-stack{display:grid;grid-template-columns:1fr;gap:20px;align-items:start}
+@media(min-width:1600px){
+  .quiz-stack{grid-template-columns:1fr}
+}
+.quiz-card h3{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:700;margin:0 0 10px;font-size:1.35rem;line-height:1.3}
+.quiz-card p{color:var(--muted);line-height:1.9;font-size:.93rem}
+.row{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+select{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:9px 16px;max-width:100%}
+select:hover{border-color:var(--line-dark)}
+.primary{background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:999px;padding:10px 26px;font-weight:700;font-size:.94rem}
+.primary:hover{background:var(--accent2);border-color:var(--accent2)}
+.progress{height:6px;background:var(--warm);border-radius:99px;overflow:hidden;margin:16px 0 8px}
+.progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
+.qmeta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.qmeta span{font-size:.73rem;padding:5px 11px;border-radius:99px;background:var(--warm);border:1px solid var(--line);color:var(--ink2)}
+.qmeta .src{background:transparent;color:var(--muted);border-style:dashed}
+.qstem{font-size:1.07rem;font-weight:700;line-height:1.8;margin:4px 0 18px;color:var(--ink)}
+.opts{display:grid;gap:10px}
+.opt{text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink2);border-radius:14px;padding:13px 16px;font-size:.96rem;line-height:1.65;min-height:3rem}
+.opt:hover{border-color:var(--accent);color:var(--ink);background:var(--accent-soft)}
+.opt.right{border-color:var(--good);background:var(--right-bg);font-weight:700;color:var(--ink)}
+.opt.wrong{border-color:var(--bad);background:var(--wrong-bg)}
+.opt:disabled{cursor:default;opacity:.95}
+.explain{display:none;margin-top:18px;border-top:1px dashed var(--line);padding-top:16px;font-size:.92rem;line-height:1.9;color:var(--ink2)}
+.explain.show{display:block}
+.explain b.ok{color:var(--good)}.explain b.no{color:var(--bad)}
+.score-big{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:700;font-size:3rem;line-height:1;color:var(--ink)}
+.review{margin-top:20px;display:grid;gap:10px}
+.review .item{border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:.9rem;line-height:1.8;background:var(--bg)}
+.review .item .a{color:var(--good);font-weight:700}
+/* workbench: uploaded question image + annotation + calculation draft */
+.wb-stage-wrap{margin-top:16px}
+.wb-stage{position:relative;margin:0 auto;background:#FCFBF6;border:1px solid var(--line);border-radius:14px;overflow:hidden;line-height:0}
+.wb-stage img{display:block;width:100%;height:auto}
+.wb-stage canvas{position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:crosshair}
+.pad-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:12px 0}
+.pad-tools .tool{border:1px solid var(--line);background:transparent;color:var(--ink2);border-radius:999px;padding:6px 14px;font-size:.84rem;font-weight:700;min-height:2.3rem}
+.pad-tools .tool.on{background:var(--solid-bg);color:var(--solid-ink);border-color:var(--solid-bg)}
+.pad-tools input[type="color"]{width:2.4rem;height:2.4rem;min-height:2.4rem;border:1px solid var(--line);border-radius:10px;background:transparent;padding:2px;cursor:pointer}
+.pad-tools input[type="range"]{accent-color:var(--accent);width:96px}
+textarea.calc-draft{width:100%;font:inherit;font-weight:700;font-size:.94rem;line-height:1.8;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 16px;resize:vertical}
+textarea.calc-draft:focus{outline:2px solid var(--accent);outline-offset:1px}
+/* calculation questions */
+.calc-zone{display:grid;gap:12px}
+.calc-final{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.calc-final input{font:inherit;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 14px;width:180px;max-width:60vw}
+.calc-final input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.calc-final .unit{color:var(--muted);font-size:.92rem}
+/* drawing questions */
+.draw-paper{display:block;width:100%;height:auto;background:#FCFBF6;border:1px solid var(--line);border-radius:14px;touch-action:none;cursor:crosshair}
+.loc-box{margin-top:12px;border:1px dashed var(--line-dark);border-radius:12px;padding:10px 14px;font-size:.88rem;line-height:1.8;color:var(--ink2)}
+.loc-box b{color:var(--accent2)}
+/* image lightbox */
+.lightbox{position:fixed;inset:0;z-index:200;background:rgba(8,8,7,.92);display:none;align-items:center;justify-content:center;padding:18px}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}
+.lightbox button{position:absolute;top:calc(14px + env(safe-area-inset-top));right:16px;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35);border-radius:999px;width:2.8rem;height:2.8rem;font-size:1.15rem;line-height:1}
+/* floating AI Q&A */
+.ai-fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom));z-index:150;background:var(--accent);color:#fff;border:1px solid var(--accent);border-radius:999px;width:3.4rem;height:3.4rem;min-height:3.4rem;padding:0;display:grid;place-items:center;font-weight:400;font-size:1.9rem;line-height:1;letter-spacing:0;box-shadow:0 12px 28px rgba(0,0,0,.35)}
+.ai-fab:hover{background:var(--accent2)}
+.ai-panel{position:fixed;right:18px;bottom:calc(76px + env(safe-area-inset-bottom));z-index:150;width:min(380px,calc(100vw - 36px));max-height:min(620px,calc(100dvh - 120px));display:none;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 22px 48px rgba(0,0,0,.4)}
+.ai-panel.open{display:flex}
+.ai-head{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line);font-weight:700}
+.ai-head button{background:transparent;border:0;color:var(--muted);font-size:1.1rem;min-height:2rem;padding:0 4px}
+.ai-key{padding:12px 18px;border-bottom:1px dashed var(--line);display:grid;gap:8px}
+.ai-key input{font:inherit;font-size:.86rem;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;width:100%}
+.ai-key .hint{font-size:.8rem;color:var(--bad);line-height:1.6}
+.ai-key .ok{font-size:.8rem;color:var(--good)}
+.ai-msgs{flex:1;overflow-y:auto;padding:14px 18px;display:grid;gap:10px;align-content:start}
+.ai-msg{font-size:.9rem;line-height:1.75;padding:10px 14px;border-radius:14px;white-space:pre-wrap;word-break:break-word}
+.ai-msg.me{background:var(--accent-soft);color:var(--ink)}
+.ai-msg.bot{background:var(--warm);color:var(--ink2)}
+.ai-msg.err{background:var(--wrong-bg);color:var(--ink)}
+.ai-input{display:flex;gap:8px;padding:12px 14px;border-top:1px solid var(--line)}
+.ai-input input{flex:1;font:inherit;font-size:.9rem;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:9px 16px;min-width:0}
+.ai-input button{flex:none}
+/* notes — every row is its own rounded-rectangle card: one radius, one gap,
+   one marker column, titles and bodies share a single left edge */
+.note-hero{background:var(--warm);border:1px solid var(--line);border-radius:24px;padding:30px 28px;margin-bottom:28px;position:relative}
+@media(min-width:860px){.note-hero{padding:36px 38px}}
+.note-hero h3{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-size:1.45rem;font-weight:700;margin:0 0 20px;line-height:1.35}
+.doc-btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;background:var(--solid-bg);color:var(--solid-ink);border:1px solid var(--solid-bg);border-radius:999px;padding:12px 26px;font-weight:700;font-size:.94rem}
+.doc-btn:hover{background:var(--accent);border-color:var(--accent);color:#fff}
+.doc-btn.disabled{background:transparent;color:var(--muted2);pointer-events:none;border:1px dashed var(--line-dark)}
+.doc-link{color:var(--accent2);text-decoration:underline;text-underline-offset:3px}
+.doc-link:hover{color:var(--accent)}
+.group{background:transparent;border:0;border-radius:0;overflow:visible;margin-bottom:28px;display:grid;gap:12px}
+.group .g-title{padding:0 4px;font-size:.74rem;letter-spacing:.14em;color:var(--muted);font-weight:700;line-height:1.5}
+.g-row{display:grid;grid-template-columns:2.5rem minmax(0,1fr);column-gap:16px;padding:18px 22px;align-items:start;background:var(--card);border:1px solid var(--line);border-radius:24px;margin:0}
+.g-row .ic{color:var(--accent2);width:2.5rem;height:1.48rem;flex:none;display:flex;align-items:center;justify-content:center}
+.g-row .ic svg{display:block;flex:none}
+.g-row .tt{font-weight:700;font-size:.95rem;color:var(--ink);line-height:1.55}
+.g-row .dd{color:var(--muted);font-size:.84rem;line-height:1.75;margin-top:4px}
+@media(max-width:560px){.g-row{padding:16px 18px;column-gap:12px}}
+/* ——— handmade pass: paper grain, sketchy edges, uneven rhythm ——— */
+body::after{content:"";position:fixed;inset:0;z-index:120;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='260' height='260' filter='url(%23n)' opacity='0.55'/></svg>")}
+.topbar{transform:translateX(-50%)}
+.primary,.doc-btn{border-radius:225px 16px 255px 16px/16px 255px 16px 225px}
+.ghost-btn{border-radius:16px 225px 16px 255px/255px 16px 225px 16px}
+/* section heads — numbers tipped at different angles, hand-drawn squiggle under each title */
+.sec-head h2{transform:rotate(-.3deg)}
+#view-quiz .sec-head{margin-top:38px}
+#view-notes .sec-head{margin-top:66px}
+@media(min-width:860px){
+  #view-quiz .tools{margin-left:30px}
+}
+/* chapter cards — aligned, uniform large radius (incl. the dashed pending card) */
+#chapList .chap{border-radius:24px}
+#chapList .chap:nth-child(7){border-style:dashed}
+.formula{transform:rotate(-.25deg);border-radius:14px 8px 16px 10px}
+.trap{transform:rotate(.15deg)}
+/* quiz & notes — pasted-in sheets, not stamped-out panels */
+.quiz-card{transform:none;border-radius:24px}
+#quizDone{transform:none}
+.note-hero{transform:none;border-radius:24px}
+.group{border-radius:0;transform:none}
+.g-row .ic{transform:none}
+
+/* ——— widescreen: layout opens up, centred, never stretched past a readable measure ——— */
+@media(min-width:1600px){
+  main{width:min(1360px,calc(100% - 120px));padding-bottom:96px}
+  .topbar{width:min(1360px,calc(100% - 120px));padding:12px 14px 12px 24px}
+  .topbar .brand{font-size:1.38rem}
+  .topnav button{padding:9px 26px;font-size:.98rem}
+  body{font-size:1.05rem}
+  .sec-head{margin-top:76px}
+  .sec-head h2{font-size:2.3rem}
+  .quiz-card h3{font-size:1.55rem}
+  .note-hero h3{font-size:1.65rem}
+}
+@media(min-width:2200px){
+  main{width:min(1560px,calc(100% - 200px))}
+  .topbar{width:min(1560px,calc(100% - 200px))}
+  body{font-size:1.1rem}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* ——— 品牌下拉 / 知识点二级页 / 学习进度 / 刷题进度 / 模糊底栏 / AI 居中展开 ——— */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--bot-bg:rgba(22,21,19,.96)}:root[data-theme="light"]{--bot-bg:rgba(255,255,255,.97)}}
+main{padding-bottom:156px}
+/* brand dropdown */
+.brand-wrap{position:relative;flex:none}
+.brand-btn{display:flex;align-items:center;gap:7px;background:transparent;border:0;color:var(--bar-ink);font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:800;font-size:1.16rem;letter-spacing:.01em;white-space:nowrap;line-height:1.2;padding:8px 6px;min-height:2.75rem;border-radius:12px}
+.brand-btn .chev{color:var(--muted);transition:transform .25s;flex:none}
+.brand-wrap.open .brand-btn .chev{transform:rotate(180deg)}
+.brand-menu{position:absolute;top:calc(100% + 12px);left:0;min-width:236px;background:var(--card);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 48px rgba(0,0,0,.38);padding:6px;display:none;z-index:90}
+.brand-wrap.open .brand-menu{display:block}
+.brand-menu button{display:flex;width:100%;align-items:center;justify-content:space-between;gap:14px;background:transparent;border:0;color:var(--ink);text-align:left;padding:11px 14px;border-radius:11px;font-size:.94rem;font-weight:700;min-height:2.75rem}
+.brand-menu button:hover{background:var(--warm)}
+.brand-menu .cur{font-size:.74rem;color:var(--accent2);flex:none}
+@media(min-width:1600px){.brand-btn{font-size:1.38rem}}
+@media(max-width:680px){.brand-btn{font-size:1.05rem}}
+/* knowledge cards → detail page */
+.chap-go{flex:none;color:var(--accent2);font-size:.85rem;font-weight:700;white-space:nowrap}
+#view-detail .sec-head{margin-top:22px}
+.detail-h4{margin:26px 0 8px;font-size:.74rem;letter-spacing:.14em;color:var(--muted);font-weight:700}
+.detail-sec{margin:0 0 24px}
+.detail-sec h3{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-size:1.14rem;font-weight:700;margin:0 0 8px;color:var(--ink);line-height:1.4}
+.detail-sec p{color:var(--ink2);line-height:1.95;font-size:.96rem;margin:0}
+/* learning progress */
+.prog-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:22px 24px;margin:22px 0 28px}
+.prog-title{font-weight:800;font-size:1.05rem;margin-bottom:8px}
+.prog-row{display:grid;grid-template-columns:minmax(110px,auto) 1fr auto auto;gap:14px;align-items:center;padding:10px 0}
+.prog-row .progress{margin:0}
+.prog-name{font-weight:700;white-space:nowrap}
+.prog-num{font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+.step-group{display:flex;gap:8px}
+.step-btn{width:2.4rem;height:2.4rem;min-height:2.4rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink);font-size:1.2rem;line-height:1;padding:0;display:grid;place-items:center}
+.step-btn:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:600px){.prog-row{grid-template-columns:1fr auto auto}.prog-row .progress{grid-column:1/-1;order:4}}
+/* quiz progress + figure note */
+.quiz-prog{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:18px 24px;margin-bottom:20px}
+.quiz-prog .progress{margin:10px 0 6px}
+.fig-note{margin:0 0 16px;border:1px dashed var(--line-dark);border-radius:12px;padding:9px 14px;font-size:.86rem;color:var(--muted);line-height:1.7}
+.fig-note b{color:var(--accent2)}
+/* blurred bottom bar (its own bar only) + AI button floating independently above it */
+.botbar{position:fixed;left:0;right:0;bottom:0;z-index:140;display:flex;align-items:center;justify-content:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--bot-bg);border-top:1px solid var(--glass-line);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);color:var(--muted);font-size:.86rem;font-weight:700;letter-spacing:.02em;line-height:1.4;text-align:center}
+.ai-fab{position:fixed;left:50%;right:auto;transform:translateX(-50%);bottom:calc(64px + env(safe-area-inset-bottom));z-index:150;width:4.6rem;height:2.7rem;min-height:2.7rem;border-radius:999px;background:#B3A48A;border-color:#B3A48A;color:#1B1813;font-size:1.02rem;font-weight:800;letter-spacing:.07em;box-shadow:0 10px 24px rgba(0,0,0,.32)}
+.ai-fab:hover{background:#C0B198;border-color:#C0B198;color:#1B1813}
+/* AI panel — springs from the bottom-centre button up to the middle of the screen */
+.ai-panel{left:50%;top:50%;right:auto;bottom:auto;width:min(430px,calc(100vw - 32px));max-height:min(640px,calc(100dvh - 108px));display:none;opacity:0;pointer-events:none;transform:translate(-50%,48vh) scale(.1);transform-origin:50% 100%;border-radius:24px;transition:transform 1s cubic-bezier(.3,1.45,.45,1),opacity .3s ease}
+.ai-panel.shown{display:flex}
+.ai-panel.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
+.ai-key{display:none;border-bottom:0;border-top:1px dashed var(--line)}
+.ai-key.open{display:grid}
+.ai-set-label{font-size:.78rem;color:var(--muted);font-weight:700}
+.ai-gear{flex:none;width:2.6rem;height:2.6rem;min-height:2.6rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--ink2);display:grid;place-items:center;padding:0}
+.ai-gear:hover{color:var(--accent);border-color:var(--accent)}
+.ai-gear .icon-back{display:none}
+.ai-gear.is-back .icon-gear{display:none}
+.ai-gear.is-back .icon-back{display:block}
+.ai-key select{font:inherit;font-size:.86rem;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px 12px;width:100%;min-height:2.5rem}
+.ai-key select:hover{border-color:var(--line-dark)}
+.ai-toast{position:absolute;left:50%;top:62px;transform:translate(-50%,-10px);z-index:20;max-width:calc(100% - 32px);width:max-content;background:#3A231B;color:#F4F1EA;border:1px solid rgba(244,241,234,.14);border-radius:12px;padding:10px 16px;font-size:.86rem;font-weight:700;line-height:1.6;text-align:center;box-shadow:0 14px 32px rgba(0,0,0,.42);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+:root[data-theme="light"] .ai-toast{background:#3A231B;color:#FFF7ED}
+.ai-toast.show{opacity:1;transform:translate(-50%,0)}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div class="brand-wrap" id="brandWrap">
+    <button type="button" class="brand-btn" id="brandBtn" aria-haspopup="true" aria-expanded="false">机械设计 <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
+    <div class="brand-menu" id="brandMenu" role="menu">
+      <button type="button" data-subject="design" role="menuitem">机械设计<span class="cur">当前</span></button>
+      <button type="button" data-subject="drawing" role="menuitem">机械制图</button>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <nav class="topnav" aria-label="主导航">
+    <button type="button" data-goto="knowledge" class="on">知识点</button>
+    <button type="button" data-goto="quiz">刷题</button>
+    <button type="button" data-goto="notes">学习进度</button>
+  </nav>
+  <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换到浅色模式" title="切换深浅模式">
+    <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+  </button>
+</header>
+<main>
+  <section class="view active" id="view-knowledge">
+    <div class="tools">
+      <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg><input id="chapSearch" type="search" placeholder="搜章节或关键词，如：自由度 / 轴承 / 自锁" aria-label="搜索章节" /></label>
+    </div>
+    <div id="chapList"></div>
+    <p class="empty" id="chapEmpty">没有匹配的章节，换个关键词试试。</p>
+  </section>
+  <section class="view" id="view-detail">
+    <div style="margin-top:10px"><button class="ghost-btn" id="detailBack" type="button">← 返回知识点</button></div>
+    <div class="sec-head"><h2 id="detailTitle"></h2></div>
+    <p id="detailSub" style="color:var(--muted);margin:0 0 26px"></p>
+    <div id="detailBody"></div>
+    <h4 class="detail-h4" id="detailFormulaH">公式速记</h4>
+    <div class="formula" id="detailFormula"></div>
+    <h4 class="detail-h4" id="detailTrapH">最容易丢分的地方</h4>
+    <p class="trap" id="detailTrap"></p>
+  </section>
+  <section class="view" id="view-drawing">
+    <div class="sec-head"><h2>机械制图（英语）</h2></div>
+    <div class="note-hero">
+      <h3>这个科目还没开始</h3>
+      <p style="color:var(--muted);line-height:1.9;margin:0">页面先占个位置，知识点和题目后续再往里加。看课进度记在「学习进度」页里：机械制图（英语）0 / 12。</p>
+    </div>
+  </section>
+  <section class="view" id="view-quiz">
+    <div class="quiz-prog">
+      <div class="row" style="justify-content:space-between"><span style="font-weight:800">刷题进度</span><span id="quizProgText" style="color:var(--muted);font-size:.9rem"></span></div>
+      <div class="progress"><i id="quizProgBar"></i></div>
+      <div id="quizProgScope" style="color:var(--muted2);font-size:.82rem"></div>
+    </div>
+    <div class="quiz-stack">
+    <div class="quiz-card" id="quizStart">
+      <h3>开始一组练习</h3>
+      <p>先选章节，再选题型：选择、判断、填空、计算、作图。一组 10 题（选题不足 10 题有多少练多少）。哪种题型就给哪种工具——计算题有草稿纸和结果框，作图题有画板，填空题有填空框，选择、判断直接点选项。</p>
+      <div class="row"><select id="quizScope" aria-label="选择练习范围"></select><select id="quizType" aria-label="选择题型"></select><button class="primary" id="startBtn" type="button">开始刷题</button></div>
+      <p id="poolMsg" style="display:none;color:var(--bad);margin:12px 0 0"></p>
+    </div>
+    <div class="quiz-card" id="quizPlay" hidden>
+      <div class="row" style="justify-content:space-between"><span id="qCount" style="color:var(--muted);font-size:.88rem"></span><span id="qScore" style="color:var(--muted);font-size:.88rem"></span></div>
+      <div class="progress"><i id="qBar"></i></div>
+      <div class="qmeta" id="qMeta"></div><div class="qstem" id="qStem"></div><div class="fig-note" id="qFig" hidden></div><div class="opts" id="qOpts"></div>
+      <div class="calc-zone" id="qCalc" hidden>
+        <textarea class="calc-draft" id="calcProcess" rows="5" placeholder="计算过程写在这里"></textarea>
+        <div class="calc-final"><label for="calcFinal">最终结果</label><input id="calcFinal" type="text" inputmode="decimal" autocomplete="off" /><span class="unit" id="calcUnit"></span><button class="primary" id="calcCheck" type="button">检查答案</button></div>
+      </div>
+      <div class="calc-zone" id="qFill" hidden>
+        <div class="calc-final"><label for="fillInput">填空</label><input id="fillInput" type="text" autocomplete="off" /><button class="primary" id="fillCheck" type="button">检查答案</button></div>
+      </div>
+      <div id="qDraw" hidden>
+        <div class="pad-tools" data-pad-tools="quizPad">
+          <button type="button" class="tool on" data-tool="pen">画笔</button>
+          <button type="button" class="tool" data-tool="line">直线</button>
+          <button type="button" class="tool" data-tool="rect">矩形</button>
+          <button type="button" class="tool" data-tool="circle">圆</button>
+          <button type="button" class="tool" data-tool="eraser">橡皮</button>
+          <input type="color" value="#C2502E" data-color aria-label="画笔颜色" />
+          <input type="range" min="1" max="10" value="3" data-width aria-label="线条粗细" />
+          <button type="button" class="tool" data-undo>撤销</button>
+          <button type="button" class="tool" data-clear>清空</button>
+        </div>
+        <canvas class="draw-paper" id="quizPad" width="880" height="540"></canvas>
+        <div class="row" style="margin-top:14px"><button class="primary" id="drawReveal" type="button">看答案与位置，自己对照</button></div>
+        <div class="row" id="drawSelf" style="margin-top:12px" hidden><span style="color:var(--muted);font-size:.9rem">对照完了：</span><button class="ghost-btn" id="drawRight" type="button">画对了</button><button class="ghost-btn" id="drawWrong" type="button">还没画对</button></div>
+      </div>
+      <div class="explain" id="qExplain"></div>
+      <div class="row" style="margin-top:18px;justify-content:flex-end"><button class="ghost-btn" id="quitBtn" type="button">结束本组</button><button class="primary" id="nextBtn" type="button" hidden>下一题</button></div>
+    </div>
+    <div class="quiz-card" id="quizDone" hidden>
+      <h3>本组结算</h3>
+      <div class="score-big"><span id="finalScore">0</span><span style="font-size:1.15rem;color:var(--muted2)"> / <span id="finalTotal">0</span></span></div>
+      <p id="finalMsg"></p><div class="review" id="reviewList"></div>
+      <div class="row" style="margin-top:22px"><button class="primary" id="againBtn" type="button">再来一组</button><button class="ghost-btn" data-goto="knowledge" type="button">回去看知识点</button></div>
+    </div>
+    </div>
+  </section>
+  <section class="view" id="view-notes">
+    <div class="prog-card">
+      <div class="prog-title">看课进度</div>
+      <div class="prog-row"><span class="prog-name">机械设计</span><div class="progress"><i id="lpDesignBar"></i></div><span class="prog-num" id="lpDesignText">7 / 42</span><span class="step-group"><button type="button" class="step-btn" id="lpDesignMinus" aria-label="机械设计进度减一">−</button><button type="button" class="step-btn" id="lpDesignPlus" aria-label="机械设计进度加一">+</button></span></div>
+      <div class="prog-row"><span class="prog-name">机械制图（英语）</span><div class="progress"><i id="lpDrawBar"></i></div><span class="prog-num" id="lpDrawText">0 / 12</span><span class="step-group"><button type="button" class="step-btn" id="lpDrawMinus" aria-label="机械制图进度减一">−</button><button type="button" class="step-btn" id="lpDrawPlus" aria-label="机械制图进度加一">+</button></span></div>
+    </div>
+    <div class="note-hero">
+      <h3>TaskPro 机械设计</h3>
+      <a class="doc-btn" id="docBtn" href="https://docs.google.com/document/d/163EJQKXmI3wBZA5qp6dkj01wU1qSQkZ7mjeDS6rqazA/edit?usp=drivesdk" target="_blank" rel="noopener"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6"/></svg>查看 TaskPro 笔记（Google Doc）</a>
+    </div>
+    <div class="group">
+      <div class="g-title">考试信息（以考尚卷面为准）</div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1"/><path d="m9 14 2 2 4-4"/></svg></div><div><div class="tt">考试形式</div><div class="dd">闭卷笔试，120 分钟，满分 100 分。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></div><div><div class="tt">模拟测试卷（一）～（四）题型与分值</div><div class="dd">选择题 10 题 × 2 分 = 20 分；判断题 10 题 × 2 分 = 20 分；计算题 6 题 × 10 分 = 60 分。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></svg></div><div><div class="tt">11 月强化月测卷题型</div><div class="dd">选择题 15 题、判断题 10 题、计算题 7 题。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12A9 9 0 1 1 12 3v9z"/><path d="M15 3.6a9 9 0 0 1 5.4 5.4L13.8 10.2z"/></svg></div><div><div class="tt">参考分布（非考尚卷面）</div><div class="dd">上海建桥学院 2026 专升本《机械设计基础》考试大纲题型：单项选择 20%、填空 15%、简答 20%、分析 45%。这是另一所学校的参考分布，不是考尚卷面。</div></div></div>
+    </div>
+    <div class="group">
+      <div class="g-title">章节考点（绪论 + Part 1～5）</div>
+      <div id="examParts"></div>
+    </div>
+    <div class="group">
+      <div class="g-title">后续章节考点范围</div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9.2"/><path d="M12 11v5"/><path d="M12 7.8h.01"/></svg></div><div><div class="tt">范围说明</div><div class="dd">TaskPro 笔记只写到 Part 5，后续章节笔记未完待续。以下考点来自考试大纲和杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解，不是笔记原文。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 19 7.5v9L12 20.5 5 16.5v-9z"/><circle cx="12" cy="12" r="3.2"/></svg></div><div><div class="tt">连接</div><div class="dd">螺栓连接强度计算、预紧与防松、平键连接强度。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="14" r="4.4"/><circle cx="9" cy="14" r="1.6"/><path d="M9 9.6V8M9 18.4V20M4.6 14H3M13.4 14H15M12.1 17.1l1.2 1.2M5.9 17.1l-1.2 1.2M12.1 10.9l1.2-1.2M5.9 10.9l-1.2-1.2"/><circle cx="17.5" cy="7" r="2.9"/><circle cx="17.5" cy="7" r="1.1"/><path d="M17.5 4.1V2.9M20.4 7h1.2M17.5 9.9v1.2M14.6 7h-1.2M19.6 4.9l.8-.8M15.4 4.9l-.8-.8M19.6 9.1l.8.8M15.4 9.1l-.8.8"/></svg></div><div><div class="tt">齿轮传动</div><div class="dd">失效形式、强度计算。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h3M19 12h3"/><path d="M5 9h14M5 15h14M5 9v6M19 9v6"/><path d="m8 15 3-6M13 15l3-6"/></svg></div><div><div class="tt">蜗杆传动</div><div class="dd">主要参数、失效形式。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7" cy="12" r="3.4"/><circle cx="17.5" cy="12" r="2.4"/><circle cx="7" cy="12" r=".9"/><circle cx="17.5" cy="12" r=".9"/><path d="M7 8.6l10.5 1M7 15.4l10.5-1"/></svg></div><div><div class="tt">带传动和链传动</div><div class="dd">弹性滑动与打滑、V 带传动计算。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10h5V7.5h6V10h7v4h-7v2.5H7V14H2z"/><path d="M1 12h2M21 12h2" stroke-dasharray="2.5 2.5"/></svg></div><div><div class="tt">轴</div><div class="dd">结构设计、强度计算。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><circle cx="12" cy="12" r="3.4"/><circle cx="18" cy="12" r="1.5"/><circle cx="15" cy="17.2" r="1.5"/><circle cx="9" cy="17.2" r="1.5"/><circle cx="6" cy="12" r="1.5"/><circle cx="9" cy="6.8" r="1.5"/><circle cx="15" cy="6.8" r="1.5"/></svg></div><div><div class="tt">滚动轴承</div><div class="dd">类型与代号、寿命计算、组合设计。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg></div><div><div class="tt">其余章节</div><div class="dd">间歇运动机构、机械运转速度波动的调节、回转件的平衡、滑动轴承、联轴器 / 离合器和制动器、弹簧。</div></div></div>
+    </div>
+    <div class="group">
+      <div class="g-title">判断题常考辨析点</div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="12" r="5.5"/><circle cx="15" cy="12" r="5.5"/></svg></div><div><div class="tt">绪论与自由度</div><div class="dd">零件与构件没有包含关系：零件是最小制造单元，构件是最小运动单元。<br />计算自由度前先处理复合铰链、局部自由度和虚约束。<br />m 个构件在同一处组成复合铰链，该处转动副数目为 m − 1。<br />机构具有确定运动的条件：F &gt; 0，且自由度数等于原动件数。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="5.5" r="2.5"/><path d="M7.3 16.7 16.7 7.3"/></svg></div><div><div class="tt">四连杆与凸轮</div><div class="dd">压力角与传动角互为余角：α + γ = 90°。<br />死点位置传动角 γ = 0。<br />等速运动规律有刚性冲击；等加速等减速、简谐运动规律有柔性冲击。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="2"/><path d="M12 3.5v6.5M12 14v6.5M3.5 12H10M14 12h6.5M6 6l4.2 4.2M13.8 13.8 18 18M18 6l-4.2 4.2M10.2 13.8 6 18"/></svg></div><div><div class="tt">齿轮与轮系</div><div class="dd">标准直齿圆柱齿轮不根切的最少齿数为 17。<br />一对渐开线齿轮的正确啮合条件：模数相等、压力角相等。<br />渐开线齿轮传动比与安装中心距的微小误差无关（可分性）。<br />行星轮系自由度为 1，差动轮系自由度为 2。<br />混合轮系传动比不能用统一公式一次算出，须先分解为定轴轮系和周转轮系再联立求解。</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3.5 6 1.2 1.2L7 5M3.5 12l1.2 1.2L7 11M3.5 18l1.2 1.2L7 17M11 6h9M11 12h9M11 18h9"/></svg></div><div><div class="tt">其他章节</div><div class="dd">飞轮调节周期性速度波动，非周期性速度波动用调速器。<br />带传动的弹性滑动不可避免，打滑可以避免。<br />蜗杆传动自锁条件：导程角小于或等于当量摩擦角。<br />螺纹连接自锁条件：螺纹升角小于或等于当量摩擦角。<br />滚动轴承基本额定寿命对应的可靠度为 90%。</div></div></div>
+    </div>
+    <div class="group">
+      <div class="g-title">来源</div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6"/></svg></div><div><div class="tt">考尚模拟测试卷（一）～（四）与 11 月强化月测卷</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h3M3 12h3M3 17h3"/><rect x="6" y="3" width="14" height="18" rx="2"/><path d="M10.5 8h6M10.5 12h6"/></svg></div><div><div class="tt">TaskPro 机械设计笔记</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2.5H6.5A2.5 2.5 0 0 0 4 5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div><div><div class="tt">杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解</div></div></div>
+      <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6H20M9.5 12H20M9.5 18H20"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg></div><div><div class="tt">上海建桥学院 2026 专升本《机械设计基础》考试大纲</div></div></div>
+    </div>
+  </section>
+</main>
+<div class="botbar">TokiLearn 2026</div>
+<button type="button" class="ai-fab" id="aiFab" aria-label="打开 AI 问答">AI</button>
+<div class="ai-panel" id="aiPanel" role="dialog" aria-label="AI 问答">
+  <div class="ai-head"><span>AI 问答</span><button type="button" id="aiClose" aria-label="关闭">✕</button></div>
+  <div class="ai-toast" id="aiToast" role="status" aria-live="polite"></div>
+  <div class="ai-msgs" id="aiMsgs"></div>
+  <div class="ai-key" id="aiKeyBox">
+    <label class="ai-set-label" for="aiBase">API 链接</label>
+    <input id="aiBase" type="url" value="https://generativelanguage.googleapis.com" aria-label="API 链接" placeholder="API 链接，如 https://generativelanguage.googleapis.com" autocomplete="off" />
+    <label class="ai-set-label" for="aiKey">API Key</label>
+    <input id="aiKey" type="password" placeholder="Gemini API Key（只存本地浏览器，不经过服务器）" autocomplete="off" />
+    <label class="ai-set-label" for="aiModel">模型</label>
+    <select id="aiModel" aria-label="模型">
+      <option value="gemini-2.5-flash" selected>gemini-2.5-flash</option>
+      <option value="gemini-2.5-pro">gemini-2.5-pro</option>
+      <option value="gemini-2.5-flash-lite">gemini-2.5-flash-lite</option>
+      <option value="gemini-2.0-flash">gemini-2.0-flash</option>
+      <option value="gemini-2.0-flash-lite">gemini-2.0-flash-lite</option>
+      <option value="gemini-1.5-flash">gemini-1.5-flash</option>
+      <option value="gemini-1.5-pro">gemini-1.5-pro</option>
+    </select>
+    <div class="row"><button class="ghost-btn" id="aiSaveKey" type="button">保存设置</button><button class="ghost-btn" id="aiTestKey" type="button">测试连接</button><span id="aiKeyState"></span></div>
+  </div>
+  <div class="ai-input"><button type="button" class="ai-gear" id="aiSettings" aria-label="AI 设置"><span class="icon-gear"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1 1.55V21a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1-1.55 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.55-1H3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 4.64 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34h.01A1.7 1.7 0 0 0 10 3.09V3a2 2 0 1 1 4 0v.09c0 .68.4 1.3 1 1.55.61.26 1.32.1 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.01c.26.6.87 1 1.55 1H21a2 2 0 1 1 0 4h-.09c-.68 0-1.3.4-1.51 1z"/></svg></span><span class="icon-back"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg></span></button><input id="aiText" type="text" placeholder="输入问题，如：自由度怎么算" /><button class="primary" id="aiSend" type="button">发送</button></div>
+</div>
+<script>
+/* TaskPro 文档链接：拿到链接后填到这里，笔记按钮会自动启用 */
+var TASKPRO_URL = "https://docs.google.com/document/d/163EJQKXmI3wBZA5qp6dkj01wU1qSQkZ7mjeDS6rqazA/edit?usp=drivesdk";
+
+/* ============ 知识点：按 TaskPro 笔记的实际结构（绪论 + Part 1~5） ============ */
+var PARTS = [
+  {
+    num:"绪", title:"绪论", sub:"机器 · 机构 · 构件 · 零件",
+    points:[
+      "机器的主体部分由机构组成，机构由构件组成。",
+      "零件是最小的制造单元——从制造角度看，机器拆到不能再拆的单个制件。",
+      "构件是最小的运动单元——从运动角度看，运动简图里一个整体运动的单元就是一个构件。",
+      "零件与构件没有包含关系。"
+    ],
+    formula:"零件 → 制造单元　|　构件 → 运动单元　|　两者无包含关系",
+    trap:"构件不是零件的组合，零件与构件不是包含关系。"
+  },
+  {
+    num:"1", title:"Part 1 · 平面机构运动分析", sub:"1-1 运动副 · 1-2 运动简图 · 1-3 自由度",
+    points:[
+      "1-1 运动副及其分类：一个作平面运动的构件有 3 个自由度；两构件直接接触并能产生一定相对运动的联结叫运动副；按接触特性分低副和高副。",
+      "1-2 平面机构运动简图：按比例画出决定运动的线条；焊成刚性三角形的几根杆在简图里算一个构件。",
+      "1-3 自由度计算的三类特殊情况：复合铰链、局部自由度、虚约束，数构件和运动副之前先处理掉。",
+      "机构具有确定运动的条件：自由度大于 0，且自由度数等于原动件数。"
+    ],
+    formula:"F = 3n − 2P<sub>L</sub> − P<sub>H</sub>　（n：活动构件数，P<sub>L</sub>：低副数，P<sub>H</sub>：高副数）",
+    trap:"复合铰链处 m 个构件汇交，含 m−1 个转动副；滚子推杆的滚子是局部自由度，计算 F 时滚子与推杆看成一体；虚约束在计算自由度前除去。"
+  },
+  {
+    num:"2", title:"Part 2 · 平面四连杆机构", sub:"杆长条件 · 急回 · 压力角与传动角 · 死点 · 图解法设计 · 自锁",
+    points:[
+      "杆长条件（曲柄存在的几何前提）：最短杆与最长杆长度之和，小于或等于其余两杆长度之和。",
+      "曲柄存在条件：在满足杆长条件的基础上，最短杆为连架杆（或机架）时，其相邻杆可作整周转动，即存在曲柄。",
+      "急回运动与行程速比系数：工作行程慢、空回行程快，源于极位夹角 θ ≠ 0；K 越大急回越明显。",
+      "压力角 α 与传动角 γ 互为余角：α + γ = 90°；α 越小、γ 越大，传力越好。",
+      "最小传动角 γmin 是校核点：出现在曲柄与机架共线的位置附近，设计时要保证 γmin 不小于许用值。",
+      "死点：从动件传动角 γ = 0 的位置，此时驱动力对从动件的有效力矩为零，从动件不能被推动。曲柄为主动件、摇杆为从动件时无死点；摇杆为主动件时存在死点。",
+      "图解法设计平面四杆机构（按已知连杆三位置）：画出连杆的三个给定位置，连接各位置的对应点，作对应点连线的垂直平分线，两条垂直平分线的交点即连架杆与机架的固定铰链中心，由此定出四杆的铰链位置和杆长。",
+      "图解法设计平面四杆机构（按连架杆三对应位置）：按给定的两连架杆三组对应位置，用刚化反转法将机构各位置归一，使某一连架杆在三个位置重合，另一连架杆上铰链点三位置对应点连线的垂直平分线交点，即该连架杆的固定铰链中心。",
+      "机构的压力角和自锁：压力角 α 是驱动力方向与从动件受力点速度方向所夹的锐角，α 越大有效分力越小；考虑摩擦时，当驱动力的有效分力不足以克服摩擦阻力、机构效率 η ≤ 0 时发生自锁，此时无论驱动力多大，从动件都不能运动。"
+    ],
+    formula:"l<sub>min</sub> + l<sub>max</sub> ≤ l<sub>3</sub> + l<sub>4</sub>　|　K = (180° + θ) / (180° − θ)　|　α + γ = 90°",
+    trap:"杆长条件是曲柄存在的必要条件，曲柄是否存在还取决于最短杆的位置；死点与自锁不同，死点是从动件 γ = 0 的位置。"
+  },
+  {
+    num:"3", title:"Part 3 · 凸轮机构", sub:"盘形凸轮 · 推杆类型 · 冲击 · 反转法 · 压力角",
+    points:[
+      "盘形凸轮的推杆分尖顶、滚子、平底三种；平底推杆的压力角恒为 0。",
+      "对心与偏心：推杆导路通过凸轮回转中心是对心，有偏距 e 的是偏心；偏置方向适当时可减小推程压力角。",
+      "基圆与偏距：基圆是以理论轮廓最小向径为半径的圆，偏距圆与偏距 e 决定偏置大小。",
+      "运动规律与冲击：等速运动有刚性冲击，等加速等减速、简谐运动有柔性冲击，正弦加速度运动无冲击。",
+      "反转法：让推杆反绕凸轮回转方向转回去，逐点求理论轮廓，是图解设计凸轮轮廓的基本方法。",
+      "压力角与基圆半径：压力角越大传力越差，增大基圆半径可以减小压力角，但凸轮尺寸随之变大，要折中。"
+    ],
+    formula:"推程许用压力角一般 [α] ≈ 30°（直动推杆）　|　基圆半径 r<sub>b</sub> ↑ → 压力角 α ↓",
+    trap:"滚子推杆的理论轮廓与实际轮廓是等距曲线，基圆在理论轮廓上；滚子半径过大或轮廓曲率半径过小会出现失真（尖点、交叉）。"
+  },
+  {
+    num:"4", title:"Part 4 · 齿轮机构", sub:"渐开线标准齿轮 · 核心公式 · 啮合条件 · 连续传动 · 变位与根切 · 展成原理",
+    points:[
+      "传动比：i₁₂ = n₁/n₂，等于齿数反比 z₂/z₁。",
+      "渐开线标准齿轮的分度圆、齿顶高、齿根高由模数 m 和齿数 z 决定，见公式。",
+      "正确啮合条件：两轮模数相等、压力角相等，缺一不可（斜齿轮还要看螺旋角）。",
+      "标准中心距：按标准安装时中心距 a = m(z₁+z₂)/2，此时分度圆与节圆重合。",
+      "根切与变位齿轮：标准齿轮齿数小于 17 会根切；用变位齿轮（正变位）可以避开根切、凑中心距、提高强度。",
+      "渐开线直齿圆柱齿轮连续传动的条件：重合度 εα ≥ 1。重合度 εα 是实际啮合线段长度与法向齿距（基圆齿距 p_b）之比，εα ≥ 1 表示前一对轮齿尚未脱离啮合时后一对轮齿已经进入啮合，传动才能连续。",
+      "斜齿圆柱齿轮的正确啮合条件：两轮法面模数相等、法面压力角相等，螺旋角大小相等；外啮合时两轮螺旋角旋向相反（β₁ = −β₂），内啮合时旋向相同。",
+      "变位齿轮的概念：用齿条刀具加工齿轮时，刀具中线相对轮坯分度圆移动一段距离 x·m（x 为变位系数，m 为模数）加工出的齿轮；x > 0 为正变位齿轮，x < 0 为负变位齿轮，x = 0 为标准齿轮。变位齿轮的分度圆和基圆不变，齿厚、齿顶高、齿根高随 x 改变。",
+      "渐开线齿轮的展成原理：展成法（范成法）利用一对齿轮（或齿轮与齿条）啮合传动的原理加工齿形，刀具与轮坯按恒定传动比作展成运动，刀具齿廓的包络线即为轮坯的渐开线齿廓；常用刀具有齿条插刀、齿轮插刀和滚刀。"
+    ],
+    formula:"d = mz　|　d<sub>b</sub> = d·cosα　|　h<sub>a</sub> = h<sub>a</sub>*·m　|　h<sub>f</sub> = (h<sub>a</sub>* + c*)m　|　a = m(z₁ + z₂)/2　|　正确啮合：m₁ = m₂，α₁ = α₂",
+    trap:"标准齿轮 h<sub>a</sub>* = 1、c* = 0.25；17 齿是标准直齿圆柱齿轮不根切的最小齿数，变位齿轮与斜齿轮的最小齿数与此不同。"
+  },
+  {
+    num:"5", title:"Part 5 · 齿轮系", sub:"定轴轮系 · 周转轮系 · 传动比计算",
+    points:[
+      "定轴轮系：所有齿轮轴线位置固定，传动比 = 各对啮合齿轮齿数连乘之比，符号判断首末轮转向（外啮合变号、内啮合不变）。",
+      "周转轮系：至少有一个齿轮既自转又绕固定轴线公转（行星轮），不能直接套用定轴轮系公式，用转化机构法计算。",
+      "周转轮系按自由度分：差动轮系 F = 2（两个原动件才能确定运动），行星轮系 F = 1（一个原动件）。",
+      "传动比计算：先区分轮系类型，划分定轴与周转部分，分别列式后联立求解。"
+    ],
+    formula:"定轴：i = ±(从动轮齿数连乘)/(主动轮齿数连乘)　|　周转：把系杆固定，转化为定轴轮系再算 i<sup>H</sup>",
+    trap:"周转轮系转化公式里的齿数比符号按转化后的定轴轮系判断；行星轮（系杆上的轮）齿数在传动比公式中约去，转向判断中不约去。"
+  }
+];
+
+/* ============ 刷题：改编自杨可桢第 7 版笔记和课后习题详解（课后习题 / 名校真题） ============ */
+var QUIZ = [
+  {ch:"第 1 章 自由度", type:"选择", stem:"某平面机构有 5 个活动构件、7 个低副、0 个高副，其自由度 F 为（　）。", opts:["0","1","2","3"], ans:1, exp:"F = 3n − 2P<sub>L</sub> − P<sub>H</sub> = 3×5 − 2×7 − 0 = 1，与原动件数相等时运动确定。", src:"改编自笔记书第 1 章课后习题"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"三个构件在同一处组成复合铰链时，该处的转动副数目为 3。", opts:["正确","错误"], ans:1, exp:"m 个构件汇交的复合铰链含 m−1 个转动副，3 个构件应算 2 个。", src:"改编自笔记书第 1 章课后习题"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"虚约束对机构的运动不起实际约束作用，计算自由度时应先除去。", opts:["正确","错误"], ans:0, exp:"虚约束是重复约束，不去除会把 F 算小，甚至算出负数。", src:"改编自笔记书第 1 章名校真题"},
+  {ch:"第 2 章 连杆机构", type:"选择", stem:"铰链四杆机构满足杆长条件，取最短杆为机架时得到（　）。", opts:["曲柄摇杆机构","双曲柄机构","双摇杆机构","曲柄滑块机构"], ans:1, exp:"满足杆长条件时，最短杆为机架 → 双曲柄；最短杆的邻边为机架 → 曲柄摇杆；最短杆对边为机架 → 双摇杆。", src:"改编自笔记书第 2 章课后习题"},
+  {ch:"第 2 章 连杆机构", type:"选择", stem:"曲柄摇杆机构的极位夹角 θ = 36°，行程速比系数 K 为（　）。", opts:["1.2","1.5","1.8","2.0"], ans:1, exp:"K = (180°+θ)/(180°−θ) = 216/144 = 1.5。", src:"改编自笔记书第 2 章课后习题"},
+  {ch:"第 2 章 连杆机构", type:"判断", stem:"四杆机构中压力角与传动角之和恒为 90°，传动角越大传力性能越好。", opts:["正确","错误"], ans:0, exp:"α + γ = 90°，γ 大则有效分力大、传力好，故用 γmin 校核。", src:"改编自笔记书第 2 章名校真题"},
+  {ch:"第 3 章 凸轮机构", type:"选择", stem:"从动件按等速运动规律运动时，凸轮机构将产生（　）。", opts:["刚性冲击","柔性冲击","无冲击","冲击类型与速度无关"], ans:0, exp:"等速运动速度突变、加速度无穷大 → 刚性冲击，只宜低速轻载；等加速等减速与简谐为柔性冲击。", src:"改编自笔记书第 3 章课后习题"},
+  {ch:"第 3 章 凸轮机构", type:"选择", stem:"在其他条件不变时，增大凸轮的基圆半径，推程压力角将（　）。", opts:["增大","减小","不变","先增后减"], ans:1, exp:"基圆半径越大，压力角越小，传力越好，代价是凸轮尺寸变大。", src:"改编自笔记书第 3 章名校真题"},
+  {ch:"第 4 章 齿轮机构", type:"选择", stem:"标准直齿圆柱齿轮 m = 4 mm、z = 20，其分度圆直径 d 为（　）。", opts:["40 mm","60 mm","80 mm","100 mm"], ans:2, exp:"d = mz = 4×20 = 80 mm。", src:"改编自笔记书第 4 章课后习题"},
+  {ch:"第 4 章 齿轮机构", type:"判断", stem:"一对渐开线齿轮的传动比与安装中心距的微小误差无关，这一性质称为可分性。", opts:["正确","错误"], ans:0, exp:"渐开线齿廓的传动比恒等于基圆半径反比，中心距略变不影响传动比。", src:"改编自笔记书第 4 章名校真题"},
+  {ch:"第 4 章 齿轮机构", type:"选择", stem:"用标准齿条刀具加工标准直齿圆柱齿轮，不发生根切的最少齿数为（　）。", opts:["14","15","16","17"], ans:3, exp:"h<sub>a</sub>* = 1、α = 20° 时 z<sub>min</sub> = 17；少于 17 齿可用正变位避免根切。", src:"改编自笔记书第 4 章课后习题"},
+  {ch:"第 5 章 轮系", type:"选择", stem:"定轴轮系中 z₁=20、z₂=40、z₃=20、z₄=60（1→2、3→4 两对外啮合，2 与 3 同轴），传动比 i₁₄ 的大小为（　）。", opts:["3","6","9","12"], ans:1, exp:"i₁₄ = (z₂z₄)/(z₁z₃) = (40×60)/(20×20) = 6；两次外啮合，方向与首轮相同。", src:"改编自笔记书第 5 章课后习题"},
+  {ch:"第 5 章 轮系", type:"判断", stem:"混合轮系的传动比可以直接用一个统一的公式一次算出。", opts:["正确","错误"], ans:1, exp:"混合轮系必须先分解为定轴轮系和周转轮系，分别列式再联立求解。", src:"改编自笔记书第 5 章名校真题"},
+  {ch:"第 6 章 间歇运动", type:"选择", stem:"外槽轮机构槽数 z = 4 时，其运动系数（运动时间与周期之比）为（　）。", opts:["0.25","0.5","0.75","1"], ans:0, exp:"槽轮运动系数 k = (z−2)/(2z) = (4−2)/8 = 0.25，且恒小于 0.5。", src:"改编自笔记书第 6 章课后习题"},
+  {ch:"第 7 章 速度波动", type:"判断", stem:"飞轮主要用来调节机械运转的非周期性速度波动。", opts:["正确","错误"], ans:1, exp:"飞轮靠储存/释放动能调节周期性速度波动；非周期性波动要用调速器。", src:"改编自笔记书第 7 章课后习题"},
+  {ch:"第 10 章 连接", type:"选择", stem:"普通螺纹连接能够自锁的条件是（　）。", opts:["螺纹升角大于当量摩擦角","螺纹升角小于或等于当量摩擦角","螺纹升角等于 90°","与摩擦角无关"], ans:1, exp:"自锁条件 ψ ≤ ρ<sub>v</sub>，普通三角螺纹升角小、当量摩擦角大，一般满足自锁。", src:"改编自笔记书第 10 章课后习题"},
+  {ch:"第 11 章 齿轮传动", type:"选择", stem:"闭式软齿面齿轮传动最主要的失效形式是（　），设计时通常先按它计算。", opts:["齿根弯曲折断","齿面疲劳点蚀","齿面胶合","齿面塑性变形"], ans:1, exp:"软齿面（硬度 ≤ 350 HBW）闭式传动以点蚀为主，先按齿面接触疲劳强度设计，再校核弯曲强度。", src:"改编自笔记书第 11 章名校真题"},
+  {ch:"第 12 章 蜗杆传动", type:"判断", stem:"当蜗杆导程角小于轮齿间的当量摩擦角时，蜗杆传动可以实现自锁。", opts:["正确","错误"], ans:0, exp:"γ ≤ ρ<sub>v</sub> 时反行程自锁，只能蜗杆带动蜗轮，起重装置常利用这一点。", src:"改编自笔记书第 12 章课后习题"},
+  {ch:"第 13 章 带传动和链传动", type:"判断", stem:"带传动的弹性滑动是不可避免的固有现象，而打滑是可以避免的过载现象。", opts:["正确","错误"], ans:0, exp:"弹性滑动源于带两边拉力差引起的伸长差，始终存在；打滑是过载时摩擦力不足，应避免。", src:"改编自笔记书第 13 章课后习题"},
+  {ch:"第 14 章 轴", type:"选择", stem:"自行车前轮轴只承受弯矩、不传递转矩，它属于（　）。", opts:["转轴","心轴","传动轴","曲轴"], ans:1, exp:"只受弯矩不受转矩的是心轴；既受弯矩又受转矩的是转轴；只受转矩的是传动轴。", src:"改编自笔记书第 14 章课后习题"},
+  {ch:"第 16 章 滚动轴承", type:"选择", stem:"滚动轴承的基本额定寿命 L₁₀ 对应的可靠度为（　）。", opts:["80%","90%","95%","99%"], ans:1, exp:"基本额定寿命是可靠度 90% 时的寿命，L₁₀ = (C/P)<sup>ε</sup>，球轴承 ε = 3、滚子轴承 ε = 10/3。", src:"改编自笔记书第 16 章名校真题"},
+  {ch:"第 18 章 弹簧", type:"选择", stem:"圆柱螺旋弹簧的旋绕比 C 的定义是（　）。", opts:["弹簧丝直径与中径之比","弹簧中径与弹簧丝直径之比 D/d","弹簧圈数与自由高度之比","弹簧外径与内径之比"], ans:1, exp:"C = D/d，常用范围约 4～16；C 过小制造困难、刚度大，过大易失稳。", src:"改编自笔记书第 18 章课后习题"},
+  {ch:"第 1 章 自由度", type:"计算", stem:"计算平面机构的自由度：活动构件数 n = 6，低副数 P<sub>L</sub> = 8，高副数 P<sub>H</sub> = 1。求 F。", unit:"", answerValue:1, tol:0.001, ansText:"F = 1", exp:"F = 3n − 2P<sub>L</sub> − P<sub>H</sub> = 3×6 − 2×8 − 1 = 1。", src:"改编自笔记书第 1 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 1 章 · 课后习题（自由度计算）"},
+  {ch:"第 2 章 连杆机构", type:"计算", stem:"曲柄摇杆机构的极位夹角 θ = 18°，求行程速比系数 K（保留两位小数）。", unit:"", answerValue:1.22, tol:0.02, ansText:"K ≈ 1.22", exp:"K = (180° + θ) / (180° − θ) = 198 / 162 ≈ 1.22。", src:"改编自笔记书第 2 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 2 章 · 课后习题（行程速比系数）"},
+  {ch:"第 4 章 齿轮机构", type:"计算", stem:"一对标准直齿圆柱齿轮：m = 3 mm，z₁ = 24，z₂ = 72。求标准中心距 a。", unit:"mm", answerValue:144, tol:0.5, ansText:"a = 144 mm", exp:"a = m(z₁ + z₂)/2 = 3×(24 + 72)/2 = 144 mm。", src:"改编自笔记书第 4 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 4 章 · 课后习题（中心距计算）"},
+  {ch:"第 4 章 齿轮机构", type:"计算", stem:"标准直齿圆柱齿轮 m = 4 mm、z = 30，求齿根高 h<sub>f</sub>（h<sub>a</sub>* = 1，c* = 0.25）。", unit:"mm", answerValue:5, tol:0.05, ansText:"h<sub>f</sub> = 5 mm", exp:"h<sub>f</sub> = (h<sub>a</sub>* + c*)m = (1 + 0.25)×4 = 5 mm。", src:"改编自笔记书第 4 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 4 章 · 课后习题（齿轮几何尺寸）"},
+  {ch:"第 5 章 轮系", type:"计算", stem:"定轴轮系：z₁ = 18、z₂ = 36、z₃ = 20、z₄ = 50（1→2、3→4 两对外啮合，2 与 3 同轴）。求传动比 i₁₄ 的大小。", unit:"", answerValue:5, tol:0.05, ansText:"i₁₄ = 5", exp:"i₁₄ = (z₂z₄)/(z₁z₃) = (36×50)/(18×20) = 5；两次外啮合，末轮与首轮转向相同。", src:"改编自笔记书第 5 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 5 章 · 课后习题（定轴轮系传动比）"},
+  {ch:"第 1 章 自由度", type:"画图", stem:"画图：画出曲柄滑块机构的运动简图（曲柄、连杆、滑块、机架），标出曲柄回转中心、滑块导路和各运动副，并注明偏距 e（对心时 e = 0）。", ansText:"见答案位置中的参考画法要点", exp:"参考画法要点：① 定比例尺，按尺寸画曲柄回转中心与滑块导路线；② 曲柄与连杆、连杆与滑块之间是转动副，滑块与导路是移动副；③ 转动副用小圆表示，机架画剖面线；④ 标出偏距 e（导路延长线到曲柄回转中心的距离），对心曲柄滑块机构 e = 0。", src:"改编自笔记书第 1 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 1 章 · 课后习题（机构运动简图）；教材第 7 版第 1 章机构运动简图图例"},
+  {ch:"第 2 章 连杆机构", type:"画图", stem:"画图：在铰链四杆机构简图上画出以连杆为参考时的压力角 α 与传动角 γ，并画出曲柄摇杆机构的两个死点位置（曲柄与连杆共线时）。", ansText:"见答案位置中的参考画法要点", exp:"参考画法要点：① 压力角 α 是连杆作用力方向与从动件受力点速度方向的夹角，传动角 γ = 90° − α，画在从动摇杆的铰链点处；② 死点位置出现在曲柄与连杆共线的两个位置，从动件传动角 γ = 0；③ 图上要标出 α、γ 的弧线和字母。", src:"改编自笔记书第 2 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 2 章 · 课后习题（压力角、传动角与死点）；教材第 7 版第 2 章压力角与死点图例"},
+  {ch:"第 3 章 凸轮机构", type:"画图", stem:"画图：用反转法画出对心直动尖顶推杆盘形凸轮的基圆、偏距圆（对心时偏距为 0 可只画基圆），并在图上标出推程运动角与推程压力角 α。", ansText:"见答案位置中的参考画法要点", exp:"参考画法要点：① 基圆以凸轮理论轮廓的最小向径为半径，圆心为凸轮回转中心；② 反转法中推杆沿 −ω 方向反转，逐点量取位移得到理论轮廓；③ 压力角 α 是推杆运动方向与轮廓法线方向的夹角，标在接触点处；④ 推程运动角标在凸轮转角方向上。", src:"改编自笔记书第 3 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 3 章 · 课后习题（反转法与压力角）；教材第 7 版第 3 章凸轮轮廓图解法图例"},
+  {ch:"第 14 章 轴", type:"画图", stem:"画图：画一根阶梯轴的简图，标出轴肩、轴环、退刀槽、键槽的位置，并注明哪一段装轴承、哪一段装齿轮。", ansText:"见答案位置中的参考画法要点", exp:"参考画法要点：① 轴段直径按装配顺序阶梯变化，轴承段与齿轮段之间有轴肩定位；② 轴肩圆角小于相配零件的倒角，砂轮越程槽或退刀槽画在轴肩根部；③ 键槽画在装齿轮（或带轮）的轴段上，长度小于该轴段长度；④ 各段标注装配对象：轴承、齿轮、轴端挡圈等。", src:"改编自笔记书第 14 章课后习题", loc:"杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解 · 第 14 章 · 课后习题（轴的结构）；教材第 7 版第 14 章轴的结构图例"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"两个构件直接接触并能产生一定____的连接，称为运动副。", opts:["相对运动","绝对运动","转动","移动"], ans:0, exp:"两构件直接接触并能产生一定相对运动的连接称为运动副。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 1 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"机构具有确定运动的条件是自由度大于零，且____。", opts:["自由度＞原动件数目","自由度＜原动件数目","自由度＝原动件数目","以上均不正确"], ans:2, exp:"只有当机构的自由度大于零，且自由度＝原动件数目时，机构才会有确定的运动。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 2 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"运动副是指能使两构件之间既保持____接触，又能产生一定形式的相对运动的____。", opts:["间接　连接","不　连接","直接　连接","相对　连接"], ans:2, exp:"构件间直接接触并能产生一定相对运动的连接称为运动副。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 3 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"由于组成运动副中两构件之间的____不同，可将运动副分为高副和低副。", opts:["运动速度","几何形状","物理特性","接触形式"], ans:3, exp:"按照接触形式的不同，通常把运动副分为低副和高副两类。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 4 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"组成运动副的两构件之间，接触形式有____三种。", opts:["点、线、面","相对、直接、间接","平面、曲面、空间","滑动、滚动、移动"], ans:0, exp:"两构件组成运动副，其接触方式有点、线、面三种。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 5 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"组成转动副的两构件只能在平面内____。", opts:["相对转动","相对移动","相对静止","转动或移动"], ans:0, exp:"组成转动副的两构件只能在平面内相对转动。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 6 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"机构中运动规律已经知道的构件称为____。", opts:["输出构件","从动件","原动件","固定构件"], ans:2, exp:"运动规律已知的活动构件称为原动件，它的运动是由外界输入的，故又称为输入构件。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 7 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"机构中随原动件运动而运动的其余活动构件称为____。", opts:["输入构件","从动件","原动件","固定构件"], ans:1, exp:"机构中随原动件运动而运动的其余活动构件称为从动件。其中输出预期运动的从动件称为输出构件，其他从动件则起传递运动的作用。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 8 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"在平面机构的运动简图中，一般用____表示转动副。", opts:["点","直线","波浪线","圆圈"], ans:3, exp:"在平面机构的运动简图中，一般用圆圈表示转动副，其圆心代表相对转动轴线。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 9 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"当两构件组成高副时，在运动简图中应当画出两构件接触处的____。", opts:["接触点","切线","曲线轮廓","法线"], ans:2, exp:"两构件组成高副时，在运动简图中应当画出两构件接触处的曲线轮廓。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 10 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"机构中用来支承活动构件的构件称为____。", opts:["机架","原动件","从动件","机械"], ans:0, exp:"机构中用来支承活动构件（或运动构件）的构件称为固定构件，即为机架。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 11 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"房门的开关运动，是____副在接触处所允许的相对运动。", opts:["移动","转动","螺旋","高"], ans:1, exp:"在房门的开关运动中，两构件在平面内相对转动，所以构成的是转动副。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 12 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"抽屉的拉出或推进运动，是____副在接触处所允许的相对运动。", opts:["移动","转动","螺旋","高"], ans:0, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 13 · 答案册 p.126（a/pg-007，速查表 11～15 ABACB 之第 3 位）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"火车车轮与铁轨之间构成____副。", opts:["移动","转动","高","球面"], ans:2, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 14 · 答案册 p.126（a/pg-007，速查表 11～15 ABACB 之第 4 位）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"如图 2-1 所示的两构件构成的运动副为____。", opts:["高副","移动副","螺旋副","转动副"], ans:1, exp:"图 2-1：直杆在槽中滑动（原图见题库 q/pg-011）。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 15 · 答案册 p.126（a/pg-007，速查表 11～15 ABACB 之第 5 位）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"如图 2-2 所示，图中 A 点处形成的转动副的个数为____。", opts:["1","2","3","4"], ans:1, exp:"图 2-2：构件 1、2、3 在 A 点汇交，复合铰链，含 2 个转动副（原图见题库 q/pg-011）。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 16 · 答案册 p.126（a/pg-007，速查表 16～20 BBDCA 之第 1 位）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"两构件组成平面转动副时，会丧失____独立的运动。", opts:["1 个","2 个","3 个","0 个"], ans:1, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 17 · 答案册 p.126（a/pg-007，速查表 16～20 BBDCA 之第 2 位）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"构件相对于参考坐标系的独立运动的数目称为构件的____。", opts:["复合铰链","虚约束","局部自由度","自由度"], ans:3, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 18 · 答案册 p.126（a/pg-007，速查表 16～20 BBDCA 之第 3 位）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"一个作平面运动的自由构件具有____个独立运动。", opts:["1","2","3","4"], ans:2, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 19 · 答案册 p.126（a/pg-007，速查表 16～20 BBDCA 之第 4 位）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"由 K 个构件组成的机构的瞬心个数为____。", opts:["N＝K(K−1)/2","N＝K(K＋1)/2","N＝(K−1)/2","N＝(K＋1)/2K"], ans:0, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 单选 20 · 答案册 p.126（a/pg-007，速查表 16～20 BBDCA 之第 5 位）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"凡两构件直接接触的连接都叫作运动副。", opts:["正确","错误"], ans:1, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 1 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"运动副是连接，连接也是运动副。", opts:["正确","错误"], ans:1, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 2 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"运动副是用来限制或约束构件的自由运动。", opts:["正确","错误"], ans:0, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 3 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"通过面接触的运动副只有移动副。", opts:["正确","错误"], ans:1, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 4 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"机构具有确定的运动的前提是该机构的自由度为 0。", opts:["正确","错误"], ans:1, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 5 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"机构中所出现的局部自由度都是有害的，在实际生产中应当避免。", opts:["正确","错误"], ans:1, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 6 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"有高副存在的地方可能有局部自由度。", opts:["正确","错误"], ans:0, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 7 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"虚约束对运动不起作用，所以在实际生产中可以去掉。", opts:["正确","错误"], ans:1, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 8 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"若机构的自由度为 2，那么该机构共需 2 个原动件才能有确定的运动。", opts:["正确","错误"], ans:0, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 9 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"若机构的自由度小于原动件数，则机构中最弱构件必损坏。", opts:["正确","错误"], ans:0, exp:"", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 10 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"机构的自由度计算公式为 F＝3n−2P<sub>L</sub>＋P<sub>H</sub>。", opts:["正确","错误"], ans:1, exp:"题干故意把正确公式 F＝3n−2P<sub>L</sub>−P<sub>H</sub> 中的减号写成加号，故判错。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 11 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"不通过运动副直接相连且作相对平面运动的三个构件共有三个瞬心，这三个瞬心不在同一直线上。", opts:["正确","错误"], ans:1, exp:"三心定理——三个瞬心位于同一直线上。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷基础 判断 12 · 答案册 p.126（a/pg-007）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"组成移动副的两构件之间，在接触处只允许按____方向作相对直线移动。", opts:["水平","给定","垂直","任意"], ans:1, exp:"若组成运动副的两构件只能沿给定的某一方向作相对直线移动，这种运动副称为移动副。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 1 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"在平面机构的运动简图中，组成移动副的两构件之一可以画成____。", opts:["点、块状或槽状","杆状、块状或槽状","杆状、块状或圆环","直线或圆圈"], ans:1, exp:"在平面机构的运动简图中，组成移动副的两构件之一可以画成杆状、块状或槽状。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 2 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"在绘制平面机构的运动简图中，所用到的运动副的规定符号仅与构件间____有关，而与运动副的结构尺寸无关。", opts:["相对运动的速度","运动的方向","相对运动的性质","运动的路径"], ans:2, exp:"在绘制平面机构的运动简图中，所用到的运动副的规定符号仅与构件间相对运动的性质有关，而与运动副的结构尺寸无关。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 3 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"在图 2-25 所示的机构中，AB⊥AC，AB＝AC，D 是 BC 的中点，则该机构所含有虚约束的个数为____。", opts:["1","2","3","0"], ans:0, exp:"机构中传递运动不起独立作用的对称部分为虚约束。图示机构中三角形 ABD 和三角形 ADC 是关于直线 AD 对称的，且 AB 或 AC 对传递运动不起独立作用，所以在 AB 或 AC 处含有一个虚约束。（原图见题库 q/pg-018，图 2-25）", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 4 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"图 2-26 所示机构若要有确定运动，需要有____原动件。", opts:["1 个","2 个","3 个","4 个"], ans:0, exp:"图示机构中含有活动构件数 n＝7，所含低副个数 P<sub>L</sub>＝10，高副个数 P<sub>H</sub>＝0，则机构自由度 F＝3n−2P<sub>L</sub>−P<sub>H</sub>＝3×7−2×10＝1，所以若要使机构具有确定的相对运动，需要自由度与原动件的个数相等，所以需要有 1 个原动件。（原图见题库 q/pg-019，图 2-26）", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 5 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"若一平面机构中加入 2 个高副，则该机构会丧失____独立的运动。", opts:["2 个","3 个","4 个","5 个"], ans:0, exp:"一个处于完全自由状态下的构件具有 3 个自由度，且机构中每引入 1 个高副就会引入 1 个约束，保留 2 个自由度。所以当加入 2 个高副时，会引入 2 个约束。故选 A。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 6 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"两个构件之间组成多个轴线____的转动副时，只有一个转动副起约束作用，其余都是虚约束。", opts:["交叉","重合","平行","垂直"], ans:1, exp:"两个构件之间组成多个轴线重合的转动副时，只有一个转动副起约束作用，其余都是虚约束。例如两个轴承支持一根轴只能看作一个转动副。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 7 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"两个构件之间组成导路方向____的多个移动副时，只有一个移动副起约束作用，其余都是虚约束。", opts:["平行","重合","相反","垂直"], ans:0, exp:"两个构件之间组成导路方向平行的多个移动副时，只有一个移动副起约束作用，其余都是虚约束。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 8 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"下列关于速度瞬心的说法，正确的是____。", opts:["速度瞬心是两构件上绝对速度为 0 的重合点","速度瞬心是两构件上绝对速度相同的重合点","如果两构件都是运动的，则其瞬心称为绝对瞬心","如果两构件之一是静止的，则其瞬心称为相对瞬心"], ans:1, exp:"速度瞬心是两构件上绝对速度相同的重合点，故 A 项错误，B 项正确；如果两构件都是运动的，则其瞬心称为相对瞬心，如果两构件之一是静止的，则其瞬心称为绝对瞬心，故 C、D 项错误。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 单选 9 · 答案册 p.131（a/pg-012）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"虚约束是由于构件间几何尺寸满足某些特殊条件而产生的。", opts:["正确","错误"], ans:0, exp:"平面机构中的虚约束常出现在：(1) 两个构件之间组成导路方向平行的多个移动副时，只有一个移动副起约束作用，其余都是虚约束。(2) 两个构件之间组成多个轴线重合的转动副时，只有一个转动副起约束作用，其余都是虚约束。(3) 机构中传递运动不起独立作用的对称部分为虚约束。即虚约束是由于构件间几何尺寸满足某些特殊条件而产生的。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷拔高 判断 1 · 答案册 p.131–132（a/pg-012 速查表；a/pg-013 逐题答案）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"引入一个平面高副引入的约束数是____。", opts:["1","2","3","4"], ans:0, exp:"每引入一个高副就会引入一个约束，保留两个自由度。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷真题 单选 1 · 答案册 p.133（a/pg-014）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"如果机构的自由度为 0，当活动构件数是 4，高副数为 0 时，则低副一定是____。", opts:["5 个","6 个","7 个","8 个"], ans:1, exp:"由 F＝3n−2P<sub>L</sub>−P<sub>H</sub>＝0 得 3×4−2P<sub>L</sub>−0＝0，低副数 P<sub>L</sub>＝6。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷真题 单选 2 · 答案册 p.133（a/pg-014）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"根据机构的自由度与原动件数目之间的关系可以判定机构是否具有确定的运动，当原动件数小于自由度 F，可能出现____的情况。", opts:["机构不能运动","机构具有确定的运动","机构可以运动，但运动不确定","无法判断"], ans:2, exp:"当机构中原动件数小于机构自由度时，机构不具有确定的相对运动。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷真题 单选 3 · 答案册 p.133（a/pg-014）"},
+  {ch:"第 1 章 自由度", type:"选择", stem:"含 4 个构件的机构的瞬心数是____。", opts:["4","5","6","7"], ans:2, exp:"若机构由 K 个构件（含机架）组成，则瞬心数为 N＝K(K−1)/2。本题构件数 K＝4，则瞬心个数为 N＝4×(4−1)/2＝6。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷真题 单选 4 · 答案册 p.133（a/pg-014）"},
+  {ch:"第 1 章 自由度", type:"判断", stem:"两个以上构件在同一轴线用转动副连接时形成复合铰链。", opts:["正确","错误"], ans:0, exp:"两个以上构件同时在一处用转动副相连接就构成复合铰链。", src:"2000 题·刷题二", loc:"2000 题·刷题二 · 刷真题 判断 1 · 答案册 p.133（a/pg-014）"},
+  /* 2000 题·刷题三～六（Part 2～5）：看图核对版主表，选择 + 判断，按核对文件原文 */
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构有三种基本形式，即____机构，____机构和____机构。", "opts": ["曲柄滑块　曲柄连杆　双摇杆", "连杆　双曲柄　双摇杆", "曲柄摇杆　双曲柄　双摇杆", "曲柄　双曲柄　摇杆"], "ans": 2, "exp": "根据连架杆中曲柄和摇杆个数的不同，铰链四杆机构可分为曲柄摇杆机构、双曲柄机构、双摇杆机构三种基本形式。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 1 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构的两个连架杆，可以有一个是____，另一个是____，也可以两个都是____或都是____。", "opts": ["曲柄　连杆　曲柄　连杆", "曲柄　摇杆　曲柄　摇杆", "连杆　摇杆　连杆　摇杆", "曲柄　连杆　摇杆　曲柄"], "ans": 1, "exp": "曲柄摇杆机构中连架杆是一个曲柄一个摇杆，双摇杆机构中两个连架杆都是摇杆，双曲柄机构中两个连架杆都是曲柄。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 2 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在铰链四杆机构中，能绕机架上的铰链作____的构件称为连架杆。", "opts": ["往复摆动", "往复移动", "左右运动", "来回转动"], "ans": 3, "exp": "能绕机架上的铰链即转动副作来回转动运动的构件称为连架杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 3 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在铰链四杆机构中，能绕机架上的铰链作整周转动的____叫作曲柄。", "opts": ["连杆", "最短杆", "最长杆", "连架杆"], "ans": 3, "exp": "与机架组成整转副的连架杆称为曲柄。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 4 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "当平面四杆机构中的运动副都是____时，就称之为铰链四杆机构，它是其他多杆机构的基础。", "opts": ["移动副", "高副", "转动副", "低副"], "ans": 2, "exp": "如果机构中的运动副均为转动副，这种平面四杆机构就称为铰链四杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 5 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "平面连杆机构是由一些刚性构件用____和____相互连接而组成的机构。", "opts": ["转动副　移动副", "平面高副　空间高副", "转动副　球面副", "高副　低副"], "ans": 0, "exp": "平面连杆机构是由若干个构件用低副（转动副、移动副）连接组成的平面机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 6 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构的最短杆与最长杆的长度之和大于其余两杆的长度之和时，机构____。", "opts": ["有曲柄存在", "不存在曲柄", "不存在摇杆", "只有一个摇杆"], "ans": 1, "exp": "当不满足杆长条件时，铰链四杆机构为双摇杆机构，无曲柄。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 7 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "平面四杆机构中，如果最短杆与最长杆的长度之和小于或等于其他两杆的长度之和，最短杆是连架杆，这个机构叫作____。", "opts": ["曲柄摇杆机构", "曲柄滑块机构", "双曲柄机构", "双摇杆机构"], "ans": 0, "exp": "四杆机构中最短杆与最长杆的长度之和小于或等于其他两杆的长度之和，即满足杆长条件，且最短杆是连架杆，所以该机构是曲柄摇杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 8 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "平面四杆机构中，如果最短杆与最长杆的长度之和小于或等于其余两杆长度之和，最短杆是连杆，这个机构叫作____。", "opts": ["曲柄摇杆机构", "曲柄滑块机构", "双曲柄机构", "双摇杆机构"], "ans": 3, "exp": "四杆机构中最短杆与最长杆的长度之和小于或等于其他两杆的长度之和，即满足杆长条件，且最短杆是连杆，所以该机构是双摇杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 9 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在铰链四杆机构中，最短杆与最长杆的长度之和____其余两杆的长度之和时，则不论取哪个杆作为机架，都可以组成双摇杆机构。", "opts": ["小于", "小于或等于", "大于或等于", "大于"], "ans": 3, "exp": "当铰链四杆机构不满足杆长条件即最短杆与最长杆的长度之和大于其他两杆的长度之和时为双摇杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 10 · 答案册 p.134（a/pg-015）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构具有两个曲柄的条件是____。", "opts": ["机架为最短杆，且最短杆与最长杆长度之和小于或等于其余两杆长度之和", "机架为最短杆，或最短杆与最长杆长度之和小于或等于其余两杆长度之和", "机架为最长杆，且最短杆与最长杆长度之和小于或等于其余两杆长度之和", "机架为最长杆，或最短杆与最长杆长度之和小于或等于其余两杆长度之和"], "ans": 0, "exp": "铰链四杆机构中最短杆与最长杆的长度之和小于或等于其他两杆的长度之和，即满足杆长条件，且最短杆是机架，该机构是双曲柄机构，即机构含有两个曲柄。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 11 · 答案册 p.134–135（a/pg-015～016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构中，若最短杆与最长杆长度之和小于其余两杆长度之和，且以最短杆为机架，则机构____。", "opts": ["有一个曲柄", "有两个曲柄", "无曲柄", "可能有一个也可能有两个曲柄"], "ans": 1, "exp": "铰链四杆机构中最短杆与最长杆的长度之和小于或等于其他两杆的长度之和，即满足杆长条件，且最短杆是机架，该机构是双曲柄机构，即机构含有两个曲柄。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 12 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "曲柄摇杆机构产生死点位置的条件是：摇杆为____件，曲柄为____件，即是把____运动转换成____运动。", "opts": ["从动　原动　转动　往复摆动", "从动　原动　往复摆动　转动", "原动　从动　转动　往复摆动", "原动　从动　往复摆动　转动"], "ans": 3, "exp": "曲柄摇杆机构中当摇杆为原动件，曲柄为从动件即是把往复摆动运动转换成转动运动时存在死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 13 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "曲柄摇杆机构的传动角是____。", "opts": ["连杆与从动摇杆之间所夹的角的余角", "连杆与从动摇杆之间所夹的锐角", "机构极位夹角的余角", "连杆与从动摇杆之间所夹的钝角"], "ans": 1, "exp": "在曲柄摇杆机构中，传动角表示连杆与从动摇杆之间所夹的锐角。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 16 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "____能把转动运动转变成往复摆动运动。", "opts": ["曲柄摇杆机构", "双曲柄机构", "双摇杆机构", "曲柄滑块机构"], "ans": 0, "exp": "曲柄摇杆机构能将主动曲柄的等速转动转变成摇杆的往复摆动。双曲柄机构是将主动曲柄的转动转变成从动曲柄的转动。双摇杆机构是将主动摇杆的往复摆动转变成从动摇杆的往复摆动。曲柄滑块机构能将主动曲柄的等速转动转变成滑块的移动。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 17 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在曲柄摇杆机构中，如果将____作为机架，则与机架相连的两杆都可以作整周转动运动，即得到双曲柄机构。", "opts": ["最短杆", "连杆", "最长杆", "连架杆"], "ans": 0, "exp": "如果将最短杆作为机架，则曲柄摇杆机构变为双曲柄机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 18 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "曲柄摇杆机构中最短杆与最长杆的长度之和____或等于其他两杆的长度之和；最短杆的相邻杆可以为____，最短杆为____。", "opts": ["大于　机架　曲柄", "大于　曲柄　连架杆", "小于　曲柄　机架", "小于　机架　连架杆"], "ans": 3, "exp": "曲柄摇杆机构满足杆长条件，即最短杆与最长杆的长度之和小于或等于其他两杆的长度之和，且连架杆最短，连架杆的邻杆是机架或连杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 19 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "惯性筛的主体属于____机构。", "opts": ["曲柄摇杆", "双曲柄", "双摇杆", "摆动导杆"], "ans": 1, "exp": "惯性筛的主体是双曲柄机构，主动曲柄等速回转一周时，另一曲柄变速回转一周，使筛子获得加速度，从而将被筛选的材料分离。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 20 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "能产生急回运动的平面连杆机构有____。", "opts": ["双摇杆机构", "曲柄摇杆机构", "对心曲柄滑块机构", "双曲柄机构"], "ans": 1, "exp": "曲柄摇杆机构当以曲柄为原动件，摇杆为从动件时，有急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 21 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "能出现死点位置的平面连杆机构有____。", "opts": ["以曲柄为原动件的转动导杆机构", "以曲柄为原动件的双曲柄机构", "以滑块为原动件的曲柄滑块机构", "以曲柄为原动件的曲柄摇杆机构"], "ans": 2, "exp": "曲柄滑块机构当以滑块为原动件，曲柄为从动件时，有死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 22 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "当行程速比系数____时，曲柄摇杆机构才有急回运动。", "opts": ["K＜1", "K＝1", "K＞1", "K≤1"], "ans": 2, "exp": "当行程速比系数 K＞1 时，曲柄摇杆机构有急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 23 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "当曲柄的极位夹角____时，曲柄摇杆机构才有急回运动。", "opts": ["θ＜0°", "θ＝0°", "θ＞0°", "θ≥0°"], "ans": 2, "exp": "当行程速比系数 K＞1 即极位夹角 θ＞0° 时，曲柄摇杆机构有急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 24 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "机构处于死点位置时，其传动角 γ 为____，压力角 α 为____。", "opts": ["90°　0°", "0°　90°", "0°　180°", "90°　270°"], "ans": 1, "exp": "当从动件的传动角 γ＝0°（即压力角 α＝90°）时机构存在死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 25 · 答案册 p.135（a/pg-016）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "以摇杆为原动件的曲柄摇杆机构，当____共线时，机构处于死点位置。", "opts": ["曲柄与连杆", "曲柄与机架", "连杆与摇杆", "连杆与机架"], "ans": 0, "exp": "在曲柄摇杆机构中当传动角为 0° 即连杆与曲柄共线时，机构处于死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 26 · 答案册 p.135–136（a/pg-016～017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "平面连杆机构急回运动的相对程度，通常用____来衡量。", "opts": ["传动角 γ", "行程速比系数 K", "压力角 α", "死点位置"], "ans": 1, "exp": "机构的急回特性一般用行程速比系数 K 或极位夹角 θ 来衡量。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 27 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在以下机构中，____机构不具有急回特性。", "opts": ["曲柄摇杆", "摆动导杆", "对心曲柄滑块", "偏置曲柄滑块"], "ans": 2, "exp": "对心曲柄滑块机构中，偏距 e＝0，极位夹角 θ＝0°，无急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 28 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "曲柄摇杆机构当以摇杆为原动件时，连杆与曲柄将出现两次共线，造成曲柄所受到的驱动力为零，称此为____。", "opts": ["机构的急回特性", "机构的运动不确定现象", "机构的死点位置", "曲柄的极限位置"], "ans": 2, "exp": "从动曲柄所受到的驱动力为 0，即传动角为 0°，此时机构处于死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 29 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "当以曲柄为原动件的曲柄摇杆机构处于____时，机构的压力角最大。", "opts": ["曲柄与连杆共线的两位置之一", "曲柄与机架共线的两位置之一", "曲柄与机架垂直的两位置之一", "曲柄与连杆垂直的两位置之一"], "ans": 1, "exp": "压力角最大即为传动角最小，而以曲柄为原动件的曲柄摇杆机构的最小传动角必出现在曲柄与机架共线处。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 30 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "没有急回特性的曲柄滑块机构的行程速比系数____。", "opts": ["等于 1", "等于 0", "大于 1", "小于 1"], "ans": 0, "exp": "当行程速比系数 K＝1 时，机构无急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 31 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构的压力角是指在不计算摩擦情况下连杆作用于____上的力与该力作用点速度方向所夹的锐角。", "opts": ["原动件", "从动件", "机架", "连架杆"], "ans": 1, "exp": "压力角是指作用在从动件上的驱动力 F 与该力作用点速度方向所夹的锐角 α。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 32 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "平面四杆机构中，是否存在死点位置，取决于____是否与连杆共线。", "opts": ["原动件", "从动件", "机架", "摇杆"], "ans": 1, "exp": "当连杆与从动件共线时机构存在死点位置，所以机构是否存在死点位置，取决于连杆与从动件是否共线。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 33 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "压力角 α____，传动角 γ____，机构传力性能越好。", "opts": ["越小　越小", "越小　越大", "越大　越小", "越大　越大"], "ans": 1, "exp": "压力角 α 越小，传动角 γ 越大，机构传力性能越好；反之，α 越大，γ 越小，机构传力越费劲，传动效率越低。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 34 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "有四根杆件，其长度分别是：A 杆 20 mm，B 杆 40 mm，C 杆 30 mm，D 杆 50 mm。如图 3-1 所示，选择____为机架才能组成双曲柄机构。", "opts": ["A 杆", "B 杆", "C 杆", "D 杆"], "ans": 0, "exp": "图中机构满足杆长条件，故选最短杆即 A 杆作为机架可得双曲柄机构。（原图见题库 q/pg-025：图 3-1：四杆 20/40/30/50，最短杆 A＝20 mm）", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 35 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "根据图 3-2 所示各杆所注尺寸和以有斜线的杆为机架时，该铰链四杆机构的名称为____机构。", "opts": ["曲柄摇杆", "双曲柄", "双摇杆", "平行四边形"], "ans": 0, "exp": "因为图中是以最短杆作为连架杆，且满足杆长条件，所以是曲柄摇杆机构。（原图见题库 q/pg-026：图 3-2：机架 30 mm，最短杆 20 mm 为连架杆）", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 36 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "根据图 3-3 所示各杆所注尺寸和以 AD 杆为机架，该铰链四杆机构的名称为____机构。", "opts": ["曲柄摇杆", "双曲柄", "双摇杆", "平行四边形"], "ans": 1, "exp": "因为图中是以最短杆作为机架，且满足杆长条件，所以是双曲柄机构。（原图见题库 q/pg-026：图 3-3：AD＝100 mm 为机架即最短杆，AB＝250、BC＝300、CD＝200 mm）", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 37 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "根据图 3-4 所示各杆所注尺寸和以杆 AD 为机架，则该铰链四杆机构的名称为____机构。", "opts": ["曲柄摇杆", "双曲柄", "双摇杆", "平行四边形"], "ans": 2, "exp": "因为最短杆与最长杆长度之和大于其他两杆长度之和，即 100＋250＞130＋150，所以不满足杆长条件，该机构为双摇杆机构。（原图见题库 q/pg-026：图 3-4：AD＝250 mm 为机架，AB＝150、BC＝100、CD＝130 mm）", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 38 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "四杆机构中，a＝30 mm，b＝70 mm，c＝90 mm，d＝60 mm，要得到双曲柄机构，机架应选为____。", "opts": ["a 杆", "b 杆", "c 杆", "d 杆"], "ans": 0, "exp": "a＋c＜b＋d，满足杆长条件，当取 a 杆为机架时，该机构为双曲柄机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 39 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "轮式车辆前轮转向机构属于____。", "opts": ["双摇杆机构", "曲柄滑块机构", "曲柄摇杆机构", "双曲柄机构"], "ans": 0, "exp": "轮式车辆前轮转向机构是两个摇杆长度相等的双摇杆机构，即等腰梯形机构，可实现摆角不同，目的是使四轮处于滚动状态，减小转向阻力。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 40 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构 ABCD 中，AD 为机架，L_AB＝40 mm，L_BC＝60 mm，L_CD＝120 mm，L_AD＝120 mm，那么____。", "opts": ["AB 为曲柄，CD 为摇杆", "AB 与 CD 均为曲柄", "AB 与 CD 均为摇杆", "AB 为连杆，CD 为曲柄"], "ans": 0, "exp": "因为 L_AB＋L_AD＜L_BC＋L_CD，满足杆长条件，又 AB 是最短杆，且 AD 是 AB 的邻杆，故连架杆是最短杆，所以该机构是曲柄摇杆机构，AB 是曲柄，CD 是摇杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 单选 42 · 答案册 p.136（a/pg-017）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "铰链四杆机构是由平面低副组成的四杆机构。", "opts": ["正确", "错误"], "ans": 0, "exp": "如果所有低副均为转动副，这种平面四杆机构就称为铰链四杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 1 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "平面四杆机构的基本形式是铰链四杆机构。", "opts": ["正确", "错误"], "ans": 0, "exp": "平面四杆机构的基本形式是铰链四杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 2 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄和连杆都是连架杆。", "opts": ["正确", "错误"], "ans": 1, "exp": "连杆不是连架杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 3 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "平面四杆机构都有曲柄。", "opts": ["正确", "错误"], "ans": 1, "exp": "平面四杆机构中的双摇杆机构无曲柄。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 4 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "铰链四杆机构存在曲柄的条件是：连架杆或机架中必有一个是最短杆；最短杆与最长杆的长度之和小于或等于其余两杆的长度之和。", "opts": ["正确", "错误"], "ans": 0, "exp": "铰链四杆机构存在曲柄的条件是：① 最短杆与最长杆长度之和小于或等于其余两杆长度之和（即杆长条件）；② 最短杆或其邻杆为机架。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 5 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "铰链四杆机构都有摇杆这个构件。", "opts": ["正确", "错误"], "ans": 1, "exp": "双曲柄机构无摇杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 6 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "铰链四杆机构都有连杆和机架。", "opts": ["正确", "错误"], "ans": 0, "exp": "铰链四杆机构包含 2 个连架杆，1 个连杆，1 个机架。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 7 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在平面连杆机构中，只要以最短杆作机架，就能得到双曲柄机构。", "opts": ["正确", "错误"], "ans": 1, "exp": "双曲柄机构需要满足 ① 最短杆与最长杆长度之和小于或等于其余两杆长度之和（杆长条件）；② 最短杆为机架，两者缺一不可。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 8 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "只有以曲柄摇杆机构的最短杆作机架，才能得到双曲柄机构。", "opts": ["正确", "错误"], "ans": 1, "exp": "满足 ① 最短杆与最长杆长度之和小于或等于其余两杆长度之和（即杆长条件）；② 最短杆为机架的机构都是双曲柄机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 9 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在铰链四杆机构中，只要两个连架杆都能绕机架上的铰链作整周转动，必然是双曲柄机构。", "opts": ["正确", "错误"], "ans": 0, "exp": "在铰链四杆机构中，只要两个连架杆都能绕机架上的铰链作整周转动，必然是双曲柄机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 10 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "利用选择不同构件作机架的方法，可以把曲柄摇杆机构改变成双摇杆机构。", "opts": ["正确", "错误"], "ans": 0, "exp": "曲柄摇杆机构可以通过将最短杆的对边杆作为机架得到双摇杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 11 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "利用改变构件之间相对长度的方法，可以把曲柄摇杆机构改变成双摇杆机构。", "opts": ["正确", "错误"], "ans": 0, "exp": "曲柄摇杆机构可以通过将机架的对边杆长度变为最短得到双摇杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 12 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在平面四杆机构中，凡是能把转动运动转换成往复运动的机构，都会有急回运动特性。", "opts": ["正确", "错误"], "ans": 1, "exp": "对心曲柄滑块机构可以将转动运动转换成往复运动，但无急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 13 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "当机构的极位夹角 θ＝0° 时，机构无急回特性。", "opts": ["正确", "错误"], "ans": 0, "exp": "当机构的极位夹角 θ＝0° 即其行程速比系数 K＝1 时，机构无急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 14 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "机构是否存在死点位置与机构取哪个构件为原动件无关。", "opts": ["正确", "错误"], "ans": 1, "exp": "机构是否存在死点位置与机构取哪个构件为原动件有关，比如曲柄摇杆机构中以摇杆为原动件时存在死点位置，以曲柄为原动件时不存在死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 15 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "压力角就是原动件所受驱动力的方向与该力作用点速度的方向之间的夹角。", "opts": ["正确", "错误"], "ans": 1, "exp": "压力角就是从动件所受驱动力的方向与该力作用点速度的方向之间的锐角。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 16 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "机构的极位夹角是衡量机构急回特性的重要指标。", "opts": ["正确", "错误"], "ans": 0, "exp": "机构的极位夹角、行程速比系数都是衡量机构急回特性的重要指标。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 17 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "压力角是衡量机构传力性能的重要指标。", "opts": ["正确", "错误"], "ans": 0, "exp": "压力角和传动角是衡量机构传力性能的重要指标。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 18 · 答案册 p.138（a/pg-019）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "压力角越大，则机构传力性能越差。", "opts": ["正确", "错误"], "ans": 0, "exp": "压力角越小，则机构传力性能越好；压力角越大，则机构传力性能越差。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 19 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄摇杆机构以曲柄为原动件时不会出现死点位置。", "opts": ["正确", "错误"], "ans": 0, "exp": "曲柄摇杆机构以曲柄为原动件时不会出现死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 20 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄摇杆机构的摇杆在两极限位置之间的夹角 φ，叫作极位夹角。", "opts": ["正确", "错误"], "ans": 1, "exp": "摇杆分别处在左、右两个极限位置时曲柄所在直线之间所夹的锐角 θ 称为极位夹角。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 21 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在有曲柄的平面连杆机构中，曲柄的极位夹角 θ，可以等于 0°，也可以大于 0°。", "opts": ["正确", "错误"], "ans": 0, "exp": "当机构无急回特性时 θ＝0°，当机构有急回特性时 θ＞0°。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 22 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄和连杆同时存在的平面连杆机构都有死点位置。", "opts": ["正确", "错误"], "ans": 1, "exp": "该命题错误，比如杆长不等的双曲柄机构中无死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 23 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在平面连杆机构中，连杆和曲柄是同时存在的，即有曲柄就有连杆。", "opts": ["正确", "错误"], "ans": 1, "exp": "双摇杆机构无曲柄但有连杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 24 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "有曲柄的四杆机构，就存在着死点位置。", "opts": ["正确", "错误"], "ans": 1, "exp": "该命题错误，比如杆长不等的双曲柄机构无死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 25 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "有曲柄的四杆机构，就能产生急回运动特性。", "opts": ["正确", "错误"], "ans": 1, "exp": "该命题错误，比如双曲柄机构无急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 26 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "机构的行程速比系数 K 的值，只能根据极位夹角 θ 的大小，通过公式求得。", "opts": ["正确", "错误"], "ans": 1, "exp": "K 值可以通过公式求得，也可以事先设计好。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 27 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "极位夹角 θ 的大小，是根据行程速比系数 K 值，通过公式求得的。而 K 值是设计时事先确定的。", "opts": ["正确", "错误"], "ans": 1, "exp": "θ 和 K 值可以通过已知条件求得，也可以预先设计好。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 28 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "利用曲柄摇杆机构，可以把往复摆动运动转变成转动运动。", "opts": ["正确", "错误"], "ans": 0, "exp": "当以摇杆为原动件时曲柄摇杆机构把摆动运动转换成了转动运动。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 29 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "只有曲柄摇杆机构，才能把等速转动运动转变成往复摆动运动。", "opts": ["正确", "错误"], "ans": 1, "exp": "摆动导杆机构也可以将等速转动运动转变成往复摆动运动。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 30 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄滑块机构，能把原动件的等速转动运动转变成从动件的直线往复运动。", "opts": ["正确", "错误"], "ans": 0, "exp": "曲柄滑块机构，能把原动件的等速转动运动转变成从动件的直线往复运动。也能将原动件的直线往复运动转变成从动件的转动运动。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 31 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "通过选择铰链四杆机构的不同构件作为机构的机架，能使机构的形式发生演变。", "opts": ["正确", "错误"], "ans": 0, "exp": "改换某一机构的机架可以派生出多种其他机构，所以是机构的一种演化方式。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 32 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "铰链四杆机构形式的改变，只能通过选择不同构件作机构的机架来实现。", "opts": ["正确", "错误"], "ans": 1, "exp": "除通过改变机架外，也可以通过改变构件的形状、运动尺寸等进而演化出其他类型机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 33 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "铰链四杆机构形式的演变，都是通过对某些构件之间相对长度的改变而达到的。", "opts": ["正确", "错误"], "ans": 1, "exp": "除通过改变运动尺寸外，也可以通过改变构件的形状、机架等进而演化出其他类型机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 34 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "通过对铰链四杆机构某些构件之间相对长度的改变，也能够起到对机构形式的演化作用。", "opts": ["正确", "错误"], "ans": 0, "exp": "除通过改变机架外，也可以通过改变构件的形状、运动尺寸等进而演化出其他类型机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 35 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "当曲柄摇杆机构把往复摆动运动转变成转动运动时，曲柄与连杆共线的位置，就是死点位置。", "opts": ["正确", "错误"], "ans": 0, "exp": "当曲柄摇杆机构把往复摆动运动转变成转动运动时，即是以摇杆为原动件，曲柄为从动件，此时若曲柄与连杆共线，则机构处于死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 36 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在实际生产中，机构的死点位置对工作都是不利的，因此都要考虑克服。", "opts": ["正确", "错误"], "ans": 1, "exp": "机构的死点位置并非总是起消极作用。在工程中，也常利用死点位置来实现一定的工作要求。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 37 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "传动机构出现死点位置和急回运动，对机构的工作都是不利的。", "opts": ["正确", "错误"], "ans": 1, "exp": "急回运动可以减少工作时间，并不是不利的。在工程中，也常利用死点位置来实现一定的工作要求。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 38 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在铰链四杆机构中，固定最短杆的邻杆可得曲柄摇杆机构。", "opts": ["正确", "错误"], "ans": 1, "exp": "要得到曲柄摇杆机构，不光要把最短杆的邻杆作为机架，还要满足杆长条件。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 39 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在铰链四杆机构中，凡是双曲柄机构，其杆长关系必须满足：最短杆与最长杆杆长之和大于其他两杆杆长之和。", "opts": ["正确", "错误"], "ans": 1, "exp": "杆长条件是最短杆与最长杆长度之和小于或等于其余两杆长度之和。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 40 · 答案册 p.139（a/pg-020）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "平面四杆机构有无急回特性可取决于极位夹角是否大于 0°。", "opts": ["正确", "错误"], "ans": 0, "exp": "极位夹角和行程速比系数都是判断机构是否有急回特性的重要因素。极位夹角大于 0°，行程速比系数大于 1 时机构有急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 41 · 答案册 p.140（a/pg-021）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "平面四杆机构的传动角在机构运动过程中是时刻变化的，为保证机构的传力性能，应限制其最小值 γ 的下限。", "opts": ["正确", "错误"], "ans": 0, "exp": "机构运转时，传动角是变化的，为了保证机构正常工作，必须规定最小传动角 γ 的下限。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 42 · 答案册 p.140（a/pg-021）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "增大构件的惯性，是机构通过死点位置的唯一办法。", "opts": ["正确", "错误"], "ans": 1, "exp": "为了消除死点位置的不良影响，可以对从动曲柄施加外力，或利用飞轮及构件自身的惯性作用，使机构通过死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 43 · 答案册 p.140（a/pg-021）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄摇杆机构中，从动件同连杆两次共线的位置处会出现最小传动角。", "opts": ["正确", "错误"], "ans": 1, "exp": "曲柄摇杆机构中，若以曲柄为原动件，曲柄与机架共线时有最小传动角。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 44 · 答案册 p.140（a/pg-021）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在铰链四杆机构中，若存在曲柄，则曲柄一定为最短杆。", "opts": ["正确", "错误"], "ans": 1, "exp": "双曲柄机构中，两个曲柄都不一定是最短杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷基础 判断 45 · 答案册 p.140（a/pg-021）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在曲柄摇杆机构中，若曲柄为原动件且作等速转动时，其从动件摇杆作____。", "opts": ["往复等速转动", "往复变速转动", "往复变速摆动", "往复等速摆动"], "ans": 2, "exp": "曲柄摇杆机构能将主动曲柄的等速转动转变成摇杆的往复变速摆动。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 3 · 答案册 p.141（a/pg-022）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "四杆长度不等的双曲柄机构，若主动曲柄作连续匀速转动，则从动曲柄将作____。", "opts": ["变速转动", "间歇转动", "匀速转动", "往复摆动"], "ans": 0, "exp": "当双曲柄机构各杆长度不同时，会将主动曲柄的匀速转动，改变成从动曲柄的变速转动。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 4 · 答案册 p.141（a/pg-022）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "双曲柄机构 ABCD 中，AB、CD 为曲柄，BC 为连杆。若 AB＝40 mm，BC＝60 mm，CD＝70 mm，则机架 AD 最大杆长为____。", "opts": ["20 mm", "30 mm", "50 mm", "90 mm"], "ans": 1, "exp": "因为双曲柄机构中机架是最短杆，所以 AD＜AB＝40 mm，又该机构满足杆长条件，所以 AD＋CD ≤ AB＋BC，故 AD ≤ 30 mm。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 5 · 答案册 p.141（a/pg-022）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "如图 3-11 所示，以构件 3 为原动件的摆动导杆机构中，机构的传动角是____。", "opts": ["∠A", "∠B", "∠C", "∠D"], "ans": 1, "exp": "连杆和从动件之间所夹的锐角为机构的传动角，对于本题以构件 3 为原动件时，连杆和从动件之间所夹的锐角为 ∠B。（原图见题库 q/pg-032：图 3-11：摆动导杆机构，构件 3 为原动件）", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 7 · 答案册 p.141（a/pg-022）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "当曲柄摇杆机构的摇杆带动曲柄运动时，曲柄在死点位置的瞬时运动方向____。", "opts": ["与原运动方向相同", "与原运动方向相反", "不确定", "垂直于原运动方向"], "ans": 2, "exp": "当曲柄摇杆机构的摇杆带动曲柄运动即摇杆为原动件，曲柄为从动件，会有死点位置，即出现从动曲柄在死点位置运动方向不确定的情况。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 8 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在下列平面四杆机构中，____无论以哪一构件为原动件，都不存在死点位置。", "opts": ["杆长不等的双曲柄机构", "双摇杆机构", "曲柄摇杆机构", "曲柄滑块机构"], "ans": 0, "exp": "曲柄摇杆机构、双摇杆机构、曲柄滑块机构都可能存在死点位置；杆长不等的双曲柄机构无论什么情况下都不会存在死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 9 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "曲柄滑块机构存在死点时，其原动件必须是____。", "opts": ["曲柄", "连杆", "滑块", "机架"], "ans": 2, "exp": "曲柄滑块机构当以滑块为原动件，曲柄为从动件时，有死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 10 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "曲柄滑块机构若存在死点位置时，则在此位置____与连杆共线。", "opts": ["曲柄", "机架", "滑块", "以上都不对"], "ans": 0, "exp": "在曲柄滑块机构中当传动角为 0° 即连杆与曲柄共线时，机构处于死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 11 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "当对心曲柄滑块机构的曲柄为原动件时，机构有无急回特性和死点？", "opts": ["有急回特性，有死点", "有急回特性，无死点", "无急回特性，无死点", "无急回特性，有死点"], "ans": 2, "exp": "对心曲柄滑块机构无急回特性，无死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 单选 12 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "最长杆为机架时不可能存在双曲柄机构。", "opts": ["正确", "错误"], "ans": 1, "exp": "当机构为杆长相等的菱形时，此时机构是双曲柄机构且机架为最短杆也是最长杆。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 2 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄滑块机构的滑块在作往复运动时，不会出现急回运动。", "opts": ["正确", "错误"], "ans": 1, "exp": "当机构为偏置曲柄滑块机构时，以曲柄为原动件时机构有急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 5 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "导杆机构有急回特性。", "opts": ["正确", "错误"], "ans": 0, "exp": "导杆机构的极位夹角等于导杆摆角，有急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 6 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄滑块机构和摆动导杆机构产生急回运动的条件是相同的。", "opts": ["正确", "错误"], "ans": 0, "exp": "曲柄滑块机构和摆动导杆机构都是以曲柄为原动件，在极限位置时出现极位夹角产生急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 7 · 答案册 p.142（a/pg-023）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "对心曲柄滑块机构具有急回特性。", "opts": ["正确", "错误"], "ans": 1, "exp": "对心曲柄滑块机构中，偏距 e＝0，极位夹角 θ＝0°，无急回特性。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 8 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "任何一种曲柄滑块机构，当曲柄为原动件时，它的行程速比系数 K＝1。", "opts": ["正确", "错误"], "ans": 1, "exp": "对于偏置曲柄滑块机构中，偏距 e＞0，极位夹角 θ＞0°，所以行程速比系数 K＞1。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 9 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "摆动导杆机构不存在急回特性。", "opts": ["正确", "错误"], "ans": 1, "exp": "在摆动导杆机构中，将曲柄的转动运动转换成了导杆的往复摆动，因此具有急回运动性质。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 10 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在摆动导杆机构中，当导杆为原动件时，机构有死点位置。", "opts": ["正确", "错误"], "ans": 0, "exp": "摆动导杆机构中，当以导杆为原动件时，在导杆与曲柄垂直的两极限位置，导杆经滑块传递给曲柄的有效转动力矩为 0，故有两个死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 11 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄摇杆机构、双曲柄机构和双摇杆机构，它们都具有产生死点位置和急回运动特性的可能。", "opts": ["正确", "错误"], "ans": 1, "exp": "曲柄摇杆机构具有产生死点位置和急回运动特性的可能；除平行四边形机构和反平行四边形机构之外的双曲柄机构无死点位置和急回运动特性；双摇杆机构无急回运动特性，有产生死点位置的可能。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 12 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "曲柄摇杆机构和曲柄滑块机构产生死点位置的条件是相同的。", "opts": ["正确", "错误"], "ans": 0, "exp": "曲柄摇杆机构和曲柄滑块机构都是以曲柄为从动件，连杆与曲柄共线时出现死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 13 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在摆动导杆机构中，若取曲柄为原动件时，机构无死点位置；而取导杆为原动件时，机构有两个死点位置。", "opts": ["正确", "错误"], "ans": 0, "exp": "在摆动导杆机构中，若取曲柄为原动件时，机构无死点位置；若取导杆为原动件时，机构有两个死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 14 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在曲柄滑块机构中，只要原动件是滑块，就必然有死点位置存在。", "opts": ["正确", "错误"], "ans": 0, "exp": "若滑块为原动件时，当曲柄与连杆共线时，将出现两个死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 15 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在曲柄摇杆机构中，若以曲柄为原动件时，最小传动角 γ_min 出现在曲柄与机架两个共线位置之一处。", "opts": ["正确", "错误"], "ans": 0, "exp": "曲柄摇杆机构的最小传动角必出现在曲柄与机架共线的位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 16 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "在偏置曲柄滑块机构中，若以曲柄为原动件时，最小传动角 γ_min 出现在曲柄与机架相平行的位置。", "opts": ["正确", "错误"], "ans": 1, "exp": "对于原动件为曲柄的曲柄滑块机构，最小传动角出现在曲柄与机架垂直的位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷拔高 判断 17 · 答案册 p.143（a/pg-024）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "若最短杆与最长杆长度之和大于其余两杆长度之和，则铰链四杆机构中____。", "opts": ["一定无曲柄存在", "一定有一个曲柄存在", "一定有两个曲柄存在", "是否有曲柄取决于哪个构件为机架"], "ans": 0, "exp": "如果铰链四杆机构不满足杆长条件：最短杆杆长＋最长杆杆长 ≤ 其余两杆长度之和，则该机构为双摇杆机构，双摇杆机构中没有曲柄。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 1 · 答案册 p.144（a/pg-025）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "家用缝纫机踏板属于____机构。", "opts": ["曲柄摇杆", "双曲柄", "双摇杆", "摆动导杆"], "ans": 0, "exp": "缝纫机踏板工作时，踏板做往复摆动（相当于摇杆的运动），通过连杆带动曲柄做整周转动，符合曲柄摇杆机构的运动特征。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 2 · 答案册 p.144（a/pg-025）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "铰链四杆机构的杆长为 a＝70 mm，b＝90 mm，c＝120 mm，d＝110 mm，若以杆 b 为机架，则此四杆机构为____。", "opts": ["双曲柄机构", "曲柄摇杆机构", "双摇杆机构", "曲柄滑块机构"], "ans": 1, "exp": "因为 a＋c＜b＋d，满足杆长条件，且最短杆为连架杆，所以该四杆机构是曲柄摇杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 3 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "在设计铰链四杆机构时，应使最小传动角 γ_min____。", "opts": ["尽可能小一些", "等于 0°", "尽可能大一些", "等于 45°"], "ans": 2, "exp": "在铰链四杆机构中，通常用传动角 γ 来衡量机构的传力性能，γ 越大，机构的传力性能越好，效率越高，所以设计时应使最小传动角 γ_min 尽可能大一些。故选 C。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 4 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "平面四杆机构中，如果最短杆与最长杆的长度之和大于其余两杆的长度之和，最短杆为机架，这个机构叫作____。", "opts": ["曲柄摇杆机构", "双曲柄机构", "双摇杆机构", "导杆机构"], "ans": 2, "exp": "若平面四杆机构不满足杆长条件：最短杆长度＋最长杆长度 ≤ 其余两杆长度之和，则为双摇杆机构。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 5 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "曲柄为原动件的曲柄摇杆机构，已知摇杆的行程速比系数 K＝1.5，那么，极位夹角为____。", "opts": ["θ＝18°", "θ＝−18°", "θ＝36°", "θ＝72°"], "ans": 2, "exp": "行程速比系数 K 与极位夹角 θ 的关系式为 θ＝180°·(K−1)/(K＋1)，则当 K＝1.5 时，极位夹角 θ＝180°×(1.5−1)/(1.5＋1)＝36°。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 6 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "压力角是所受作用力与该力作用点____所夹锐角。", "opts": ["法线", "切线", "加速度方向", "速度方向"], "ans": 3, "exp": "作用在从动件上的驱动力 F 与该力作用点速度 v 的方向所夹的锐角 α 称为压力角。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 7 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "选择", "stem": "当四杆机构处于死点位置时，机构的传动角为____。", "opts": ["0°", "45°", "90°", "180°"], "ans": 0, "exp": "机构中传动角为 0° 的位置称为死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 单选 8 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "（判断）双摇杆机构一定无死点位置。", "opts": ["正确", "错误"], "ans": 1, "exp": "在双摇杆机构中，当摇杆为原动件，在连杆与从动摇杆共线位置时，机构的传动角为 0°，此时机构处于死点位置。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 判断 13 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "（判断）铰链四杆机构中如果有曲柄存在，则曲柄一定是最短构件。", "opts": ["正确", "错误"], "ans": 1, "exp": "命题错误。举反例：双曲柄机构中，最短杆是机架。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 判断 14 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 2 章 连杆机构", "type": "判断", "stem": "（判断）在曲柄摇杆机构中，空回行程比工作行程速度慢。", "opts": ["正确", "错误"], "ans": 1, "exp": "在曲柄摇杆机构中，当曲柄等速转动时，摇杆来回摆动的速度不同，返回时速度较大，所以空回行程比工作行程速度快。", "src": "2000 题·刷题三", "loc": "2000 题·刷题三 · 刷真题 判断 15 · 答案册 p.145（a/pg-026）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "凸轮机构的三个基本组成构件不包括以下哪项？", "opts": ["凸轮", "从动件", "机架", "齿轮"], "ans": 3, "exp": "凸轮机构由凸轮、从动件和机架三个基本构件组成，齿轮并非其组成部分。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 1 · 答案册 p.146（a/pg-027）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "能使从动件获得较大行程的凸轮机构是", "opts": ["盘形凸轮", "移动凸轮", "圆柱凸轮", "以上三者均可"], "ans": 2, "exp": "盘形凸轮，从动件运动轨迹为径向，行程受限于凸轮直径；移动凸轮的行程要比盘形凸轮大些，但受限于凸轮设计长度；圆柱凸轮，从动件可沿圆柱轴移动较长距离，行程最大，故能使从动件获得较大行程的凸轮机构是圆柱凸轮。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 2 · 答案册 p.146（a/pg-027）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "与连杆机构相比，凸轮机构最大的缺点是", "opts": ["惯性力难以平衡", "点、线接触，易磨损", "设计较为复杂", "结构不紧凑"], "ans": 1, "exp": "凸轮机构的特点：结构较为简单、紧凑，设计方便，可在运作中实现从动件任意预期运动，但凸轮与从动件间为点或线接触，易磨损，只宜用于传力不大的场合。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 3 · 答案册 p.146（a/pg-027）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "下列哪种凸轮的运动形式属于平面运动？", "opts": ["圆柱凸轮", "盘形凸轮", "球面凸轮", "圆锥凸轮"], "ans": 1, "exp": "盘形凸轮和移动凸轮与从动件之间的相对运动为平面运动，属于平面凸轮机构。选项中仅盘形凸轮符合平面运动特征。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 4 · 答案册 p.146（a/pg-027）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "尖顶从动件的主要优点是", "opts": ["耐磨损，可承受大载荷", "能与复杂轮廓保持接触，实现任意运动规律", "传动效率高，适用于高速", "尖顶与凸轮是点接触，磨损快"], "ans": 1, "exp": "尖顶从动件的尖顶能与复杂凸轮轮廓保持接触，可实现任意预期运动规律；A 项是滚子从动件的优点，C 项是平底从动件的优点，D 项是尖顶从动件的缺点，并非其优点。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 5 · 答案册 p.146（a/pg-027）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "下列属于力锁合的凸轮机构的是", "opts": ["沟槽凸轮机构", "等宽凸轮机构", "靠弹簧力保持接触的凸轮机构", "等径凸轮机构"], "ans": 2, "exp": "一般通过重力或者弹簧力等外力保持接触的凸轮机构属于力锁合。而沟槽凸轮、等径凸轮及等宽凸轮等都是利用几何形状来保持接触的凸轮机构，属于几何锁合。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 6 · 答案册 p.146（a/pg-027）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "摩擦阻力较小，且传力能力大的凸轮机构为", "opts": ["尖顶从动件", "滚子从动件", "平底从动件", "摆动从动件"], "ans": 1, "exp": "尖顶从动件，结构最简单，但尖端处易磨损，故只适用于速度较低和传力不大的场合；滚子从动件，滚子与凸轮滚动接触，摩擦阻力小，耐磨损，可用来传递较大的动力；平底从动件，与之配合的凸轮轮廓必须全部为外凸形状，且摩擦阻力较大，摩擦损耗可能影响长期性能。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 7 · 答案册 p.146（a/pg-027）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "计算凸轮机构从动件行程的基础是", "opts": ["基圆", "转角", "轮廓曲线", "压力角"], "ans": 0, "exp": "计算凸轮机构从动件行程的基础是基圆。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 8 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "在凸轮机构几种常用的运动规律中，只宜用于低速场合的是", "opts": ["等速运动规律", "等加速等减速运动规律", "余弦加速度运动规律", "正弦加速度运动规律"], "ans": 0, "exp": "从动件作等速运动时，在行程始末速度有突变，理论上加速度可以达到无穷大，产生极大的惯性力，因此等速运动只能用于低速轻载的场合。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 9 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "滚子从动件盘形凸轮的基圆半径是从凸轮回转中心到________的最短距离。", "opts": ["凸轮实际廓线", "凸轮理论廓线", "凸轮包络线", "从动件运动线"], "ans": 1, "exp": "滚子从动件盘形凸轮机构的基圆半径是从凸轮回转中心到凸轮理论廓线的最短距离。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 10 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "平底垂直于导路的直动从动件盘形凸轮机构中，其压力角等于", "opts": ["0°", "10°", "15°", "20°"], "ans": 0, "exp": "从动件的受力方向为接触点的法线方向，从动件作垂直于凸轮轴的直线运动，其运动方向与法线方向一致，故压力角为 0°。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 11 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "在凸轮机构从动件常用的四种运动规律中，会产生刚性冲击的是", "opts": ["等速运动规律", "等加速等减速运动规律", "余弦加速度运动规律", "正弦加速度运动规律"], "ans": 0, "exp": "从动件作等速运动时，在行程始末速度有突变，理论上加速度可以达到无穷大，产生极大的惯性力，导致机构产生强烈的刚性冲击。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 12 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "为了使凸轮机构正常工作和具有较好的效率，要求凸轮的最小压力角的值，不得超过某一许用值。此句中错误的是", "opts": ["效率", "最小", "不得超过", "许用值"], "ans": 1, "exp": "为了使凸轮机构正常工作和具有较好的效率，要求凸轮的最大压力角的值，不得超过某一许用值。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 13 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "在高速凸轮机构中，为减小冲击与振动，从动件运动规律最好选用", "opts": ["等速运动规律", "等加速等减速运动规律", "余弦加速度运动规律", "正弦加速度运动规律"], "ans": 3, "exp": "从动件按正弦加速度规律运动时，在全行程中无速度和加速度的突变，因此不产生冲击，适用于高速场合。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 14 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "凸轮轮廓曲线出现尖顶时的滚子半径________该点理论廓线的曲率半径。", "opts": ["大于等于", "小于", "小于等于", "等于"], "ans": 0, "exp": "实际轮廓的曲率半径＝理论廓线的最小曲率半径－滚子半径，当滚子半径大于等于理论廓线的最小曲率半径时，实际廓线会出现尖点或交叉，导致运动失真。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 15 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "为了降低凸轮机构的压力角，应采取的一个措施是", "opts": ["增大滚子半径", "减小基圆半径", "减小滚子半径", "增大基圆半径"], "ans": 3, "exp": "滚子半径主要影响接触强度和磨损程度，对压力角的影响较小，不能有效降低压力角。而减小基圆半径会使凸轮廓线更陡峭，导致压力角增大。因此为了降低凸轮机构的压力角，可以增大基圆半径。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 16 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "从动件作等加速等减速运动时的凸轮机构适用于", "opts": ["低速轻载", "中速中载", "中速轻载", "低速重载"], "ans": 2, "exp": "从动件作等加速等减速运动时，在某些点加速度存在有限值突变，导致机构产生柔性冲击，可用于中速轻载的场合。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 17 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "从动件按等速运动规律上升时，冲击出现在", "opts": ["升程开始点", "升程结束点", "升程中点", "升程开始点和升程结束点"], "ans": 3, "exp": "从动件作等速运动时，在行程始末速度有突变，理论上加速度可以达到无穷大，产生极大的惯性力，导致机构产生强烈的刚性冲击。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 18 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "凸轮机构从动件位移与时间变化线图如图 4-1 所示，该运动规律为", "opts": ["等速", "等加速等减速", "正弦加速度", "余弦加速度"], "ans": 0, "exp": "由从动件位移与时间的变化线图分析可知，运动过程中速度是不变的；因此该从动件的运动规律为等速运动。（原图见题库 q/pg-038：图 4-1：s–φ,t 图为一条过原点的斜直线）", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 19 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "下列哪种凸轮机构的从动件导路轴线通过凸轮回转轴？", "opts": ["偏置直动从动件", "对心直动从动件", "摆动从动件", "移动凸轮"], "ans": 1, "exp": "对心直动从动件的导路轴线正好通过凸轮回转中心，而偏置直动从动件的导路轴线不通过凸轮回转中心，存在偏距。移动凸轮作直线运动，无回转轴。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 20 · 答案册 p.147（a/pg-028）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "滚子从动件盘形凸轮的理论轮廓是指", "opts": ["滚子中心的运动轨迹", "与滚子相包络的凸轮廓线", "凸轮的基圆轮廓", "从动件的位移线图"], "ans": 0, "exp": "滚子从动件盘形凸轮的理论轮廓是滚子中心的运动轨迹。实际轮廓是以理论轮廓上各点为圆心、滚子半径为半径的圆族的包络线。基圆是设计凸轮的最小半径参考，不是理论轮廓。位移线图描述的是从动件的运动规律。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 单选 21 · 答案册 p.148（a/pg-029）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮在凸轮机构中经常是主动件。", "opts": ["正确", "错误"], "ans": 0, "exp": "在凸轮机构中，凸轮通常是主动件，因为它可以主动地旋转，并驱动从动件按照所需的运动规律进行运动。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 1 · 答案册 p.148（a/pg-029）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "滚子从动件与凸轮轮廓之间为滑动摩擦，因此磨损较快。", "opts": ["正确", "错误"], "ans": 1, "exp": "滚子从动件与凸轮轮廓之间是滚动摩擦，耐磨损，可承受较大载荷。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 2 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "平底从动件适用于高速凸轮机构，因为其传动效率高。", "opts": ["正确", "错误"], "ans": 0, "exp": "当不考虑摩擦时，凸轮与从动件之间的作用力始终与从动件的平底相垂直，传动效率较高，且接触面间易形成油膜，利于润滑，故常用于高速凸轮机构。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 3 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "力锁合的凸轮机构中，回程时无需考虑压力角是否超过许用值。", "opts": ["正确", "错误"], "ans": 0, "exp": "力锁合的凸轮机构（如靠弹簧返回）回程不会自锁，通常只需校核推程压力角。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 4 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "几何锁合的凸轮机构无需外力即可保持从动件与凸轮接触。", "opts": ["正确", "错误"], "ans": 0, "exp": "几何锁合的凸轮机构通过凸轮与从动件的几何形状（如沟槽）保持接触，无需重力、弹簧等外力。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 5 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "当基圆半径和运动规律一定时，增大行程会导致压力角增大。", "opts": ["正确", "错误"], "ans": 0, "exp": "当基圆半径和运动规律一定时，由压力角计算公式易知，增大行程会使位移斜率增大，即凸轮廓线更陡峭，从而导致压力角增大。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 6 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "在圆柱面上开有曲线凹槽轮廓的圆柱凸轮只适用于滚子从动件。", "opts": ["正确", "错误"], "ans": 0, "exp": "滚子从动件可以沿着凸轮轮廓曲线平稳地滚动，从而使得凸轮机构能够实现连续的转动。而平底从动件不能与凹陷的凸轮轮廓相接触，尖顶从动件易与凹槽壁卡死，磨损严重。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 7 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮机构中，基圆半径选取越大，则压力角越大。", "opts": ["正确", "错误"], "ans": 1, "exp": "在其他条件不变的情况下，基圆半径增大，会引起压力角减小。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 8 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮轮廓曲线上各点的压力角是不变的。", "opts": ["正确", "错误"], "ans": 1, "exp": "凸轮轮廓曲线上各点的压力角一般是变化的。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 9 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "为防止凸轮机构出现自锁现象，压力角的最大值应不超过许用值。", "opts": ["正确", "错误"], "ans": 0, "exp": "为了保证凸轮机构正常工作不发生自锁，必须对压力角加以限制。凸轮轮廓曲线上各点的压力角一般是变化的，在设计时应使最大压力角不超过许用值。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 10 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮轮廓线上某点的压力角，是该点的法线方向与速度方向之间的夹角。", "opts": ["正确", "错误"], "ans": 1, "exp": "凸轮轮廓上某点的压力角是该点的法线方向与速度方向所夹的锐角。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 11 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "选择滚子半径时，必须使滚子半径小于凸轮实际轮廓曲线外凸部分的最小曲率半径。", "opts": ["正确", "错误"], "ans": 1, "exp": "选择滚子半径时，必须使滚子半径小于凸轮理论轮廓曲线外凸部分的最小曲率半径。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 12 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "压力角的大小影响从动件的正常工作和凸轮机构的传动效率。", "opts": ["正确", "错误"], "ans": 0, "exp": "压力角越大，从动件所受的法向力越大，从而导致摩擦损失增加，传动效率降低。因此，压力角的大小会影响从动件的正常工作和凸轮机构的传动效率。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 13 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "由于凸轮的轮廓曲线可以任意确定，所以从动件的运动规律可以任意拟定。", "opts": ["正确", "错误"], "ans": 0, "exp": "从动件的位移线图即运动规律，取决于凸轮轮廓曲线的形状。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 14 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "在确定凸轮基圆半径的尺寸时，首先应考虑凸轮的外形尺寸不能过大，而后再考虑对压力角的影响。", "opts": ["正确", "错误"], "ans": 1, "exp": "实际设计中应在保证凸轮轮廓的最大压力角不超过许用值的前提下，选取尽可能小的基圆半径，以缩小凸轮的尺寸。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 15 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮机构的主要功能是将凸轮的连续运动转变成从动件的按一定规律的往复移动或摆动。", "opts": ["正确", "错误"], "ans": 0, "exp": "凸轮机构的主要功能是将凸轮的连续运动（移动或转动）转变成从动件按一定规律的往复移动或摆动。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 16 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "余弦加速度运动规律会引起柔性冲击，因而这种运动规律适用于中速的凸轮。", "opts": ["正确", "错误"], "ans": 0, "exp": "从动件按余弦加速度规律运动时，在行程始末加速度存在有限值突变，将导致机构产生柔性冲击，适用于中速场合。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 17 · 答案册 p.149（a/pg-030）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮机构易于实现各种预定的运动，且结构简单、紧凑，便于设计。", "opts": ["正确", "错误"], "ans": 0, "exp": "凸轮是一种具有曲线轮廓或凹槽的构件，与从动件高副接触，结构简单紧凑，便于设计，只要设计出适当的凸轮轮廓曲线，就可以使从动件实现任何预期的运动规律。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 18 · 答案册 p.150（a/pg-031）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "对于同一种从动件运动规律，使用不同类型的从动件所设计出来的凸轮的实际轮廓是相同的。", "opts": ["正确", "错误"], "ans": 1, "exp": "对于不同类型的从动件，如尖顶从动件、滚子从动件和平底从动件，它们与凸轮轮廓曲线的接触方式不同，因此可能会对凸轮的轮廓曲线产生不同的影响。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 19 · 答案册 p.150（a/pg-031）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮机构中，当从动件的速度存在有限值突变时，会产生柔性冲击。", "opts": ["正确", "错误"], "ans": 1, "exp": "凸轮机构中，当从动件的速度存在有限值突变时，会产生刚性冲击。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 20 · 答案册 p.150（a/pg-031）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮机构中，滚子从动件使用最多，因为它相对于尖顶从动件、平底从动件是最基本的形式。", "opts": ["正确", "错误"], "ans": 1, "exp": "由于滚子和凸轮轮廓之间为滚动摩擦，耐磨损，可承受较大载荷，所以滚子从动件是从动件中最常用的一种形式。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷基础 判断 21 · 答案册 p.150（a/pg-031）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "盘形凸轮是一个具有变化半径的盘形构件，当它绕固定轴转动时，推动从动件在与凸轮轴________平面内运动。", "opts": ["共面的", "平行的", "垂直的", "成 180° 的"], "ans": 2, "exp": "盘形凸轮是一个具有变化半径的盘形构件，当它绕固定轴转动时，推动从动件在与凸轮轴垂直的平面内运动。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 1 · 答案册 p.152（a/pg-033）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "盘形凸轮从动件的行程不能太大，否则将使凸轮的________尺寸变化过大。", "opts": ["横向", "轴向", "周向", "径向"], "ans": 3, "exp": "盘形凸轮从动件的行程不能太大，否则将使凸轮的径向尺寸变化过大。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 2 · 答案册 p.152（a/pg-033）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "凸轮机构从动件升程中加速度与时间变化线图如图 4-8 所示，该运动规律为", "opts": ["等速", "等加速等减速", "正弦加速度", "余弦加速度"], "ans": 2, "exp": "由从动件加速度与时间的变化线图分析可知，在全行程中无加速度的突变，因此该从动件的运动规律为正弦加速度运动。（原图见题库 q/pg-042：图 4-8：a–φ,t 图为一条先正后负的平滑正弦波）", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 3 · 答案册 p.152（a/pg-033）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "凸轮机构从动件升程中加速度与时间变化线图如图 4-9 所示，该运动规律为", "opts": ["等速", "等加速等减速", "正弦加速度", "余弦加速度"], "ans": 3, "exp": "由从动件加速度与时间的变化线图分析可知，在行程始末加速度存在有限值突变，因此该从动件的运动规律为余弦加速度运动。（原图见题库 q/pg-042：图 4-9：a–φ,t 图起始为正最大值，单调递减过零到负值）", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 4 · 答案册 p.152（a/pg-033）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "凸轮机构从动件整个升程中加速度与时间变化线图如图 4-10 所示，该运动规律为", "opts": ["等速", "等加速等减速", "正弦加速度", "余弦加速度"], "ans": 1, "exp": "由从动件加速度与时间的变化线图分析可知，从动件在 OB 段作等加速运动，在 BC 段作等减速运动，仅在 O、B、C 三点加速度存在有限值突变，因此该从动件的运动规律为等加速等减速运动。（原图见题库 q/pg-043：图 4-10：a–φ,t 图 OB 段为正恒值、BC 段为负恒值的阶梯）", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 5 · 答案册 p.152（a/pg-033）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "设计滚子从动件盘形凸轮机构时，若发现工作廓线有变尖现象，则在尺寸参数改变上应采用的措施是", "opts": ["增大基圆半径和滚子半径", "减小基圆半径和滚子半径", "减小基圆半径，增大滚子半径", "增大基圆半径，减小滚子半径"], "ans": 3, "exp": "廓线变尖则是由于滚子半径接近或超过理论廓线外凸部分的最小曲率半径。因此，可通过增大基圆半径或者减小滚子半径来消除变尖现象。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 6 · 答案册 p.152（a/pg-033）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "在设计滚子直动从动件盘形凸轮机构的工作廓线时发现压力角超过了许用值，且廓线出现变尖现象，此时应采用的措施是", "opts": ["增大基圆半径", "减小基圆半径", "增大滚子半径", "减小滚子半径"], "ans": 0, "exp": "压力角过大是由于基圆半径过小，而廓线变尖则是由于滚子半径接近或超过理论廓线外凸部分的最小曲率半径。因此，增大基圆半径可以减小压力角，同时可以增大理论廓线外凸部分的最小曲率半径，避免变尖，而减小滚子半径，只是可以消除变尖现象。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 7 · 答案册 p.153（a/pg-034）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "盘形凸轮机构的滚子从动件被损坏，若更换为一个半径不同的滚子，则", "opts": ["压力角不变，运动规律不变", "压力角变，运动规律也变", "压力角不变，运动规律变", "压力角变，运动规律不变"], "ans": 0, "exp": "滚子半径变化会改变凸轮的实际轮廓曲线（即理论轮廓曲线的等距曲线），但压力角取决于理论轮廓曲线的几何性质（如切线斜率）和从动件的运动方向，从动件的运动规律（位移、速度、加速度等）由凸轮的理论轮廓决定，而理论轮廓是滚子中心的运动轨迹，与滚子半径无关。故更换滚子后，实际轮廓会变化（例如更尖锐或更平滑），但滚子中心的轨迹即理论轮廓不变，因此压力角与从动件的运动规律均不变。需注意，若滚子半径过大会导致实际轮廓失真。此时压力角和运动规律都可能异常。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 单选 8 · 答案册 p.153（a/pg-034）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "设计对心平底直动从动件盘形凸轮机构时，若要求平底与导路中心线垂直，则平底左右两侧的宽度必须分别大于导路中心线到左右两侧最远切点的距离。", "opts": ["正确", "错误"], "ans": 0, "exp": "设计对心平底直动从动件盘形凸轮机构时，若要求平底与导路中心线垂直，则平底左右两侧的宽度必须分别大于导路中心线到左右两侧最远切点的距离，以保证在所有位置平底都能与凸轮廓线相切。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 判断 1 · 答案册 p.153（a/pg-034）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "适合尖顶从动件工作的轮廓曲线，也必然适合于滚子从动件。", "opts": ["正确", "错误"], "ans": 1, "exp": "尖顶从动件和滚子从动件在凸轮机构中具有不同的特点和应用。尖顶从动件与凸轮轮廓曲线接触点为尖顶，适用于需要精确控制从动件运动的场合，如高精度仪器，而滚子从动件与凸轮轮廓曲线接触点为滚轮，适用于承受较大载荷和传递较大扭矩的场合，如各种传动系统。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 判断 2 · 答案册 p.153（a/pg-034）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "凸轮的基圆尺寸越大，推动从动件的有用分力也越大。", "opts": ["正确", "错误"], "ans": 0, "exp": "基圆半径增大会引起压力角减小，由有用分力 F′＝Fcosα 得有用分力也就越大。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 判断 3 · 答案册 p.153（a/pg-034）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "在凸轮机构中，从动件采用等加速等减速运动规律，是指在推程时作等加速运动，而在回程时作等减速运动。", "opts": ["正确", "错误"], "ans": 1, "exp": "等加速等减速运动规律是指从动件在运动过程中，速度的变化是均匀的，即在推程和回程时都采用等加速和等减速运动，而不是在推程时作等加速运动，在回程时作等减速运动。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 判断 4 · 答案册 p.153（a/pg-034）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "滚子从动件盘形凸轮机构中，基圆半径和压力角应在凸轮的实际轮廓上来度量。", "opts": ["正确", "错误"], "ans": 1, "exp": "由滚子从动件盘形凸轮廓线的设计过程可知，滚子从动件凸轮的基圆半径和压力角均应当在理论轮廓上度量。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷拔高 判断 5 · 答案册 p.153（a/pg-034）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "与其他机构相比，凸轮机构的最大优点是", "opts": ["便于润滑", "可实现各种预期的运动规律", "从动件的行程可较大", "制造方便，易获得较高的精度"], "ans": 1, "exp": "与其他机构相比，凸轮机构最大的优点是只要设计出适当的凸轮轮廓曲线，就可以使从动件实现任何预期的运动规律。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 单选 1 · 答案册 p.156（a/pg-037）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "如图 4-13 所示凸轮轮廓是由分别以 O₁ 及 O₂ 为圆心的圆弧和直线段组成的。该凸轮机构从动件的运动过程是________类型。", "opts": ["升—停—降—停", "升—停—降", "升—降—停", "升—降"], "ans": 0, "exp": "凸轮机构的从动件运动规律由凸轮轮廓决定。凸轮转动时，从动件随第一段直线段凸轮轮廓移动，推动从动件上升。当以 O₂ 为圆心的圆弧与从动件接触时，此段圆弧到转动中心 O₁ 的距离不变，从动件停止运动。当凸轮继续转动到另一段直线段凸轮轮廓与从动件接触时，推动从动件下降。最后，当以 O₁ 为圆心的圆弧与从动件接触时，此段圆弧到转动中心 O₁ 的距离不变，从动件再次停止运动。故该从动件完整的运动过程为升—停—降—停。（原图见题库 q/pg-045：图 4-13：凸轮轮廓由两段圆弧 O₁、O₂ 与两段直线段组成）", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 单选 2 · 答案册 p.156（a/pg-037）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "凸轮机构中，从动件按照简谐（余弦加速度）运动规律运动时________冲击。", "opts": ["无法确定是否有", "不会产生", "会产生刚性", "会产生柔性"], "ans": 3, "exp": "从动件按余弦加速度规律运动时，在行程始末加速度存在有限值突变，将导致机构产生柔性冲击。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 单选 3 · 答案册 p.156（a/pg-037）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "在凸轮机构中，下列参数绝对不可以为零的是", "opts": ["推程运动角", "偏距", "远休止角", "近休止角"], "ans": 0, "exp": "如果推程运动角为零，意味着从动件没有上升过程，即凸轮机构无推程功能，失去基本运动意义。因此，推程运动角不可为零，偏距、远休止角、近休止角都可以为零。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 单选 4 · 答案册 p.156（a/pg-037）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "尖顶从动件凸轮机构中，基圆的大小会影响", "opts": ["从动件的位移", "从动件的速度", "从动件的加速度", "凸轮机构的压力角"], "ans": 3, "exp": "基圆的大小直接影响凸轮机构的压力角，而从动件的位移、速度、加速度主要由凸轮轮廓曲线的形状来决定。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 单选 5 · 答案册 p.156（a/pg-037）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "在设计直动滚子从动件盘形凸轮机构时，可以通过________避免发生运动失真。", "opts": ["增大滚子半径", "减小基圆半径", "增大基圆半径", "增加从动件长度"], "ans": 2, "exp": "当滚子半径过大或基圆半径过小，导致理论廓线外凸部分的最小曲率半径小于滚子半径时，滚子无法准确地跟随凸轮轮廓运动，从而引发失真，故增大基圆半径能增加理论廓线外凸部分的最小曲率半径，避免滚子与凸轮轮廓接触时的运动失真。增大滚子半径和减小基圆半径，会进一步加剧失真。从动件长度与运动失真无关。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 单选 6 · 答案册 p.156（a/pg-037）"},
+  {"ch": "第 3 章 凸轮机构", "type": "选择", "stem": "直动从动件盘形凸轮机构中，当从动件运动规律一定时，欲同时降低升程的压力角和回程的压力角，可采用的措施是", "opts": ["减小基圆半径", "增大基圆半径", "增大偏距", "减小偏距"], "ans": 1, "exp": "当从动件运动规律一定时，欲同时降低升程的压力角和回程的压力角，可通过增大基圆半径来实现。增大基圆半径可以使得凸轮轮廓曲线变得平缓，从而减小压力角。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 单选 7 · 答案册 p.157（a/pg-038）"},
+  {"ch": "第 3 章 凸轮机构", "type": "判断", "stem": "（判断）在直动从动件盘形凸轮机构中，若从动件位于凸轮回转中心右侧，为减小推程阶段压力角，凸轮的回转方向应为逆时针。", "opts": ["正确", "错误"], "ans": 0, "exp": "当从动件导路位置偏置于凸轮回转中心的右侧时，若凸轮的回转方向为逆时针，此时凸轮轮廓推动从动件向左运动，接触点的法线方向与从动件运动方向更为接近，压力角较小。", "src": "2000 题·刷题四", "loc": "2000 题·刷题四 · 刷真题 判断 12 · 答案册 p.157（a/pg-038）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "直齿圆柱齿轮机构的轴线", "opts": ["平行", "垂直", "交错", "相交"], "ans": 0, "exp": "直齿圆柱齿轮机构的轴线互相平行。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 1 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "外啮合的齿轮机构的齿轮转向________，内啮合的齿轮机构的齿轮转向________。", "opts": ["相同　相反", "相同　相同", "相反　相反", "相反　相同"], "ans": 3, "exp": "外啮合的齿轮机构的齿轮转向相反，内啮合的齿轮机构的齿轮转向相同。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 3 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "已知一对标准直齿圆柱齿轮传动，其中 n₁＝200 r/min，n₂＝400 r/min，则传动比 i₁₂＝", "opts": ["1/4", "4", "2", "1/2"], "ans": 3, "exp": "i₁₂＝n₁/n₂＝200/400＝1/2。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 4 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "已知一对外啮合标准直齿圆柱齿轮传动，其中 z₁＝300，z₂＝100，则其传动比 i₁₂＝", "opts": ["3", "2", "1/3", "1/2"], "ans": 2, "exp": "i₁₂＝z₂/z₁＝100/300＝1/3。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 5 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "已知一对正常齿渐开线标准外啮合直齿圆柱齿轮传动的传动比 i₁₂＝2/5，z₂＝50，则 z₁＝", "opts": ["20", "150", "125", "100"], "ans": 2, "exp": "由 i₁₂＝z₂/z₁ 可得 2/5＝50/z₁，则 z₁＝125。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 6 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "已知一对正常齿渐开线标准外啮合直齿圆柱齿轮传动的模数 m＝8 mm，z₁＝30，z₂＝50，则中心距 a＝", "opts": ["40 mm", "80 mm", "320 mm", "160 mm"], "ans": 2, "exp": "a＝m(z₁＋z₂)/2＝8(30＋50)/2＝320 mm。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 7 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "已知一对正常齿渐开线标准外啮合直齿圆柱齿轮传动，其中两轮转速 n₁＝150 r/min，n₂＝240 r/min，角速度 ω₂＝80 °/min，则 ω₁＝", "opts": ["20 °/min", "30 °/min", "40 °/min", "50 °/min"], "ans": 3, "exp": "由 n₁/n₂＝ω₁/ω₂ 可得 150/240＝ω₁/80，解得 ω₁＝50 °/min。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 8 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "分度圆上齿距 p 对 π 的比值称为", "opts": ["模数", "齿厚", "齿宽", "齿距"], "ans": 0, "exp": "分度圆上齿距 p 对 π 的比值称为模数。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 9 · 答案册 p.158（a/pg-039）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "我国规定的标准压力角是", "opts": ["20°", "10°", "40°", "15°"], "ans": 0, "exp": "我国规定的标准压力角是 20°。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 10 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "我国规定的标准直齿圆柱齿轮的齿顶高系数是", "opts": ["1", "2", "0.5", "0.25"], "ans": 0, "exp": "我国规定标准直齿圆柱齿轮的齿顶高系数是 1，顶隙系数是 0.25。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 11 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "模数的单位是", "opts": ["mm", "m", "nm", "cm"], "ans": 0, "exp": "模数的单位是 mm。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 12 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "轮齿抗弯能力的重要标志是", "opts": ["模数", "齿数", "压力角", "齿厚"], "ans": 0, "exp": "轮齿抗弯能力的重要标志是模数，模数越大，抗弯能力越强。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 13 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "一对齿轮传动时，一轮节圆上的齿槽宽与另一轮节圆上的齿厚之差称为", "opts": ["齿顶高", "全齿高", "顶隙系数", "侧隙"], "ans": 3, "exp": "一对齿轮传动时，一轮节圆上的齿槽宽与另一轮节圆上的齿厚之差称为侧隙（齿侧间隙）。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 14 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "成形法加工齿轮的优点是", "opts": ["切齿方法简单，不需要专用机床", "生产率高", "精度高", "适用于批量生产的齿轮加工"], "ans": 0, "exp": "成形法加工齿轮的切齿方法简单，不需要专用机床，但是生产率低，精度差，仅适用于单件生产、精度要求不高的齿轮加工以及不完全齿轮的加工。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 15 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "若允许略有根切，正常齿制标准齿轮的实际最少齿数可取", "opts": ["20", "12", "14", "17"], "ans": 2, "exp": "若允许略有根切，正常齿制标准齿轮的实际最少齿数可取 14。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 16 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "已知一个直齿圆柱齿轮的分度圆直径为 20 mm，齿数为 10，则该齿轮的模数是", "opts": ["1 mm", "2 mm", "4 mm", "5 mm"], "ans": 1, "exp": "由 d＝mz 可得 20＝10m，解得 m＝2 mm。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 17 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "有一对齿轮传动，已知主动轮的转速 n₁＝960 r/min，这对齿轮的传动比 i₁₂＝2.5，那么从动轮的转速 n₂＝", "opts": ["2400 r/min", "384 r/min", "4800 r/min", "2000 r/min"], "ans": 1, "exp": "由 i₁₂＝n₁/n₂ 得 n₂＝n₁/i₁₂＝960/2.5＝384 r/min。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 18 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线上各点的压力角是________的，越远离基圆压力角越________。", "opts": ["相等　大", "不等　大", "相等　小", "不等　小"], "ans": 1, "exp": "渐开线上各点的压力角是不等的，越远离基圆压力角越大，基圆上的压力角为 0°。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 19 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "齿轮的标准压力角和标准模数都在", "opts": ["分度圆上取", "基圆上取", "齿根圆上取", "齿顶圆上取"], "ans": 0, "exp": "齿轮的标准压力角和标准模数都在分度圆上取。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 20 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "在任意圆周上，相邻两轮齿同侧齿廓间的弧长称为该圆上的", "opts": ["齿厚", "齿宽", "齿顶高", "齿距"], "ans": 3, "exp": "在任意圆周上，相邻两轮齿同侧齿廓间的弧长称为该圆上的齿距。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 21 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "用展成法加工标准齿轮时，为了不产生根切现象，规定齿数不得少于", "opts": ["14", "15", "16", "17"], "ans": 3, "exp": "用展成法加工标准齿轮时，为了不产生根切现象，齿数不得少于 17。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 22 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "一对标准渐开线圆柱齿轮要正确啮合，它们的________必须相等。", "opts": ["直径 d", "模数 m", "齿宽 b", "齿数 z"], "ans": 1, "exp": "一对标准渐开线圆柱齿轮要正确啮合，它们的模数和压力角必须相等。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 23 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线标准齿轮的根切现象发生在", "opts": ["模数较大时", "模数较小时", "齿数较少时", "齿数较多时"], "ans": 2, "exp": "渐开线标准齿轮的根切现象发生在齿数较少时。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 24 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "以下几点中，________不是齿轮传动的优点。", "opts": ["传动精度高", "传动效率高", "结构紧凑", "成本低"], "ans": 3, "exp": "齿轮机构要求较高的制造和安装精度，成本较高，且不适宜于两轴间距较大的传动。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 25 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线齿轮的渐开线形状取决于齿轮的", "opts": ["齿根圆", "分度圆", "基圆", "节圆"], "ans": 2, "exp": "渐开线齿轮的渐开线形状取决于齿轮的基圆。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 26 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "一对渐开线齿轮啮合能够连续传动的充分条件是", "opts": ["重合度小于 1", "重合度大于 2", "重合度大于 1", "重合度小于 2"], "ans": 2, "exp": "一对渐开线齿轮啮合若能够连续传动，应满足重合度大于 1。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 27 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "若忽略摩擦，一对渐开线齿廓啮合时，齿廓间作用力沿着", "opts": ["齿廓公切线方向", "节圆公切线方向", "中心线方向", "基圆内公切线方向"], "ans": 3, "exp": "渐开线齿廓啮合时，齿廓间作用力沿着基圆内公切线方向。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 28 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线齿轮传动的轴承磨损后，中心距变大，这时传动比将", "opts": ["增大", "减小", "不变", "无法确定"], "ans": 2, "exp": "渐开线齿轮只要设计完成，基圆就确定了，轴承磨损后，中心距变大，但传动比不变，这就是渐开线齿廓啮合的中心距可分性。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 29 · 答案册 p.159（a/pg-040）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "按照标准中心距安装的两齿轮的________分别与各自的________重合。", "opts": ["节圆　分度圆", "分度圆　齿根圆", "基圆　节圆", "节圆　齿顶圆"], "ans": 0, "exp": "按照标准中心距安装的两齿轮的节圆分别与各自的分度圆重合。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 32 · 答案册 p.160（a/pg-041）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线在基圆上的压力角为", "opts": ["20°", "0°", "15°", "25°"], "ans": 1, "exp": "渐开线在基圆上的压力角为 0°。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 34 · 答案册 p.160（a/pg-041）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线齿轮传动的重合度随着齿轮________增大而增大。", "opts": ["模数", "齿数", "基圆直径", "压力角"], "ans": 1, "exp": "渐开线齿轮传动的重合度随着齿轮齿数增大而增大。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 36 · 答案册 p.160（a/pg-041）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "一对渐开线齿轮啮合传动时，其节圆压力角", "opts": ["大于啮合角", "等于啮合角", "小于啮合角", "无法确定"], "ans": 1, "exp": "一对渐开线齿轮啮合传动时，其节圆压力角等于啮合角。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 单选 37 · 答案册 p.160（a/pg-041）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线上各点的曲率半径都是相等的。", "opts": ["正确", "错误"], "ans": 1, "exp": "渐开线上各点的曲率半径都是不等的，基圆越大，曲率半径越大。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 1 · 答案册 p.160（a/pg-041）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线的形状与基圆的大小无关。", "opts": ["正确", "错误"], "ans": 1, "exp": "渐开线的形状是由基圆决定的。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 2 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "两齿轮间的距离叫中心距。", "opts": ["正确", "错误"], "ans": 1, "exp": "两齿轮基圆圆心的距离叫中心距。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 3 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "外齿轮的齿顶圆在齿根圆以外，内齿轮的齿根圆在齿顶圆以外。", "opts": ["正确", "错误"], "ans": 0, "exp": "外齿轮的齿顶圆在齿根圆以外，而内齿轮则相反。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 4 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "标准直齿圆柱齿轮计算基本参数有 3 个，分别是：模数、压力角和齿数。", "opts": ["正确", "错误"], "ans": 1, "exp": "标准直齿圆柱齿轮的基本参数有 5 个：齿数 z、模数 m、压力角 α、齿顶高系数 h_a*、顶隙系数 c*。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 5 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "标准直齿圆柱齿轮的正确啮合条件是：只要两齿轮模数相等即可。", "opts": ["正确", "错误"], "ans": 1, "exp": "标准直齿圆柱齿轮的正确啮合条件是：模数和压力角都必须相等。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 8 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "相同模数和相同压力角，但不同齿数的两个齿轮可以使用同一把齿轮刀具进行加工。", "opts": ["正确", "错误"], "ans": 0, "exp": "相同模数和相同压力角的齿轮可正确啮合，均可以使用同一把齿轮刀具进行加工。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 10 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "齿数越多越容易出现根切。", "opts": ["正确", "错误"], "ans": 1, "exp": "齿数越少越容易出现根切。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 11 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "为了美观，通常小齿轮的宽度比大齿轮的宽度大一些。", "opts": ["正确", "错误"], "ans": 1, "exp": "为了便于装配，保证齿轮的接触宽度，通常小齿轮的宽度比大齿轮的宽度大一些，与美观无关。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 12 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "齿轮传动不适宜于两轴间距大的场合。", "opts": ["正确", "错误"], "ans": 0, "exp": "齿轮机构的结构比较紧凑，不宜用于两轴间距大的场合。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 13 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线齿轮啮合时，啮合角恒等于节圆压力角。", "opts": ["正确", "错误"], "ans": 0, "exp": "渐开线齿轮啮合时，啮合角恒等于节圆压力角。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 14 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "由安装误差导致中心距改变时，渐开线齿轮不能保证瞬时传动比不变。", "opts": ["正确", "错误"], "ans": 1, "exp": "一对渐开线齿轮一经加工完毕，基圆大小就确定了，因此在安装时若中心距有变化也不会改变传动比的大小，此特性称为中心距可分性，该特性使渐开线齿轮对加工、安装的误差及轴承的磨损均不敏感。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 15 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "分度圆是一对齿轮相啮合时才存在的量。", "opts": ["正确", "错误"], "ans": 1, "exp": "分度圆是单个齿轮具有的量。节圆是一对齿轮相啮合时才存在的量。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 16 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "分度圆是计量齿轮各部分尺寸的基准。", "opts": ["正确", "错误"], "ans": 0, "exp": "分度圆是计量齿轮各部分尺寸的基准。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 17 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线外齿轮的齿根圆并非总是大于基圆。", "opts": ["正确", "错误"], "ans": 0, "exp": "对于正常齿制渐开线标准外齿轮，当齿数 z＜42 时，基圆大于齿根圆，当齿数 z≥42 时，基圆小于齿根圆。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 18 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "重合度大于 1 时，两直齿圆柱齿轮才能正确啮合。", "opts": ["正确", "错误"], "ans": 1, "exp": "重合度大于 1 时，两直齿圆柱齿轮才能连续传动。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 19 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "加工负变位齿轮时，齿条刀具的分度线应向远离轮坯的方向移动。", "opts": ["正确", "错误"], "ans": 1, "exp": "加工负变位齿轮时，齿条刀具的分度线应向靠近轮坯的方向移动。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 20 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线上任意一点的法线必相切于基圆。", "opts": ["正确", "错误"], "ans": 0, "exp": "渐开线上任意一点的法线必相切于基圆。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 21 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "越远离基圆，渐开线上的压力角越大。", "opts": ["正确", "错误"], "ans": 0, "exp": "越远离基圆，渐开线上的压力角越大。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 23 · 答案册 p.161（a/pg-042）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线直齿圆柱齿轮同一基圆的两同向渐开线为等距线。", "opts": ["正确", "错误"], "ans": 0, "exp": "渐开线直齿圆柱齿轮同一基圆的两同向渐开线为等距线。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 24 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "对于单个齿轮来说，分度圆半径就等于节圆半径。", "opts": ["正确", "错误"], "ans": 1, "exp": "单个齿轮只有分度圆，没有节圆。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 25 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "根据渐开线性质，基圆之内没有渐开线，所以渐开线齿轮的齿根圆必须设计比基圆大一些。", "opts": ["正确", "错误"], "ans": 1, "exp": "基圆之内没有渐开线，渐开线齿轮的齿根圆和基圆的大小关系由齿数决定。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 26 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "所谓直齿圆柱标准齿轮就是分度圆上的压力角和模数均为标准值的齿轮。", "opts": ["正确", "错误"], "ans": 1, "exp": "所谓直齿圆柱标准齿轮就是分度圆上齿厚与齿槽宽相等，且齿顶高与齿根高均为标准值的直齿圆柱齿轮。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 27 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "共轭齿廓就是一对能满足齿廓啮合基本定律的齿廓。", "opts": ["正确", "错误"], "ans": 0, "exp": "共轭齿廓就是一对能满足齿廓啮合基本定律的齿廓。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 28 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "齿廓啮合基本定律就是使齿廓能保持连续传动的定律。", "opts": ["正确", "错误"], "ans": 1, "exp": "齿廓啮合基本定律指的是互相啮合传动的一对齿轮在任一位置时的传动比，都与其连心线被其啮合齿廓在接触点处的公法线所分成的两线段成反比，但并不一定能保持齿轮连续传动。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 29 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线齿廓上各点的曲率半径处处不等，基圆处的曲率半径为 r_b。", "opts": ["正确", "错误"], "ans": 1, "exp": "渐开线齿廓上各点的曲率半径处处不等，基圆处的曲率半径为 0。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 30 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "在渐开线齿轮传动中，齿轮与齿条传动的啮合角始终与分度圆上的压力角相等。", "opts": ["正确", "错误"], "ans": 0, "exp": "在渐开线齿轮传动中，齿轮与齿条传动的啮合角始终与分度圆上的压力角相等。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 31 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "用展成法切制渐开线直齿圆柱齿轮发生根切的原因是齿轮太小了，大的齿轮就不会根切。", "opts": ["正确", "错误"], "ans": 1, "exp": "用展成法切制渐开线直齿圆柱齿轮发生根切的原因是齿数太少，与齿轮大小无关。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 32 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "用展成法切制渐开线齿轮时，模数为 m、压力角为 α 的刀具可以切削相同模数和压力角的任何齿数的齿轮。", "opts": ["正确", "错误"], "ans": 0, "exp": "展成法切削渐开线齿轮时，模数为 m、压力角为 α 的刀具可以切削相同模数和压力角的任何齿数的齿轮。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 33 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线标准直齿圆柱齿轮 A 分别同时与齿轮 B、C 啮合传动，则齿轮 A 上的分度圆只有一个，但节圆可以有两个。", "opts": ["正确", "错误"], "ans": 0, "exp": "分度圆是单个齿轮具有的，每个齿轮只有一个，节圆是齿轮啮合产生的，啮合两次，可以产生两个节圆。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 34 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "因为渐开线齿轮传动具有中心距可分性，所以实际中心距稍大于两轮分度圆半径之和，仍可满足一对标准齿轮的无侧隙啮合传动。", "opts": ["正确", "错误"], "ans": 1, "exp": "虽然渐开线齿轮传动具有中心距可分性，但是实际中心距稍大于两齿轮分度圆半径之和时，节圆与分度圆分离，侧隙必然产生。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 35 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "用齿轮滚刀加工一个渐开线直齿圆柱标准齿轮，如果不发生根切，则改用齿轮插刀加工该标准齿轮时，也必定不会发生根切。", "opts": ["正确", "错误"], "ans": 0, "exp": "根切由齿数和刀具齿顶高决定，与加工方法（滚刀或插刀）无关。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 36 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "两个渐开线直齿圆柱齿轮的齿数不同，但基圆直径相同，则它们一定可以用同一把齿轮铣刀加工。", "opts": ["正确", "错误"], "ans": 1, "exp": "由 d＝mz 可得齿数不同但基圆直径相同的两个渐开线直齿圆柱齿轮模数不同，不能用同一把齿轮铣刀加工。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 37 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "基圆的内部能产生渐开线。", "opts": ["正确", "错误"], "ans": 1, "exp": "基圆内部没有渐开线。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 39 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "内齿轮的齿形轮廓线就是在基圆内产生的渐开线。", "opts": ["正确", "错误"], "ans": 1, "exp": "内齿轮的齿形轮廓线是在基圆外产生的渐开线，但齿形向内凹陷。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 40 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "变位齿轮是标准齿轮。", "opts": ["正确", "错误"], "ans": 1, "exp": "变位齿轮通过刀具位移改变齿厚，是非标准齿轮。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷基础 判断 41 · 答案册 p.162（a/pg-043）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "设计齿轮时，若发现重合度小于 1，则修改设计时应", "opts": ["增加齿数", "加大模数", "加大中心距", "减少齿数"], "ans": 0, "exp": "设计齿轮时，若发现重合度小于 1，则修改设计时应增加齿数。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 单选 6 · 答案册 p.164（a/pg-045）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "正变位齿轮与相应的标准齿轮相比", "opts": ["分度圆改变", "模数改变", "压力角改变", "齿厚改变"], "ans": 3, "exp": "正变位齿轮与相应的标准齿轮相比，齿轮变位前后，齿距、模数、压力角、分度圆、基圆、角速比均保持不变，齿厚增大。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 单选 9 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "一对圆柱齿轮，通常把小齿轮的齿宽做得比大齿轮宽一些，其主要原因是", "opts": ["使传动平稳", "提高传动效率", "为了美观", "便于安装，保证接触线长度"], "ans": 3, "exp": "圆柱齿轮的小齿轮的齿宽做得比大齿轮宽一些，是为了便于安装，保证接触线长度。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 单选 10 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "两渐开线标准直齿圆柱齿轮啮合，当中心距增加时，两齿轮的分度圆半径会", "opts": ["增加", "减小", "不变", "无法确定"], "ans": 2, "exp": "分度圆是单个齿轮特有的性质，其半径不随啮合齿轮中心距改变而改变。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 单选 11 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "齿数大于 42，压力角为 20° 的正常齿渐开线标准直齿外齿轮，其齿根圆________基圆。", "opts": ["小于", "大于", "等于", "小于或等于"], "ans": 1, "exp": "齿数大于 42，压力角为 20° 的正常齿渐开线标准直齿外齿轮的齿根圆大于基圆。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 单选 12 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "当两直齿圆柱齿轮的安装中心距大于标准中心距时，为保证无侧隙啮合，应采用正传动。", "opts": ["正确", "错误"], "ans": 0, "exp": "当两直齿圆柱齿轮的安装中心距大于标准中心距时，为保证无侧隙啮合，应采用正传动。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 1 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "一对能正确啮合传动的渐开线直齿圆柱齿轮的啮合角一定为 20°。", "opts": ["正确", "错误"], "ans": 1, "exp": "一对能正确啮合传动的渐开线直齿圆柱齿轮的啮合角为常数，且啮合角的数值等于渐开线在节圆上的压力角，但不一定为 20°。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 2 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "一对直齿圆柱齿轮啮合传动，模数越大，重合度也越大。", "opts": ["正确", "错误"], "ans": 1, "exp": "直齿圆柱齿轮啮合传动的重合度与模数无关。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 3 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "满足正确啮合条件的两直齿圆柱齿轮分度圆大小必须相同。", "opts": ["正确", "错误"], "ans": 1, "exp": "满足正确啮合条件的两直齿圆柱齿轮模数和压力角分别相等，与其分度圆大小无关。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 4 · 答案册 p.165（a/pg-046）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "α＝20°，h_a*＝1 的一对渐开线标准圆柱直齿轮传动，不可能有三对齿同时啮合。", "opts": ["正确", "错误"], "ans": 0, "exp": "对于 α＝20°，h_a*＝1 的标准直齿圆柱齿轮，其重合度恒大于 1，经计算得出 ε_max＝1.981，即最多两对齿同时啮合。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 5 · 答案册 p.166（a/pg-047）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "当模数一定时，齿数越多，齿轮的几何尺寸越大，齿廓曲线越趋于平直。", "opts": ["正确", "错误"], "ans": 0, "exp": "当模数一定时，由 d_b＝mzcosα 可得齿数越多，基圆越大，齿轮的几何尺寸越大，齿廓曲线越趋于平直。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 6 · 答案册 p.166（a/pg-047）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线上任意一点的法线不可能都与基圆相切。", "opts": ["正确", "错误"], "ans": 1, "exp": "渐开线上任意一点的法线都与基圆相切。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 7 · 答案册 p.166（a/pg-047）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "直齿圆柱齿轮传动中节圆与分度圆永远相等。", "opts": ["正确", "错误"], "ans": 1, "exp": "直齿圆柱齿轮传动中节圆不一定与分度圆相等。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 8 · 答案册 p.166（a/pg-047）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "渐开线圆柱外齿轮的基圆大于齿根圆时，基圆以内部分的齿廓曲线都不是渐开线。", "opts": ["正确", "错误"], "ans": 0, "exp": "渐开线圆柱外齿轮的基圆大于齿根圆时，基圆以内部分的齿廓曲线都不是渐开线，因为基圆内无渐开线。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷拔高 判断 9 · 答案册 p.166（a/pg-047）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线标准直齿圆柱齿轮是指模数、压力角、齿顶高系数及（　　）均为标准值的齿轮。", "opts": ["中心距", "齿根高", "顶隙系数", "齿全高"], "ans": 2, "exp": "渐开线标准直齿圆柱齿轮是指模数、压力角、齿顶高系数及顶隙系数均为标准值的齿轮。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 1 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线直齿圆柱齿轮传动的可分性是指（　　）不受中心距变化的影响。", "opts": ["传动比", "啮合角", "重合度", "节圆半径"], "ans": 0, "exp": "渐开线直齿圆柱齿轮传动的可分性是指传动比不受中心距变化的影响，齿轮一经加工完毕，基圆大小就确定了，而传动比等于基圆半径的反比。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 2 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线标准齿轮在标准安装的情况下，两齿轮分度圆的相对位置是", "opts": ["相交", "相切", "分离", "不确定"], "ans": 1, "exp": "分度圆是齿轮设计和加工的基准圆，在标准安装时，两齿轮的分度圆正好相切。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 3 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "一个标准直齿圆柱齿轮分度圆的齿距 p＝15.7 mm，齿顶圆直径 d_a＝400 mm。则该齿轮的齿数为", "opts": ["82", "80", "78", "76"], "ans": 2, "exp": "由 p＝πm 可得 m＝p/π＝15.7/3.14＝5，由 d_a＝m(z＋2h_a*) 可得 400＝5(z＋2)，解得 z＝78。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 4 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "用齿条插刀加工标准直齿圆柱齿轮时，齿坯上与刀具中线相切的圆是", "opts": ["基圆", "分度圆", "齿根圆", "齿顶圆"], "ans": 1, "exp": "当用齿条插刀加工标准齿轮时，刀具的中线与被加工齿轮的分度圆相切并做纯滚动。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 5 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "渐开线齿轮的齿廓曲线形状取决于", "opts": ["基圆", "分度圆", "齿根圆", "齿顶圆"], "ans": 0, "exp": "渐开线齿轮的齿廓曲线形状取决于基圆。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 7 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "加工直齿圆柱齿轮轮齿时，一般检测________来确定该齿轮是否合格。", "opts": ["公法线长度", "齿厚", "齿根圆直径", "齿顶圆直径"], "ans": 0, "exp": "加工直齿圆柱齿轮轮齿时，一般检测公法线长度来确定该齿轮是否合格。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 8 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "影响齿轮承载能力大小的主要参数是", "opts": ["齿数", "压力角", "模数", "齿厚"], "ans": 2, "exp": "影响齿轮承载能力大小的主要参数是模数，模数越大，抗弯能力越强，承载能力越大。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 9 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "选择", "stem": "直齿圆柱齿轮无侧隙啮合的条件是", "opts": ["m₁＝m₂＝m，α₁＝α₂＝α", "重合度大于等于 1", "重合度等于零", "分度圆与节圆重合"], "ans": 3, "exp": "直齿圆柱齿轮无侧隙啮合的条件是分度圆与节圆重合。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 单选 11 · 答案册 p.167（a/pg-048）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "（判断）范成法（展成法）比仿形法加工精度高。", "opts": ["正确", "错误"], "ans": 0, "exp": "范成法基于连续啮合传动，理论齿形更精确，加工精度显著高于仿形法。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 判断 17 · 答案册 p.168（a/pg-049）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "（判断）一对齿轮的实际中心距永远等于分度圆半径之和。", "opts": ["正确", "错误"], "ans": 1, "exp": "只有当一对齿轮标准安装（无侧隙啮合）时，实际中心距才等于两齿轮分度圆半径之和，但实际应用中，齿轮安装可能存在变位（如正变位或负变位）或装配误差，此时实际中心距可能大于或小于分度圆半径之和。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 判断 18 · 答案册 p.168（a/pg-049）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "（判断）为了避免加工标准齿轮出现根切，可采用正变位方法加以修正。", "opts": ["正确", "错误"], "ans": 0, "exp": "对于标准齿轮，当齿数少于最少齿数时就会发生根切。正变位是指将刀具远离轮坯中心移动一段距离，这样可以改变刀具与轮坯的相对位置，使得刀具的齿顶不会切到轮坯的齿根部分，从而避免根切。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 判断 19 · 答案册 p.168（a/pg-049）"},
+  {"ch": "第 4 章 齿轮机构", "type": "判断", "stem": "（判断）渐开线各点的压力角不相等，离基圆越远压力角越小，基圆上压力角最大。", "opts": ["正确", "错误"], "ans": 1, "exp": "渐开线各点的压力角不相等，离基圆越远压力角越大，基圆上压力角为 0。", "src": "2000 题·刷题五", "loc": "2000 题·刷题五 · 刷真题 判断 20 · 答案册 p.168（a/pg-049）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "对于所有轴线都平行的平面定轴轮系，始末两齿轮转向关系可用它们之间的________对数来判定。", "opts": ["内啮合", "外啮合", "总啮合", "内外啮合差的"], "ans": 1, "exp": "对于所有齿轮轴线都平行的定轴轮系，直接按轮系中外啮合的对数来确定始末两轮转向关系。当外啮合对数为奇数时，始末两轮反向；当外啮合对数为偶数时，始末两轮同向。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 1 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "行星轮系由哪三种基本构件组成？", "opts": ["主动轮、中心轮、系杆", "行星轮、从动轮、转臂", "行星轮、中心轮、行星架", "太阳轮、中心轮、行星架"], "ans": 2, "exp": "基本周转轮系由行星轮、支持它的行星架和与行星轮相啮合的两个（有时只有一个）中心轮构成。其中自由度为 1 的周转轮系称为行星轮系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 2 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "在定轴轮系中，所有齿轮的几何轴线都是________的。", "opts": ["平行", "变动", "相交", "固定"], "ans": 3, "exp": "传动时每个齿轮的几何轴线位置都是固定的，这种轮系称为定轴轮系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 3 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "惰轮对________并无影响，但却能改变从动轮的________。", "opts": ["传动比的大小　转动方向", "传动比　转动方向", "转动方向　传动比", "转动方向　传动比的大小"], "ans": 0, "exp": "不影响轮系传动比的大小，只起到改变转向的作用，这种齿轮称为惰轮。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 4 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "如果在齿轮传动中，其中有一个齿轮和它的________绕另一个齿轮轴线旋转，则该轮系为周转轮系。", "opts": ["轴线", "卫星轮", "太阳轮", "系杆"], "ans": 0, "exp": "至少有一个齿轮的几何轴线绕另一齿轮的几何轴线转动的轮系，称为周转轮系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 5 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "轮系中________之比，称为轮系的传动比。", "opts": ["指定两轮转速", "指定两轮齿数", "首末两轮转速", "首末两轮齿数"], "ans": 2, "exp": "在轮系中，输入轴与输出轴的角速度（或转速）之比称为轮系的传动比。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 6 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "计算一对齿轮的传动比，若两轮旋转方向不同，可写成 i₁₂＝", "opts": ["＋z₂/z₁", "＋z₁/z₂", "－z₂/z₁", "－z₁/z₂"], "ans": 2, "exp": "一对齿轮的传动比大小为其齿数的反比，若考虑转向关系，外啮合时两齿轮的转向相反，传动比取“－”；内啮合时两齿轮的转向相同，传动比取“＋”。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 7 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "定轴轮系的传动比，等于组成该轮系的所有________齿数连乘积与所有________齿数连乘积之比。", "opts": ["末轮　首轮", "主动轮　从动轮", "首轮　末轮", "从动轮　主动轮"], "ans": 3, "exp": "平面定轴轮系的传动比等于组成轮系的各对齿轮传动比的连乘积，也等于从动轮齿数的连乘积与主动轮齿数的连乘积之比。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 8 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "周转轮系中，只有一个________的轮系称为行星轮系。", "opts": ["原动件", "从动件", "太阳轮", "转臂"], "ans": 0, "exp": "只有一个中心轮能转动，自由度等于 1，只需一个原动件的周转轮系称为行星轮系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 9 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "轮系可获得________的传动比，并可作________距离的传动。", "opts": ["较小　较远", "较大　较远", "较大　较近", "较小　较近"], "ans": 1, "exp": "轮系的主要功用有：① 实现相距较远的两轴之间的传动，② 实现变速传动，③ 获得较大传动比，④ 实现合成运动和分解运动。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 10 · 答案册 p.169（a/pg-050）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "差动轮系的主要结构特点是有", "opts": ["1 个原动件", "1 个从动件", "2 个从动件", "2 个原动件"], "ans": 3, "exp": "两个中心轮都能转动，机构的自由度为 2，需要两个原动件的周转轮系称为差动轮系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 11 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "定轴轮系与周转轮系的区别在于定轴轮系所有轴相对于机架的位置都是固定的；周转轮系是指轮系中有一个齿轮的轴线绕另一轴线转动的轮系。此句中错误的是", "opts": ["所有轴", "固定", "有一个", "绕另一轴线"], "ans": 2, "exp": "传动时每个齿轮的几何轴线位置都是固定的，这种轮系称为定轴轮系，至少有一个齿轮的几何轴线绕另一齿轮的几何轴线转动的轮系，称为周转轮系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 12 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "周转轮系的传动比计算应用了转化机构的概念。对应周转轮系的转化机构是", "opts": ["定轴轮系", "行星轮系", "混合轮系", "差动轮系"], "ans": 0, "exp": "如果能使行星架变为固定不动，并保持周转轮系中各个构件之间的相对运动不变，则周转轮系就转化成为一个假想的定轴轮系，这一假想的定轴轮系称为原来周转轮系的转化轮系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 13 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "在行星轮系中，具有固定几何轴线的齿轮被称为", "opts": ["行星轮", "太阳轮", "惰轮", "系杆"], "ans": 1, "exp": "在周转轮系中，轴线位置固定的齿轮称为中心轮或太阳轮。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 单选 14 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "旋转齿轮的几何轴线并非全部固定的轮系，称之为周转轮系。", "opts": ["正确", "错误"], "ans": 0, "exp": "至少有一个齿轮的几何轴线绕另一齿轮的几何轴线转动的轮系，称为周转轮系。故该说法正确。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 1 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "至少有一个齿轮和它的几何轴线绕另一个齿轮的几何轴线旋转的轮系，称为定轴轮系。", "opts": ["正确", "错误"], "ans": 1, "exp": "定轴轮系每个齿轮的几何轴线位置都是固定的。该说法错误。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 2 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "在周转轮系中，凡具有旋转几何轴线的齿轮，就称为中心轮。", "opts": ["正确", "错误"], "ans": 1, "exp": "轴线位置固定的齿轮称为中心轮。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 3 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "在周转轮系中，凡具有固定几何轴线的齿轮，就称为行星轮。", "opts": ["正确", "错误"], "ans": 1, "exp": "既作自转又作公转的齿轮称为行星轮。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 4 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "定轴轮系可以把旋转运动转变为直线运动。", "opts": ["正确", "错误"], "ans": 0, "exp": "定轴轮系可以把旋转运动转换为直线运动。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 5 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "轮系传动比的计算，不但要确定其数值，还要确定输入输出轴之间的运动关系，表示出它们的转向关系。", "opts": ["正确", "错误"], "ans": 0, "exp": "计算轮系传动比不仅要确定它的数值，而且要确定两轴的相对转动方向，这样才能完整表达输入轴与输出轴之间的运动关系。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 6 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "对空间定轴轮系，其始末两齿轮转向关系可以用传动比计算公式中的 (－1)^m 的符号来判定。", "opts": ["正确", "错误"], "ans": 1, "exp": "空间齿轮由于各齿轮轴线不都互相平行，所以不能用 (－1)^m 的正负来确定首末齿轮的转向，而要采用在图上面箭头的方法来确定。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 7 · 答案册 p.170（a/pg-051）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "计算行星轮系的传动比时，把行星轮系转化为一假想的定轴轮系，即可用定轴轮系的方法解决行星轮系的问题。", "opts": ["正确", "错误"], "ans": 0, "exp": "周转轮系中行星轮的运动不是绕固定轴线的简单转动，所以其传动比不能直接用求解定轴轮系传动比的方法来计算。但是，如果能使行星架变为固定不动，并保持周转轮系中各个构件之间的相对运动不变，则周转轮系就转化成为一个假想的定轴轮系，列出该假想定轴轮系传动比的计算公式，从而求出周转轮系的传动比。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 8 · 答案册 p.171（a/pg-052）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "定轴轮系和行星轮系的主要区别在于系杆是否转动。", "opts": ["正确", "错误"], "ans": 1, "exp": "定轴轮系和行星轮系的主要区别在于轴线是否全部固定。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 9 · 答案册 p.171（a/pg-052）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "轮系可分为定轴轮系和周转轮系两种。", "opts": ["正确", "错误"], "ans": 1, "exp": "轮系分为定轴轮系、周转轮系和复合轮系三种。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 10 · 答案册 p.171（a/pg-052）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "定轴轮系的传动比等于各对齿轮传动比的连乘积。", "opts": ["正确", "错误"], "ans": 0, "exp": "定轴轮系的传动比等于组成轮系的各对齿轮传动比的连乘积。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 11 · 答案册 p.171（a/pg-052）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "周转轮系的传动比等于各对齿轮传动比的连乘积。", "opts": ["正确", "错误"], "ans": 1, "exp": "周转轮系中行星轮的运动不是绕固定轴线的简单转动，所以其传动比不能直接用求解定轴轮系传动比的方法来计算。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷基础 判断 12 · 答案册 p.171（a/pg-052）"},
+  {"ch": "第 5 章 轮系", "type": "选择", "stem": "轮系中若有某个齿轮的轴线相对于机架不是固定的，则此轮系一定不是", "opts": ["行星轮系", "差动轮系", "复合轮系", "定轴轮系"], "ans": 3, "exp": "定轴轮系的定义是轮系中所有齿轮的轴线相对于机架都是固定不动的；行星轮系存在轴线绕其他齿轮轴线转动的行星轮；差动轮系属于周转轮系的一种，有两个自由度，存在轴线可动的齿轮；复合轮系包含定轴轮系和周转轮系，也有轴线可动的齿轮。所以若有齿轮轴线相对机架不固定，一定不是定轴轮系，选 D。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷真题 单选 1 · 答案册 p.174（a/pg-055）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "（判断）行星轮系的传动比是对齿轮传动比的连乘积。", "opts": ["正确", "错误"], "ans": 1, "exp": "行星轮系传动比不能直接通过定轴轮系那样简单的“对齿轮传动比连乘积”计算。行星轮系属于周转轮系。计算行星轮系传动比需要用反转法，先将周转轮系转化为定轴轮系（给整个周转轮系加上一个与系杆角速度大小相等、方向相反的角速度，使系杆“静止”），然后在转化轮系中按定轴轮系传动比公式（齿轮传动比连乘积形式）计算，但这不是直接对行星轮系原轮系的齿轮传动比连乘积，所以该说法错误。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷真题 判断 2 · 答案册 p.174（a/pg-055）"},
+  {"ch": "第 5 章 轮系", "type": "判断", "stem": "（判断）行星轮系自由度为 1。", "opts": ["正确", "错误"], "ans": 0, "exp": "行星轮系的自由度为 1，差动轮系的自由度为 2。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷真题 判断 3 · 答案册 p.174（a/pg-055）"}
+];
+
+/* ============ 视图切换 ============ */
+function gotoView(name){
+  document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("active"); });
+  document.getElementById("view-" + name).classList.add("active");
+  var nav = name === "detail" ? "knowledge" : name;
+  document.querySelectorAll(".topnav button").forEach(function(b){
+    b.classList.toggle("on", b.getAttribute("data-goto") === nav);
+  });
+  var bw = document.getElementById("brandWrap");
+  if(bw) bw.classList.remove("open");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+document.querySelectorAll("[data-goto]").forEach(function(el){
+  el.addEventListener("click", function(){ gotoView(el.getAttribute("data-goto")); });
+});
+
+/* ============ 深浅模式切换（默认深色，不保存，刷新回到深色） ============ */
+document.getElementById("themeToggle").addEventListener("click", function(){
+  var root = document.documentElement;
+  var toLight = root.getAttribute("data-theme") !== "light";
+  root.setAttribute("data-theme", toLight ? "light" : "dark");
+  this.setAttribute("aria-label", toLight ? "切换到深色模式" : "切换到浅色模式");
+});
+
+/* ============ 顶栏品牌下拉：机械设计 / 机械制图（英语） ============ */
+var brandWrap = document.getElementById("brandWrap");
+var brandBtn = document.getElementById("brandBtn");
+brandBtn.addEventListener("click", function(e){
+  e.stopPropagation();
+  var open = brandWrap.classList.toggle("open");
+  brandBtn.setAttribute("aria-expanded", open);
+});
+document.addEventListener("click", function(e){
+  if(!brandWrap.contains(e.target)){
+    brandWrap.classList.remove("open");
+    brandBtn.setAttribute("aria-expanded", "false");
+  }
+});
+document.addEventListener("keydown", function(e){
+  if(e.key === "Escape"){
+    brandWrap.classList.remove("open");
+    brandBtn.setAttribute("aria-expanded", "false");
+  }
+});
+document.querySelectorAll(".brand-menu button").forEach(function(b){
+  b.addEventListener("click", function(){
+    brandWrap.classList.remove("open");
+    brandBtn.setAttribute("aria-expanded", "false");
+    gotoView(b.getAttribute("data-subject") === "drawing" ? "drawing" : "knowledge");
+  });
+});
+
+/* ============ 知识点渲染 ============ */
+var chapList = document.getElementById("chapList");
+function renderParts(filter){
+  chapList.innerHTML = "";
+  var shown = 0;
+  PARTS.forEach(function(p, i){
+    var text = (p.title + " " + p.sub + " " + p.points.join(" ")).toLowerCase();
+    if(filter && text.indexOf(filter.toLowerCase()) === -1) return;
+    shown++;
+    var card = document.createElement("article");
+    card.className = "chap";
+    card.innerHTML =
+      '<button class="chap-head" type="button">' +
+        '<span class="chap-num">' + p.num + '</span>' +
+        '<span class="t">' + p.title + '<small>' + p.sub + '</small></span>' +
+        '<span class="chap-go">详细介绍 ›</span>' +
+      '</button>';
+    card.querySelector(".chap-head").addEventListener("click", function(){ openDetail(i); });
+    chapList.appendChild(card);
+  });
+  /* 未完待续 */
+  if(!filter || "后续章节 轴 轴承 齿轮传动 蜗杆 带传动 链传动 连接 弹簧".indexOf(filter) !== -1 || shown > 0){
+    var pend = document.createElement("article");
+    pend.className = "chap";
+    pend.innerHTML =
+      '<button class="chap-head" type="button">' +
+        '<span class="chap-num" style="color:var(--accent2)">待</span>' +
+        '<span class="t">后续章节<small>杨可桢《机械设计基础》（第 7 版）目录</small></span>' +
+        '<span class="chap-go">详细介绍 ›</span>' +
+      '</button>';
+    pend.querySelector(".chap-head").addEventListener("click", function(){ openPendingDetail(); });
+    chapList.appendChild(pend);
+  }
+  document.getElementById("chapEmpty").style.display = shown === 0 ? "block" : "none";
+}
+renderParts("");
+document.getElementById("chapSearch").addEventListener("input", function(){ renderParts(this.value.trim()); });
+/* ============ 知识点二级页：专业术语翻成大白话，只讲 TaskPro 笔记与杨可桢书里要考的内容 ============ */
+var DETAILS = {
+  "绪": [
+    ["先分清四个词", "机器、机构、构件、零件最容易混。打个比方：一台缝纫机是机器；它里面负责把转动变成针上下动的连杆组合是机构；机构里每一根「整块一起动」的杆是构件；把构件再拆开，一颗螺钉、一根销轴就是零件。"],
+    ["零件看「做」，构件看「动」", "零件是制造角度的最小单位：工厂加工到不能再拆的单个制件。构件是运动角度的最小单位：画运动简图时，焊死在一起、永远一起动的几根杆只算一个构件。"],
+    ["考试就考这一句", "零件与构件没有包含关系。判断题常写成「构件由零件组成，所以零件包含于构件」来挖坑——按笔记的口径，两者是两个角度的划分，不存在包含关系，看到「包含」的说法要警惕。"]
+  ],
+  "1": [
+    ["运动副是什么", "两个构件直接接触、还能相对动，这个联结就叫运动副。想象门轴：门和门框接触，门能绕轴转，这就是一个转动副。"],
+    ["低副和高副", "按接触的样子分：面接触的是低副（转动副、移动副），比较耐磨；点或线接触的是高副（齿轮啮合、凸轮顶着推杆），接触面积小。一个平面构件本来有 3 个自由度，低副会吃掉 2 个，高副吃掉 1 个。"],
+    ["运动简图怎么画", "不管零件长什么样，只按比例画出决定运动的线条和符号：杆就是线段，转动副是小圆，机架画上剖面线。焊成刚性三角形的几根杆，在简图里只能算一个构件。"],
+    ["自由度公式在算什么", "F = 3n − 2PL − PH：n 个活动构件各有 3 个自由度，减去低副、高副吃掉的，剩下的就是机构能自己定下来的运动个数。"],
+    ["数数之前先处理三个坑", "复合铰链：几个构件挤在同一个点上转，m 个构件要算 m−1 个转动副；局部自由度：像滚子自己原地打转这种不影响整体运动的自由度，算 F 时把滚子和推杆看成一体；虚约束：重复了一遍的约束，不去掉会把 F 算小，先除去再数。"],
+    ["机构能动的条件", "F 必须大于 0，而且 F 要正好等于原动件数：少了动不了，多了运动不确定。"]
+  ],
+  "2": [
+    ["杆长条件", "四根杆想拼出能整圈转的曲柄，先看长度：最短杆加最长杆，不能比另外两杆之和还长。就像四根木条拼四边形，最长的那根太长，短的那根就够不着转整圈。"],
+    ["光满足长度还不够", "还要看最短杆站在哪个位置：最短杆当连架杆（或机架）时，它相邻的杆才能整圈转，这才有曲柄。位置不对，再满足长度也只能摆动。"],
+    ["急回是怎么来的", "摇杆去的时候慢、回来的时候快，因为曲柄转过两个极位时转角不一样大，这个夹角叫极位夹角 θ。K = (180° + θ) / (180° − θ)：θ 越大 K 越大，回程越「急」。牛头刨床就靠这个：切削慢、退刀快。"],
+    ["压力角和传动角", "推一个东西，沿运动方向的分力才有用，偏掉的分力白费。压力角 α 是力与速度方向的夹角，α 越小越好推；传动角 γ 是它的余角，α + γ = 90°。校核时看最小传动角 γmin，它出现在曲柄与机架共线的位置附近，太小机构就推不动了。"],
+    ["死点", "当传动角 γ = 0，力正好沿着杆的方向推，一点转动的劲都使不上，从动件卡住不动，这就是死点。关键看谁主动：曲柄主动、摇杆从动，没有死点；反过来摇杆主动，就会在曲柄与连杆共线时卡死。"],
+    ["按位置设计四杆（图解法）", "给了连杆的三个位置：把三个位置都画出来，对应点连线、作垂直平分线，两条垂分线的交点就是固定铰链中心，杆长随之定下来。给了两连架杆的三组对应位置：用刚化反转法，把机构各位置归一到同一位置再作垂分线找交点，道理一样。"],
+    ["自锁和死点不是一回事", "自锁是考虑摩擦以后：推力的有效分力还不够克服摩擦，效率 η ≤ 0，这时把力加得再大也推不动。死点是几何位置的问题（γ = 0），自锁是摩擦的问题，判断题爱把两者混着说。"]
+  ],
+  "3": [
+    ["凸轮和三种推杆", "凸轮是一个轮廓不圆的盘，转起来顶着推杆按规律上下动。推杆顶端有三种：尖顶（简单、易磨损）、滚子（把滑动变滚动，耐磨）、平底（受力好，而且压力角恒为 0）。"],
+    ["对心和偏心", "推杆的导路正好通过凸轮回转中心，叫对心；偏开一个距离 e，叫偏心。偏的方向选对，可以把推程的压力角压小一点。"],
+    ["基圆和偏距圆", "基圆是按理论轮廓的最小向径画的圆，是设计凸轮的基准；偏距 e 决定偏距圆的大小，偏多少一目了然。"],
+    ["运动规律和冲击", "推杆怎么动，决定机器抖不抖：等速运动在起止点速度突变，是刚性冲击（硬碰硬）；等加速等减速、简谐运动加速度突变但有限，是柔性冲击；正弦加速度运动全程平滑，没有冲击。"],
+    ["反转法画轮廓", "假装凸轮不动，让推杆带着导路绕凸轮反方向转回去，每转一个角度量一次位移，连点成线，就得到理论轮廓。"],
+    ["压力角和基圆的取舍", "压力角大，推杆容易被顶歪、卡住；把基圆做大，压力角就小，但凸轮也跟着变大变重，只能折中。直动推杆推程许用压力角一般取 30° 左右。"]
+  ],
+  "4": [
+    ["齿轮为什么用模数", "齿的大小不看直径看模数 m：m 越大齿越大越结实。分度圆直径 d = mz，知道 m 和齿数 z 就能算一串尺寸，这是本章一切计算的起点。"],
+    ["一组核心尺寸", "齿顶高 ha = m，齿根高 hf = 1.25m，基圆直径 db = d·cosα。基圆是渐开线的「出生圆」：渐开线齿形就是从基圆上展开出来的，所以 db 只跟 d 和压力角有关，跟齿顶齿根无关。"],
+    ["两个齿轮怎么配对", "正确啮合条件只有一条：模数相等、压力角相等，缺一不可——齿的大小和形状对不上，根本咬合不了。标准安装时中心距 a = m(z₁ + z₂)/2，分度圆和节圆正好重合。"],
+    ["传动不能断", "前一对齿还没分开，后一对齿必须已经咬上，这叫连续传动，条件是重合度 εα ≥ 1。εα 是实际啮合线段长度与法向齿距（基圆齿距）之比，算出来小于 1 就会出现传动中断。"],
+    ["根切和变位", "齿数太少（标准直齿小于 17），加工时刀具会把齿根挖掉一块，叫根切，齿轮变脆。救法是变位：加工时刀具往外挪一点（正变位），齿根变厚，还能凑中心距、提强度。变位后分度圆和基圆不变，变的只是齿厚、齿顶高、齿根高。"],
+    ["斜齿轮多看一个螺旋角", "斜齿轮的啮合条件看的是法面：法面模数相等、法面压力角相等，螺旋角大小相等；外啮合时两轮旋向相反，内啮合时旋向相同。"],
+    ["齿是怎么做出来的（展成原理）", "展成法（范成法）让刀具和轮坯像一对真齿轮那样啮合着转，刀具齿廓的包络线就是轮坯的渐开线齿形。常用刀具有齿条插刀、齿轮插刀和滚刀。"]
+  ],
+  "5": [
+    ["定轴轮系", "所有齿轮的轴都固定在机架上不动，传动比就是各级齿数连乘之比。转向靠数啮合：外啮合一次变一次号，内啮合不变号；中间的惰轮只改方向、不改大小。"],
+    ["周转轮系", "有的齿轮（行星轮）一边自转一边绕着别的齿轮公转，像行星绕太阳，所以不能直接套定轴轮系的公式。"],
+    ["转化机构法", "诀窍是「反转」：给整个轮系加上一个和系杆大小相等、方向相反的转速，系杆就假装不动了，周转轮系变成定轴轮系，再按连乘公式算，最后联立求解。"],
+    ["差动和行星差在一个自由度", "差动轮系 F = 2，要两个原动件才能定下运动；行星轮系 F = 1，一个原动件就够。算之前先判断是哪种，心里有数再下笔。"],
+    ["混合轮系要拆开算", "考试最爱给混合轮系：先把定轴部分和周转部分分出来，各算各的，再联立求解。想用一个公式从头套到尾，一定是错的。"]
+  ],
+  "待": [
+    ["笔记还没写到这里", "TaskPro 笔记目前写到 Part 5（齿轮系）就停了，后面的章节还没整理，所以这里先不展开讲，只把杨可桢《机械设计基础》（第 7 版）的后续章节目录列出来，心里有个范围。笔记原文在这里：<a class='doc-link' href='https://docs.google.com/document/d/163EJQKXmI3wBZA5qp6dkj01wU1qSQkZ7mjeDS6rqazA/edit?usp=drivesdk' target='_blank' rel='noopener'>查看 TaskPro 笔记（Google Doc）</a>"],
+    ["后续章节目录", "间歇运动机构、机械运转速度波动的调节、回转件的平衡、机械零件设计概论、连接、齿轮传动、蜗杆传动、带传动和链传动、轴、滑动轴承、滚动轴承、联轴器 / 离合器和制动器、弹簧。等笔记补上，再逐章加通俗讲解和题目。"]
+  ]
+};
+function fillDetail(title, sub, secs, formula, trap){
+  document.getElementById("detailTitle").textContent = title;
+  document.getElementById("detailSub").textContent = sub;
+  document.getElementById("detailBody").innerHTML = secs.map(function(s){
+    return '<div class="detail-sec"><h3>' + s[0] + '</h3><p>' + s[1] + '</p></div>';
+  }).join("");
+  var f = document.getElementById("detailFormula"), fh = document.getElementById("detailFormulaH");
+  var t = document.getElementById("detailTrap"), th = document.getElementById("detailTrapH");
+  if(formula){ f.innerHTML = formula; f.style.display = ""; fh.style.display = ""; }
+  else { f.style.display = "none"; fh.style.display = "none"; }
+  if(trap){ t.textContent = trap; t.style.display = ""; th.style.display = ""; }
+  else { t.style.display = "none"; th.style.display = "none"; }
+  gotoView("detail");
+}
+function openDetail(i){
+  var p = PARTS[i];
+  fillDetail(p.title, p.sub, DETAILS[p.num] || [], p.formula, p.trap);
+}
+function openPendingDetail(){
+  fillDetail("后续章节", "杨可桢《机械设计基础》（第 7 版）目录", DETAILS["待"] || [], "", "");
+}
+document.getElementById("detailBack").addEventListener("click", function(){ gotoView("knowledge"); });
+
+/* ============ 刷题引擎 ============ */
+var scopeSel = document.getElementById("quizScope");
+var chaptersSeen = [];
+QUIZ.forEach(function(q){ if(chaptersSeen.indexOf(q.ch) === -1) chaptersSeen.push(q.ch); });
+scopeSel.innerHTML = '<option value="__all">全部章节（随机 10 题）</option>' +
+  chaptersSeen.map(function(c){ return '<option value="' + c + '">' + c + '</option>'; }).join("");
+
+/* 题型分类：选择 / 判断 / 填空 / 计算 / 作图（题库数据里写作「画图」） */
+var typeSel = document.getElementById("quizType");
+var TYPE_FILTERS = [["__all", "全部题型"], ["选择", "选择"], ["判断", "判断"], ["填空", "填空"], ["计算", "计算"], ["画图", "作图"]];
+typeSel.innerHTML = TYPE_FILTERS.map(function(t){
+  var n = t[0] === "__all" ? QUIZ.length : QUIZ.filter(function(q){ return q.type === t[0]; }).length;
+  return '<option value="' + t[0] + '">' + t[1] + "（" + n + " 题）</option>";
+}).join("");
+function typeLabel(t){ return t === "画图" ? "作图" : t; }
+
+/* 刷题进度：已刷题数按章节累计，存本机 */
+var quizDoneStore = {};
+try { quizDoneStore = JSON.parse(localStorage.getItem("md_quiz_done") || "{}") || {}; } catch(e){ quizDoneStore = {}; }
+function markQuizDone(q){
+  quizDoneStore[q.ch] = (quizDoneStore[q.ch] || 0) + 1;
+  try { localStorage.setItem("md_quiz_done", JSON.stringify(quizDoneStore)); } catch(e){}
+  updateQuizProg();
+}
+function updateQuizProg(){
+  var scope = scopeSel.value;
+  var y, x = 0, label;
+  if(scope === "__all"){
+    y = QUIZ.length;
+    Object.keys(quizDoneStore).forEach(function(k){ x += quizDoneStore[k] || 0; });
+    label = "全部章节";
+  } else {
+    y = QUIZ.filter(function(q){ return q.ch === scope; }).length;
+    x = quizDoneStore[scope] || 0;
+    label = scope;
+  }
+  document.getElementById("quizProgText").textContent = "已刷 " + x + " / " + y + " 题";
+  document.getElementById("quizProgBar").style.width = (y ? Math.min(100, x / y * 100) : 0) + "%";
+  document.getElementById("quizProgScope").textContent = "当前范围：" + label + " · 做完一题计一题";
+}
+scopeSel.addEventListener("change", updateQuizProg);
+updateQuizProg();
+
+var quiz = null;
+function shuffle(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+function startQuiz(){
+  var scope = scopeSel.value;
+  var type = typeSel.value;
+  var pool = QUIZ.filter(function(q){ return (scope === "__all" || q.ch === scope) && (type === "__all" || q.type === type); });
+  var msg = document.getElementById("poolMsg");
+  if(pool.length === 0){
+    msg.textContent = "这个章节 + 题型的组合暂时没有题，换个题型或章节试试。";
+    msg.style.display = "block";
+    return;
+  }
+  msg.style.display = "none";
+  pool = shuffle(pool.slice()).slice(0, 10);
+  quiz = { list: pool, idx: 0, score: 0, wrong: [], answered: false };
+  document.getElementById("quizStart").hidden = true;
+  document.getElementById("quizDone").hidden = true;
+  document.getElementById("quizPlay").hidden = false;
+  showQuestion();
+}
+function showQuestion(){
+  var q = quiz.list[quiz.idx];
+  quiz.answered = false;
+  document.getElementById("qCount").textContent = "第 " + (quiz.idx + 1) + " / " + quiz.list.length + " 题";
+  document.getElementById("qScore").textContent = "已答对 " + quiz.score + " 题";
+  document.getElementById("qBar").style.width = ((quiz.idx) / quiz.list.length * 100) + "%";
+  document.getElementById("qMeta").innerHTML =
+    "<span>" + q.ch + "</span><span>" + typeLabel(q.type) + "题</span>" +
+    '<span class="src">' + q.src + "</span>";
+  document.getElementById("qStem").innerHTML = q.stem;
+  var figEl = document.getElementById("qFig");
+  var fn = figNote(q);
+  if(fn){ figEl.innerHTML = fn; figEl.hidden = false; } else { figEl.hidden = true; }
+  var box = document.getElementById("qOpts");
+  box.innerHTML = "";
+  var calcBox = document.getElementById("qCalc");
+  var drawBox = document.getElementById("qDraw");
+  var fillBox = document.getElementById("qFill");
+  calcBox.hidden = q.type !== "计算";
+  drawBox.hidden = q.type !== "画图";
+  fillBox.hidden = q.type !== "填空";
+  box.style.display = q.opts ? "grid" : "none";
+  if(q.opts){
+    var letters = ["A","B","C","D"];
+    q.opts.forEach(function(op, i){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "opt";
+      b.innerHTML = "<b>" + letters[i] + ".</b>　" + op;
+      b.addEventListener("click", function(){ answer(i, b); });
+      box.appendChild(b);
+    });
+  }
+  if(q.type === "计算"){
+    document.getElementById("calcProcess").value = "";
+    var cf = document.getElementById("calcFinal");
+    cf.value = ""; cf.disabled = false;
+    document.getElementById("calcUnit").textContent = q.unit || "";
+    document.getElementById("calcCheck").disabled = false;
+  }
+  if(q.type === "画图"){
+    if(quizPad) quizPad.clearAll();
+    document.getElementById("drawReveal").disabled = false;
+    document.getElementById("drawSelf").hidden = true;
+  }
+  if(q.type === "填空"){
+    var fi = document.getElementById("fillInput");
+    fi.value = ""; fi.disabled = false;
+    document.getElementById("fillCheck").disabled = false;
+  }
+  var ex = document.getElementById("qExplain");
+  ex.className = "explain"; ex.innerHTML = "";
+  document.getElementById("nextBtn").hidden = true;
+}
+function locHTML(q){
+  return '<div class="loc-box"><b>答案位置</b>　' + (q.loc || q.src + " · 杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解") + "</div>";
+}
+/* 有图的题：图号从题干取、原图页码从解析里的题库页码取，直接标在题干处 */
+function figNote(q){
+  var m = String(q.stem || "").match(/图\s*\d+\s*[-－]\s*\d+/);
+  var pm = String(q.exp || "").match(/q\/pg-(\d+)/);
+  if(!m && !pm) return "";
+  var parts = [];
+  if(m) parts.push("<b>题目图</b>　" + m[0].replace(/\s+/g, ""));
+  if(pm) parts.push("原图见《专升本必刷2000题 机械设计基础》题库第 " + parseInt(pm[1], 10) + " 页");
+  return parts.join(" · ");
+}
+function finishAnswer(right, html){
+  document.getElementById("qScore").textContent = "已答对 " + quiz.score + " 题";
+  document.getElementById("qBar").style.width = ((quiz.idx + 1) / quiz.list.length * 100) + "%";
+  var ex = document.getElementById("qExplain");
+  ex.innerHTML = html;
+  ex.classList.add("show");
+  var nb = document.getElementById("nextBtn");
+  nb.textContent = quiz.idx === quiz.list.length - 1 ? "看结算" : "下一题";
+  nb.hidden = false;
+}
+function checkCalc(){
+  if(!quiz || quiz.answered) return;
+  var q = quiz.list[quiz.idx];
+  var raw = document.getElementById("calcFinal").value.trim();
+  var v = parseFloat(raw.replace(/,/g, ""));
+  if(raw === "" || isNaN(v)){ 
+    var ex0 = document.getElementById("qExplain");
+    ex0.innerHTML = '<b class="no">先填最终结果再检查。</b>';
+    ex0.classList.add("show");
+    return;
+  }
+  quiz.answered = true;
+  markQuizDone(q);
+  var right = Math.abs(v - q.answerValue) <= q.tol;
+  if(right){ quiz.score++; } else { quiz.wrong.push({ q: q, mine: raw }); }
+  document.getElementById("calcFinal").disabled = true;
+  document.getElementById("calcCheck").disabled = true;
+  finishAnswer(right, (right ? '<b class="ok">答对了。</b>' : '<b class="no">答错了，正确答案是 ' + q.ansText + '。</b>') +
+    "<br />" + q.exp + locHTML(q));
+}
+function checkFill(){
+  if(!quiz || quiz.answered) return;
+  var q = quiz.list[quiz.idx];
+  var raw = document.getElementById("fillInput").value.trim();
+  if(!raw){
+    var ex0 = document.getElementById("qExplain");
+    ex0.innerHTML = '<b class="no">先把空填上再检查。</b>';
+    ex0.classList.add("show");
+    return;
+  }
+  quiz.answered = true;
+  markQuizDone(q);
+  var norm = function(s){ return String(s == null ? "" : s).replace(/[\s　]+/g, "").replace(/。$/, ""); };
+  var answers = q.fillAnswers || (q.ansText ? [q.ansText] : []);
+  var right = answers.some(function(a){ return norm(a) === norm(raw); });
+  if(right){ quiz.score++; } else { quiz.wrong.push({ q: q, mine: raw }); }
+  document.getElementById("fillInput").disabled = true;
+  document.getElementById("fillCheck").disabled = true;
+  finishAnswer(right, (right ? '<b class="ok">答对了。</b>' : '<b class="no">答错了，正确答案是 ' + (q.ansText || answers[0] || "") + '。</b>') +
+    (q.exp ? "<br />" + q.exp : "") + locHTML(q));
+}
+function revealDraw(){
+  if(!quiz) return;
+  var q = quiz.list[quiz.idx];
+  document.getElementById("drawReveal").disabled = true;
+  document.getElementById("drawSelf").hidden = false;
+  var ex = document.getElementById("qExplain");
+  ex.innerHTML = "<b>参考答案</b><br />" + q.exp + locHTML(q);
+  ex.classList.add("show");
+}
+function selfMarkDraw(right){
+  if(!quiz || quiz.answered) return;
+  quiz.answered = true;
+  var q = quiz.list[quiz.idx];
+  markQuizDone(q);
+  if(right){ quiz.score++; } else { quiz.wrong.push({ q: q, mine: -1 }); }
+  document.getElementById("drawSelf").hidden = true;
+  finishAnswer(right, document.getElementById("qExplain").innerHTML);
+}
+function answer(i, btn){
+  if(quiz.answered) return;
+  quiz.answered = true;
+  var q = quiz.list[quiz.idx];
+  markQuizDone(q);
+  var opts = document.querySelectorAll("#qOpts .opt");
+  opts.forEach(function(o, j){
+    o.disabled = true;
+    if(j === q.ans) o.classList.add("right");
+  });
+  var right = i === q.ans;
+  if(right){ quiz.score++; } else {
+    btn.classList.add("wrong");
+    quiz.wrong.push({ q: q, mine: i });
+  }
+  document.getElementById("qScore").textContent = "已答对 " + quiz.score + " 题";
+  document.getElementById("qBar").style.width = ((quiz.idx + 1) / quiz.list.length * 100) + "%";
+  var ex = document.getElementById("qExplain");
+  var correctLabel = (q.opts && q.opts.length === 2) ? q.opts[q.ans] : (["A","B","C","D"][q.ans] + "．" + (q.opts ? q.opts[q.ans] : ""));
+  ex.innerHTML = (right ? '<b class="ok">答对了。</b>' : '<b class="no">答错了，正确答案是 ' + correctLabel + '。</b>') +
+    (q.exp ? "<br />" + q.exp : "") + (q.loc ? locHTML(q) : '<br /><span style="color:var(--muted); font-size:.82rem">' + q.src + " · 杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解</span>");
+  ex.classList.add("show");
+  var nb = document.getElementById("nextBtn");
+  nb.textContent = quiz.idx === quiz.list.length - 1 ? "看结算" : "下一题";
+  nb.hidden = false;
+}
+function finishQuiz(){
+  document.getElementById("quizPlay").hidden = true;
+  document.getElementById("quizDone").hidden = false;
+  document.getElementById("finalScore").textContent = quiz.score;
+  document.getElementById("finalTotal").textContent = quiz.list.length;
+  var msg;
+  if(quiz.wrong.length === 0) msg = "本组全部答对。";
+  else msg = "错题见下方回顾。";
+  document.getElementById("finalMsg").textContent = msg;
+  lastWrong = quiz.wrong.slice(); lastTotal = quiz.list.length; lastScore = quiz.score;
+  var rl = document.getElementById("reviewList");
+  rl.innerHTML = quiz.wrong.length === 0 ? "" : reviewHTML(quiz.wrong);
+}
+var lastWrong = [], lastTotal = 0, lastScore = 0;
+function reviewHTML(wrong){
+  return "<h3 style='font-family:Inter,\"Noto Sans SC\",\"Source Han Sans SC\",sans-serif;font-weight:700; margin:6px 0 0'>错题回顾（" + wrong.length + "）</h3>" +
+    wrong.map(function(w){
+      var correct = w.q.opts ? w.q.opts[w.q.ans] : w.q.ansText;
+      return '<div class="item"><b>' + w.q.ch + " · " + typeLabel(w.q.type) + '题</b><br />' + w.q.stem +
+        '<br />正确答案：<span class="a">' + correct + '</span><br /><span style="color:var(--muted)">' + w.q.exp + "</span>" +
+        (w.q.loc ? '<br /><span style="color:var(--muted)">答案位置：' + w.q.loc + "</span>" : "") + "</div>";
+    }).join("");
+}
+function showWrongReview(){
+  gotoView("quiz");
+  var wrong = lastWrong;
+  if((!wrong || wrong.length === 0) && quiz && quiz.wrong) wrong = quiz.wrong;
+  document.getElementById("quizStart").hidden = true;
+  document.getElementById("quizPlay").hidden = true;
+  document.getElementById("quizDone").hidden = false;
+  document.getElementById("finalScore").textContent = wrong && wrong.length ? lastScore : "–";
+  document.getElementById("finalTotal").textContent = wrong && wrong.length ? lastTotal : "–";
+  document.getElementById("finalMsg").textContent = wrong && wrong.length
+    ? "这是最近一组练习的错题回顾。"
+    : "还没有错题记录。做完一组练习后，答错的题会收进这里。";
+  document.getElementById("reviewList").innerHTML = wrong && wrong.length ? reviewHTML(wrong) : "";
+  setTimeout(function(){ document.getElementById("quizDone").scrollIntoView({behavior:"smooth", block:"start"}); }, 60);
+}
+document.getElementById("calcCheck").addEventListener("click", checkCalc);
+document.getElementById("fillCheck").addEventListener("click", checkFill);
+document.getElementById("drawReveal").addEventListener("click", revealDraw);
+document.getElementById("drawRight").addEventListener("click", function(){ selfMarkDraw(true); });
+document.getElementById("drawWrong").addEventListener("click", function(){ selfMarkDraw(false); });
+document.getElementById("startBtn").addEventListener("click", startQuiz);
+document.getElementById("againBtn").addEventListener("click", startQuiz);
+document.getElementById("nextBtn").addEventListener("click", function(){
+  if(quiz.idx === quiz.list.length - 1) finishQuiz();
+  else { quiz.idx++; showQuestion(); }
+});
+document.getElementById("quitBtn").addEventListener("click", function(){
+  if(quiz && quiz.idx >= 0 && quiz.answered || quiz.idx > 0) finishQuiz();
+  else {
+    document.getElementById("quizPlay").hidden = true;
+    document.getElementById("quizStart").hidden = false;
+  }
+});
+
+/* ============ 画图板（画笔 / 直线 / 矩形 / 圆 / 橡皮，可撤销） ============ */
+function createPad(canvas, paperColor){
+  var ctx = canvas.getContext("2d");
+  var tool = "pen", color = "#C2502E", width = 3, drawing = false, startX = 0, startY = 0, snapshot = null, undoStack = [];
+  function paintPaper(){
+    if(paperColor){ ctx.fillStyle = paperColor; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+  paintPaper();
+  function pos(e){
+    var r = canvas.getBoundingClientRect();
+    return { x: (e.clientX - r.left) * canvas.width / r.width, y: (e.clientY - r.top) * canvas.height / r.height };
+  }
+  function pushUndo(){
+    undoStack.push(canvas.toDataURL());
+    if(undoStack.length > 40) undoStack.shift();
+  }
+  function restore(dataUrl){
+    var img = new Image();
+    img.onload = function(){ ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0, canvas.width, canvas.height); };
+    img.src = dataUrl;
+  }
+  canvas.addEventListener("pointerdown", function(e){
+    if(canvas.width === 0) return;
+    drawing = true;
+    canvas.setPointerCapture(e.pointerId);
+    pushUndo();
+    var p = pos(e); startX = p.x; startY = p.y;
+    snapshot = canvas.toDataURL();
+    ctx.lineCap = "round"; ctx.lineJoin = "round";
+    if(tool === "pen" || tool === "eraser"){
+      ctx.beginPath(); ctx.moveTo(p.x, p.y);
+    }
+    e.preventDefault();
+  });
+  canvas.addEventListener("pointermove", function(e){
+    if(!drawing) return;
+    var p = pos(e);
+    if(tool === "pen"){
+      ctx.strokeStyle = color; ctx.lineWidth = width; ctx.globalCompositeOperation = "source-over";
+      ctx.lineTo(p.x, p.y); ctx.stroke();
+    } else if(tool === "eraser"){
+      ctx.strokeStyle = paperColor || "rgba(0,0,0,0)"; ctx.lineWidth = width * 4;
+      ctx.globalCompositeOperation = paperColor ? "source-over" : "destination-out";
+      ctx.lineTo(p.x, p.y); ctx.stroke(); ctx.globalCompositeOperation = "source-over";
+    } else {
+      var img = new Image();
+      img.onload = function(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.strokeStyle = color; ctx.lineWidth = width; ctx.globalCompositeOperation = "source-over";
+        ctx.beginPath();
+        if(tool === "line"){ ctx.moveTo(startX, startY); ctx.lineTo(p.x, p.y); }
+        else if(tool === "rect"){ ctx.rect(startX, startY, p.x - startX, p.y - startY); }
+        else if(tool === "circle"){ ctx.arc(startX, startY, Math.hypot(p.x - startX, p.y - startY), 0, Math.PI * 2); }
+        ctx.stroke();
+      };
+      img.src = snapshot;
+    }
+    e.preventDefault();
+  });
+  function endDraw(){ drawing = false; }
+  canvas.addEventListener("pointerup", endDraw);
+  canvas.addEventListener("pointercancel", endDraw);
+  return {
+    setTool: function(t){ tool = t; },
+    setColor: function(c){ color = c; },
+    setWidth: function(w){ width = w; },
+    undo: function(){ if(undoStack.length) restore(undoStack.pop()); },
+    clearAll: function(){ pushUndo(); paintPaper(); },
+    reset: function(){ undoStack = []; paintPaper(); },
+    merged: function(baseImg){
+      var c = document.createElement("canvas");
+      c.width = canvas.width; c.height = canvas.height;
+      var x = c.getContext("2d");
+      if(baseImg) x.drawImage(baseImg, 0, 0, c.width, c.height);
+      x.drawImage(canvas, 0, 0);
+      return c;
+    }
+  };
+}
+function wirePadTools(pad, canvasId){
+  var bar = document.querySelector('[data-pad-tools="' + canvasId + '"]');
+  if(!bar || !pad) return;
+  bar.querySelectorAll("[data-tool]").forEach(function(b){
+    b.addEventListener("click", function(){
+      bar.querySelectorAll("[data-tool]").forEach(function(x){ x.classList.remove("on"); });
+      b.classList.add("on");
+      pad.setTool(b.getAttribute("data-tool"));
+    });
+  });
+  var col = bar.querySelector("[data-color]");
+  if(col) col.addEventListener("input", function(){ pad.setColor(this.value); pad.setColorDefault = this.value; });
+  if(col) pad.setColor(col.value);
+  var wid = bar.querySelector("[data-width]");
+  if(wid) wid.addEventListener("input", function(){ pad.setWidth(parseInt(this.value, 10)); });
+  var un = bar.querySelector("[data-undo]");
+  if(un) un.addEventListener("click", function(){ pad.undo(); });
+  var cl = bar.querySelector("[data-clear]");
+  if(cl) cl.addEventListener("click", function(){ pad.clearAll(); });
+}
+var quizPad = createPad(document.getElementById("quizPad"), "#FCFBF6");
+wirePadTools(quizPad, "quizPad");
+
+/* ============ AI 问答 · Gemini API（用户自己的 Gemini API Key，只存本地浏览器 localStorage，不经过任何服务器） ============ */
+(function(){
+  var KEY = "md_gemini_key", MODEL = "md_gemini_model", BASE = "md_gemini_base";
+  var CONTEXT = "你是机械设计基础（上海专升本，考尚小杨老师课程）的答疑助手。学习上下文：课程按杨可桢《机械设计基础》（第 7 版）与 TaskPro 笔记，内容包括绪论（机器、机构、构件、零件，零件是最小制造单元、构件是最小运动单元，两者无包含关系）、平面机构运动分析（运动副与低副/高副、运动简图、自由度 F = 3n − 2PL − PH、复合铰链、局部自由度、虚约束）、平面四连杆机构（杆长条件、曲柄存在条件、行程速比系数 K = (180°+θ)/(180°−θ)、急回、压力角与传动角 α + γ = 90°、死点）、凸轮机构（盘形凸轮、尖顶/滚子/平底推杆、等速刚性冲击与柔性冲击、反转法、压力角与基圆半径）、齿轮机构（d = mz、db = d·cosα、标准中心距 a = m(z1+z2)/2、正确啮合条件 m1 = m2 且 α1 = α2、17 齿根切与变位齿轮）、齿轮系（定轴轮系、周转轮系、差动轮系 F = 2、行星轮系 F = 1、转化机构法），以及间歇运动、速度波动调节、连接与螺纹自锁、齿轮传动失效、蜗杆传动、带传动与链传动、轴的分类、滚动轴承基本额定寿命、弹簧旋绕比等考点。回答只依据机械设计基础的定义、公式、条件、结论，简明准确，需要时给出公式和适用条件；不确定的地方明说不确定，不要编造。";
+  var panel = document.getElementById("aiPanel");
+  var msgs = document.getElementById("aiMsgs");
+  var keyInput = document.getElementById("aiKey");
+  var modelInput = document.getElementById("aiModel");
+  var baseInput = document.getElementById("aiBase");
+  var keyBox = document.getElementById("aiKeyBox");
+  var state = document.getElementById("aiKeyState");
+  var toastEl = document.getElementById("aiToast");
+  var settingsBtn = document.getElementById("aiSettings");
+  function ensureModelOption(v){
+    if(!v) return;
+    v = String(v).replace(/^models\//, "");
+    for(var i = 0; i < modelInput.options.length; i++){ if(modelInput.options[i].value === v) return; }
+    var opt = document.createElement("option");
+    opt.value = v; opt.textContent = v;
+    modelInput.appendChild(opt);
+  }
+  try {
+    keyInput.value = localStorage.getItem(KEY) || "";
+    var savedModel = localStorage.getItem(MODEL);
+    if(savedModel){ ensureModelOption(savedModel); modelInput.value = savedModel; }
+    baseInput.value = localStorage.getItem(BASE) || baseInput.value;
+  } catch(e){}
+  var toastTimer = null;
+  function showToast(msg){
+    if(!toastEl) return;
+    /* single toast element: repeated calls only refresh the same toast, never stack a second one */
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    if(toastTimer) clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toastEl.classList.remove("show"); toastTimer = null; }, 3000);
+  }
+  function setSettingsOpen(open){
+    keyBox.classList.toggle("open", !!open);
+    settingsBtn.classList.toggle("is-back", !!open);
+    settingsBtn.setAttribute("aria-label", open ? "返回对话" : "AI 设置");
+    settingsBtn.setAttribute("title", open ? "返回对话" : "AI 设置");
+  }
+  function isSettingsOpen(){ return keyBox.classList.contains("open"); }
+  function esc(s){
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function refreshState(){
+    var has = !!keyInput.value.trim();
+    state.innerHTML = has ? '<span class="ok">已保存 Gemini API Key，可以提问了。</span>' : '';
+  }
+  refreshState();
+  var aiCloseTimer = null;
+  function openPanel(){
+    if(aiCloseTimer){ clearTimeout(aiCloseTimer); aiCloseTimer = null; }
+    panel.classList.add("shown");
+    void panel.offsetWidth;
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ panel.classList.add("open"); }); });
+  }
+  function closePanel(){
+    setSettingsOpen(false);
+    if(toastEl) toastEl.classList.remove("show");
+    panel.classList.remove("open");
+    if(aiCloseTimer) clearTimeout(aiCloseTimer);
+    aiCloseTimer = setTimeout(function(){ if(!panel.classList.contains("open")) panel.classList.remove("shown"); aiCloseTimer = null; }, 1050);
+  }
+  document.getElementById("aiFab").addEventListener("click", function(){ if(panel.classList.contains("open")) closePanel(); else openPanel(); });
+  document.getElementById("aiClose").addEventListener("click", closePanel);
+  settingsBtn.addEventListener("click", function(){ setSettingsOpen(!isSettingsOpen()); if(!isSettingsOpen()){ var t = document.getElementById("aiText"); if(t) t.focus(); } });
+  document.getElementById("aiSaveKey").addEventListener("click", function(){
+    try {
+      localStorage.setItem(KEY, keyInput.value.trim());
+      localStorage.setItem(MODEL, modelInput.value || "gemini-2.5-flash");
+      localStorage.setItem(BASE, baseInput.value.trim() || "https://generativelanguage.googleapis.com");
+    } catch(e){}
+    refreshState();
+    showToast(keyInput.value.trim() ? "设置已保存，可以提问了。" : "先填 Gemini API Key 并点「保存设置」，再提问。");
+  });
+  function setState(html){ state.innerHTML = html; }
+
+  /* ============ 请求层：两个通道逐个试，通了为止 ============
+     Key 只放请求头（x-goog-api-key），不进网址——网址会被日志和中间环节记下来。
+     接口版本试 v1beta 和 v1 两个：哪个先通就用哪个并记住；模型不可用时拉这个 Key 的
+     可用模型列表自动换一个；再失败就把 Google 回的原话和具体原因亮出来，不再猜。 */
+  var CHANNELS = [
+    { version: "v1beta" },
+    { version: "v1" }
+  ];
+  var goodChannel = -1; /* 本次打开页面后已验证能到达 Google 的通道下标 */
+  function orderedChannels(){
+    var list = CHANNELS.slice();
+    if(goodChannel > 0){
+      var c = list.splice(goodChannel, 1)[0];
+      list.unshift(c);
+    }
+    return list;
+  }
+  function rawRequest(ch, path, key, body){
+    var base = (baseInput.value.trim() || "https://generativelanguage.googleapis.com").replace(/\/+$/, "");
+    var url = base + "/" + ch.version + "/" + path;
+    var headers = { "x-goog-api-key": key };
+    if(body) headers["Content-Type"] = "application/json";
+    var ctrl = ("AbortController" in window) ? new AbortController() : null;
+    var timer = ctrl ? setTimeout(function(){ ctrl.abort(); }, 25000) : null;
+    return fetch(url, {
+      method: body ? "POST" : "GET",
+      headers: headers,
+      body: body || undefined,
+      signal: ctrl ? ctrl.signal : undefined
+    }).then(function(r){
+      if(timer) clearTimeout(timer);
+      return r.json().then(function(j){ return { ok: r.ok, status: r.status, j: j }; },
+                           function(){ return { ok: r.ok, status: r.status, j: null }; });
+    }, function(err){
+      if(timer) clearTimeout(timer);
+      throw err;
+    });
+  }
+  /* 同一请求逐个通道试：拿到 HTTP 回应就说明这条路能到 Google；
+     400 / 403 / 404 可能随接口版本而不同，继续试下一个通道；
+     成功、429（额度）和 5xx 是明确结果，立即返回；
+     两个通道都连不上才算网络错误；都有回应时用第一个回应来报告原因。 */
+  function callApi(path, key, body){
+    var list = orderedChannels();
+    var firstHttp = null, lastNetErr = null;
+    function next(i){
+      if(i >= list.length){
+        if(firstHttp) return Promise.resolve(firstHttp);
+        return Promise.reject(lastNetErr || new Error("网络错误"));
+      }
+      return rawRequest(list[i], path, key, body).then(function(res){
+        goodChannel = CHANNELS.indexOf(list[i]);
+        if(!firstHttp) firstHttp = res;
+        if(res.ok || res.status === 429 || res.status >= 500) return res;
+        return next(i + 1);
+      }, function(err){
+        lastNetErr = err;
+        return next(i + 1);
+      });
+    }
+    return next(0);
+  }
+  function errReason(res){
+    var d = res.j && res.j.error && res.j.error.details;
+    if(d && d.length){
+      for(var i = 0; i < d.length; i++){ if(d[i] && d[i].reason) return d[i].reason; }
+    }
+    return "";
+  }
+  function describeHttpError(res, model){
+    var e = (res.j && res.j.error) || {};
+    var m = e.message || "";
+    var reason = errReason(res);
+    if(/API key not valid/i.test(m)) return "Google 说这个 Key 无效（HTTP 400）。确认填的是 Google AI Studio（aistudio.google.com）里「Get API key」生成的 Gemini API Key：整段复制，不要带空格、引号，也不要填成 Google Cloud 的其它 Key。";
+    if(reason === "API_KEY_SERVICE_BLOCKED" || /service restrictions/i.test(m) || /Generative Language API has not been used/i.test(m) || /it is disabled/i.test(m)) return "这个 Key 没放行 Gemini 接口（HTTP 403）。到 Google Cloud 控制台 →「API 和服务」→「凭据」→ 打开这个 Key，把「API 限制」改成「不限制密钥」（或只勾 Generative Language API），保存后等几分钟再试。";
+    if(reason === "API_KEY_HTTP_REFERRER_BLOCKED" || /referer|referrer/i.test(m)) return "这个 Key 设了网站来源限制（HTTP 403）。这个页面是在应用内嵌框里打开的，来源地址对不上限制名单，所以被拒。把这个 Key 的「应用限制」改成「无」，保存后等几分钟再试。";
+    if(res.status === 403) return "Key 被 Google 拒绝（HTTP 403）：" + (m || "没有说明原因") + "。到 Google Cloud 控制台检查这个 Key 的「应用限制」和「API 限制」，都改成不限制后等几分钟再试。";
+    if(res.status === 404) return "模型「" + (model || "") + "」对这个 Key 不可用（HTTP 404）。点「测试连接」，会自动从这个 Key 能用的模型里挑一个填上。";
+    if(res.status === 429) return "请求太频繁或免费额度用完了（HTTP 429），等一会儿再试。";
+    if(res.status === 400) return "请求被 Gemini 拒绝（HTTP 400）：" + (m || "参数有误") + "。";
+    return "Gemini 返回 HTTP " + res.status + (m ? "：" + m : "，没有返回答案。");
+  }
+  function describeNetError(err){
+    if(err && err.name === "AbortError") return "两种连接方式都试过了，请求都超时没响应。这个页面是在应用内嵌框里打开的，内嵌框的网络不一定走你平时上网的通道：在浏览器里直接打开这个页面再试，或换一个网络再试。";
+    return "两种连接方式（v1 / v1beta 接口，Key 都放请求头）都试过了，浏览器都连不上设置里填的 API 链接（浏览器报：" + (err && err.message ? err.message : "网络错误") + "）。先检查设置里的 API 链接有没有填错；没填错的话，在浏览器里直接打开这个页面再试，或换一个网络再试。";
+  }
+  /* 拉这个 Key 能用的模型列表（要能 generateContent 的才算） */
+  function fetchModelList(key){
+    return callApi("models", key).then(function(res){
+      if(!res.ok) return { res: res, models: null };
+      var arr = (res.j && res.j.models) || [];
+      var usable = [];
+      for(var i = 0; i < arr.length; i++){
+        var methods = arr[i].supportedGenerationMethods || [];
+        var canGen = false;
+        for(var k = 0; k < methods.length; k++){ if(methods[k] === "generateContent") canGen = true; }
+        if(canGen && arr[i].name) usable.push(arr[i].name.replace(/^models\//, ""));
+      }
+      return { res: res, models: usable };
+    });
+  }
+  function pickModel(models, current){
+    if(!models || !models.length) return "";
+    for(var i = 0; i < models.length; i++){ if(models[i] === current) return current; }
+    var prefs = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash-lite", "gemini-1.5-flash"];
+    for(var p = 0; p < prefs.length; p++){
+      for(var j = 0; j < models.length; j++){ if(models[j] === prefs[p]) return prefs[p]; }
+    }
+    for(var f = 0; f < models.length; f++){ if(models[f].indexOf("flash") >= 0) return models[f]; }
+    return models[0];
+  }
+  document.getElementById("aiTestKey").addEventListener("click", function(){
+    var key = keyInput.value.trim();
+    if(!key){ showToast("先填 Gemini API Key 再测试。"); keyInput.focus(); return; }
+    setState('<span class="hint">正在测试连接（两种方式逐个试）…</span>');
+    fetchModelList(key).then(function(out){
+      if(out.models && out.models.length){
+        var cur = (modelInput.value.trim() || "gemini-2.5-flash").replace(/^models\//, "");
+        var pick = pickModel(out.models, cur);
+        if(pick && pick !== cur){
+          ensureModelOption(pick); modelInput.value = pick;
+          try { localStorage.setItem(MODEL, pick); } catch(e){}
+          setState('<span class="ok">连接正常：Key 有效。原来选的模型这个 Key 用不了，已自动改成 ' + esc(pick) + '（这个 Key 共可用 ' + out.models.length + ' 个模型），可以提问了。</span>');
+        } else {
+          setState('<span class="ok">连接正常：Key 有效，模型 ' + esc(cur) + ' 可用（这个 Key 共可用 ' + out.models.length + ' 个模型），可以提问了。</span>');
+        }
+      } else if(out.models){
+        setState('<span class="hint">Key 有效，但这个 Key 查不到任何能对话的模型，换一个 Google AI Studio 生成的 Key 再试。</span>');
+      } else {
+        setState('<span class="hint">' + esc(describeHttpError(out.res, modelInput.value.trim())) + '</span>');
+      }
+    }).catch(function(err){
+      setState('<span class="hint">' + esc(describeNetError(err)) + '</span>');
+    });
+  });
+  function addMsg(text, cls){
+    var d = document.createElement("div");
+    d.className = "ai-msg " + cls;
+    d.textContent = text;
+    msgs.appendChild(d);
+    msgs.scrollTop = msgs.scrollHeight;
+    return d;
+  }
+  var history = [];
+  function send(){
+    var text = document.getElementById("aiText").value.trim();
+    if(!text) return;
+    var key = keyInput.value.trim();
+    if(!key){ showToast("先点输入框左边的设置按钮，填 Gemini API Key 并点「保存设置」，再提问。"); setSettingsOpen(true); keyInput.focus(); return; }
+    document.getElementById("aiText").value = "";
+    addMsg(text, "me");
+    history.push({ role: "user", text: text });
+    var wait = addMsg("正在回答…", "bot");
+    var model = (modelInput.value.trim() || "gemini-2.5-flash").replace(/^models\//, "");
+    var contents = history.slice(-10).map(function(h){ return { role: h.role, parts: [{ text: h.text }] }; });
+    var body = JSON.stringify({
+      systemInstruction: { parts: [{ text: CONTEXT }] },
+      contents: contents
+    });
+    function fail(msg){
+      wait.textContent = "出错了：" + msg;
+      wait.classList.add("err");
+      history.pop();
+    }
+    function showAnswer(res, mdl, switched){
+      var cand = res.j && res.j.candidates && res.j.candidates[0];
+      var parts = cand && cand.content && cand.content.parts;
+      if(res.ok && parts && parts.length){
+        var ans = parts.map(function(p){ return p.text || ""; }).join("");
+        if(ans){
+          wait.textContent = ans + (switched ? "\n（原先选的模型不可用，已自动改用 " + mdl + "）" : "");
+          history.push({ role: "model", text: ans });
+        } else {
+          wait.textContent = "Gemini 返回了空回答，换个问法再试。";
+          history.pop();
+        }
+        return true;
+      }
+      return false;
+    }
+    function doSend(mdl){
+      return callApi("models/" + encodeURIComponent(mdl) + ":generateContent", key, body);
+    }
+    doSend(model).then(function(res){
+      if(showAnswer(res, model, false)) return;
+      if(res.status === 404){
+        /* 填的模型对这个 Key 不可用：拉可用模型列表，挑一个自动重发 */
+        fetchModelList(key).then(function(out){
+          var pick = out.models ? pickModel(out.models, "") : "";
+          if(pick && pick !== model){
+            ensureModelOption(pick); modelInput.value = pick;
+            try { localStorage.setItem(MODEL, pick); } catch(e){}
+            doSend(pick).then(function(res2){
+              if(showAnswer(res2, pick, true)) return;
+              if(!res2.ok){ fail(describeHttpError(res2, pick)); return; }
+              fail("Gemini 没有返回答案，换个问法再试。");
+            }).catch(function(err2){ fail(describeNetError(err2)); });
+          } else {
+            fail(describeHttpError(res, model));
+          }
+        }).catch(function(){ fail(describeHttpError(res, model)); });
+        return;
+      }
+      if(!res.ok){ fail(describeHttpError(res, model)); return; }
+      var block = res.j && res.j.promptFeedback && res.j.promptFeedback.blockReason;
+      fail(block ? "问题被 Gemini 拦截：" + block : "Gemini 没有返回答案，换个问法再试。");
+    }).catch(function(err){ fail(describeNetError(err)); });
+  }
+  document.getElementById("aiSend").addEventListener("click", send);
+  document.getElementById("aiText").addEventListener("keydown", function(e){
+    if(e.key === "Enter") send();
+  });
+})();
+
+/* ============ 考点页：章节考点由 PARTS 数据渲染（只列定义、公式、条件、结论） ============ */
+(function(){
+  var EXAM_ICONS = {
+    "\u7eea": '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>',
+    "1": '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="5" r="2.5"/><circle cx="5" cy="19" r="2.5"/><circle cx="19" cy="12" r="2.5"/><path d="m10.4 6.4-4 4M6.4 13.6l4 4M7.5 12h9"/></svg>',
+    "2": '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="18" r="1.9"/><circle cx="8" cy="7" r="1.9"/><circle cx="17" cy="5" r="1.9"/><circle cx="19" cy="18" r="1.9"/><path d="M5.8 16.3 7.2 8.7M9.8 6.5l5.3-.9M17.8 6.7l.9 9.4M2 21.5h20"/></svg>',
+    "3": '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21.5c-3.6 0-6-2.6-6-5.9 0-2.3 1.1-4 2.5-5.2C9.9 8.3 10.8 7 12 7s2.1 1.3 3.5 2.4C16.9 10.6 18 12.3 18 14.6c0 3.3-2.4 6.9-6 6.9z"/><circle cx="12" cy="15" r="1.7"/><circle cx="12" cy="3" r="1.8"/><path d="M12 4.8V7"/></svg>',
+    "4": '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="6.2"/><circle cx="12" cy="12" r="2.2"/><path d="M18.2 12h2.4M12 18.2v2.4M5.8 12H3.4M12 5.8V3.4M16.4 16.4l1.7 1.7M16.4 7.6l1.7-1.7M7.6 16.4l-1.7 1.7M7.6 7.6 5.9 5.9"/></svg>',
+    "5": '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2.4"/><ellipse cx="12" cy="12" rx="10" ry="4.6" transform="rotate(-24 12 12)"/><circle cx="19.3" cy="7.6" r="1.8"/></svg>'
+  };
+  var box = document.getElementById("examParts");
+  if(!box || typeof PARTS === "undefined") return;
+  box.innerHTML = PARTS.map(function(p){
+    var dd = p.points.join("<br />") + '<br /><span style="color:var(--ink)">' + p.formula + "</span>";
+    return '<div class="g-row"><div class="ic">' + (EXAM_ICONS[p.num] || "") + '</div><div><div class="tt">' + p.title + '</div><div class="dd">' + dd + "</div></div></div>";
+  }).join("");
+})();
+
+/* ============ 学习进度：看课进度存本机，+ / − 修改 ============ */
+(function(){
+  var TOTALS = { design: 42, drawing: 12 };
+  var store = { design: 7, drawing: 0 };
+  try {
+    var saved = JSON.parse(localStorage.getItem("md_progress") || "null");
+    if(saved){
+      if(typeof saved.design === "number") store.design = saved.design;
+      if(typeof saved.drawing === "number") store.drawing = saved.drawing;
+    }
+  } catch(e){}
+  function clamp(k){ store[k] = Math.max(0, Math.min(TOTALS[k], store[k])); }
+  function render(){
+    clamp("design"); clamp("drawing");
+    document.getElementById("lpDesignText").textContent = store.design + " / " + TOTALS.design;
+    document.getElementById("lpDesignBar").style.width = (store.design / TOTALS.design * 100) + "%";
+    document.getElementById("lpDrawText").textContent = store.drawing + " / " + TOTALS.drawing;
+    document.getElementById("lpDrawBar").style.width = (store.drawing / TOTALS.drawing * 100) + "%";
+    try { localStorage.setItem("md_progress", JSON.stringify(store)); } catch(e){}
+  }
+  document.getElementById("lpDesignPlus").addEventListener("click", function(){ store.design++; render(); });
+  document.getElementById("lpDesignMinus").addEventListener("click", function(){ store.design--; render(); });
+  document.getElementById("lpDrawPlus").addEventListener("click", function(){ store.drawing++; render(); });
+  document.getElementById("lpDrawMinus").addEventListener("click", function(){ store.drawing--; render(); });
+  render();
+})();
+
+/* ============ 笔记链接 ============ */
+(function(){
+  var btn = document.getElementById("docBtn");
+  if(TASKPRO_URL){
+    btn.href = TASKPRO_URL;
+  } else {
+    btn.classList.add("disabled");
+    btn.removeAttribute("href");
+  }
+})();
+</script>
+</body>
+</html>
