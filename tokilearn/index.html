@@ -58,7 +58,7 @@ a,button,select,input{transition:color .2s ease,background-color .2s ease,border
 .topbar .brand{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-weight:800;font-size:1.16rem;letter-spacing:.01em;white-space:nowrap;line-height:1.2;color:var(--bar-ink)}
 .topbar .spacer{flex:1}
 .topnav{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:4px;padding:4px;background:var(--nav-track);border:1px solid var(--bar-line);border-radius:999px;flex:none}
-.topnav button{border:0;background:transparent;color:var(--nav-ink);border-radius:999px;padding:7px 20px;font-size:.9rem;font-weight:700;white-space:nowrap;min-height:2.5rem}
+.topnav button{border:0;background:transparent;color:var(--nav-ink);border-radius:999px;padding:7px 13px;font-size:.88rem;font-weight:700;white-space:nowrap;min-height:2.5rem}
 .topnav button:hover{color:var(--bar-ink)}
 .topnav button.on{background:var(--nav-on-bg);color:var(--nav-on-ink)}
 .theme-toggle{flex:none;width:2.75rem;height:2.75rem;min-height:2.75rem;border-radius:999px;border:0;background:transparent;color:var(--bar-ink);display:grid;place-items:center;padding:0}
@@ -68,11 +68,11 @@ a,button,select,input{transition:color .2s ease,background-color .2s ease,border
 :root[data-theme="dark"] .theme-toggle .icon-moon{display:none}
 :root[data-theme="light"] .theme-toggle .icon-sun{display:none}
 main{width:min(1040px,calc(100% - 36px));margin:0 auto;padding:calc(104px + env(safe-area-inset-top)) 0 72px}
-@media(max-width:680px){.topbar{flex-wrap:wrap;row-gap:8px;border-radius:28px;padding:10px 12px 10px 18px}.topnav{order:3;width:100%;position:static;transform:none}.topnav button{flex:1;padding:7px 6px}.topbar .brand{font-size:1.05rem}main{padding-top:calc(204px + env(safe-area-inset-top))}}
+@media(max-width:960px){.topbar{flex-wrap:wrap;row-gap:8px;border-radius:28px;padding:10px 12px 10px 18px}.topnav{order:3;width:100%;position:static;transform:none;flex-wrap:wrap}.topnav button{flex:1 1 22%;padding:7px 6px}.topbar .brand{font-size:1.05rem}main{padding-top:calc(204px + env(safe-area-inset-top))}}
 .view{display:none}.view.active{display:block}
 /* section heads — editorial numbering */
 .sec-head{position:relative;display:flex;align-items:flex-end;gap:16px;margin:52px 0 8px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-#view-knowledge .sec-head{margin-top:10px}
+#view-learning .sec-head,#view-overview .sec-head,#view-subjects .sec-head,#view-review .sec-head,#view-analytics .sec-head,#view-settings .sec-head{margin-top:10px}
 .sec-head h2{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-size:clamp(1.55rem,3vw,1.95rem);font-weight:700;margin:0;line-height:1.2;color:var(--ink)}
 /* knowledge tools */
 .tools{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 20px}
@@ -212,10 +212,9 @@ body::after{content:"";position:fixed;inset:0;z-index:120;pointer-events:none;op
 .ghost-btn{border-radius:16px 225px 16px 255px/255px 16px 225px 16px}
 /* section heads — numbers tipped at different angles, hand-drawn squiggle under each title */
 .sec-head h2{transform:rotate(-.3deg)}
-#view-quiz .sec-head{margin-top:38px}
-#view-notes .sec-head{margin-top:66px}
+#view-practice .sec-head{margin-top:38px}
 @media(min-width:860px){
-  #view-quiz .tools{margin-left:30px}
+  #view-practice .tools
 }
 /* chapter cards — aligned, uniform large radius (incl. the dashed pending card) */
 #chapList .chap{border-radius:24px}
@@ -394,16 +393,18 @@ main{padding-bottom:156px}
     <button type="button" class="brand-btn" id="brandBtn" aria-haspopup="true" aria-expanded="false">机械设计 <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg></button>
     <div class="brand-menu" id="brandMenu" role="menu">
       <button type="button" data-subject="design" role="menuitem">机械设计<span class="cur">当前</span></button>
-      <button type="button" data-subject="drawing" role="menuitem">机械制图</button>
+      <button type="button" data-subject="drawing" role="menuitem">机械制图<span class="cur">未开始</span></button>
     </div>
   </div>
   <div class="spacer"></div>
   <nav class="topnav" aria-label="主导航">
-    <button type="button" data-goto="knowledge" class="on">知识点</button>
-    <button type="button" data-goto="methods">题型方法</button>
-    <button type="button" data-goto="quiz">刷题</button>
-    <button type="button" data-goto="summary">考点总结</button>
-    <button type="button" data-goto="notes">学习进度</button>
+    <button type="button" data-route="#/overview" class="on">Overview</button>
+    <button type="button" data-route="#/subjects">Subjects</button>
+    <button type="button" data-route="#/learning">Learning</button>
+    <button type="button" data-route="#/practice">Practice</button>
+    <button type="button" data-route="#/review">Review</button>
+    <button type="button" data-route="#/analytics">Analytics</button>
+    <button type="button" data-route="#/settings">Settings</button>
   </nav>
   <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换到浅色模式" title="切换深浅模式">
     <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
@@ -411,7 +412,37 @@ main{padding-bottom:156px}
   </button>
 </header>
 <main>
-  <section class="view active" id="view-knowledge">
+  <section class="view active" id="view-overview">
+    <div class="sec-head"><h2>学习首页</h2></div>
+    <p id="ovDate" style="color:var(--muted);line-height:1.9;margin:0 0 24px"></p>
+    <div class="group">
+      <div class="g-title">继续学习</div>
+      <div id="ovContinue" style="display:grid;gap:12px"></div>
+    </div>
+    <div class="group">
+      <div class="g-title">最近学习</div>
+      <div id="ovRecent" style="display:grid;gap:12px"></div>
+    </div>
+    <div class="group">
+      <div class="g-title">待复习</div>
+      <div id="ovReview" style="display:grid;gap:12px"></div>
+    </div>
+    <div class="group">
+      <div class="g-title">快速入口</div>
+      <div class="row">
+        <button class="primary" type="button" data-route="#/learning">学习中心</button>
+        <button class="ghost-btn" type="button" data-route="#/practice">去刷题</button>
+        <button class="ghost-btn" type="button" data-route="#/learning/methods">题型方法</button>
+        <button class="ghost-btn" type="button" data-route="#/learning/summary">考点总结</button>
+      </div>
+    </div>
+  </section>
+  <section class="view" id="view-subjects">
+    <div class="sec-head"><h2>我的科目</h2></div>
+    <p style="color:var(--muted);line-height:1.9;margin:0 0 24px">每个科目有独立的学习空间。下面数字都是站内真实数据。</p>
+    <div id="subjList" style="display:grid;gap:16px"></div>
+  </section>
+  <section class="view" id="view-learning">
     <div class="tools">
       <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg><input id="chapSearch" type="search" placeholder="搜章节或关键词，如：自由度 / 轴承 / 自锁" aria-label="搜索章节" /></label>
     </div>
@@ -429,13 +460,25 @@ main{padding-bottom:156px}
     <p class="trap" id="detailTrap"></p>
   </section>
   <section class="view" id="view-drawing">
-    <div class="sec-head"><h2>机械制图（英语）</h2></div>
+    <div class="sec-head"><h2>机械制图（英语）</h2><span class="badge warn">未开始</span></div>
     <div class="note-hero">
       <h3>这个科目还没开始</h3>
-      <p style="color:var(--muted);line-height:1.9;margin:0">页面先占个位置，知识点和题目后续再往里加。看课进度记在「学习进度」页里：机械制图（英语）0 / 12。</p>
+      <p style="color:var(--muted);line-height:1.9;margin:0">知识点和题目后续再往里加。看课进度记在「学习分析」页里：机械制图（英语）0 / 12（手动记录）。</p>
     </div>
+    <div class="group">
+      <div class="g-title">学科总览</div>
+      <div class="rec-row"><div><div class="rt">和机械设计同样的结构</div><div class="rd">这个科目开始后，会和机械设计一样有独立的学习空间：知识点（新结构讲解）、题型方法、刷题、考点总结、错题本和学习进度。</div></div></div>
+    </div>
+    <div class="group">
+      <div class="g-title">计划内容（尚未开始）</div>
+      <div class="rec-row"><div><div class="rt">制图基本知识</div><div class="rd">图幅、比例、字体、图线、尺寸标注的基本规定。</div></div></div>
+      <div class="rec-row"><div><div class="rt">投影法与三视图</div><div class="rd">正投影、点线面的投影、三视图的形成与对应关系。</div></div></div>
+      <div class="rec-row"><div><div class="rt">零件图</div><div class="rd">视图选择、剖视图、断面图、尺寸与公差标注。</div></div></div>
+      <div class="rec-row"><div><div class="rt">装配图</div><div class="rd">装配图的表达方法、尺寸种类、零件序号与明细栏。</div></div></div>
+    </div>
+    <div class="row"><button class="primary" type="button" data-route="#/learning">先去学机械设计</button><button class="ghost-btn" type="button" data-route="#/subjects">回科目列表</button></div>
   </section>
-  <section class="view" id="view-quiz">
+  <section class="view" id="view-practice">
     <div class="quiz-prog">
       <div class="row" style="justify-content:space-between"><span style="font-weight:800">刷题进度</span><span id="quizProgText" style="color:var(--muted);font-size:.9rem"></span></div>
       <div class="progress"><i id="quizProgBar"></i></div>
@@ -444,10 +487,10 @@ main{padding-bottom:156px}
     <div class="quiz-stack">
     <div class="quiz-card" id="quizStart">
       <h3>开始一组练习</h3>
-      <p>先选章节，再选题型：选择、判断、填空、计算、作图。一组 10 题（选题不足 10 题有多少练多少）。哪种题型就给哪种工具——计算题有草稿纸和结果框，作图题有画板，填空题有填空框，选择、判断直接点选项。</p>
+      <p>先选章节，再选题型：选择、判断、计算、作图。一组 10 题（选题不足 10 题有多少练多少）。哪种题型就给哪种工具——计算题有草稿纸和结果框，作图题有画板，选择、判断直接点选项。</p>
       <div class="row"><select id="quizScope" aria-label="选择练习范围"></select><select id="quizType" aria-label="选择题型"></select><button class="primary" id="startBtn" type="button">开始刷题</button></div>
       <p id="poolMsg" style="display:none;color:var(--bad);margin:12px 0 0"></p>
-      <div class="row" style="margin-top:16px;border-top:1px dashed var(--line);padding-top:16px"><span style="color:var(--muted);font-size:.9rem">先学方法再刷题：</span><button class="ghost-btn" type="button" data-goto="methods">题型方法（4 种高频题型）</button><button class="ghost-btn" type="button" data-goto="summary">考点总结</button></div>
+      <div class="row" style="margin-top:16px;border-top:1px dashed var(--line);padding-top:16px"><span style="color:var(--muted);font-size:.9rem">先学方法再刷题：</span><button class="ghost-btn" type="button" data-route="#/learning/methods">题型方法（4 种高频题型）</button><button class="ghost-btn" type="button" data-route="#/learning/summary">考点总结</button></div>
     </div>
     <div class="quiz-card" id="quizPlay" hidden>
       <div class="row" style="justify-content:space-between"><span id="qCount" style="color:var(--muted);font-size:.88rem"></span><span id="qScore" style="color:var(--muted);font-size:.88rem"></span></div>
@@ -487,13 +530,31 @@ main{padding-bottom:156px}
       <h3>本组结算</h3>
       <div class="score-big"><span id="finalScore">0</span><span style="font-size:1.15rem;color:var(--muted2)"> / <span id="finalTotal">0</span></span></div>
       <p id="finalMsg"></p><div class="review" id="reviewList"></div>
-      <div class="row" style="margin-top:22px"><button class="primary" id="againBtn" type="button">再来一组</button><button class="ghost-btn" data-goto="knowledge" type="button">回去看知识点</button></div>
+      <div class="row" style="margin-top:22px"><button class="primary" id="againBtn" type="button">再来一组</button><button class="ghost-btn" data-route="#/learning" type="button">回去看知识点</button></div>
     </div>
     </div>
   </section>
-  <section class="view" id="view-notes">
+  <section class="view" id="view-review">
+    <div class="sec-head"><h2>复习中心</h2></div>
+    <p style="color:var(--muted);line-height:1.9;margin:0 0 24px">错题、薄弱点和知识点状态都在这里。错题答错自动收录，只存本机浏览器。</p>
+      <div class="group">
+      <div class="g-title">错题本（答错自动收录，只存本机浏览器）</div>
+      <div id="wrongBookList" style="display:grid;gap:12px"></div>
+    </div>
+    <div class="group">
+      <div class="g-title">薄弱知识点（自测答错或错题涉及的知识点）</div>
+      <div id="weakList" style="display:grid;gap:12px"></div>
+    </div>
+    <div class="group">
+      <div class="g-title">知识点状态 · 已阅读 ≠ 已掌握（打开知识点页记为已阅读；掌握要靠自测或手动确认）</div>
+      <div id="pointStateList" style="display:grid;gap:12px"></div>
+    </div>
+  </section>
+  <section class="view" id="view-analytics">
+    <div class="sec-head"><h2>学习分析</h2></div>
     <div class="prog-card">
       <div class="prog-title">看课进度</div>
+      <p style="color:var(--muted2);font-size:.85rem;line-height:1.8;margin:0 0 6px">看课进度是手动记录的（点 + / −），不是系统算出来的；打开知识点、做自测、刷题不会自动改它。</p>
       <div class="prog-row"><span class="prog-name">机械设计</span><div class="progress"><i id="lpDesignBar"></i></div><span class="prog-num" id="lpDesignText">7 / 42</span><span class="step-group"><button type="button" class="step-btn" id="lpDesignMinus" aria-label="机械设计进度减一">−</button><button type="button" class="step-btn" id="lpDesignPlus" aria-label="机械设计进度加一">+</button></span></div>
       <div class="prog-row"><span class="prog-name">机械制图（英语）</span><div class="progress"><i id="lpDrawBar"></i></div><span class="prog-num" id="lpDrawText">0 / 12</span><span class="step-group"><button type="button" class="step-btn" id="lpDrawMinus" aria-label="机械制图进度减一">−</button><button type="button" class="step-btn" id="lpDrawPlus" aria-label="机械制图进度加一">+</button></span></div>
     </div>
@@ -537,18 +598,6 @@ main{padding-bottom:156px}
       <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V2.5H6.5A2.5 2.5 0 0 0 4 5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div><div><div class="tt">杨可桢《机械设计基础》（第 7 版）笔记和课后习题详解</div></div></div>
       <div class="g-row"><div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6H20M9.5 12H20M9.5 18H20"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg></div><div><div class="tt">上海建桥学院 2026 专升本《机械设计基础》考试大纲</div></div></div>
     </div>
-      <div class="group">
-      <div class="g-title">错题本（答错自动收录，只存本机浏览器）</div>
-      <div id="wrongBookList" style="display:grid;gap:12px"></div>
-    </div>
-    <div class="group">
-      <div class="g-title">薄弱知识点（自测答错或错题涉及的知识点）</div>
-      <div id="weakList" style="display:grid;gap:12px"></div>
-    </div>
-    <div class="group">
-      <div class="g-title">知识点状态 · 已阅读 ≠ 已掌握（打开知识点页记为已阅读；掌握要靠自测或手动确认）</div>
-      <div id="pointStateList" style="display:grid;gap:12px"></div>
-    </div>
   </section>
   <section class="view" id="view-methods">
     <div class="sec-head"><h2>题型方法</h2></div>
@@ -560,6 +609,21 @@ main{padding-bottom:156px}
     <p style="color:var(--muted);line-height:1.9;margin:0 0 18px">按章节整理的考试考点总结，保留完整推导与解释步骤。Part 1 已是完整版；其余章节先列目录，标注待补充。</p>
     <div class="row print-hide" style="margin-bottom:24px"><button class="primary" type="button" id="sumPrintBtn">打印本页总结</button><span style="color:var(--muted2);font-size:.85rem">打印时自动隐藏顶栏、底栏与按钮</span></div>
     <div id="summaryBody"></div>
+  </section>
+  <section class="view" id="view-settings">
+    <div class="sec-head"><h2>系统设置</h2></div>
+    <div class="group">
+      <div class="g-title">外观</div>
+      <div class="rec-row"><div><div class="rt">深浅模式</div><div class="rd">当前：<span id="themeCurrent">深色</span>。选择后存在本机浏览器，刷新保持。</div></div><button type="button" class="ghost-btn" id="themeToggle2">切换到浅色</button></div>
+    </div>
+    <div class="group">
+      <div class="g-title">AI 问答</div>
+      <div class="rec-row"><div><div class="rt">Gemini API Key 与模型</div><div class="rd">Key 只存在本机浏览器，不经过服务器。在 AI 面板里设置。</div></div><button type="button" class="ghost-btn" id="openAiSettingsBtn">打开 AI 设置</button></div>
+    </div>
+    <div class="group">
+      <div class="g-title">数据</div>
+      <div class="rec-row"><div><div class="rt">学习记录只存在本机浏览器</div><div class="rd">知识点状态、个人笔记、错题本、刷题进度、看课进度都存在本机浏览器的 localStorage 里。清除浏览器数据会丢失；导出与备份在后续版本提供。</div></div></div>
+    </div>
   </section>
 </main>
 <div class="botbar">TokiLearn 2026</div>
@@ -1061,29 +1125,144 @@ var QUIZ = [
   {"ch": "第 5 章 轮系", "type": "判断", "stem": "（判断）行星轮系自由度为 1。", "opts": ["正确", "错误"], "ans": 0, "exp": "行星轮系的自由度为 1，差动轮系的自由度为 2。", "src": "2000 题·刷题六", "loc": "2000 题·刷题六 · 刷真题 判断 3 · 答案册 p.174（a/pg-055）"}
 ];
 
-/* ============ 视图切换 ============ */
-function gotoView(name){
+/* ============ 路由：全部视图走 location.hash（刷新不丢位置、后退可用、可分享链接） ============ */
+var NAV_FOR_VIEW = { overview:"overview", subjects:"subjects", learning:"learning", detail:"learning", drawing:"subjects", practice:"practice", review:"review", analytics:"analytics", settings:"settings", methods:"learning", summary:"learning" };
+/* 旧的视图名 -> 新路由（供原有代码的 gotoView("knowledge"|"methods"|"quiz"|"summary"|"notes"|"drawing") 调用） */
+var OLD_VIEW_TO_ROUTE = { knowledge:"#/learning", methods:"#/learning/methods", quiz:"#/practice", summary:"#/learning/summary", notes:"#/review", drawing:"#/subjects/drawing", detail:"#/learning" };
+var hashSteps = 0; /* 本次打开页面后经 hash 变化产生的历史步数；用于判断返回键能否安全后退 */
+var curSubject = "design";
+function showView(name){
   document.querySelectorAll(".view").forEach(function(v){ v.classList.remove("active"); });
-  document.getElementById("view-" + name).classList.add("active");
-  var nav = name === "detail" ? "knowledge" : name;
+  var el = document.getElementById("view-" + name);
+  if (el) el.classList.add("active");
+  var nav = NAV_FOR_VIEW[name] || name;
   document.querySelectorAll(".topnav button").forEach(function(b){
-    b.classList.toggle("on", b.getAttribute("data-goto") === nav);
+    b.classList.toggle("on", b.getAttribute("data-route") === "#/" + nav);
   });
   var bw = document.getElementById("brandWrap");
-  if(bw) bw.classList.remove("open");
+  if (bw) bw.classList.remove("open");
   window.scrollTo({top:0, behavior:"smooth"});
 }
-document.querySelectorAll("[data-goto]").forEach(function(el){
-  el.addEventListener("click", function(){ gotoView(el.getAttribute("data-goto")); });
+function gotoView(name){
+  var r = OLD_VIEW_TO_ROUTE[name];
+  if (r) go(r); else showView(name);
+}
+function go(route){
+  var h = route.charAt(0) === "#" ? route : "#" + route;
+  if (location.hash === h) { route(); } else { location.hash = h; }
+}
+function updateBrand(){
+  var btn = document.getElementById("brandBtn");
+  if (btn && btn.firstChild) btn.firstChild.textContent = (curSubject === "drawing" ? "机械制图" : "机械设计") + " ";
+  document.querySelectorAll(".brand-menu button").forEach(function(b){
+    var sub = b.getAttribute("data-subject");
+    var tag = b.querySelector(".cur");
+    if (sub === curSubject) {
+      if (!tag) { tag = document.createElement("span"); tag.className = "cur"; b.appendChild(tag); }
+      tag.textContent = "当前";
+    } else if (sub === "drawing") {
+      if (!tag) { tag = document.createElement("span"); tag.className = "cur"; b.appendChild(tag); }
+      tag.textContent = "未开始";
+    } else if (tag) { tag.remove(); }
+  });
+}
+function route(){
+  var hash = location.hash || "";
+  if (!hash) { location.hash = "#/overview"; return; }
+  var parts = hash.replace(/^#\/?/, "").split("/");
+  var seg = parts[0] || "overview";
+  if (seg === "learning" && parts[1] === "chapter") {
+    curSubject = "design";
+    /* 章节号 → PARTS 下标，直接渲染（不能经 openChapterByNum 绕回 go()：已在该 hash 上时会无限递归） */
+    var cnum = decodeURIComponent(parts[2] || "");
+    var cidx = -1;
+    for (var ci = 0; ci < PARTS.length; ci++) if (PARTS[ci].num === cnum) { cidx = ci; break; }
+    if (cidx >= 0 && window.renderChapter) window.renderChapter(cidx);
+    else go("#/learning");
+    updateBrand();
+    return;
+  }
+  if (seg === "learning" && parts[1] === "point") {
+    curSubject = "design";
+    if (window.renderPoint) window.renderPoint(decodeURIComponent(parts[2] || ""));
+    updateBrand();
+    return;
+  }
+  if (seg === "learning" && parts[1] === "pending") {
+    curSubject = "design";
+    openPendingDetail();
+    updateBrand();
+    return;
+  }
+  if (seg === "learning" && parts[1] === "methods") {
+    curSubject = "design"; showView("methods");
+    if (window.renderMethods) window.renderMethods();
+    updateBrand();
+    return;
+  }
+  if (seg === "learning" && parts[1] === "summary") {
+    curSubject = "design"; showView("summary");
+    if (window.renderSummary) window.renderSummary();
+    updateBrand();
+    return;
+  }
+  if (seg === "subjects" && parts[1] === "drawing") {
+    curSubject = "drawing"; showView("drawing"); updateBrand();
+    return;
+  }
+  if (seg === "overview" || seg === "subjects" || seg === "learning" || seg === "practice" || seg === "review" || seg === "analytics" || seg === "settings") {
+    if (seg !== "subjects") curSubject = "design";
+    if (seg === "review" && window.renderRecords) window.renderRecords();
+    if (seg === "overview" && window.renderOverview) window.renderOverview();
+    if (seg === "subjects" && window.renderSubjects) window.renderSubjects();
+    showView(seg);
+    updateBrand();
+    return;
+  }
+  /* 未知路由：回首页 */
+  go("#/overview");
+}
+window.addEventListener("hashchange", function(){ hashSteps++; route(); });
+/* data-route 用事件委托：Overview/科目卡等动态生成的按钮也能点 */
+document.addEventListener("click", function(e){
+  var t = e.target.closest ? e.target.closest("[data-route]") : null;
+  if (t) go(t.getAttribute("data-route"));
+});
+/* 详情页返回：站内导航过就用浏览器后退，否则回学习中心（直接打开深链时不跳出本站） */
+document.getElementById("detailBack").addEventListener("click", function(){
+  if (hashSteps > 0) history.back(); else go("#/learning");
 });
 
-/* ============ 深浅模式切换（默认深色，不保存，刷新回到深色） ============ */
+/* ============ 深浅模式切换（默认深色，选择后存本机 md_theme，刷新保持） ============ */
+var THEME_KEY = "md_theme";
+try {
+  var savedTheme = localStorage.getItem(THEME_KEY);
+  if (savedTheme === "light" || savedTheme === "dark") document.documentElement.setAttribute("data-theme", savedTheme);
+} catch(e){}
+function currentTheme(){ return document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark"; }
+function applyTheme(t){
+  document.documentElement.setAttribute("data-theme", t);
+  try { localStorage.setItem(THEME_KEY, t); } catch(e){}
+  updateThemeUI();
+}
+function updateThemeUI(){
+  var toLight = currentTheme() !== "light";
+  var label = toLight ? "切换到浅色模式" : "切换到深色模式";
+  var b1 = document.getElementById("themeToggle");
+  if (b1) b1.setAttribute("aria-label", label);
+  var b2 = document.getElementById("themeToggle2");
+  if (b2) b2.textContent = toLight ? "切换到浅色" : "切换到深色";
+  var cur = document.getElementById("themeCurrent");
+  if (cur) cur.textContent = currentTheme() === "light" ? "浅色" : "深色";
+}
 document.getElementById("themeToggle").addEventListener("click", function(){
-  var root = document.documentElement;
-  var toLight = root.getAttribute("data-theme") !== "light";
-  root.setAttribute("data-theme", toLight ? "light" : "dark");
-  this.setAttribute("aria-label", toLight ? "切换到深色模式" : "切换到浅色模式");
+  applyTheme(currentTheme() === "light" ? "dark" : "light");
 });
+var themeToggle2 = document.getElementById("themeToggle2");
+if (themeToggle2) themeToggle2.addEventListener("click", function(){
+  applyTheme(currentTheme() === "light" ? "dark" : "light");
+});
+updateThemeUI();
 
 /* ============ 顶栏品牌下拉：机械设计 / 机械制图（英语） ============ */
 var brandWrap = document.getElementById("brandWrap");
@@ -1109,7 +1288,7 @@ document.querySelectorAll(".brand-menu button").forEach(function(b){
   b.addEventListener("click", function(){
     brandWrap.classList.remove("open");
     brandBtn.setAttribute("aria-expanded", "false");
-    gotoView(b.getAttribute("data-subject") === "drawing" ? "drawing" : "knowledge");
+    go(b.getAttribute("data-subject") === "drawing" ? "#/subjects/drawing" : "#/learning");
   });
 });
 
@@ -1133,8 +1312,9 @@ function renderParts(filter){
     card.querySelector(".chap-head").addEventListener("click", function(){ openDetail(i); });
     chapList.appendChild(card);
   });
-  /* 未完待续 */
-  if(!filter || "后续章节 轴 轴承 齿轮传动 蜗杆 带传动 链传动 连接 弹簧".indexOf(filter) !== -1 || shown > 0){
+  /* 未完待续：搜不到且本卡也不匹配时不显示本卡；“无结果”提示只在两者都不显示时出现 */
+  var pendShown = !filter || "后续章节 轴 轴承 齿轮传动 蜗杆 带传动 链传动 连接 弹簧".indexOf(filter) !== -1 || shown > 0;
+  if(pendShown){
     var pend = document.createElement("article");
     pend.className = "chap";
     pend.innerHTML =
@@ -1146,7 +1326,7 @@ function renderParts(filter){
     pend.querySelector(".chap-head").addEventListener("click", function(){ openPendingDetail(); });
     chapList.appendChild(pend);
   }
-  document.getElementById("chapEmpty").style.display = shown === 0 ? "block" : "none";
+  document.getElementById("chapEmpty").style.display = (shown === 0 && !pendShown) ? "block" : "none";
 }
 renderParts("");
 document.getElementById("chapSearch").addEventListener("input", function(){ renderParts(this.value.trim()); });
@@ -1203,28 +1383,18 @@ var DETAILS = {
     ["后续章节目录", "间歇运动机构、机械运转速度波动的调节、回转件的平衡、机械零件设计概论、连接、齿轮传动、蜗杆传动、带传动和链传动、轴、滑动轴承、滚动轴承、联轴器 / 离合器和制动器、弹簧。等笔记补上，再逐章加通俗讲解和题目。"]
   ]
 };
-function fillDetail(title, sub, secs, formula, trap){
-  document.getElementById("detailTitle").textContent = title;
-  document.getElementById("detailSub").textContent = sub;
-  document.getElementById("detailBody").innerHTML = secs.map(function(s){
+/* ============ 后续章节页：DETAILS["待"] 的唯一入口，走同一详情页 ============ */
+function openPendingDetail(){
+  document.getElementById("detailTitle").textContent = "后续章节";
+  document.getElementById("detailSub").textContent = "杨可桢《机械设计基础》（第 7 版）目录";
+  document.getElementById("detailBody").innerHTML = (DETAILS["待"] || []).map(function(s){
     return '<div class="detail-sec"><h3>' + s[0] + '</h3><p>' + s[1] + '</p></div>';
   }).join("");
   var f = document.getElementById("detailFormula"), fh = document.getElementById("detailFormulaH");
   var t = document.getElementById("detailTrap"), th = document.getElementById("detailTrapH");
-  if(formula){ f.innerHTML = formula; f.style.display = ""; fh.style.display = ""; }
-  else { f.style.display = "none"; fh.style.display = "none"; }
-  if(trap){ t.textContent = trap; t.style.display = ""; th.style.display = ""; }
-  else { t.style.display = "none"; th.style.display = "none"; }
-  gotoView("detail");
+  f.style.display = "none"; fh.style.display = "none"; t.style.display = "none"; th.style.display = "none";
+  showView("detail");
 }
-function openDetail(i){
-  var p = PARTS[i];
-  fillDetail(p.title, p.sub, DETAILS[p.num] || [], p.formula, p.trap);
-}
-function openPendingDetail(){
-  fillDetail("后续章节", "杨可桢《机械设计基础》（第 7 版）目录", DETAILS["待"] || [], "", "");
-}
-document.getElementById("detailBack").addEventListener("click", function(){ gotoView("knowledge"); });
 
 /* ============ 刷题引擎 ============ */
 var scopeSel = document.getElementById("quizScope");
@@ -1233,9 +1403,9 @@ QUIZ.forEach(function(q){ if(chaptersSeen.indexOf(q.ch) === -1) chaptersSeen.pus
 scopeSel.innerHTML = '<option value="__all">全部章节（随机 10 题）</option>' +
   chaptersSeen.map(function(c){ return '<option value="' + c + '">' + c + '</option>'; }).join("");
 
-/* 题型分类：选择 / 判断 / 填空 / 计算 / 作图（题库数据里写作「画图」） */
+/* 题型分类：选择 / 判断 / 计算 / 作图（题库数据里写作「画图」）；填空题库为 0 道，入口已隐藏 */
 var typeSel = document.getElementById("quizType");
-var TYPE_FILTERS = [["__all", "全部题型"], ["选择", "选择"], ["判断", "判断"], ["填空", "填空"], ["计算", "计算"], ["画图", "作图"]];
+var TYPE_FILTERS = [["__all", "全部题型"], ["选择", "选择"], ["判断", "判断"], ["计算", "计算"], ["画图", "作图"]];
 typeSel.innerHTML = TYPE_FILTERS.map(function(t){
   var n = t[0] === "__all" ? QUIZ.length : QUIZ.filter(function(q){ return q.type === t[0]; }).length;
   return '<option value="' + t[0] + '">' + t[1] + "（" + n + " 题）</option>";
@@ -1904,7 +2074,15 @@ wirePadTools(quizPad, "quizPad");
   document.getElementById("aiText").addEventListener("keydown", function(e){
     if(e.key === "Enter") send();
   });
+  /* 供设置页调用：打开 AI 面板并展开设置区 */
+  window.openAiSettings = function(){ openPanel(); setSettingsOpen(true); };
 })();
+
+/* ============ 设置页：打开 AI 设置 ============ */
+var openAiSettingsBtn = document.getElementById("openAiSettingsBtn");
+if (openAiSettingsBtn) openAiSettingsBtn.addEventListener("click", function(){
+  if (window.openAiSettings) window.openAiSettings();
+});
 
 /* ============ 考点页：章节考点由 PARTS 数据渲染（只列定义、公式、条件、结论） ============ */
 (function(){
@@ -1964,6 +2142,962 @@ wirePadTools(quizPad, "quizPad");
 </script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-<script src="data:application/javascript;base64,LyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICBUb2tpTGVhcm4g56ysIDEg6Zi25q615pWZ5a2m5Y2H57qn77yI6ICD6K+V5a+85ZCR77yJCiAgIC0g55+l6K+G54K55paw57uT5p6E77ya5byV5YWlIOKGkiDlrprkuYnkuI7pgJrkv5fop6Pph4og4oaSIOWJjee9ruefpeivhiDihpIg55+l6K+G6IGU57O7CiAgIC0gTGV2ZWwgMOKAkzUg5YiG5bGCICsg6L+H5rih5L6L6aKY5YWl5Y+jCiAgIC0g6aKY5Z6L5pa55rOV6aG1IC8g6ICD54K55oC757uT6aG1CiAgIC0g6Ieq5rWL77yI5YiG5bGC5o+Q56S677yJKyDkuKrkurrnrJTorrAgKyDplJnpopjmnKwgKyDoloTlvLHngrkgKyDlt7LpmIXor7sv5bey5o6M5o+hCiAgIOS4quS6uuiusOW9leWPquWtmOa1j+iniOWZqCBsb2NhbFN0b3JhZ2Ug55qE54us56uL6ZSuIG1kX2xlYXJuX3Yx77yMCiAgIOS4juWOn+aciSBtZF9xdWl6X2RvbmUgLyBtZF9wcm9ncmVzcyAvIG1kX2dlbWluaV8qIOS6kuS4jeimhuebluOAggogICA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovCihmdW5jdGlvbigpewoidXNlIHN0cmljdCI7CgovKiAtLS0tLS0tLS0tIOS4quS6uuiusOW9le+8iOeLrOeri+aVsOaNruWMuu+8iSAtLS0tLS0tLS0tICovCnZhciBMU19LRVkgPSAibWRfbGVhcm5fdjEiOwp2YXIgc3RvcmUgPSB7IHBvaW50czp7fSwgcW5vdGVzOnt9LCB3cm9uZzpbXSB9Owp0cnkgewogIHZhciBzYXZlZCA9IEpTT04ucGFyc2UobG9jYWxTdG9yYWdlLmdldEl0ZW0oTFNfS0VZKSB8fCAibnVsbCIpOwogIGlmIChzYXZlZCkgewogICAgaWYgKHNhdmVkLnBvaW50cykgc3RvcmUucG9pbnRzID0gc2F2ZWQucG9pbnRzOwogICAgaWYgKHNhdmVkLnFub3Rlcykgc3RvcmUucW5vdGVzID0gc2F2ZWQucW5vdGVzOwogICAgaWYgKHNhdmVkLndyb25nKSBzdG9yZS53cm9uZyA9IHNhdmVkLndyb25nOwogIH0KfSBjYXRjaChlKXt9CmZ1bmN0aW9uIHNhdmVTdG9yZSgpeyB0cnkgeyBsb2NhbFN0b3JhZ2Uuc2V0SXRlbShMU19LRVksIEpTT04uc3RyaW5naWZ5KHN0b3JlKSk7IH0gY2F0Y2goZSl7fSB9CmZ1bmN0aW9uIHBTdGF0ZShpZCl7CiAgaWYgKCFzdG9yZS5wb2ludHNbaWRdKSBzdG9yZS5wb2ludHNbaWRdID0geyByZWFkOmZhbHNlLCBtYXN0ZXJlZDpmYWxzZSwgZmF2OmZhbHNlLCBsZXZlbDoiIiwgbm90ZTp7dToiIixxOiIiLGU6IiJ9LCB0ZXN0Ont9IH07CiAgcmV0dXJuIHN0b3JlLnBvaW50c1tpZF07Cn0KCi8qIC0tLS0tLS0tLS0g5bel5YW3IC0tLS0tLS0tLS0gKi8KZnVuY3Rpb24gcm0oZWwpewogIGlmICh3aW5kb3cucmVuZGVyTWF0aEluRWxlbWVudCAmJiBlbCkgewogICAgdHJ5IHsgcmVuZGVyTWF0aEluRWxlbWVudChlbCwgeyBkZWxpbWl0ZXJzOlsKICAgICAgeyBsZWZ0OiJcXFsiLCByaWdodDoiXFxdIiwgZGlzcGxheTp0cnVlIH0sCiAgICAgIHsgbGVmdDoiXFwoIiwgcmlnaHQ6IlxcKSIsIGRpc3BsYXk6ZmFsc2UgfQogICAgXSwgdGhyb3dPbkVycm9yOmZhbHNlIH0pOyB9IGNhdGNoKGUpe30KICB9Cn0KZnVuY3Rpb24gbGlua0hUTUwobCl7CiAgaWYgKGwuaWQpIHJldHVybiAnPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJrcC1saW5rIiBkYXRhLXBvaW50PSInICsgbC5pZCArICciPicgKyBsLnQgKyAnPC9idXR0b24+JzsKICByZXR1cm4gJzxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0ia3AtbGluayIgZGF0YS1wYXJ0PSInICsgbC5wYXJ0ICsgJyI+JyArIGwudCArICc8L2J1dHRvbj4nOwp9CnZhciBMVl9OQU1FUyA9IFsiTGV2ZWwgMCDCtyDpm7bln7rnoYDorqTor4YiLCJMZXZlbCAxIMK3IOWfuuacrOeQhuinoyIsIkxldmVsIDIgwrcg5Y2V55+l6K+G54K55bqU55SoIiwiTGV2ZWwgMyDCtyDnn6Xor4bogZTns7siLCJMZXZlbCA0IMK3IOe7vOWQiOS5oOmimCIsIkxldmVsIDUgwrcg6L+B56e75LiO5ouT5bGVIl07CgovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiAgIFBhcnQgMSDlha3kuKrmoLjlv4Pnn6Xor4bngrnvvIjmlrDnu5PmnoTlrozmlbTniYjvvIkKICAg5YaF5a655L6d5o2uIFRhc2tQcm8g56yU6K6w5LiO5p2o5Y+v5qGi44CK5py65qKw6K6+6K6h5Z+656GA44CL56ysIDcg54mICiAgID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8KdmFyIFBPSU5UUyA9IFsKewogIGlkOiJwMS1wYWlyIiwgcGFydDoiMSIsIGNoOiLnrKwgMSDnq6Ag6Ieq55Sx5bqmIiwgdGl0bGU6Iui/kOWKqOWJr+S4jui/kOWKqOeugOWbviIsIGx2OlswLDJdLAogIGludHJvOlsKICAgICLnnJ/lrp7mnLrlmajnmoTpm7bku7blvaLnirbljYPlt67kuIfliKvvvJrmnInlvK/nmoTjgIHluKblrZTnmoTjgIHljproloTkuI3kuIDnmoTjgILkvYbnoJTnqbbkuIDlj7DmnLrlmajjgIzmgI7kuYjliqjjgI3ml7bvvIzpm7bku7bnmoTlhbfkvZPlvaLnirblpKflpJrmmK/lubLmibDkv6Hmga/igJTigJTnnJ/mraPlhrPlrprov5DliqjnmoTvvIzlj6rmnInmnoTku7bkuYvpl7TmgI7moLfov57mjqXjgIHog73nm7jlr7nmgI7moLfliqjjgIIiLAogICAgIuaJgOS7pemcgOimgeS4pOS4quW3peWFt++8muWFiOeUqOOAjOi/kOWKqOWJr+OAjeaPj+i/sOaehOS7tuS5i+mXtOeahOi/nuaOpe+8iOWPqueci+aOpeinpuW9ouW8j+WSjOWFgeiuuOeahOebuOWvuei/kOWKqO+8jOS4jeeuoembtuS7tumVv+S7gOS5iOagt++8ie+8m+WGjeeUqOOAjOi/kOWKqOeugOWbvuOAjeaKiuaVtOWPsOacuuWZqOaKveixoeaIkOe6v+adoeWSjOespuWPt++8jOWPquS/neeVmeWGs+Wumui/kOWKqOeahOS/oeaBr+OAguWQjumdouaJgOacieiuoeeul++8iOiHqueUseW6puOAgeeerOW/g++8iemDveW7uueri+WcqOi/meW8oOeugOWbvuS4iuOAgiIKICBdLAogIGRlZjp7CiAgICBwbGFpbjoi5Lik5Liq5p6E5Lu255u05o6l5o6l6Kem44CB6L+Y6IO955u45a+55Yqo5LiA5Yqo77yM6L+Z5Liq6L+e5o6l5bCx5Y+r6L+Q5Yqo5Ymv44CC5oyJ5o6l6Kem55qE5qC35a2Q5YiG5Lik57G777ya6Z2i5o6l6Kem55qE5piv5L2O5Ymv77yI6L2s5Yqo5Ymv44CB56e75Yqo5Ymv77yJ77yM54K55oiW57q/5o6l6Kem55qE5piv6auY5Ymv77yI6b2/6L2u5ZWu5ZCI44CB5Ye46L2u6aG2552A5o6o5p2G77yJ44CC6L+Q5Yqo566A5Zu+5bCx5piv5oyJ5q+U5L6L5Y+q55S75Yaz5a6a6L+Q5Yqo55qE57q/5p2h5ZKM56ym5Y+355qE5Zu+44CCIiwKICAgIHN0cmljdDoi6L+Q5Yqo5Ymv77ya5Lik5p6E5Lu255u05o6l5o6l6Kem5bm26IO95Lqn55Sf5LiA5a6a55u45a+56L+Q5Yqo55qE6L+e5o6l44CC5oyJ5o6l6Kem54m55oCn5YiG5Li65L2O5Ymv77yI6Z2i5o6l6Kem77yJ5LiO6auY5Ymv77yI54K544CB57q/5o6l6Kem77yJ44CC5bmz6Z2i5L2O5Ymv5YyF5ous6L2s5Yqo5Ymv77yI5Y+q5YWB6K6455u45a+56L2s5Yqo77yJ5LiO56e75Yqo5Ymv77yI5Y+q5YWB6K6455u45a+556e75Yqo77yJ44CC5py65p6E6L+Q5Yqo566A5Zu+77ya55So6KeE5a6a56ym5Y+35ZKM57q/5p2h5oyJ5q+U5L6L6KGo56S65py65p6E6L+Q5Yqo5YWz57O755qE566A5YyW5Zu+5b2i44CCIiwKICAgIG1hdGg6IuS4gOS4quS9nOW5s+mdoui/kOWKqOeahOiHqueUseaehOS7tuaciSBcXCgzXFwpIOS4quiHqueUseW6puOAgue7hOaIkOS9juWJr+WQjuS/neeVmSBcXCgxXFwpIOS4quiHqueUseW6pu+8iOW8leWFpSBcXCgyXFwpIOS4que6puadn++8ie+8jOe7hOaIkOmrmOWJr+WQjuS/neeVmSBcXCgyXFwpIOS4quiHqueUseW6pu+8iOW8leWFpSBcXCgxXFwpIOS4que6puadn++8ie+8mlxcWzMtMj0xIFxccXF1YWQgMy0xPTJcXF0iLAogICAgc3ltYm9sczpbWyLkvY7lia8iLCLpnaLmjqXop6bnmoTov5Dliqjlia/vvJrovazliqjlia/jgIHnp7vliqjlia/vvIzlkITlvJXlhaUgMiDkuKrnuqbmnZ8iXSxbIumrmOWJryIsIueCueaIlue6v+aOpeinpueahOi/kOWKqOWJr++8jOWQhOW8leWFpSAxIOS4que6puadnyJdLFsi6L2s5Yqo5Ymv56ym5Y+3Iiwi566A5Zu+5Lit55So5bCP5ZyG6KGo56S677yM5ZyG5b+D5piv55u45a+56L2s5Yqo6L2057q/Il0sWyLnp7vliqjlia/nrKblj7ciLCLnroDlm77kuK3miorkuIDmnoTku7bnlLvmiJDmu5HlnZfmiJblr7zot6/lvaLlvI8iXV0sCiAgICBleDoi6Zeo5LiO6Zeo5qGG5LmL6Ze05piv6L2s5Yqo5Ymv77yI5Y+q6IO955u45a+56L2s77yJ77yb5oq95bGJ5LiO5p+c5L2T5LmL6Ze05piv56e75Yqo5Ymv77yI5Y+q6IO955u45a+55ruR77yJ77yb54Gr6L2m6L2m6L2u5LiO6ZOB6L2o44CB6b2/6L2u5LiO6b2/6L2u5LmL6Ze05piv6auY5Ymv77yI54K544CB57q/5o6l6Kem77yJ44CCIiwKICAgIG1lYW5pbmc6Iui/kOWKqOeugOWbvueahOaEj+S5ieaYr+OAjOWPqueci+i/kOWKqOOAgeS4jeeci+mVv+ebuOOAje+8mueEiuaIkOWImuaAp+S4ieinkuW9oueahOWHoOagueadhuWcqOeugOWbvumHjOWPqueul+S4gOS4quaehOS7tu+8m+mrmOWJr+WcqOeugOWbvuS4reimgeeUu+WHuuaOpeinpuWkhOeahOabsue6v+i9ruW7k+OAgiIsCiAgICBjb25mdXNlOiLov5Dliqjlia8g4omgIOS4gOWIh+i/nuaOpeOAguieuuagk+aKiuS4pOWdl+adv+aLp+atu+OAgeS4jeiDveebuOWvuei/kOWKqO+8jOmCo+aYr+WbuuWumui/nuaOpe+8jOS4jeaYr+i/kOWKqOWJr+OAguOAjOebtOaOpeaOpeinpuOAjeWSjOOAjOiDveS6p+eUn+ebuOWvuei/kOWKqOOAjeS4pOS4quadoeS7tue8uuS4gOS4jeWPr++8jOWIpOaWremimOacgOeIseWcqOi/meWPpeivneS4iuaMluWdkeOAgiIKICB9LAogIHByZTpbIHt0OiLnu6rorrrvvJrmnoTku7bkuI7pm7bku7bnmoTljLrliKsiLCBwYXJ0OiLnu6oifSBdLAogIGxpbmtzOlsKICAgICLoh6rnlLHluqblhazlvI/ph4znmoQgXFwoUF9MXFwp44CBXFwoUF9IXFwpIOWwseaYr+S7jueugOWbvuS4iuaVsOWHuuadpeeahOS9juWJr+OAgemrmOWJr+S4quaVsOKAlOKAlOeugOWbvueUu+mUme+8jOWQjumdouWFqOmUmeOAgiIsCiAgICAi5aSN5ZCI6ZOw6ZO+44CB6YCf5bqm556s5b+D55qE5Yik5pat6YO95YWI6KaB6K6k5Ye65q+P5Liq6L+Q5Yqo5Ymv55qE57G75Z6L5ZKM5L2N572u77yM5omA5Lul5pys55+l6K+G54K55pivIFBhcnQgMSDnmoTlnLDln7rjgIIiCiAgXSwKICB0ZXN0OlsKICAgIHsgcToi5Yik5pat77ya5Yeh5piv5Lik5p6E5Lu255u05o6l5o6l6Kem55qE6L+e5o6l6YO95Y+r6L+Q5Yqo5Ymv44CCIiwgb3B0czpbIuato+ehriIsIumUmeivryJdLCBhbnM6MSwKICAgICAgaDE6IuaDs+aDs+i/kOWKqOWJr+WumuS5iemHjOeahOS4pOS4quadoeS7tu+8muebtOaOpeaOpeinpu+8jOi/mOimgeKApuKApu+8nyIsCiAgICAgIGgyOiLonrrmoJPmi6fmrbvnmoTkuKTlnZfmnb/nm7TmjqXmjqXop6bvvIzkvYbog73nm7jlr7nov5DliqjlkJfvvJ8iLAogICAgICBmaXg6Iui/kOWKqOWJr+imgeaxguOAjOebtOaOpeaOpeinpiArIOiDveS6p+eUn+S4gOWumuebuOWvuei/kOWKqOOAjeS4pOS4quadoeS7tuWQjOaXtuaIkOeri+OAguWPquaOpeinpuS4jeiDveWKqOeahOaYr+WbuuWumui/nuaOpe+8jOS4jeaYr+i/kOWKqOWJr+OAgiIgfSwKICAgIHsgcToi5q2l6aqk6KGl5YWo77ya55S75py65p6E6L+Q5Yqo566A5Zu+5pe277yM54SK5oiQ5Yia5oCn5LiJ6KeS5b2i55qE5LiJ5qC55p2G5bqU5b2T566X5L2c77yI44CA77yJ44CCIiwgb3B0czpbIjMg5Liq5p6E5Lu2IiwiMSDkuKrmnoTku7YiLCIyIOS4quaehOS7tiIsIueci+aDheWGteWGjeWumiJdLCBhbnM6MSwKICAgICAgaDE6IueugOWbvuWPqueci+OAjOS4gOi1t+WKqOOAjeeahOWNleWFg+KAlOKAlOS4ieagueadhueEiuatu+WQjui/mOiDveebuOWvueWKqOWQl++8nyIsCiAgICAgIGgyOiLmnoTku7bmmK/mnIDlsI/nmoTov5DliqjljZXlhYPvvJrmsLjov5zkuIDotbfliqjnmoTmlbTkvZPlj6rnrpfkuIDkuKrjgIIiLAogICAgICBmaXg6IueEiuaIkOWImuaAp+aVtOS9k+eahOWHoOagueadhuS5i+mXtOayoeacieebuOWvuei/kOWKqO+8jOWcqOeugOWbvumHjOaYr+S4gOS4quaehOS7tuOAguaVsOa0u+WKqOaehOS7tuaVsCBuIOaXtui/meaYr+acgOW4uOingeeahOWkmueul+adpea6kOOAgiIgfSwKICAgIHsgcToi6b2/6L2u5ZWu5ZCI5aSE5Lik6L2u6b2/55qE5o6l6Kem5piv54K577yI57q/77yJ5o6l6Kem77yM5a6D5bGe5LqO77yI44CA77yJ44CCIiwgb3B0czpbIui9rOWKqOWJryIsIuenu+WKqOWJryIsIuS9juWJryIsIumrmOWJryJdLCBhbnM6MywKICAgICAgaDE6IuS9juWJr+WSjOmrmOWJr+aYr+aMieS7gOS5iOWIhueahO+8n+eci+aOpeinpumdouenr+OAgiIsCiAgICAgIGgyOiLpnaLmjqXop6bmmK/kvY7lia/vvJvngrnjgIHnur/mjqXop6bmmK/igJTigJTvvJ8iLAogICAgICBmaXg6IuaMieaOpeinpuW9ouW8j+WIhu+8mumdouaOpeinpuS4uuS9juWJr++8iOi9rOWKqOWJr+OAgeenu+WKqOWJr++8ie+8jOeCueaIlue6v+aOpeinpuS4uumrmOWJr+OAgum9v+i9ruWVruWQiOOAgeWHuOi9ruS4juaOqOadhuaOpeinpumDveaYr+mrmOWJr++8jOWPquW8leWFpSAxIOS4que6puadn+OAgiIgfSwKICAgIHsgcToi5qaC5b+15Yik5pat77ya57uE5oiQ6L2s5Yqo5Ymv55qE5Lik5p6E5Lu277yM5Zyo5o6l6Kem5aSE5YWB6K6455qE55u45a+56L+Q5Yqo5piv77yI44CA77yJ44CCIiwgb3B0czpbIuWPquiDveebuOWvueenu+WKqCIsIuWPquiDveebuOWvuei9rOWKqCIsIuaXouiDvei9rOWPiOiDveenuyIsIuS4jeiDveebuOWvuei/kOWKqCJdLCBhbnM6MSwKICAgICAgaDE6IuWbnuaDs+mXqOe7lemXqOi9tOW8gOWQiOeahOeUu+mdouOAgiIsCiAgICAgIGgyOiLovazliqjlia/nmoTlkI3lrZfmnKzouqvlsLHmj5DnpLrkuobnrZTmoYjjgIIiLAogICAgICBmaXg6Iui9rOWKqOWJr+WPquWFgeiuuOS4pOaehOS7tuWcqOW5s+mdouWGheebuOWvuei9rOWKqO+8jOW8leWFpSAyIOS4que6puadn++8m+enu+WKqOWJr+WPquWFgeiuuOayv+e7meWumuaWueWQkeebuOWvueenu+WKqOOAgiIgfQogIF0KfSwKewogIGlkOiJwMS1kb2YiLCBwYXJ0OiIxIiwgY2g6IuesrCAxIOeroCDoh6rnlLHluqYiLCB0aXRsZToi6Ieq55Sx5bqm5YWs5byPIEYgPSAzbiDiiJIgMlBMIOKIkiBQSCIsIGx2OlswLDNdLAogIGludHJvOlsKICAgICLmi7/liLDkuIDkuKrmnLrmnoTvvIzlhYjopoHlm57nrZTkuKTkuKrpl67popjvvJrlroPliLDlupXog73kuI3og73liqjvvJ/liqjotbfmnaXkuYvlkI7vvIzmr4/kuKrmnoTku7bnmoTkvY3nva7mmK/kuI3mmK/llK/kuIDnoa7lrprnmoTvvIjnu5nkuIDkuKrovpPlhaXvvIzovpPlh7rlsLHlrprmrbvvvInvvJ/ov5nkuKTkuKrpl67popjpg73pnaDmlbDjgIzoh6rnlLHluqbjgI3mnaXlm57nrZTjgIIiLAogICAgIuiHqueUseW6pueahOaEj+aAneaYr++8muimgeiuqeacuuaehOmHjOavj+S4quaehOS7tueahOS9jee9rumDveWumuS4i+adpe+8jOmcgOimgeeLrOeri+e7meWumuWHoOS4qui/kOWKqOWPguaVsOOAgumcgOimgSAxIOS4qu+8jOmFjSAxIOS4quWOn+WKqOS7tu+8iOavlOWmguS4gOWPsOeUteacuu+8ieWwseWkn++8m+mcgOimgSAyIOS4qu+8jOWwseW+l+mFjSAyIOS4quWOn+WKqOS7tuOAgiIKICBdLAogIGRlZjp7CiAgICBwbGFpbjoi5q+P5Liq5rS75Yqo5p6E5Lu25Zyo5bmz6Z2i6YeM5pys5p2l6IO95pyJIDMg56eN54us56uL6L+Q5Yqo77yI5bem5Y+z44CB5LiK5LiL44CB6L2s77yJ44CC5q+P6KOF5LiA5Liq5L2O5Ymv6KKr566h5L2PIDIg56eN77yM5q+P6KOF5LiA5Liq6auY5Ymv6KKr566h5L2PIDEg56eN44CC5Ymp5LiL55qE5bCx5piv6Ieq55Sx5bqmIEbjgIIiLAogICAgc3RyaWN0OiLlubPpnaLmnLrmnoToh6rnlLHluqbvvJrmnLrmnoTlhbfmnInni6znq4vov5DliqjnmoTmlbDnm67jgILmnLrmnoTlhbfmnInnoa7lrprov5DliqjnmoTmnaHku7bmmK/vvJroh6rnlLHluqYgXFwoRj4wXFwp77yM5LiU6Ieq55Sx5bqm5pWw562J5LqO5Y6f5Yqo5Lu25pWw44CCIiwKICAgIG1hdGg6IlxcW0YgPSAzbiAtIDJQX0wgLSBQX0hcXF3mjqjlr7zvvJpcXChuXFwpIOS4qua0u+WKqOaehOS7tuS6kuS4jei/nuaOpeaXtuWFseaciSBcXCgzblxcKSDkuKroh6rnlLHluqbvvJvmr4/kuKrkvY7lia/lvJXlhaUgXFwoMlxcKSDkuKrnuqbmnZ/vvIzlhbHlh48gXFwoMlBfTFxcKe+8m+avj+S4qumrmOWJr+W8leWFpSBcXCgxXFwpIOS4que6puadn++8jOWFseWHjyBcXChQX0hcXCnjgIIiLAogICAgc3ltYm9sczpbWyJcXChGXFwpIiwi5py65p6E55qE6Ieq55Sx5bqmIl0sWyJcXChuXFwpIiwi5rS75Yqo5p6E5Lu25pWw77yI5LiN5ZCr5py65p6277yB5py65p625LiN566X5rS75Yqo5p6E5Lu277yJIl0sWyJcXChQX0xcXCkiLCLkvY7lia/kuKrmlbDvvIjovazliqjlia8gKyDnp7vliqjlia/vvIkiXSxbIlxcKFBfSFxcKSIsIumrmOWJr+S4quaVsCJdXSwKICAgIGV4OiLmn5DmnLrmnoQgXFwobj01XFwp44CBXFwoUF9MPTdcXCnjgIFcXChQX0g9MFxcKe+8jOWImSBcXChGID0gM1xcdGltZXMgNSAtIDJcXHRpbWVzIDcgLSAwID0gMVxcKe+8jOmFjSAxIOS4quWOn+WKqOS7tui/kOWKqOWwseehruWumuOAgiIsCiAgICBtZWFuaW5nOiJcXChGXFwpIOS4juWOn+WKqOS7tuaVsOeahOWFs+ezu+WwseaYr+e7k+iuuu+8muebuOetiSDihpIg6L+Q5Yqo56Gu5a6a77yb5Y6f5Yqo5Lu25bCR5LqOIFxcKEZcXCkg4oaSIOi/kOWKqOS4jeehruWumu+8iOaehOS7tuS8muS5seaZg++8ie+8m+WOn+WKqOS7tuWkmuS6jiBcXChGXFwpIOKGkiDmnLrmnoTooqvmhovkvY/vvIzmnIDlvLHnmoTmnoTku7bkvJrooqvmjZ/lnY/jgIJcXChGIFxcbGUgMFxcKSDml7bmnLrmnoTmoLnmnKzkuI3mmK/mnLrmnoTvvIzlj6rmmK/pnZnlrprnmoTmiJbotoXpnZnlrprnmoTnu5PmnoTjgIIiLAogICAgY29uZnVzZToi6Ieq55Sx5bqm5YWs5byPIHZzIOacuuaehOiDveWKqOeahOadoeS7tu+8mueul+WHuiBcXChGPTFcXCkg5Y+q6K+05piO6Ieq55Sx5bqm5pivIDHvvIzov5jopoHlho3moLjlr7nljp/liqjku7bmlbDkuZ/mmK8gMe+8jOaJjeiDveivtOi/kOWKqOehruWumuOAguWPpuWkliBcXChuXFwpIOaYr+a0u+WKqOaehOS7tuaVsO+8jOaKiuacuuaetuaVsOi/m+WOu+aYr+acgOmrmOmikeeahOmUmeivr+OAgiIKICB9LAogIHByZTpbIHt0OiLov5Dliqjlia/kuI7ov5DliqjnroDlm74iLCBpZDoicDEtcGFpciJ9IF0sCiAgbGlua3M6WwogICAgIuWFrOW8j+acrOi6q+S4jemavu+8jOmavueahOaYr+aKiiBcXChuXFwp44CBXFwoUF9MXFwp44CBXFwoUF9IXFwpIOaVsOWvue+8muWkjeWQiOmTsOmTvuW9seWTjSBcXChQX0xcXCnvvIzlsYDpg6joh6rnlLHluqblvbHlk40gXFwoblxcKe+8jOiZmue6puadn+W9seWTjeWJr+eahOiuoeaVsOKAlOKAlOS4ieexu+eJueauiuaDheWGtemDveaYr+S4uui/meS4quWFrOW8j+acjeWKoeeahOOAgiIsCiAgICAiUGFydCA1IOWIpOaWreW3ruWKqOi9ruezu++8iFxcKEY9MlxcKe+8ieS4juihjOaYn+i9ruezu++8iFxcKEY9MVxcKe+8ie+8jOeUqOeahOi/mOaYr+i/meS4quWFrOW8j+WSjOOAjEYgPSDljp/liqjku7bmlbDjgI3nmoTmnaHku7bjgIIiCiAgXSwKICB0ZXN0OlsKICAgIHsgcToi6K6h566X77ya5rS75Yqo5p6E5Lu25pWwIFxcKG49NlxcKe+8jOS9juWJryBcXChQX0w9OFxcKe+8jOmrmOWJryBcXChQX0g9MVxcKe+8jOiHqueUseW6piBcXChGXFwpIOS4uu+8iOOAgO+8ieOAgiIsIG9wdHM6WyIwIiwiMSIsIjIiLCIzIl0sIGFuczoxLAogICAgICBoMToi5YWI5YaZ5YWs5byP77yaXFwoRiA9IDNuIC0gMlBfTCAtIFBfSFxcKe+8jOWGjemAkOmhueS7o+WFpeOAgiIsCiAgICAgIGgyOiJcXCgzXFx0aW1lcyA2ID0gMThcXCnvvIxcXCgyXFx0aW1lcyA4ID0gMTZcXCnvvIzlho3lh4/ljrvpq5jlia/nmoQgMeOAgiIsCiAgICAgIGZpeDoiXFwoRiA9IDNcXHRpbWVzIDYgLSAyXFx0aW1lcyA4IC0gMSA9IDFcXCnjgILorqHnrpfpopjnmoTkuKLliIbngrnlh6DkuY7pg73lnKjku6PlhaXliY3mlbDplJkgbiDlkozlia/nmoTkuKrmlbDvvIzogIzkuI3mmK/lhazlvI/mnKzouqvjgIIiIH0sCiAgICB7IHE6IuWIpOaWre+8muacuuaehOeahOiHqueUseW6puWkp+S6jiAw77yM5a6D5bCx5LiA5a6a5YW35pyJ56Gu5a6a55qE6L+Q5Yqo44CCIiwgb3B0czpbIuato+ehriIsIumUmeivryJdLCBhbnM6MSwKICAgICAgaDE6IuehruWumui/kOWKqOmcgOimgeS4pOS4quadoeS7tu+8jOmimOW5suWPquivtOS6huWFtuS4reS4gOS4quOAgiIsCiAgICAgIGgyOiLov5jlt67kuIDkuKrlhbPkuo7jgIzljp/liqjku7bmlbDjgI3nmoTmnaHku7bjgIIiLAogICAgICBmaXg6IuehruWumui/kOWKqOeahOadoeS7tuaYryBcXChGPjBcXCkg5LiUIFxcKEY9XFwpIOWOn+WKqOS7tuaVsOOAguWPqua7oei2syBcXChGPjBcXCnvvIzljp/liqjku7bnu5nlsJHkuobov5DliqjkuI3noa7lrprvvIznu5nlpJrkuobkvJrmhovlnY/mnoTku7bjgIIiIH0sCiAgICB7IHE6IuatpemqpOihpeWFqO+8mueUqOWFrOW8j+eul+iHqueUseW6puaXtu+8jFxcKG5cXCkg5bqU5b2T5pWw77yI44CA77yJ44CCIiwgb3B0czpbIuWFqOmDqOaehOS7tu+8iOWQq+acuuaetu+8iSIsIua0u+WKqOaehOS7tu+8iOS4jeWQq+acuuaetu+8iSIsIuWPquaVsOi/nuadhiIsIuaehOS7tuaAu+aVsOWHjyAyIl0sIGFuczoxLAogICAgICBoMToi5py65p625piv5Zu65a6a5LiN5Yqo55qE77yM5a6D5pyJ6Ieq55Sx5bqm5Y+v5pWw5ZCX77yfIiwKICAgICAgaDI6IuWFrOW8j+mHjOeahCAzbiDmnaXoh6rmr4/kuKrjgIzog73liqjjgI3nmoTmnoTku7bnmoQgMyDkuKroh6rnlLHluqbjgIIiLAogICAgICBmaXg6Im4g5piv5rS75Yqo5p6E5Lu25pWw77yM5py65p625LiN6K6h5YWl44CC5pW05py65YWxIEsg5Liq5p6E5Lu25pe277yMXFwobiA9IEsgLSAxXFwp44CCIiB9LAogICAgeyBxOiLljp/lm6Dop6Pph4rvvJrljp/liqjku7bmlbDlsI/kuo7oh6rnlLHluqYgRiDml7bvvIzmnLrmnoTnmoTov5DliqjnirbmgIHmmK/vvIjjgIDvvInjgIIiLCBvcHRzOlsi6L+Q5Yqo56Gu5a6aIiwi5LiN6IO96L+Q5YqoIiwi6L+Q5Yqo5LiN56Gu5a6aIiwi5p6E5Lu25b+F5o2f5Z2PIl0sIGFuczoyLAogICAgICBoMToi54us56uL5Y+C5pWw5rKh57uZ5aSf77yM5Ymp5LiL55qE5p6E5Lu25L2N572u55Sx6LCB5Yaz5a6a77yfIiwKICAgICAgaDI6IuWvueavlOWPpuS4gOenjeaDheWGte+8muWOn+WKqOS7tuWkmuS6jiBGIOaXtuaJjeS8muaGi+Wdj+aehOS7tuOAgiIsCiAgICAgIGZpeDoi5Y6f5Yqo5Lu25pWwIDwgRu+8mue7meWumuWPguaVsOS4jei2s++8jOaehOS7tuS9jee9ruS4jeWUr+S4gO+8jOi/kOWKqOS4jeehruWumu+8m+WOn+WKqOS7tuaVsCA+IEbvvJrnuqbmnZ/ov4flianvvIzmnIDlvLHmnoTku7blj6/og73mjZ/lnY/jgILkuKTnp43mg4XlhrXliKTmlq3popjph4znu4/luLjlr7nosIPlh7rnjrDjgIIiIH0KICBdCn0sCnsKICBpZDoicDEtY29tcCIsIHBhcnQ6IjEiLCBjaDoi56ysIDEg56ugIOiHqueUseW6piIsIHRpdGxlOiLlpI3lkIjpk7Dpk74iLCBsdjpbMSwzXSwKICBpbnRybzpbCiAgICAi5pWw6L+Q5Yqo5Ymv5pe25pyA5a655piT5qC955qE5Z2R77ya5aW95Yeg5Liq5p6E5Lu25oyk5Zyo5ZCM5LiA5qC56ZSA6L205LiK6L2s44CC5Zu+5LiK55yL552A5Y+q5piv5LiA5Liq6ZOw6ZO+54K577yM5a6e6ZmF5LiK6JeP552A5LiN5q2i5LiA5Liq6L2s5Yqo5Ymv44CC5bCR5pWw5LiA5Liq77yM6Ieq55Sx5bqm5bCx5aSa566XIDIg5YiG77yM5pW06YGT6aKY6ZSZ5Yiw5bqV44CCIgogIF0sCiAgZGVmOnsKICAgIHBsYWluOiLkuKTkuKrku6XkuIrnmoTmnoTku7blnKjlkIzkuIDlpITnlKjovazliqjlia/ov57lnKjkuIDotbfvvIzlsLHlj6vlpI3lkIjpk7Dpk77jgILmlbDnmoTml7blgJnorrDkvY/kuIDlj6Xor53vvJrlh6DkuKrmnoTku7bmsYfkuqTvvIzlsLHmlbDmnoTku7bmlbDlh48gMSDkuKrovazliqjlia/jgIIiLAogICAgc3RyaWN0OiLlpI3lkIjpk7Dpk77vvJrkuKTkuKrku6XkuIrmnoTku7blkIzml7blnKjkuIDlpITku6Xovazliqjlia/nm7jov57mjqXmiYDmnoTmiJDnmoTpk7Dpk77jgIJcXChtXFwpIOS4quaehOS7tuaxh+S6pOS6juS4gOWkhO+8jOaehOaIkOeahOi9rOWKqOWJr+aVsOebruS4uiBcXChtLTFcXCkg5Liq44CCIiwKICAgIG1hdGg6IlxcW1xcdGV4dHvor6XlpITovazliqjlia/mlbB9ID0gbSAtIDFcXF0iLAogICAgc3ltYm9sczpbWyJcXChtXFwpIiwi5Zyo5ZCM5LiA5aSE5rGH5Lqk55qE5p6E5Lu25oC75pWw77yI5py65p625Lmf566X5LiA5Liq77yJIl1dLAogICAgZXg6IjMg5Liq5p6E5Lu25ZyoIEEg54K55rGH5LqkIOKGkiDor6XlpITmnIkgXFwoMy0xPTJcXCkg5Liq6L2s5Yqo5Ymv77ybNCDkuKrmnoTku7bmsYfkuqQg4oaSIDMg5Liq6L2s5Yqo5Ymv44CCIiwKICAgIG1lYW5pbmc6IuS4uuS7gOS5iOWHjyAx77ya56ys5LiA5Liq5p6E5Lu25piv44CM5Z+65YeG44CN77yM5YW25L2Z5q+P5Liq5p6E5Lu25LiO5a6D77yI5oiW5LiO5YmN5LiA5Liq77yJ5ZCE57uE5oiQ5LiA5Liq6L2s5Yqo5Ymv77yM5omA5LulIG0g5Liq5p6E5Lu25b2i5oiQIG3iiJIxIOWvueebuOWvuei9rOWKqOWFs+ezu+OAgiIsCiAgICBjb25mdXNlOiLlpI3lkIjpk7Dpk74gdnMg5pmu6YCa6ZOw6ZO+77ya5Y+q5pyJ5Lik5Liq5p6E5Lu25Zyo5LiA5aSE6L+e5o6l77yM5bCx5piv5pmu6YCa6L2s5Yqo5Ymv77yM5pWwIDEg5Liq77yb5LiJ5Liq5Y+K5Lul5LiK5omN5Y+r5aSN5ZCI6ZOw6ZO+44CC5rGH5Lqk54K56Iul5Zyo566A5Zu+5LiK5piv5ZCM5LiA5qC56L2057q/5omN566X77yM5L2N572u6Z2g6L+R5L2G5LiN5Zyo5ZCM5LiA54K555qE5LiN566X44CCIgogIH0sCiAgcHJlOlsge3Q6Iui/kOWKqOWJr+S4jui/kOWKqOeugOWbviIsIGlkOiJwMS1wYWlyIn0sIHt0OiLoh6rnlLHluqblhazlvI8iLCBpZDoicDEtZG9mIn0gXSwKICBsaW5rczpbCiAgICAi5aSN5ZCI6ZOw6ZO+55u05o6l5pS55Y+YIFxcKFBfTFxcKe+8mua8j+aVsOS4gOS4qui9rOWKqOWJr++8jFxcKEZcXCkg5bCx5aSa566XIDLjgILoh6rnlLHluqborqHnrpfpopjnmoTmoIflh4bmtYHnqIvmmK/lhYjmib7lpI3lkIjpk7Dpk77vvIzlho3mlbDlia/jgIIiLAogICAgIueerOW/g+mimOmHjOOAjOWbvuS4rSBBIOeCueWkhOi9rOWKqOWJr+eahOS4quaVsOOAjemXrueahOS5n+aYr+WQjOS4gOS7tuS6i+OAgiIKICBdLAogIHRlc3Q6WwogICAgeyBxOiLkuInkuKrmnoTku7blnKjlkIzkuIDlpITnu4TmiJDlpI3lkIjpk7Dpk77vvIzor6XlpITovazliqjlia/mlbDnm67kuLrvvIjjgIDvvInjgIIiLCBvcHRzOlsiMSIsIjIiLCIzIiwiNCJdLCBhbnM6MSwKICAgICAgaDE6IuWll+eUqOinhOWIme+8muaehOS7tuaVsOWHjyAx44CCIiwKICAgICAgaDI6IlxcKG09M1xcKSDml7bvvIxcXChtLTFcXCkg562J5LqO5aSa5bCR77yfIiwKICAgICAgZml4OiJtIOS4quaehOS7tuaxh+S6pOWQqyBt4oiSMSDkuKrovazliqjlia/vvIwzIOS4quaehOS7tuWwseaYryAyIOS4quOAguaKiuWug+ivr+aVsOaIkCAzIOS4quaYr+WIpOaWremimOeahOe7j+WFuOmUmeivr+ivtOazleOAgiIgfSwKICAgIHsgcToi5Yik5pat77ya5Lik5Liq5p6E5Lu25Zyo5ZCM5LiA5aSE55So6L2s5Yqo5Ymv6L+e5o6l77yM5Lmf5p6E5oiQ5aSN5ZCI6ZOw6ZO+44CCIiwgb3B0czpbIuato+ehriIsIumUmeivryJdLCBhbnM6MSwKICAgICAgaDE6IuOAjOWkjeWQiOOAjeeahOmXqOanm+aYr+WHoOS4quaehOS7tu+8nyIsCiAgICAgIGgyOiLkuKTkuKrmnoTku7bkuIDlpITov57mjqXvvIzmlbAgMSDkuKrovazliqjlia/vvIzpgqPmmK/mma7pgJrovazliqjlia/jgIIiLAogICAgICBmaXg6IuWkjeWQiOmTsOmTvuimgeaxguS4pOS4quS7peS4iu+8iOWNs+iHs+WwkSAzIOS4qu+8ieaehOS7tuWcqOWQjOS4gOWkhOS7pei9rOWKqOWJr+i/nuaOpeOAguS4pOS4quaehOS7tuWPquaYr+aZrumAmui9rOWKqOWJr+OAgiIgfSwKICAgIHsgcToi5qaC5b+15Yik5pat77ya5pWw6Ieq55Sx5bqm5pe25ryP5o6J5LiA5Liq5aSN5ZCI6ZOw6ZO+5aSE55qEIDEg5Liq6L2s5Yqo5Ymv77yM566X5Ye655qEIEYg5Lya77yI44CA77yJ44CCIiwgb3B0czpbIuWBj+WkpyAyIiwi5YGP5bCPIDIiLCLlgY/lpKcgMSIsIuS4jeWPl+W9seWTjSJdLCBhbnM6MCwKICAgICAgaDE6IuS4gOS4quS9juWJr+WcqOWFrOW8j+mHjOWvueW6lOWHj+WHoO+8nyIsCiAgICAgIGgyOiJcXChGID0gM24gLSAyUF9MIC0gUF9IXFwp77yaXFwoUF9MXFwpIOWwkSAx77yMRiDlpJrigJTigJTvvJ8iLAogICAgICBmaXg6Iuavj+S4quS9juWJr+WHjyAy77yMXFwoUF9MXFwpIOWwkeaVsCAxIOS4qu+8jEYg5bCx5YGP5aSnIDLjgILlpI3lkIjpk7Dpk77mmK/oh6rnlLHluqblpKfpopjmnIDluLjop4HnmoTkuKLliIbngrnjgIIiIH0sCiAgICB7IHE6IuatpemqpOihpeWFqO+8muiuoeeul+iHqueUseW6puWJje+8jOWFiOWkhOeQhuWkjeWQiOmTsOmTvueahOato+ehrumhuuW6j+aYr++8iOOAgO+8ieOAgiIsIG9wdHM6WyLlhYjku6PlhaXlhazlvI/lho3kv67mraMiLCLlhYjmib7lh7rlhajpg6jlpI3lkIjpk7Dpk77lubbmjIkgbeKIkjEg6K6h5pWw77yM5YaN5Luj5YWl5YWs5byPIiwi5aSN5ZCI6ZOw6ZO+5LiN55So566hIiwi5oqK5aSN5ZCI6ZOw6ZO+5oyJIDEg5Liq5Ymv6K6hIl0sIGFuczoxLAogICAgICBoMToi54m55q6K5oOF5Ya177yI5aSN5ZCI6ZOw6ZO+44CB5bGA6YOo6Ieq55Sx5bqm44CB6Jma57qm5p2f77yJ5bqU6K+l5Zyo5pWw5pWw5LmL5YmN6L+Y5piv5LmL5ZCO5aSE55CG77yfIiwKICAgICAgaDI6IlRhc2tQcm8g56yU6K6w55qE5Y+j5b6E77ya5LiJ57G754m55q6K5oOF5Ya15YWI5aSE55CG5o6J77yM5YaN5pWw5p6E5Lu25ZKM6L+Q5Yqo5Ymv44CCIiwKICAgICAgZml4OiLmoIflh4bmtYHnqIvvvJrlhYjlpITnkIblpI3lkIjpk7Dpk77jgIHlsYDpg6joh6rnlLHluqbjgIHomZrnuqbmnZ/vvIzlho3mlbAgbuOAgVBfTOOAgVBfSCDku6PlhaXlhazlvI/jgILpobrluo/lj43kuoblv4XnhLbmlbDplJnjgIIiIH0KICBdCn0sCnsKICBpZDoicDEtbG9jYWwiLCBwYXJ0OiIxIiwgY2g6IuesrCAxIOeroCDoh6rnlLHluqYiLCB0aXRsZToi5bGA6YOo6Ieq55Sx5bqmIiwgbHY6WzEsM10sCiAgaW50cm86WwogICAgIuWHuOi9ruacuuaehOmHjO+8jOaOqOadhumhtuerr+W4uOijheS4gOS4quWwj+a7muWtkOOAgua7muWtkOWPr+S7pee7leiHquW3seeahOi9tOWOn+WcsOaJk+i9rO+8jOS9huWug+i9rOS4jei9rO+8jOaOqOadhueFp+agt+aMieWHuOi9rui9ruW7k+S4iuS4i+WKqOKAlOKAlOi/meS4qui9rOWKqOWvueacuuaehOeahOaVtOS9k+i/kOWKqOavq+aXoOW9seWTje+8jOWNtOS8muiuqeiHqueUseW6puWkmueulyAxIOS4quOAguS4jeWkhOeQhu+8jEYg5bCx6ZSZ44CCIgogIF0sCiAgZGVmOnsKICAgIHBsYWluOiLlsYDpg6joh6rnlLHluqblsLHmmK/jgIzmn5DkuKrmnoTku7boh6rlt7HlpJrkvZnnmoTkuIDkuKrlsI/ov5DliqjjgI3vvIzkuI3lvbHlk43lhbbku5bmnoTku7bmgI7kuYjliqjjgILmnIDlhbjlnovnmoTlsLHmmK/mu5rlrZDmjqjmnYbph4zmu5rlrZDnmoToh6rovazjgILnrpfoh6rnlLHluqbml7bvvIzmiormu5rlrZDlkozmjqjmnYbnnIvmiJDkuIDkuKrmlbTkvZPvvIjnhIrmrbvvvInlho3mlbDjgIIiLAogICAgc3RyaWN0OiLlsYDpg6joh6rnlLHluqbvvJrmnLrmnoTkuK3mn5DkupvmnoTku7bmiYDlhbfmnInnmoTjgIHkuI3lvbHlk43lhbbku5bmnoTku7bov5DliqjnmoToh6rnlLHluqbjgILorqHnrpfoh6rnlLHluqbml7blupTlhYjlsIblvJXlhaXlsYDpg6joh6rnlLHluqbnmoTmnoTku7bkuI7lhbbnm7jov57mnoTku7bop4bkuLrkuIDkuKrmlbTkvZPlho3orqHmlbDjgIIiLAogICAgbWF0aDoi5rua5a2Q5LiO5o6o5p2G6KeG5Li65LiA5L2T5ZCO77ya5rS75Yqo5p6E5Lu25pWw5YePIFxcKDFcXCnvvIzlkIzml7blsJHorqHmu5rlrZDkuI7mjqjmnYbkuYvpl7TnmoQgXFwoMVxcKSDkuKrovazliqjlia/vvIxcXChGXFwpIOeahOiuoeeul+e7k+aenOaJjeato+ehruOAgiIsCiAgICBzeW1ib2xzOltbIua7muWtkCIsIuWHuOi9ruaOqOadhumhtuerr+eahOWwj+i9ru+8jOS4juaOqOadhuS7pei9rOWKqOWJr+i/nuaOpSJdLFsi54SK5oiQ5LiA5L2TIiwi6K6h566X5pe255qE5aSE55CG5pa55rOV77ya5rua5a2Q5LiO5o6o5p2G5ZCI5bm25Li65LiA5Liq5p6E5Lu2Il1dLAogICAgZXg6Iua7muWtkOebtOWKqOaOqOadhuWHuOi9ruacuuaehO+8muiLpeaKiua7muWtkOWNleeLrOeul+S4gOS4quaehOS7tu+8jOS8muW+l+WIsOavlOecn+WunuWAvOWkpyAxIOeahCBG77yb5bCG5rua5a2Q5LiO5o6o5p2G54SK5oiQ5LiA5L2T5ZCO77yMRiDkuI7lrp7pmYXljp/liqjku7bmlbDkuIDoh7TjgIIiLAogICAgbWVhbmluZzoi5rua5a2Q5LiN5piv55m96KOF55qE77ya5a6D5oqK5o6o5p2G5LiO5Ye46L2u5LmL6Ze055qE5ruR5Yqo5pGp5pOm5Y+Y5oiQ5rua5Yqo5pGp5pOm77yM5YeP5bCP56Oo5o2f44CC5bGA6YOo6Ieq55Sx5bqm44CM5a+56L+Q5Yqo6KeE5b6L5aSa5L2Z44CB5a+55a+/5ZG95pyJ55So44CN44CCIiwKICAgIGNvbmZ1c2U6IuWxgOmDqOiHqueUseW6piB2cyDomZrnuqbmnZ/vvJrliY3ogIXmmK/lpJrlh7rmnaXnmoTjgIzoh6rnlLHluqbjgI3vvIjmnoTku7blpJrkuobkuIDkuKrkuI3lvbHlk43mlbTkvZPnmoTov5DliqjvvInvvIzlpITnkIbmlrnms5XmmK/lkIjlubbmnoTku7bvvJvlkI7ogIXmmK/lpJrlh7rmnaXnmoTjgIznuqbmnZ/jgI3vvIzlpITnkIbmlrnms5XmmK/pmaTljrvph43lpI3nmoTlia/jgILkuIDlrZfkuYvlt67vvIzlpITnkIbnm7jlj43jgIIiCiAgfSwKICBwcmU6WyB7dDoi6Ieq55Sx5bqm5YWs5byPIiwgaWQ6InAxLWRvZiJ9LCB7dDoi6L+Q5Yqo5Ymv5LiO6L+Q5Yqo566A5Zu+IiwgaWQ6InAxLXBhaXIifSBdLAogIGxpbmtzOlsKICAgICLlsYDpg6joh6rnlLHluqblh6DkuY7mgLvmmK/lkowgUGFydCAzIOeahOa7muWtkOaOqOadhuWHuOi9rue7keWcqOS4gOi1t+iAg++8mueci+WIsOa7muWtkO+8jOWFiOaDs+WxgOmDqOiHqueUseW6puOAgiIsCiAgICAi5a6D5ZKM5aSN5ZCI6ZOw6ZO+44CB6Jma57qm5p2f5bm256ew6Ieq55Sx5bqm6K6h566X55qE44CM5LiJ57G754m55q6K5oOF5Ya144CN77yM5YGa6aKY5pe26KaB5Zyo5pWw5pWw5LmL5YmN5LiA5qyh5oCn5aSE55CG5a6M44CCIgogIF0sCiAgdGVzdDpbCiAgICB7IHE6IuWIpOaWre+8muacuuaehOS4reWHuueOsOeahOWxgOmDqOiHqueUseW6pumDveaYr+acieWus+eahO+8jOWunumZheeUn+S6p+S4reW6lOW9k+mBv+WFjeOAgiIsIG9wdHM6WyLmraPnoa4iLCLplJnor68iXSwgYW5zOjEsCiAgICAgIGgxOiLmu5rlrZDmiormu5Hliqjmkanmk6blj5jmiJDmu5rliqjmkanmk6bvvIzov5nlr7nno6jmjZ/mmK/lpb3kuovov5jmmK/lnY/kuovvvJ8iLAogICAgICBoMjoi5bGA6YOo6Ieq55Sx5bqm5Y+q5piv44CM566XIEYg5pe26KaB5aSE55CG44CN77yM5LiN562J5LqO44CM6K6+6K6h5LiK5aSa5L2Z44CN44CCIiwKICAgICAgZml4OiLlsYDpg6joh6rnlLHluqbvvIjlpoLmu5rlrZDoh6rovazvvInog73lh4/lsI/mkanmk6bno6jmjZ/vvIzmmK/mnInmhI/orr7orqHnmoTjgILor7Tms5XmiorjgIzorqHnrpfml7bpnIDlkIjlubblpITnkIbjgI3lgbfmjaLmiJDjgIzmnInlrrPlupTpgb/lhY3jgI3vvIzplJnor6/jgIIiIH0sCiAgICB7IHE6Iuiuoeeul+iHqueUseW6puaXtu+8jOWvuea7muWtkOaOqOadhueahOa7muWtkOW6lO+8iOOAgO+8ieOAgiIsIG9wdHM6WyLljZXni6znrpfkuIDkuKrmnoTku7YiLCLkuI7mjqjmnYbnnIvmiJDkuIDkvZMiLCLnm7TmjqXliKDmjonmu5rlrZDkuI3nrqEiLCLmjInpq5jlia/lpITnkIYiXSwgYW5zOjEsCiAgICAgIGgxOiLmu5rlrZDnmoToh6rovazlvbHlk43mjqjmnYbnmoTov5Dliqjop4TlvovlkJfvvJ8iLAogICAgICBoMjoi5aSE55CG5bGA6YOo6Ieq55Sx5bqm55qE5pa55rOV5piv5oqK55u45YWz5p6E5Lu244CM54SK44CN5Zyo5LiA6LW344CCIiwKICAgICAgZml4OiLlsIbmu5rlrZDkuI7mjqjmnYbop4bkuLrkuIDkuKrmnoTku7bvvJpuIOWHjyAx77yM5ZCM5pe25bCR5LiA5Liq6L2s5Yqo5Ymv77yMRiDmiY3mraPnoa7jgILliKDmjonkuI3nrqHkvJrmiorpq5jlia/mjqXop6blhbPns7vkuZ/lvITkuKLjgIIiIH0sCiAgICB7IHE6IuamguW/teWIpOaWre+8muWxgOmDqOiHqueUseW6puaMh+eahOaYr++8iOOAgO+8ieOAgiIsIG9wdHM6WyLmlbTkuKrmnLrmnoTlpJrkvZnnmoTnuqbmnZ8iLCLmn5DkupvmnoTku7bkuI3lvbHlk43lhbbku5bmnoTku7bov5DliqjnmoToh6rnlLHluqYiLCLmnLrmnrbnmoToh6rnlLHluqYiLCLljp/liqjku7bnmoToh6rnlLHluqYiXSwgYW5zOjEsCiAgICAgIGgxOiLlhbPplK7or43mmK/jgIzlsYDpg6jjgI3lkozjgIzkuI3lvbHlk43mlbTkvZPjgI3jgIIiLAogICAgICBoMjoi44CM5aSa5L2Z55qE57qm5p2f44CN5piv5Y+m5LiA5Liq5qaC5b+177yI6Jma57qm5p2f77yJ77yM5Yir6YCJ5Y+N44CCIiwKICAgICAgZml4OiLlsYDpg6joh6rnlLHluqbmmK/mn5DkupvmnoTku7blhbfmnInnmoTjgIHkuI3lvbHlk43lhbbku5bmnoTku7bov5DliqjnmoToh6rnlLHluqbvvJvlpJrkvZnnmoTnuqbmnZ/lj6vomZrnuqbmnZ/vvIzkuKTogIXkuI3opoHmt7fjgIIiIH0sCiAgICB7IHE6IuWIpOaWre+8muaciemrmOWJr+WtmOWcqOeahOWcsOaWue+8jOWPr+iDveWHuueOsOWxgOmDqOiHqueUseW6puOAgiIsIG9wdHM6WyLmraPnoa4iLCLplJnor68iXSwgYW5zOjAsCiAgICAgIGgxOiLmnIDlhbjlnovnmoTlsYDpg6joh6rnlLHluqblh7rnjrDlnKjlk6rph4zvvJ/mu5rlrZDlkozlh7jova7kuYvpl7TmmK/ku4DkuYjlia/vvJ8iLAogICAgICBoMjoi5rua5a2Q5LiO5Ye46L2u5piv54K577yI57q/77yJ5o6l6Kem4oCU4oCU6auY5Ymv44CCIiwKICAgICAgZml4OiLmu5rlrZDmjqjmnYblh7jova7mnLrmnoTkuK3vvIzmu5rlrZDkuI7lh7jova7nu4TmiJDpq5jlia/vvIzmu5rlrZDnmoToh6rovazljbPlsYDpg6joh6rnlLHluqbjgILmiYDku6XmnInpq5jlia/lpITnoa7lrp7lj6/og73mnInlsYDpg6joh6rnlLHluqbvvIzor7Tms5XmraPnoa7jgIIiIH0KICBdCn0sCnsKICBpZDoicDEtdmlydCIsIHBhcnQ6IjEiLCBjaDoi56ysIDEg56ugIOiHqueUseW6piIsIHRpdGxlOiLomZrnuqbmnZ8iLCBsdjpbMSwzXSwKICBpbnRybzpbCiAgICAi5pyJ5Lqb5py65p6E6YeM77yM5ZCM5LiA5Liq57qm5p2f6KKr6YeN5aSN6K6+572u5LqG5Lik6YGN77ya5q+U5aaC5LiA5qC56L2055So5Lik5Liq6L205om/5pSv5om/77yM5Lik5Liq6L2s5Yqo5Ymv5YW25a6e5Y+q6LW35Yiw5LiA5Liq55qE57qm5p2f5L2c55So44CC6L+Z56eN6YeN5aSN55qE57qm5p2f5aaC5p6c54Wn5Y2V5YWo5pS277yMRiDkvJrooqvnrpflsI/vvIznlJroh7Pnrpflh7rotJ/mlbDvvIzmmI7mmI7og73liqjnmoTmnLrmnoTkvJrooqvliKTmiJDjgIzkuI3og73liqjjgI3jgIIiCiAgXSwKICBkZWY6ewogICAgcGxhaW46IuiZmue6puadn+WwseaYr+mHjeWkjeS6huS4gOmBjeOAgeWvuei/kOWKqOS4jei1t+eLrOeri+S9nOeUqOeahOe6puadn+OAgueul+iHqueUseW6puS5i+WJjeWFiOaKiuWug+mZpOWOu++8jOWJqeS4i+eahOaJjeaYr+ecn+ato+euoeS6i+eahOe6puadn+OAgiIsCiAgICBzdHJpY3Q6IuiZmue6puadn++8muacuuaehOS4reWvueaehOS7tueahOi/kOWKqOS4jei1t+eLrOeri+e6puadn+S9nOeUqOeahOmHjeWkjee6puadn++8jOW4uOeUseaehOS7tumXtOWHoOS9leWwuuWvuOa7oei2s+eJueauiuadoeS7tuiAjOS6p+eUn+OAguiuoeeul+iHqueUseW6puaXtuW6lOWFiOmZpOWOu+iZmue6puadn+WGjeiuoeaVsOOAgiIsCiAgICBtYXRoOiLpmaTljrvomZrnuqbmnZ/lkI7lho3nlKggXFwoRiA9IDNuIC0gMlBfTCAtIFBfSFxcKSDorqHnrpfvvJvkuI3pmaTljrvkvJrkvb8gXFwoUF9MXFwpIOaIliBcXChQX0hcXCkg5YGP5aSn77yMXFwoRlxcKSDlgY/lsI/jgIIiLAogICAgc3ltYm9sczpbWyLovbTnur/ph43lkIjnmoTlpJrkuKrovazliqjlia8iLCLlj6rnrpcgMSDkuKrvvIzlhbbkvZnkuLromZrnuqbmnZ/vvIjlpoLkuIDmoLnovbTnmoTkuKTkuKrovbTmib/vvIkiXSxbIuWvvOi3r+W5s+ihjOeahOWkmuS4quenu+WKqOWJryIsIuWPqueulyAxIOS4qu+8jOWFtuS9meS4uuiZmue6puadnyJdLFsi5a+556ew6YOo5YiGIiwi5py65p6E5Lit5Lyg6YCS6L+Q5Yqo5LiN6LW354us56uL5L2c55So55qE5a+556ew6YOo5YiG5Li66Jma57qm5p2fIl1dLAogICAgZXg6IuS4pOaehOS7tuS5i+mXtOe7hOaIkOS4pOS4qui9tOe6v+mHjeWQiOeahOi9rOWKqOWJr++8muWPquiuoSAxIOS4qui9rOWKqOWJr++8jOWPpiAxIOS4quaYr+iZmue6puadn+OAguWbvuekuuWvueensOacuuaehOS4rSBBQiDkuI4gQUMg5a+55Lyg6YCS6L+Q5Yqo5LiN6LW354us56uL5L2c55So77yM5ZCrIDEg5Liq6Jma57qm5p2f44CCIiwKICAgIG1lYW5pbmc6IuiZmue6puadn+iZveeEtuOAjOiZmuOAje+8jOWcqOecn+WunuacuuWZqOmHjOS4jeiDveecn+eahOaLhuaOie+8muWug+iDveWinuW8uuacuuaehOWImuaAp+OAgeaUueWWhOWPl+WKm+OAgeS/neivgei/kOWKqOWPr+mdoO+8iOWmguWPjOi9tOaJv+aUr+aJv++8ieOAguWug+WPquaYr+WcqOOAjOeul+iHqueUseW6puOAjei/meS4queOr+iKgumHjOS4jemHjeWkjeiuoeaVsOOAgiIsCiAgICBjb25mdXNlOiLomZrnuqbmnZ8gdnMg5bGA6YOo6Ieq55Sx5bqm77ya6Jma57qm5p2f5piv5aSa566X5LqG57qm5p2f77yI5Ymv5pWw5YGP5aSa77yJ77yM5bGA6YOo6Ieq55Sx5bqm5piv5aSa566X5LqG6Ieq55Sx5bqm77yI5p6E5Lu255qE5bCP6L+Q5Yqo77yJ44CC5Y+m5aSW5Yik5pat6aKY44CM6Jma57qm5p2f5a+56L+Q5Yqo5LiN6LW35L2c55So77yM5omA5Lul5a6e6ZmF5Lit5Y+v5Lul5Y675o6J44CN5piv6ZSZ55qE4oCU4oCU6LW35LiN6LW354us56uL57qm5p2f5L2c55So77yM5ZKM6IO95LiN6IO95ouG5piv5Lik5Zue5LqL44CCIgogIH0sCiAgcHJlOlsge3Q6IuiHqueUseW6puWFrOW8jyIsIGlkOiJwMS1kb2YifSwge3Q6Iui/kOWKqOWJr+S4jui/kOWKqOeugOWbviIsIGlkOiJwMS1wYWlyIn0gXSwKICBsaW5rczpbCiAgICAi6Jma57qm5p2f5ZKM5aSN5ZCI6ZOw6ZO+5piv5LiA5a+56ZWc5YOP5Z2R77ya5aSN5ZCI6ZOw6ZO+5piv44CM55yL552AIDEg5Liq5YW25a6e5pivIG3iiJIxIOS4quOAje+8iOWuueaYk+WwkeaVsO+8ie+8jOiZmue6puadn+aYr+OAjOeci+edgCAyIOS4quWFtuWunuWPqueulyAxIOS4quOAje+8iOWuueaYk+WkmuaVsO+8ie+8jOmDveebtOaOpeWGs+WumiBcXChQX0xcXCnjgIIiLAogICAgIuWIpOaWreiZmue6puadn+imgeeci+WHoOS9leadoeS7tu+8iOmHjeWQiOOAgeW5s+ihjOOAgei9qOi/uemHjeWQiOOAgeWvueensO+8ie+8jOi/meS5n+aYr+Wug+W4uOWHuueOsOWcqOmAieaLqemimOOAjOS4i+WIl+WTquenjeaDheWGteWtmOWcqOiZmue6puadn+OAjemHjOeahOWOn+WboOOAgiIKICBdLAogIHRlc3Q6WwogICAgeyBxOiLliKTmlq3vvJromZrnuqbmnZ/lr7nov5DliqjkuI3otbfkvZznlKjvvIzmiYDku6XlnKjlrp7pmYXnlJ/kuqfkuK3lj6/ku6XljrvmjonjgIIiLCBvcHRzOlsi5q2j56GuIiwi6ZSZ6K+vIl0sIGFuczoxLAogICAgICBoMToi5Lik5Liq6L205om/5pSv5om/5LiA5qC56L2077yM5ouG5o6J5LiA5Liq6L205om/77yM6L206L2s6LW35p2l5Lya5pu056iz6L+Y5piv5pu05pmD77yfIiwKICAgICAgaDI6IuOAjOiuoeeul+aXtuS4jemHjeWkjeiuoeaVsOOAjeWSjOOAjOWunueJqeWPr+S7peaLhumZpOOAjeaYr+S4gOWbnuS6i+WQl++8nyIsCiAgICAgIGZpeDoi6Jma57qm5p2f5Zyo6K6h566X6Ieq55Sx5bqm5pe26Zmk5Y6777yM5L2G5a6e54mp5Lit5a6D6LW35aKe5by65Yia5oCn44CB5pS55ZaE5Y+X5Yqb55qE5L2c55So77yM5LiN6IO95Y675o6J44CC6K+05rOV5re35reG5LqG6K6h566X5aSE55CG5LiO57uT5p6E6K6+6K6h77yM6ZSZ6K+v44CCIiB9LAogICAgeyBxOiLkuKTkuKrmnoTku7bkuYvpl7Tnu4TmiJDlpJrkuKrovbTnur/vvIjjgIDvvInnmoTovazliqjlia/ml7bvvIzlj6rmnInkuIDkuKrotbfnuqbmnZ/kvZznlKjvvIzlhbbkvZnmmK/omZrnuqbmnZ/jgIIiLCBvcHRzOlsi5Lqk5Y+JIiwi6YeN5ZCIIiwi5bmz6KGMIiwi5Z6C55u0Il0sIGFuczoxLAogICAgICBoMToi5oOz5LiA5qC56L206KKr5Lik5Liq6L205om/5pSv5om/55qE5Zu+77ya5Lik5Liq6L2s5Yqo5Ymv55qE6L2057q/5piv5LuA5LmI5YWz57O777yfIiwKICAgICAgaDI6Iui9tOe6v+S4jeWcqOWQjOS4gOebtOe6v+S4iueahOS4pOS4qui9rOWKqOWJr++8jOWQhOeuoeWQhOeahO+8jOS4jeS8mumHjeWkjeOAgiIsCiAgICAgIGZpeDoi6L2057q/6YeN5ZCI55qE5aSa5Liq6L2s5Yqo5Ymv5Y+q5pyJ5LiA5Liq55yf5q2j6LW357qm5p2f5L2c55So77yM5YW25L2Z5Li66Jma57qm5p2f44CC5ZCM55CG77yM5a+86Lev5bmz6KGM55qE5aSa5Liq56e75Yqo5Ymv5Lmf5Y+q566X5LiA5Liq44CCIiB9LAogICAgeyBxOiLmpoLlv7XliKTmlq3vvJromZrnuqbmnZ/kuqfnlJ/nmoTljp/lm6DmmK/vvIjjgIDvvInjgIIiLCBvcHRzOlsi5p6E5Lu25pWw5aSq5aSaIiwi5p6E5Lu26Ze05Yeg5L2V5bC65a+45ruh6Laz5p+Q5Lqb54m55q6K5p2h5Lu2Iiwi5Y6f5Yqo5Lu25aSq5aSaIiwi6auY5Ymv5aSq5aSaIl0sIGFuczoxLAogICAgICBoMToi6L2057q/6YeN5ZCI44CB5a+86Lev5bmz6KGM44CB6L2o6L+56YeN5ZCI4oCU4oCU6L+Z5Lqb6YO95piv5LuA5LmI5p2h5Lu277yfIiwKICAgICAgaDI6IuWug+S7rOmDveS4jeaYr+aVsOmHj+mXrumimO+8jOiAjOaYr+S9jee9ruS4juWwuuWvuOeahOeJueauiuWFs+ezu+OAgiIsCiAgICAgIGZpeDoi6Jma57qm5p2f55Sx5p6E5Lu26Ze05Yeg5L2V5bC65a+45ruh6Laz54m55q6K5p2h5Lu277yI6YeN5ZCI44CB5bmz6KGM44CB6L2o6L+56YeN5ZCI44CB5a+556ew5biD572u77yJ6ICM5Lqn55Sf77yM5omA5Lul6K+G5Yir6Jma57qm5p2f6KaB55uv5L2P5Yeg5L2V5YWz57O744CCIiB9LAogICAgeyBxOiLmraXpqqTooaXlhajvvJrmnLrmnoTkuK3kvKDpgJLov5DliqjkuI3otbfni6znq4vkvZznlKjnmoTlr7nnp7Dpg6jliIbvvIzlnKjorqHnrpfoh6rnlLHluqbml7blupTvvIjjgIDvvInjgIIiLCBvcHRzOlsi54Wn5bi46K6h5pWwIiwi5L2c5Li66Jma57qm5p2f6Zmk5Y67Iiwi566X5L2c5bGA6YOo6Ieq55Sx5bqmIiwi566X5L2c5aSN5ZCI6ZOw6ZO+Il0sIGFuczoxLAogICAgICBoMToi5a+556ew6YOo5YiG6YeN5aSN6K6+572u5LqG5ZCM5qC355qE57qm5p2f77yM5bGe5LqO5ZOq57G754m55q6K5oOF5Ya177yfIiwKICAgICAgaDI6IuS4ieexu+eJueauiuaDheWGtemHjO+8jOOAjOmHjeWkjee6puadn+OAjeWvueW6lOeahOaYr+WTquS4gOS4qu+8nyIsCiAgICAgIGZpeDoi5LiN6LW354us56uL5L2c55So55qE5a+556ew6YOo5YiG5piv6Jma57qm5p2f77yM6K6h566X5YmN6Zmk5Y6744CC5a6D5LiN5piv5bGA6YOo6Ieq55Sx5bqm77yI6YKj5piv5p6E5Lu255qE54us56uL5bCP6L+Q5Yqo77yJ77yM5Lmf5LiN5piv5aSN5ZCI6ZOw6ZO+77yI6YKj5piv5aSa5p6E5Lu25rGH5Lqk77yJ44CCIiB9CiAgXQp9LAp7CiAgaWQ6InAxLWljIiwgcGFydDoiMSIsIGNoOiLnrKwgMSDnq6Ag6Ieq55Sx5bqmIiwgdGl0bGU6IumAn+W6pueerOW/gyIsIGx2OlsyLDRdLAogIGludHJvOlsKICAgICLmsYLmnLrmnoTkuK3mn5DngrnnmoTpgJ/luqbvvIznoaznrpflvoDlvoDlvojnu5XjgILmnInkuKrlgbfmh5LkvYbkuKXosKjnmoTlip7ms5XvvJrku7vmhI/kuKTkuKrmnoTku7blnKjmn5DkuIDnnqzpl7TnmoTnm7jlr7nov5DliqjvvIzpg73lj6/ku6XnnIvmiJDnu5Xmn5DkuIDkuKrngrnnmoTnuq/ovazliqjjgILov5nkuKrngrnlsLHmmK/pgJ/luqbnnqzlv4PjgILmib7liLDnnqzlv4PvvIzlpI3mnYLnmoTlubPpnaLov5Dliqjnnqzpl7Tlj5jmiJDnroDljZXnmoTlrprovbTovazliqjvvIzpgJ/luqbmjInliLDnnqzlv4PnmoTot53nprvmiJDmr5TkvovvvIzkuIDkuIvlsLHog73nrpfjgIIiCiAgXSwKICBkZWY6ewogICAgcGxhaW46IumAn+W6pueerOW/g+aYr+S4pOS4quaehOS7tuWcqOWQjOS4gOeerOmXtOe7neWvuemAn+W6puWujOWFqOebuOWQjOeahOmCo+S4qumHjeWQiOeCueOAgue7leedgOWug+eci++8jOS4gOS4quaehOS7tuebuOWvueWPpuS4gOS4quaehOS7tuWwseWDj+WcqOe6r+i9rOWKqOOAgiIsCiAgICBzdHJpY3Q6IumAn+W6pueerOW/g++8muS6kuS9nOW5s+mdouebuOWvuei/kOWKqOeahOS4pOaehOS7tuWcqOS7u+S4gOeerOaXtu+8jOWFtuebuOWvuei/kOWKqOWPr+eci+S9nOe7leafkOS4gOmHjeWQiOeCueeahOi9rOWKqO+8jOivpemHjeWQiOeCueWNs+S4pOaehOS7tueahOmAn+W6pueerOW/g++8jOWug+aYr+S4pOaehOS7tuS4iue7neWvuemAn+W6puebuOWQjOeahOmHjeWQiOeCueOAguS4pOaehOS7tuS5i+S4gOS4uumdmeatouaehOS7tu+8iOacuuaetu+8ieaXtuensOe7neWvueeerOW/g++8jOS4pOiAhemDveWcqOi/kOWKqOaXtuensOebuOWvueeerOW/g+OAgiIsCiAgICBtYXRoOiLnlLEgXFwoS1xcKSDkuKrmnoTku7bvvIjlkKvmnLrmnrbvvInnu4TmiJDnmoTmnLrmnoTvvIznnqzlv4PmgLvmlbDkuLpcXFtOID0gXFxmcmFje0soSy0xKX17Mn1cXF3kuInlv4PlrprnkIbvvJrkupLkvZzlubPpnaLov5DliqjnmoTkuInkuKrmnoTku7blhbHmnInkuInkuKrnnqzlv4PvvIzkuJTkuInogIXkvY3kuo7lkIzkuIDnm7Tnur/kuIrjgIIiLAogICAgc3ltYm9sczpbWyJcXChQX3tpan1cXCkiLCLmnoTku7YgaSDkuI7mnoTku7YgaiDnmoTnnqzlv4PnmoTorrDlj7ciXSxbIlxcKE5cXCkiLCLmnLrmnoTlhajpg6jnnqzlv4PnmoTkuKrmlbAiXSxbIue7neWvueeerOW/gyIsIuS4juacuuaetueahOeerOW/g++8jOWFtue7neWvuemAn+W6puS4uiAwIl0sWyLnm7jlr7nnnqzlv4MiLCLkuKTov5DliqjmnoTku7bkuYvpl7TnmoTnnqzlv4PvvIzpgJ/luqbnm7jlkIzkvYbkuI3kuLogMCJdXSwKICAgIGV4OiLlkKsgNCDkuKrmnoTku7bnmoTmnLrmnoTvvIznnqzlv4PmlbAgXFwoTiA9IDRcXHRpbWVzKDQtMSkvMiA9IDZcXCkg5Liq44CCIiwKICAgIG1lYW5pbmc6IuaJvueerOW/g+eahOaWueazle+8muS4pOaehOS7tuS7pei9rOWKqOWJr+i/nuaOpe+8jOmTsOmTvueCueWwseaYr+eerOW/g++8m+S7peenu+WKqOWJr+i/nuaOpe+8jOeerOW/g+WcqOWeguebtOS6juWvvOi3r+aWueWQkeeahOaXoOept+i/nOWkhO+8m+S7pemrmOWJr+i/nuaOpe+8jOeerOW/g+WcqOaOpeinpueCueeahOWFrOazlee6v+S4iu+8jOWFt+S9k+S9jee9ruWGjeeUqOS4ieW/g+WumueQhuS4juWPpuWkluS4pOS4quW3suefpeeerOW/g+i/nue6v+axguS6pOeCueOAgiIsCiAgICBjb25mdXNlOiLnnqzlv4PmmK/jgIzpgJ/luqbnm7jlkIzjgI3nmoTngrnvvIzkuI3mmK/jgIzpgJ/luqbkuLogMOOAjeeahOeCueKAlOKAlOWPquaciee7neWvueeerOW/g++8iOebuOWvueacuuaetu+8iemAn+W6puaJjeS4uiAw44CC5Yik5pat6aKY5oqK5Lik6ICF5YG35o2i5piv6auY6aKR5Z2R44CC5Y+m5aSW5LiJ5b+D5a6a55CG6K+055qE5piv5LiJ556s5b+D44CM5YWx57q/44CN77yM6K+05oiQ44CM5LiN5Zyo5ZCM5LiA55u057q/5LiK44CN5bCx5piv6ZSZ55qE44CCIgogIH0sCiAgcHJlOlsge3Q6Iui/kOWKqOWJr+S4jui/kOWKqOeugOWbviIsIGlkOiJwMS1wYWlyIn0gXSwKICBsaW5rczpbCiAgICAi556s5b+D55qE5rGC5rOV5a6M5YWo5L6d6LWW6L+Q5Yqo5Ymv57G75Z6L77ya6L2s5Yqo5Ymv44CB56e75Yqo5Ymv55u05o6l5a6a77yM6auY5Ymv6KaB6Z2g5LiJ5b+D5a6a55CG77yM5omA5Lul5a6D5ZKM44CM6L+Q5Yqo5Ymv44CN5piv5ZCM5LiA6IqC6YeM55qE5LiA5a+555+l6K+G44CCIiwKICAgICLnnqzlv4Pms5XmmK/lkI7nu63pgJ/luqbliIbmnpDnmoTln7rnoYDmlrnms5XvvJrlhYjmlbDmuIXnnqzlv4PmgLvmlbDvvIjnu4TlkIjmlbDlhazlvI/vvInvvIzlho3pgJDkuKrlrprkvY3vvIzpgb/lhY3mvI/mib7jgIIiCiAgXSwKICB0ZXN0OlsKICAgIHsgcToi55SxIEsg5Liq5p6E5Lu257uE5oiQ55qE5py65p6E77yM556s5b+D5Liq5pWw5Li677yI44CA77yJ44CCIiwgb3B0czpbIlxcKE49SyhLLTEpLzJcXCkiLCJcXChOPUsoSysxKS8yXFwpIiwiXFwoTj0oSy0xKS8yXFwpIiwiXFwoTj1LXjJcXCkiXSwgYW5zOjAsCiAgICAgIGgxOiLnnqzlv4PmmK/jgIzmr4/kuKTkuKrmnoTku7bphY3kuIDlr7njgI3vvIzov5nmmK/nu4TlkIjpl67popjvvJrku44gSyDkuKrph4zlj5YgMiDkuKrjgIIiLAogICAgICBoMjoi5LuOIEsg5Liq5p6E5Lu25Lit5Lu75Y+WIDIg5Liq55qE57uE5ZCI5pWw5oCO5LmI5YaZ77yfIiwKICAgICAgZml4OiLmr4/kuKTkuKrmnoTku7bmnInkuIDkuKrnnqzlv4PvvIxcXChOID0gQ19LXjIgPSBLKEstMSkvMlxcKeOAgks9NCDml7YgTj0277yM5Y+v55So6L+Z5Liq54m55L6L6aqM566X5YWs5byP44CCIiB9LAogICAgeyBxOiLliKTmlq3vvJrkuI3pgJrov4fov5Dliqjlia/nm7TmjqXnm7jov57nmoTkuInkuKrmnoTku7blhbHmnInkuInkuKrnnqzlv4PvvIzov5nkuInkuKrnnqzlv4PkuI3lnKjlkIzkuIDnm7Tnur/kuIrjgIIiLCBvcHRzOlsi5q2j56GuIiwi6ZSZ6K+vIl0sIGFuczoxLAogICAgICBoMToi5Zue5b+G5LiJ5b+D5a6a55CG55qE5Y6f6K+d77ya5LiJ5Liq556s5b+D5L2N5LqO4oCm4oCm77yfIiwKICAgICAgaDI6IumimOW5suaKiuWumueQhueahOe7k+iuuuWPjei/h+adpeivtOS6huOAgiIsCiAgICAgIGZpeDoi5LiJ5b+D5a6a55CG77ya5LiJ5Liq556s5b+D5L2N5LqO5ZCM5LiA55u057q/5LiK44CC6aKY5bmy6K+044CM5LiN5Zyo5ZCM5LiA55u057q/5LiK44CN77yM5LiO5a6a55CG55u45Y+N77yM6ZSZ6K+v44CC6L+Z5p2h5a6a55CG5q2j5piv5rGC6auY5Ymv556s5b+D5L2N572u55qE5bel5YW344CCIiB9LAogICAgeyBxOiLmpoLlv7XliKTmlq3vvJrlhbPkuo7pgJ/luqbnnqzlv4PvvIzmraPnoa7nmoTmmK/vvIjjgIDvvInjgIIiLCBvcHRzOlsi5Lik5p6E5Lu25LiK57ud5a+56YCf5bqm5Li6IDAg55qE6YeN5ZCI54K5Iiwi5Lik5p6E5Lu25LiK57ud5a+56YCf5bqm55u45ZCM55qE6YeN5ZCI54K5Iiwi5Lik5p6E5Lu26YO95piv6L+Q5Yqo55qE56ew57ud5a+5556s5b+DIiwi5LiA5p6E5Lu26Z2Z5q2i55qE56ew55u45a+5556s5b+DIl0sIGFuczoxLAogICAgICBoMToi5YWI6YCQ6aG55o6S6Zmk77ya6YCf5bqm5Li6IDAg55qE5Y+q5piv5YW25Lit5LiA56eN54m55q6K5oOF5Ya144CCIiwKICAgICAgaDI6IuWGjeajgOafpeWQjuS4pOmhue+8mue7neWvuS/nm7jlr7nnmoTliJLliIbmoIflh4bmmK/kuI3mmK/or7Tlj43kuobvvJ8iLAogICAgICBmaXg6IueerOW/g+aYr+e7neWvuemAn+W6puebuOWQjOeahOmHjeWQiOeCue+8m+S4gOaehOS7tumdmeatou+8iOS4juacuuaetueahOeerOW/g++8ieensOe7neWvueeerOW/g++8jOS4pOaehOS7tumDveWcqOi/kOWKqOensOebuOWvueeerOW/g+OAguWQjuS4pOmhueato+WlveivtOWPjeOAgiIgfSwKICAgIHsgcToi5q2l6aqk6KGl5YWo77ya5rGC5Lik5p6E5Lu25Lul6auY5Ymv55u46L+e5pe255qE556s5b+D5L2N572u77yM56ys5LiA5q2l5piv77yI44CA77yJ44CCIiwgb3B0czpbIuebtOaOpeWPluaOpeinpueCueS4uueerOW/gyIsIuWFiOehruWumueerOW/g+WcqOaOpeinpueCueeahOWFrOazlee6v+S4iu+8jOWGjeeUqOS4ieW/g+WumueQhuWumuS9jSIsIuWPluS4pOaehOS7tuS4reeCuSIsIueerOW/g+WcqOaXoOept+i/nOWkhCJdLCBhbnM6MSwKICAgICAgaDE6IumrmOWJr+aOpeinpuaXtu+8jOS4pOaehOS7tuayv+WFrOazlee6v+aWueWQkeeahOebuOWvuemAn+W6puWIhumHj+W/hemhu+ebuOetie+8jOeerOW/g+WPquiDveiQveWcqOWTquadoee6v+S4iu+8nyIsCiAgICAgIGgyOiLlj6rnn6XpgZPlnKjlk6rmnaHnur/kuIrov5jkuI3lpJ/vvIzov5jopoHpnaDlj6blpJbkuKTkuKrnnqzlv4PnmoTov57nur/kuqTlh7rmnaXjgIIiLAogICAgICBmaXg6IumrmOWJr+eerOW/g+W/heWcqOaOpeinpueCueWFrOazlee6v+S4iu+8jOWGjeeUqOS4ieW/g+WumueQhu+8iOS4juWPpuS4pOS4quW3suefpeeerOW/g+eahOi/nue6v++8ieaxguS6pOeCueWumuS9jeOAguaOpeinpueCueacrOi6q+S4gOiIrOS4jeaYr+eerOW/g++8iOWtmOWcqOebuOWvuea7keWKqO+8ieOAgiIgfQogIF0KfQpdOwoKLyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICBQYXJ0IDLigJM1IOS4jue7quiuuu+8muWll+eUqOWQjOS4gOe7k+aehOaooeadv++8jOS/neeVmeeOsOacieiusuino+WGheWuue+8jAogICDmnKrooaXlhajnmoTpg6jliIblpoLlrp7moIfms6jjgIzlvoXmjInmlrDnu5PmnoTooaXlhajjgI3vvIzkuI3moIforrDkuLrlt7LlrozmiJDjgIIKICAgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwp2YXIgQ0hfT0ZfUEFSVCA9IHsgIue7qiI6Iue7quiuuiIsICIyIjoi56ysIDIg56ugIOi/nuadhuacuuaehCIsICIzIjoi56ysIDMg56ugIOWHuOi9ruacuuaehCIsICI0Ijoi56ysIDQg56ugIOm9v+i9ruacuuaehCIsICI1Ijoi56ysIDUg56ugIOi9ruezuyIgfTsKdmFyIExWX09GX1BBUlQgPSB7ICLnu6oiOlswLDFdLCAiMiI6WzAsM10sICIzIjpbMCwzXSwgIjQiOlswLDRdLCAiNSI6WzAsNF0gfTsKdmFyIFBFTkRJTkcgPSBbXTsKaWYgKHR5cGVvZiBERVRBSUxTICE9PSAidW5kZWZpbmVkIikgewogIE9iamVjdC5rZXlzKERFVEFJTFMpLmZvckVhY2goZnVuY3Rpb24obnVtKXsKICAgIGlmIChudW0gPT09ICLlvoUiKSByZXR1cm47CiAgICBpZiAobnVtID09PSAiMSIpIHJldHVybjsgLyogUGFydCAxIOW3sueUseS4iuaWueWFreS4quaWsOe7k+aehOWujOaVtOeJiOefpeivhueCueimhueblu+8jOS4jeWGjeeUn+aIkOW+heihpeadoeebru+8m+WOn+iusuino+S7jeWcqOeroOiKgumhteOAjOeroOiKgumAn+iniOOAjemHjOS/neeVmSAqLwogICAgREVUQUlMU1tudW1dLmZvckVhY2goZnVuY3Rpb24oc2VjLCBrKXsKICAgICAgUEVORElORy5wdXNoKHsKICAgICAgICBpZDoieCIgKyBudW0gKyAiLSIgKyBrLCBwYXJ0Om51bSwgY2g6Q0hfT0ZfUEFSVFtudW1dIHx8ICIiLCB0aXRsZTpzZWNbMF0sCiAgICAgICAgbHY6TFZfT0ZfUEFSVFtudW1dIHx8IFswLDJdLCBwZW5kaW5nOnRydWUsIGJvZHk6c2VjWzFdCiAgICAgIH0pOwogICAgfSk7CiAgfSk7Cn0KdmFyIEFMTF9QT0lOVFMgPSBQT0lOVFMuY29uY2F0KFBFTkRJTkcpOwpmdW5jdGlvbiBmaW5kUG9pbnQoaWQpeyBmb3IgKHZhciBpPTA7aTxBTExfUE9JTlRTLmxlbmd0aDtpKyspIGlmIChBTExfUE9JTlRTW2ldLmlkID09PSBpZCkgcmV0dXJuIEFMTF9QT0lOVFNbaV07IHJldHVybiBudWxsOyB9CmZ1bmN0aW9uIHBhcnRQb2ludHMobnVtKXsgcmV0dXJuIEFMTF9QT0lOVFMuZmlsdGVyKGZ1bmN0aW9uKHApeyByZXR1cm4gcC5wYXJ0ID09PSBTdHJpbmcobnVtKTsgfSk7IH0KCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KICAg6aKY5Z6L5pa55rOV77yINCDnp43ogIPor5Xpq5jpopHpopjlnovvvIkKICAgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwp2YXIgTUVUSE9EUyA9IFsKewogIGlkOiJtLWRvZiIsIHRpdGxlOiLoh6rnlLHluqborqHnrpciLCBjaDoi56ysIDEg56ugIOiHqueUseW6piIsCiAgcmVjb2c6IumimOW5sue7meWHuuacuuaehOeugOWbvu+8iOaIluaWh+Wtl+aPj+i/sOeahOaehOS7tuS4jui/kOWKqOWJr++8ie+8jOimgeaxguiuoeeul+iHqueUseW6piBG77yM5bm25Yik5pat5py65p6E5piv5ZCm5YW35pyJ56Gu5a6a6L+Q5Yqo44CB6ZyA6KaB5Yeg5Liq5Y6f5Yqo5Lu244CC566A5Zu+6aKY44CB5paH5a2X6K6h5pWw6aKY6YO95bGe5LqO6L+Z5LiA57G744CCIiwKICBrbm93bjoi566A5Zu+5Lit55qE5p6E5Lu25pWw44CB5ZCE57G76L+Q5Yqo5Ymv55qE5L2N572u5LiO57G75Z6L77yb5pyJ5pe255u05o6l57uZIG7jgIFQX0zjgIFQX0gg55qE5pWw5YC86K6p5L2g5Luj5YWl44CCIiwKICBnb2FsOiLmsYIgRiDnmoTmlbDlgLzvvJvov5vkuIDmraXliKTmlq0gRiDkuI7ljp/liqjku7bmlbDnmoTlhbPns7vvvIjnoa7lrpogLyDkuI3noa7lrpogLyDmjZ/lnY/vvInjgIIiLAogIGtleToi5YWI5aSE55CG5LiJ57G754m55q6K5oOF5Ya15YaN5pWw5pWw77ya5aSN5ZCI6ZOw6ZO+77yIbeKIkjHvvInjgIHlsYDpg6joh6rnlLHluqbvvIjmu5rlrZDnhIrmiJDkuIDkvZPvvInjgIHomZrnuqbmnZ/vvIjlhYjpmaTljrvvvInjgILlpJrmlbDplJnor6/kuI3mmK/lhazlvI/plJnvvIzogIzmmK/mlbDplJnjgIIiLAogIHBhdGg6WyIxLiDmlbDmtLvliqjmnoTku7bmlbAgbu+8iOaAu+aVsOWHj+acuuaetu+8m+a7muWtkOS4juaOqOadhuWFiOWQiOW5tu+8ieOAgiIsIjIuIOmAkOeCueaJvuWkjeWQiOmTsOmTvu+8mm0g5Liq5p6E5Lu25rGH5Lqk5oyJIG3iiJIxIOS4qui9rOWKqOWJr+iuoeWFpSBQX0zjgIIiLCIzLiDor4bliKvlubbpmaTljrvomZrnuqbmnZ/vvIjovbTnur/ph43lkIjnmoTovazliqjlia/jgIHlr7zot6/lubPooYznmoTnp7vliqjlia/jgIHkuI3otbfni6znq4vkvZznlKjnmoTlr7nnp7Dpg6jliIbvvInjgIIiLCI0LiDmlbDkvY7lia8gUF9MIOS4jumrmOWJryBQX0jjgIIiLCI1LiDku6PlhaUgRiA9IDNuIOKIkiAyUF9MIOKIkiBQX0jjgIIiLCI2LiDoi6Xpopjnm67pl67ov5DliqjmmK/lkKbnoa7lrprvvIzlho3kuI7ljp/liqjku7bmlbDmr5TovoPjgIIiXSwKICBmb3JtdWxhczpbIlxcKEYgPSAzbiAtIDJQX0wgLSBQX0hcXCkiLCLlpI3lkIjpk7Dpk77vvJrovazliqjlia/mlbAgXFwoPSBtIC0gMVxcKSIsIuehruWumui/kOWKqOadoeS7tu+8mlxcKEYgPiAwXFwpIOS4lCBcXChGID1cXCkg5Y6f5Yqo5Lu25pWwIl0sCiAgY29uZDoi5YWs5byP5Y+q6YCC55So5LqO5bmz6Z2i5py65p6E77ybbiDlv4XpobvmmK/mtLvliqjmnoTku7bmlbDvvJvmiYDmnInnibnmrormg4XlhrXlv4XpobvlnKjorqHmlbDliY3lpITnkIblrozjgIIiLAogIGNhc2VzOiJGID4gMCDkuJTnrYnkuo7ljp/liqjku7bmlbAg4oaSIOi/kOWKqOehruWumu+8m0YgPiAwIOS9huWOn+WKqOS7tuS4jei2syDihpIg6L+Q5Yqo5LiN56Gu5a6a77yb5Y6f5Yqo5Lu25aSa5LqOIEYg4oaSIOacgOW8seaehOS7tuWPr+iDveaNn+Wdj++8m0Yg4omkIDAg4oaSIOS4jeaYr+iDveWKqOeahOacuuaehO+8iOe7k+aehO+8ieOAgiIsCiAgZXhhbXBsZToi5L6L77yabiA9IDfjgIFQX0wgPSAxMOOAgVBfSCA9IDAg55qE5py65p6E77yMXFwoRiA9IDNcXHRpbWVzIDcgLSAyXFx0aW1lcyAxMCA9IDFcXCnvvIzpnIDopoEgMSDkuKrljp/liqjku7bmiY3mnInnoa7lrprov5DliqjjgILlgZrpopjml7blhYjlnKjlm77kuIrpgJDkuKrmoIflh7rov5Dliqjlia/lho3mlbDvvIzpgb/lhY3mvI/mlbDlpI3lkIjpk7Dpk77jgIIiLAogIGVycm9yczpbIuaKiuacuuaetuaVsOi/myBu77yb5aSN5ZCI6ZOw6ZO+5oyJIDEg5Liq5Ymv6K6h77yb5rua5a2Q5Y2V54us566X5LiA5Liq5p6E5Lu277yb6Jma57qm5p2f54Wn5Y2V5YWo5pS277yb5YWs5byP6YeM6auY5Ymv5YmN5YaZ5oiQ5Yqg5Y+344CCIl0KfSwKewogIGlkOiJtLWZvdXJiYXIiLCB0aXRsZToi6ZOw6ZO+5Zub5p2G5py65p6E6K6+6K6h77yI57G75Z6L5Yik5a6aICsg5Zu+6Kej5rOV77yJIiwgY2g6IuesrCAyIOeroCDov57mnYbmnLrmnoQiLAogIHJlY29nOiLnu5nlh7rlm5vmnYbplb/luqbpl67mnLrmnoTnsbvlnovvvIjmm7Lmn4TmkYfmnYYgLyDlj4zmm7Lmn4QgLyDlj4zmkYfmnYbvvInvvIzmiJbnu5nooYznqIvpgJ/mr5Tns7vmlbAgS+OAgeaegeS9jeWkueinkiDOuCDkupLmsYLvvIzmiJbnu5nlh7rov57mnYbvvIjov57mnrbmnYbvvInnmoToi6XlubLkvY3nva7opoHmsYLnlKjlm77op6Pms5Xorr7orqHlm5vmnYbmnLrmnoTjgIIiLAogIGtub3duOiLlm5vmnYbplb/luqbvvJvmiJbmnoHkvY3lpLnop5IgLyBLIOWAvO+8m+aIlui/nuadhueahCAy4oCTMyDkuKrnu5nlrprkvY3nva7jgIHov57mnrbmnYbnmoTlr7nlupTkvY3nva7jgIIiLAogIGdvYWw6IuWIpOWumuacuuaehOexu+Wei++8m+axgiBLIOaIliDOuO+8m+Wbvuino+axguWHuuWbuuWumumTsOmTvuS4reW/g+S4juWQhOadhumVv+W6puOAgiIsCiAga2V5OiLnsbvlnovliKTlrprlj6rmipPkuKTngrnvvJrlhYjpqozmnYbplb/mnaHku7bvvIzlho3nnIvmnIDnn63mnYbnq5nlnKjlk6rkuKrkvY3nva7jgILlm77op6Porr7orqHnmoTnqoHnoLTlj6PmmK/jgIzlnoLnm7TlubPliIbnur/jgI3igJTigJTlm7rlrprpk7Dpk77liLDliqjpk7Dpk77nmoTot53nprvkuI3lj5jvvIzmiYDku6XlnKjlnoLliIbnur/kuIrjgIIiLAogIHBhdGg6WyIxLiDnsbvlnovpopjvvJrpqowgbF9taW4gKyBsX21heCDiiaQg5YW25L2Z5Lik5p2G5LmL5ZKM44CCIiwiMi4g5ruh6Laz5p2G6ZW/5p2h5Lu25ZCO55yL5pyA55+t5p2G5L2N572u77ya5Li65py65p62IOKGkiDlj4zmm7Lmn4TvvJvkuLrov57mnrbmnYYg4oaSIOabsuafhOaRh+adhu+8m+S4uui/nuadhiDihpIg5Y+M5pGH5p2G44CC5LiN5ruh6LazIOKGkiDlj4zmkYfmnYbjgIIiLCIzLiBLIOS4jiDOuCDkupLmsYLvvJpLID0gKDE4MMKwICsgzrgpIC8gKDE4MMKwIOKIkiDOuCnvvIzmiJblj43op6MgzrjjgIIiLCI0LiDlm77op6Porr7orqHvvIjov57mnYbkuInkvY3nva7vvInvvJrnlLvlh7rkuInkuKrkvY3nva7vvIzov57mjqXlr7nlupTngrnvvIzkvZzov57nur/nmoTlnoLnm7TlubPliIbnur/vvIzkuqTngrnljbPlm7rlrprpk7Dpk77kuK3lv4PjgIIiLCI1LiDlm77op6Porr7orqHvvIjov57mnrbmnYblr7nlupTkvY3nva7vvInvvJrnlKjliJrljJblj43ovazms5XmiorlkITkvY3nva7lvZLkuIDvvIzlho3kvZzlnoLliIbnur/msYLkuqTngrnjgIIiLCI2LiDph4/lj5bmnYbplb/lubbpqoznrpfnsbvlnovkuI7ooYznqIvopoHmsYLjgIIiXSwKICBmb3JtdWxhczpbIuadhumVv+adoeS7tu+8mlxcKGxfe21pbn0gKyBsX3ttYXh9IFxcbGUgbF8zICsgbF80XFwpIiwiXFwoSyA9IFxcZGZyYWN7MTgwXntcXGNpcmN9ICsgXFx0aGV0YX17MTgwXntcXGNpcmN9IC0gXFx0aGV0YX1cXCkiLCLljovlipvop5LkuI7kvKDliqjop5LvvJpcXChcXGFscGhhICsgXFxnYW1tYSA9IDkwXntcXGNpcmN9XFwp77yb5q2754K55pe2IFxcKFxcZ2FtbWEgPSAwXFwpIl0sCiAgY29uZDoi5p2G6ZW/5p2h5Lu25piv5puy5p+E5a2Y5Zyo55qE5b+F6KaB5p2h5Lu277yM5LiN5piv5YWF5YiG5p2h5Lu24oCU4oCU6L+Y5b+F6aG75pyA55+t5p2G5Li66L+e5p625p2G5oiW5py65p6244CC5Zu+6Kej5rOV5L6d6LWW5L2c5Zu+57K+5bqm77yM6ICD6K+V5oyJ5q2l6aqk57uZ5YiG77yM5Z6C5YiG57q/5b+F6aG755S75Ye644CCIiwKICBjYXNlczoi5oyJ5pyA55+t5p2G5L2N572u5YiG5Zub57G76K6o6K6677yI6KeB5qCH5YeG6Lev5b6E56ysIDIg5q2l77yJ77yb5q2754K55Y+q5Zyo5LuO5Yqo5Lu25LiO6L+e5p2G5YWx57q/44CB5LiU6K+l5LuO5Yqo5Lu25Li65Y6f5Yqo5Lu25LiA5L6n5pe25Ye6546w77ya5pGH5p2G5Li75Yqo5pyJ5q2754K577yM5puy5p+E5Li75Yqo5peg5q2754K544CCIiwKICBleGFtcGxlOiLkvovvvJrOuCA9IDM2wrAg5pe2IFxcKEsgPSAoMTgwKzM2KS8oMTgwLTM2KSA9IDIxNi8xNDQgPSAxLjVcXCnjgILlj43ov4fmnaXnu5kgSyDmsYIgzrgg5pe277yM5YWI55SxIEsg6Kej5Ye6IM64IOWGjeWIpOaWreaApeWbnueoi+W6pu+8mksgPiAx77yI5Y2zIM64ID4gMO+8ieaJjeacieaApeWbnuOAgiIsCiAgZXJyb3JzOlsi5Y+q6aqM5p2G6ZW/5p2h5Lu25bCx5LiL57uT6K6677yM5LiN55yL5pyA55+t5p2G5L2N572u77yb5oqK5q2754K55LiO6Ieq6ZSB5re35Li65LiA6LCI77ybSyDkuI4gzrgg5YWs5byP5YiG5a2Q5YiG5q+N5YaZ5Y+N77yb5Zu+6Kej5rOV5b+Y5L2c5Z6C55u05bmz5YiG57q/44CB55u05o6l6YeP6Led56a75YeR6ZOw6ZO+44CCIl0KfSwKewogIGlkOiJtLWdlYXIiLCB0aXRsZToi6b2/6L2u5Yeg5L2V5Y+C5pWw6K6h566XIiwgY2g6IuesrCA0IOeroCDpvb/ova7mnLrmnoQiLAogIHJlY29nOiLnu5nlh7rmqKHmlbAgbeOAgem9v+aVsCB677yI5pyJ5pe257uZ5Y6L5Yqb6KeSIM6x44CB5Y+Y5L2N57O75pWw77yJ77yM6KaB5rGC5YiG5bqm5ZyG44CB5Z+65ZyG44CB6b2/6aG26auY44CB6b2/5qC56auY44CB5Lit5b+D6Led562J5Yeg5L2V6YeP77yM5oiW5Yik5pat5Lik6L2u6IO95ZCm5q2j56Gu5ZWu5ZCI44CB5piv5ZCm5qC55YiH44CCIiwKICBrbm93bjoibeOAgXrigoHjgIF64oKC77yb5qCH5YeG6b2/6L2u6buY6K6kIGhfYSogPSAx44CBYyogPSAwLjI144CBzrEgPSAyMMKw44CCIiwKICBnb2FsOiLmsYIgZOOAgWRfYuOAgWhfYeOAgWhfZuOAgWEg562J5bC65a+477yb5Yik5pat5ZWu5ZCI5p2h5Lu25LiO5qC55YiH44CCIiwKICBrZXk6IuS4gOWIh+iuoeeul+S7jiBkID0gbXog5Ye65Y+R77ya5YWI5pyJ5YiG5bqm5ZyG77yM5YW25L2Z5bC65a+46YO95pivIG0g55qE5YCN5pWw5oiW55SxIGQg5rS+55Sf44CC5ZWu5ZCI6Zeu6aKY5YWI5p+l44CM5qih5pWw55u4562J44CB5Y6L5Yqb6KeS55u4562J44CN44CCIiwKICBwYXRoOlsiMS4g55SxIGQgPSBteiDmsYLliIbluqblnIbnm7TlvoTjgIIiLCIyLiDln7rlnIYgZF9iID0gZMK3Y29zzrHvvIjlj6rkuI4gZOOAgc6xIOacieWFs++8ieOAgiIsIjMuIOm9v+mhtumrmCBoX2EgPSBoX2EqwrdtID0gbe+8m+m9v+aguemrmCBoX2YgPSAoaF9hKiArIGMqKW0gPSAxLjI1beOAgiIsIjQuIOagh+WHhuS4reW/g+i3nSBhID0gbSh64oKBICsgeuKCgikvMuOAgiIsIjUuIOWVruWQiOWIpOaWre+8mm3igoEgPSBt4oKCIOS4lCDOseKCgSA9IM6x4oKC77yI5pac6b2/6L2u55yL5rOV6Z2i5Y+C5pWw5LiO6J665peL6KeS77yJ44CCIiwiNi4g5qC55YiH5Yik5pat77ya5qCH5YeG55u06b2/IHogPCAxNyDkvJrmoLnliIfvvIzlj6/nlKjmraPlj5jkvY3pgb/lhY3jgIIiXSwKICBmb3JtdWxhczpbIlxcKGQgPSBtelxcKSIsIlxcKGRfYiA9IGQgXFxjb3NcXGFscGhhXFwpIiwiXFwoaF9hID0gaF9hXnsqfSBtXFwp77yMXFwoaF9mID0gKGhfYV57Kn0gKyBjXnsqfSkgbVxcKSIsIlxcKGEgPSBcXGRmcmFje20oel8xICsgel8yKX17Mn1cXCkiLCLkuI3moLnliIfmnIDlsJHpvb/mlbAgXFwoel97bWlufSA9IDE3XFwp77yI5qCH5YeG55u06b2/77yMXFwoaF9hXnsqfT0xLCBcXGFscGhhPTIwXntcXGNpcmN9XFwp77yJIiwi6L+e57ut5Lyg5Yqo5p2h5Lu277ya6YeN5ZCI5bqmIFxcKFxcdmFyZXBzaWxvbl97XFxhbHBoYX0gXFxnZSAxXFwpIl0sCiAgY29uZDoi5Lul5LiK5YWs5byP6ZKI5a+55qCH5YeG55u06b2/5ZyG5p+x6b2/6L2u77yb5Y+Y5L2N6b2/6L2u55qE5YiG5bqm5ZyG44CB5Z+65ZyG5LiN5Y+Y77yM5L2G6b2/5Y6a44CB6b2/6aG26auY44CB6b2/5qC56auY6KaB5oyJ5Y+Y5L2N57O75pWw5L+u5q2j77yb5pac6b2/6L2u6KaB55So56uv6Z2iIC8g5rOV6Z2i5Y+C5pWw5o2i566X77yM5LiN6KaB55u05o6l5aWX44CCIiwKICBjYXNlczoi5qCH5YeG5a6J6KOF5pe25YiG5bqm5ZyG5LiO6IqC5ZyG6YeN5ZCI77yb5Lit5b+D6Led5aSn5LqO5qCH5YeG5YC85pe26IqC5ZyG5aSn5LqO5YiG5bqm5ZyG44CB5ZWu5ZCI6KeS5aSn5LqO5Y6L5Yqb6KeS77yM5L2G5Lyg5Yqo5q+U5LiN5Y+Y77yI5Y+v5YiG5oCn77yJ44CCIiwKICBleGFtcGxlOiLkvovvvJptID0gNCBtbeOAgXogPSAzMO+8jOWImSBkID0gMTIwIG1t77yMaF9mID0gMS4yNSDDlyA0ID0gNSBtbe+8m+S4jiB64oKCID0gMjQg55qE6L2u6YWN5a+55pe2IGEgPSA0IMOXICgzMCArIDI0KS8yID0gMTA4IG1t44CCIiwKICBlcnJvcnM6WyLmiorpvb/moLnpq5jnrpfmiJAgbe+8iOa8j+aOiemhtumamSBjKm3vvInvvJvln7rlnIbnm7TlvoTor6/nlKjpvb/pobblnIbvvJvlla7lkIjmnaHku7blj6rlhpnmqKHmlbDnm7jnrYnmvI/mjonljovlipvop5LvvJvmioogMTcg6b2/5aWX5Yiw5pac6b2/6L2u5oiW5Y+Y5L2N6b2/6L2u5LiK44CCIl0KfSwKewogIGlkOiJtLXRyYWluIiwgdGl0bGU6Iui9ruezu+S8oOWKqOavlOiuoeeulyIsIGNoOiLnrKwgNSDnq6Ag6L2u57O7IiwKICByZWNvZzoi5aSa5Liq6b2/6L2u57uE5oiQ55qE6L2u57O777yM57uZ5ZCE6L2u6b2/5pWw77yM5rGC6aaW5pyr6L2u5Lyg5Yqo5q+U5aSn5bCP5LiO6L2s5ZCR77yb5oiW5bey55+l5p+Q6L2u6L2s6YCf5rGC5Y+m5LiA6L2u6L2s6YCf44CC5Ye6546w44CM57O75p2GIC8g6KGM5pif6L2u44CN5a2X5qC35Y2z5ZCr5ZGo6L2s6L2u57O744CCIiwKICBrbm93bjoi5ZCE6b2/6L2u6b2/5pWw44CB5ZWu5ZCI6aG65bqP77yb5ZOq5Liq5p6E5Lu25piv57O75p2G44CB5ZOq5Liq6L2u5Zu65a6a44CCIiwKICBnb2FsOiLmsYLkvKDliqjmr5TnmoTmlbDlgLzkuI7pppbmnKvova7ovazlkJHlhbPns7vvvIjlkIzlkJEgLyDlj43lkJHvvInjgIIiLAogIGtleToi5YWI5YiG5Z6L5YaN5Yqo5omL77ya5YWo6YOo6L2057q/5Zu65a6aIOKGkiDlrprovbTlhazlvI/ov57kuZjvvJvmnInooYzmmJ/ova4g4oaSIOi9rOWMluacuuaehOazle+8m+a3t+WQiOi9ruezu+W/hemhu+WFiOaLhuaIkOWumui9tOmDqOWIhuS4juWRqOi9rOmDqOWIhuWIhuWIq+WIl+W8j+OAgeiBlOeri+axguino++8jOe7neS4jeiDveS4gOS4quWFrOW8j+Wll+WIsOW6leOAgiIsCiAgcGF0aDpbIjEuIOWIpOexu+Wei++8muWumui9tCAvIOWRqOi9rCAvIOa3t+WQiOOAgiIsIjIuIOWumui9tO+8mmkgPSDCsSjku47liqjova7pvb/mlbDov57kuZgpLyjkuLvliqjova7pvb/mlbDov57kuZgp77yM56ym5Y+35oyJ5aSW5ZWu5ZCI5qyh5pWwICjiiJIxKV5tIOWumu+8iOW5s+mdoui9ruezu++8ieOAgiIsIjMuIOWRqOi9rO+8mue7meaVtOS4qui9ruezu+WKoCDiiJLPiV9IIOaKiuezu+adhuWbuuWumu+8jOWGmei9rOWMlui9ruezu+S8oOWKqOavlCBpXkgg55qE5byP5a2Q44CCIiwiNC4g5oqK5bey55+l6L2s6YCf77yI5Zu65a6a6L2uIM+JID0gMCDnrYnvvInku6PlhaXovazljJblvI/msYLop6PjgIIiLCI1LiDmt7flkIjova7ns7vvvJrliIbliKvlr7nlrprovbTmrrXjgIHlkajovazmrrXliJflvI/vvIznlKjkuK3pl7Tova7ovazpgJ/ogZTnq4vjgIIiLCI2LiDmnIDlkI7ljZXni6zliKTmlq3pppbmnKvova7ovazlkJHlubblhpnmmI7jgIIiXSwKICBmb3JtdWxhczpbIuWumui9tOi9ruezu++8mlxcKGkgPSBcXHBtIFxcZGZyYWN7XFx0ZXh0e+S7juWKqOi9rum9v+aVsOi/nuS5mH19e1xcdGV4dHvkuLvliqjova7pvb/mlbDov57kuZh9fVxcKSIsIui9rOWMluacuuaehOazle+8mlxcKGlfezEzfV57SH0gPSBcXGRmcmFje1xcb21lZ2FfMSAtIFxcb21lZ2FfSH17XFxvbWVnYV8zIC0gXFxvbWVnYV9IfSA9IC1cXGRmcmFje3pfM317el8xfVxcKe+8iOekuuS+i++8jOaMieWFt+S9k+WVruWQiOWumuespuWPt++8iSIsIuihjOaYn+i9ruezuyBcXChGID0gMVxcKe+8jOW3ruWKqOi9ruezuyBcXChGID0gMlxcKSJdLAogIGNvbmQ6IijiiJIxKV5tIOWumuespuWPt+WPqumAgueUqOS6juWQhOi9tOW5s+ihjOeahOW5s+mdouWumui9tOi9ruezu++8m+epuumXtOi9ruezu+i9rOWQkeimgeeUqOWbvuS4iueUu+eureWktOeahOaWueazleOAgui9rOWMluWFrOW8j+S4reeahOm9v+aVsOavlOespuWPt+aMiei9rOWMluWQjueahOWumui9tOi9ruezu+WIpOaWreOAgiIsCiAgY2FzZXM6IuihjOaYn+i9ruezu++8iOS4gOS4quS4reW/g+i9ruWbuuWumu+8ieS7o+WFpSDPiV/lm7rlrpogPSAwIOaxguino++8m+W3ruWKqOi9ruezu+acieS4pOS4qui+k+WFpe+8jOW/hemhu+S4pOS4quWOn+WKqOS7tui9rOmAn+mDveW3suefpeaJjeiDveino++8m+aDsOi9ruWPquaUuei9rOWQkeS4jeaUueS8oOWKqOavlOWkp+Wwj+OAgiIsCiAgZXhhbXBsZToi5L6L77ya5a6a6L206L2u57O7IHrigoE9MTjjgIF64oKCPTM244CBeuKCgz0yMOOAgXrigoQ9NTDvvIjkuKTlr7nlpJblla7lkIjvvIwy44CBMyDlkIzovbTvvInvvIxp4oKB4oKEID0gKDM2w5c1MCkvKDE4w5cyMCkgPSA177yM5Lik5qyh5aSW5ZWu5ZCI56ym5Y+35Li65q2j77yM6aaW5pyr6L2u5ZCM5ZCR44CCIiwKICBlcnJvcnM6WyLlkajovazova7ns7vnm7TmjqXlpZflrprovbTov57kuZjlhazlvI/vvJvovazljJblhazlvI/ph4wgz4kg5YePIM+JX0gg5YaZ5ryP5oiW5YaZ6ZSZ5a+56LGh77yb6KGM5pif6L2u6b2/5pWw5rKh57qm5Y675bCx5Luj5YWl77yI5aSn5bCP5byP5Lit5a6D5Lya57qm5Y6777yM5L2G6L2s5ZCR5Yik5pat6KaB55So77yJ77yb5re35ZCI6L2u57O75LiN5ouG5YiG44CCIl0KfQpdOwpmdW5jdGlvbiBtZXRob2RCeUlkKGlkKXsgZm9yICh2YXIgaT0wO2k8TUVUSE9EUy5sZW5ndGg7aSsrKSBpZiAoTUVUSE9EU1tpXS5pZCA9PT0gaWQpIHJldHVybiBNRVRIT0RTW2ldOyByZXR1cm4gbnVsbDsgfQp2YXIgTUVUSE9EX09GX0NIID0geyAi56ysIDEg56ugIOiHqueUseW6piI6Im0tZG9mIiwgIuesrCAyIOeroCDov57mnYbmnLrmnoQiOiJtLWZvdXJiYXIiLCAi56ysIDQg56ugIOm9v+i9ruacuuaehCI6Im0tZ2VhciIsICLnrKwgNSDnq6Ag6L2u57O7IjoibS10cmFpbiIgfTsKCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KICAg6ICD54K55oC757uT77yaUGFydCAxIOWujOaVtOeJiO+8m+WFtuS9meeroOiKguebruW9lSArIOW+heihpeWFhQogICA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovCnZhciBTVU1NQVJZX0hUTUwgPQogJzxkaXYgY2xhc3M9InN1bS1zZWMiPjxoMz5QYXJ0IDEgwrcg5bmz6Z2i5py65p6E6L+Q5Yqo5YiG5p6Q77yI5a6M5pW054mI77yJPC9oMz4nICsKICc8aDQ+6ICD54K5IDEgwrcg6L+Q5Yqo5Ymv5LiO6L+Q5Yqo566A5Zu+PC9oND4nICsKICc8cD7ov5Dliqjlia/mmK/kuKTmnoTku7bnm7TmjqXmjqXop6blubbog73kuqfnlJ/kuIDlrprnm7jlr7nov5DliqjnmoTov57mjqXjgILmjInmjqXop6blvaLlvI/liIbvvJrkvY7lia/vvIjpnaLmjqXop6bvvIzljIXmi6zovazliqjlia/kuI7np7vliqjlia/vvIzlkITlvJXlhaUgMiDkuKrnuqbmnZ/vvInlkozpq5jlia/vvIjngrnjgIHnur/mjqXop6bvvIzlvJXlhaUgMSDkuKrnuqbmnZ/vvInjgILkuIDkuKrkvZzlubPpnaLov5DliqjnmoToh6rnlLHmnoTku7bmnIkgMyDkuKroh6rnlLHluqbjgII8L3A+JyArCiAnPHA+55S76L+Q5Yqo566A5Zu+5Y+q5L+d55WZ5Yaz5a6a6L+Q5Yqo55qE5L+h5oGv77ya5oyJ5q+U5L6L55S757q/5p2h5LiO6KeE5a6a56ym5Y+377yM6L2s5Yqo5Ymv55So5bCP5ZyG6KGo56S677yM6auY5Ymv55S75Ye65o6l6Kem5aSE5puy57q/6L2u5buT77yM5py65p6255S75YmW6Z2i57q/77yb54SK5oiQ5Yia5oCn5pW05L2T55qE5Yeg5qC55p2G566X5LiA5Liq5p6E5Lu244CCPC9wPicgKwogJzxoND7ogIPngrkgMiDCtyDoh6rnlLHluqblhazlvI/nmoTmjqjlr7zvvIjkuI3ot7PmraXvvIk8L2g0PicgKwogJzxwPuesrOS4gOatpe+8mlxcKG5cXCkg5Liq5rS75Yqo5p6E5Lu26Iul5LqS5LiN6L+e5o6l77yM5q+P5Liq5Zyo5bmz6Z2i5YaF5pyJIDMg5Liq6Ieq55Sx5bqm77yI5Lik5Liq56e75Yqo44CB5LiA5Liq6L2s5Yqo77yJ77yM5YWxIFxcKDNuXFwpIOS4quOAgjwvcD4nICsKICc8cD7nrKzkuozmraXvvJrmr4/nu4TmiJDkuIDkuKrkvY7lia/vvIzkuKTmnoTku7bpl7Tlj6rliakgMSDkuKrnm7jlr7noh6rnlLHluqbvvIzljbPlvJXlhaUgMiDkuKrnuqbmnZ/vvIxcXChQX0xcXCkg5Liq5L2O5Ymv5YWx5byV5YWlIFxcKDJQX0xcXCkg5Liq57qm5p2f44CCPC9wPicgKwogJzxwPuesrOS4ieatpe+8muavj+e7hOaIkOS4gOS4qumrmOWJr++8jOS/neeVmSAyIOS4quebuOWvueiHqueUseW6pu+8jOWNs+W8leWFpSAxIOS4que6puadn++8jFxcKFBfSFxcKSDkuKrpq5jlia/lhbHlvJXlhaUgXFwoUF9IXFwpIOS4que6puadn+OAgjwvcD4nICsKICc8cD7nrKzlm5vmraXvvJrmgLvoh6rnlLHluqYgPSDliJ3lp4voh6rnlLHluqYg4oiSIOe6puadn+aAu+aVsO+8mjwvcD5cXFtGID0gM24gLSAyUF9MIC0gUF9IXFxdJyArCiAnPHA+57uT6K6655qE5L2/55So77ya5py65p6E5YW35pyJ56Gu5a6a6L+Q5Yqo55qE5p2h5Lu25pivIFxcKEYgPiAwXFwpIOS4lCBcXChGXFwpIOetieS6juWOn+WKqOS7tuaVsOOAguWOn+WKqOS7tuWwkeS6jiBcXChGXFwpIOWImei/kOWKqOS4jeehruWumu+8m+WkmuS6jiBcXChGXFwpIOWImee6puadn+i/h+WJqe+8jOacgOW8seaehOS7tuWPr+iDveaNn+Wdj+OAgjwvcD4nICsKICc8aDQ+6ICD54K5IDMgwrcg5LiJ57G754m55q6K5oOF5Ya177yI5pWw5pWw5YmN5YWI5aSE55CG77yJPC9oND4nICsKICc8dWw+PGxpPjxiPuWkjeWQiOmTsOmTvjwvYj7vvJpcXChtXFwpIOS4quaehOS7tuWcqOWQjOS4gOWkhOS7pei9rOWKqOWJr+i/nuaOpe+8jOWQqyBcXChtLTFcXCkg5Liq6L2s5Yqo5Ymv44CC5Y6f55CG77ya56ys5LiA5Liq5p6E5Lu25L2c5Z+65YeG77yM5YW25L2Z5q+P5Liq5p6E5Lu25ZCE5LiO5a6D57uE5oiQ5LiA5Liq6L2s5Yqo5Ymv44CCPC9saT4nICsKICc8bGk+PGI+5bGA6YOo6Ieq55Sx5bqmPC9iPu+8muafkOS6m+aehOS7tuS4jeW9seWTjeWFtuS7luaehOS7tui/kOWKqOeahOiHqueUseW6pu+8jOWFuOWei+aYr+a7muWtkOaOqOadhuS4rea7muWtkOeahOiHqui9rO+8iOS9nOeUqOaYr+aKiua7keWKqOaRqeaTpuWPmOa7muWKqOaRqeaTpuOAgeWHj+Wwj+ejqOaNn++8ieOAguWkhOeQhu+8mua7muWtkOS4juaOqOadhuinhuS4uuS4gOS9k+WQjuWGjeiuoeaVsOOAgjwvbGk+JyArCiAnPGxpPjxiPuiZmue6puadnzwvYj7vvJrlr7nov5DliqjkuI3otbfni6znq4vnuqbmnZ/kvZznlKjnmoTph43lpI3nuqbmnZ/vvIznlLHlh6DkvZXlsLrlr7jmu6HotrPnibnmrormnaHku7bkuqfnlJ/vvJrovbTnur/ph43lkIjnmoTlpJrkuKrovazliqjlia/lj6rnrpfkuIDkuKrjgIHlr7zot6/lubPooYznmoTlpJrkuKrnp7vliqjlia/lj6rnrpfkuIDkuKrjgIHovajov7nph43lkIjjgIHkvKDpgJLov5DliqjkuI3otbfni6znq4vkvZznlKjnmoTlr7nnp7Dpg6jliIbjgILlpITnkIbvvJrorqHnrpfliY3pmaTljrvvvJvkvYblrp7niankuK3otbflop7lvLrliJrmgKfjgIHmlLnlloTlj5flipvnmoTkvZznlKjvvIzkuI3og73mi4bpmaTjgII8L2xpPjwvdWw+JyArCiAnPGg0PuiAg+eCuSA0IMK3IOmAn+W6pueerOW/gzwvaDQ+JyArCiAnPHA+6YCf5bqm556s5b+D5piv5Lik5p6E5Lu25LiK57ud5a+56YCf5bqm55u45ZCM55qE6YeN5ZCI54K577yb5LiO5py65p6255qE556s5b+D5piv57ud5a+5556s5b+D77yI6YCf5bqm5Li6IDDvvInvvIzkuKTov5DliqjmnoTku7bkuYvpl7TnmoTmmK/nm7jlr7nnnqzlv4PjgILnnqzlv4PmgLvmlbDmjqjlr7zvvJrmr4/kuKTkuKrmnoTku7bphY3kuIDkuKrnnqzlv4PvvIzku44gXFwoS1xcKSDkuKrmnoTku7bkuK3lj5YgMiDkuKrnmoTnu4TlkIjmlbDkuLo8L3A+XFxbTiA9IFxcZnJhY3tLKEstMSl9ezJ9XFxdJyArCiAnPHA+5a6a5L2N5pa55rOV77ya6L2s5Yqo5Ymv55qE556s5b+D5Zyo6ZOw6ZO+54K577yb56e75Yqo5Ymv55qE556s5b+D5Zyo5Z6C55u05a+86Lev5pa55ZCR55qE5peg56m36L+c5aSE77yb6auY5Ymv55qE556s5b+D5Zyo5o6l6Kem54K55YWs5rOV57q/5LiK77yM5YaN55Sx5LiJ5b+D5a6a55CG77yI5LqS5L2c5bmz6Z2i6L+Q5Yqo55qE5LiJ5Liq5p6E5Lu255qE5LiJ5Liq556s5b+D5L2N5LqO5ZCM5LiA55u057q/5LiK77yJ5LiO5bey55+l556s5b+D6L+e57q/5rGC5Lqk54K556Gu5a6a44CCPC9wPicgKwogJzxoND7mnKznq6Doh6rmn6Xpobrluo88L2g0PicgKwogJzxvbD48bGk+566A5Zu+6K6k5Ymv77ya5q+P5Liq6L+Q5Yqo5Ymv55qE57G75Z6L5a+55LiN5a+577yfPC9saT48bGk+54m55q6K5oOF5Ya177ya5aSN5ZCI6ZOw6ZO+44CB5bGA6YOo6Ieq55Sx5bqm44CB6Jma57qm5p2f5aSE55CG5a6M5rKh5pyJ77yfPC9saT48bGk+5pWwIG7jgIFQX0zjgIFQX0gg5Luj5YWl5YWs5byP44CCPC9saT48bGk+6Zeu56Gu5a6a6L+Q5Yqo5pe277yM6KGl5LiK5LiO5Y6f5Yqo5Lu25pWw55qE5q+U6L6D44CCPC9saT48bGk+556s5b+D6aKY5YWI55So57uE5ZCI5pWw5YWs5byP5pWw5oC75pWw77yM5YaN6YCQ5Liq5a6a5L2N44CCPC9saT48L29sPicgKwogJzwvZGl2PicgKwogJzxkaXYgY2xhc3M9InN1bS1zZWMiPjxoMz7lhbbkvZnnq6DoioLnm67lvZXvvIjlvoXooaXlhYXvvIk8L2gzPicgKwogJzxwPuS7peS4i+eroOiKgueahOiAg+eCueaAu+e7k+WwmuacquaMieWujOaVtOaOqOWvvOeJiOihpeWFqO+8jOWFiOWIl+ebruW9le+8jOS4jeimgeW9k+S9nOW3suWujOaIkO+8mjwvcD48dWw+JyArCiAnPGxpPue7quiuuiDigJTigJQg5b6F6KGl5YWF77yI546w5pyJ5YaF5a656KeB55+l6K+G54K56aG177yJPC9saT4nICsKICc8bGk+UGFydCAyIMK3IOW5s+mdouWbm+i/nuadhuacuuaehCDigJTigJQg5b6F6KGl5YWF77yI5p2G6ZW/5p2h5Lu244CB5oCl5Zue44CB5Y6L5Yqb6KeS5LiO5q2754K544CB5Zu+6Kej5rOV6K6+6K6h77yJPC9saT4nICsKICc8bGk+UGFydCAzIMK3IOWHuOi9ruacuuaehCDigJTigJQg5b6F6KGl5YWF77yI6L+Q5Yqo6KeE5b6L5LiO5Yay5Ye744CB5Y+N6L2s5rOV44CB5Y6L5Yqb6KeS5LiO5Z+65ZyG77yJPC9saT4nICsKICc8bGk+UGFydCA0IMK3IOm9v+i9ruacuuaehCDigJTigJQg5b6F6KGl5YWF77yI5Yeg5L2V5Y+C5pWw44CB5ZWu5ZCI5p2h5Lu244CB6YeN5ZCI5bqm44CB5qC55YiH5LiO5Y+Y5L2N77yJPC9saT4nICsKICc8bGk+UGFydCA1IMK3IOm9v+i9ruezuyDigJTigJQg5b6F6KGl5YWF77yI5a6a6L20IC8g5ZGo6L2sIC8g5re35ZCI6L2u57O75Lyg5Yqo5q+U77yJPC9saT4nICsKICc8bGk+5ZCO57ut56ug6IqC77yI6L+e5o6l44CB6b2/6L2u5Lyg5Yqo44CB6JyX5p2G44CB5bim6ZO+5Lyg5Yqo44CB6L2044CB6L205om/562J77yJ4oCU4oCUIFRhc2tQcm8g56yU6K6w5pyq5YaZ5Yiw77yM5b6F6KGl5YWFPC9saT48L3VsPjwvZGl2Pic7CgovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiAgIOefpeivhueCuemhtea4suafk++8mueroOiKguaAu+iniCDihpIg55+l6K+G54K55paw57uT5p6E6aG177yI5bim6L+U5Zue5qCI77yJCiAgID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8KdmFyIG5hdlN0YWNrID0gW107CnZhciBjdXJDdHggPSBudWxsOyAvKiB7a2luZDoiY2hhcHRlciIsIGl9IHwge2tpbmQ6InBvaW50IiwgaWR9ICovCmZ1bmN0aW9uIHBhcnRPZihpKXsgcmV0dXJuIFBBUlRTW2ldOyB9CmZ1bmN0aW9uIHN0YXR1c0JhZGdlcyhwKXsKICB2YXIgc3QgPSBzdG9yZS5wb2ludHNbcC5pZF07CiAgdmFyIGIgPSAiIjsKICBpZiAocC5wZW5kaW5nKSBiICs9ICc8c3BhbiBjbGFzcz0iYmFkZ2Ugd2FybiI+5b6F5oyJ5paw57uT5p6E6KGl5YWoPC9zcGFuPic7CiAgaWYgKHN0ICYmIHN0LmZhdikgYiArPSAnPHNwYW4gY2xhc3M9ImJhZGdlIGFjYyI+4piFIOW3suaUtuiXjzwvc3Bhbj4nOwogIGlmIChzdCAmJiBzdC5tYXN0ZXJlZCkgYiArPSAnPHNwYW4gY2xhc3M9ImJhZGdlIG9rIj7lt7Lmjozmj6E8L3NwYW4+JzsKICBlbHNlIGlmIChzdCAmJiBzdC5yZWFkKSBiICs9ICc8c3BhbiBjbGFzcz0iYmFkZ2UiPuW3sumYheivuzwvc3Bhbj4nOwogIHJldHVybiBiOwp9CmZ1bmN0aW9uIGx2U3RyaXBIVE1MKHApewogIHZhciBjZWxscyA9IExWX05BTUVTLm1hcChmdW5jdGlvbihuLCBpKXsKICAgIHZhciBvbiA9IGkgPj0gcC5sdlswXSAmJiBpIDw9IHAubHZbMV07CiAgICByZXR1cm4gJzxkaXYgY2xhc3M9Imx2LWNlbGwnICsgKG9uID8gIiBvbiIgOiAiIikgKyAnIj48Yj5MZXZlbCAnICsgaSArICc8L2I+JyArIG4uc3BsaXQoIsK3ICIpWzFdICsgJzwvZGl2Pic7CiAgfSkuam9pbigiIik7CiAgdmFyIHRyYW5zID0gIiI7CiAgZm9yICh2YXIgbCA9IHAubHZbMF07IGwgPCBwLmx2WzFdOyBsKyspIHsKICAgIHRyYW5zICs9ICc8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9Imdob3N0LWJ0biIgZGF0YS10cmFucz0iJyArIHAuaWQgKyAiOiIgKyBsICsgJyI+6L+H5rih5L6L6aKYIEwnICsgbCArICcg4oaSIEwnICsgKGwrMSkgKyAnPC9idXR0b24+JzsKICB9CiAgcmV0dXJuICc8ZGl2IGNsYXNzPSJsdi1zdHJpcCI+JyArIGNlbGxzICsgJzwvZGl2PicgKwogICAgKHRyYW5zID8gJzxkaXYgY2xhc3M9InRyYW5zLXJvdyI+PHNwYW4gc3R5bGU9ImNvbG9yOnZhcigtLW11dGVkKTtmb250LXNpemU6Ljg4cmVtIj7lsYLnuqfkuYvpl7TlhYjnu4Pov4fmuKHkvovpopjvvIzlho3lvoDkuIrotbDvvJo8L3NwYW4+JyArIHRyYW5zICsgJzwvZGl2PicgOiAiIik7Cn0KZnVuY3Rpb24gcmVuZGVyQ2hhcHRlcihpKXsKICB2YXIgcCA9IHBhcnRPZihpKTsKICBjdXJDdHggPSB7IGtpbmQ6ImNoYXB0ZXIiLCBpOmkgfTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsVGl0bGUiKS50ZXh0Q29udGVudCA9IHAudGl0bGU7CiAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImRldGFpbFN1YiIpLnRleHRDb250ZW50ID0gcC5zdWI7CiAgdmFyIHB0cyA9IHBhcnRQb2ludHMocC5udW0pOwogIHZhciBodG1sID0gIiI7CiAgaWYgKHB0cy5sZW5ndGgpIHsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PGgzPuacrOeroOefpeivhueCue+8iOeCueW8gOmAkOS4quWtpu+8iTwvaDM+PGRpdiBjbGFzcz0icHQtbGlzdCI+JyArCiAgICAgIHB0cy5tYXAoZnVuY3Rpb24ocHQpewogICAgICAgIHJldHVybiAnPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJwdC1jYXJkIiBkYXRhLXBvaW50PSInICsgcHQuaWQgKyAnIj48c3BhbiBjbGFzcz0icHQtdCI+JyArIHB0LnRpdGxlICsKICAgICAgICAgICc8c21hbGw+TGV2ZWwgJyArIHB0Lmx2WzBdICsgJyDigJMgTGV2ZWwgJyArIHB0Lmx2WzFdICsgKHB0LnBlbmRpbmcgPyAiIMK3IOWGheWuueW+heaMieaWsOe7k+aehOihpeWFqCIgOiAiIMK3IOaWsOe7k+aehOWujOaVtOeJiCIpICsgJzwvc21hbGw+PC9zcGFuPicgKwogICAgICAgICAgJzxzcGFuIGNsYXNzPSJwdC1iYWRnZXMiPicgKyBzdGF0dXNCYWRnZXMocHQpICsgJzwvc3Bhbj48L2J1dHRvbj4nOwogICAgICB9KS5qb2luKCIiKSArICc8L2Rpdj48L2Rpdj4nOwogIH0KICB2YXIgc2VjcyA9ICh0eXBlb2YgREVUQUlMUyAhPT0gInVuZGVmaW5lZCIgJiYgREVUQUlMU1twLm51bV0pIHx8IFtdOwogIGlmIChzZWNzLmxlbmd0aCkgewogICAgaHRtbCArPSAnPGRpdiBjbGFzcz0ia3Atc2VjIj48aDM+56ug6IqC6YCf6KeI77yI5Y6f5pyJ6K6y6Kej77yJPC9oMz4nICsgc2Vjcy5tYXAoZnVuY3Rpb24ocyl7CiAgICAgIHJldHVybiAnPGRpdiBjbGFzcz0iZGV0YWlsLXNlYyI+PGgzPicgKyBzWzBdICsgJzwvaDM+PHA+JyArIHNbMV0gKyAnPC9wPjwvZGl2Pic7CiAgICB9KS5qb2luKCIiKSArICc8L2Rpdj4nOwogIH0KICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsQm9keSIpLmlubmVySFRNTCA9IGh0bWw7CiAgdmFyIGYgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsRm9ybXVsYSIpLCBmaCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkZXRhaWxGb3JtdWxhSCIpOwogIHZhciB0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImRldGFpbFRyYXAiKSwgdGggPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsVHJhcEgiKTsKICBpZiAocC5mb3JtdWxhKSB7IGYuaW5uZXJIVE1MID0gcC5mb3JtdWxhOyBmLnN0eWxlLmRpc3BsYXkgPSAiIjsgZmguc3R5bGUuZGlzcGxheSA9ICIiOyB9IGVsc2UgeyBmLnN0eWxlLmRpc3BsYXkgPSAibm9uZSI7IGZoLnN0eWxlLmRpc3BsYXkgPSAibm9uZSI7IH0KICBpZiAocC50cmFwKSB7IHQudGV4dENvbnRlbnQgPSBwLnRyYXA7IHQuc3R5bGUuZGlzcGxheSA9ICIiOyB0aC5zdHlsZS5kaXNwbGF5ID0gIiI7IH0gZWxzZSB7IHQuc3R5bGUuZGlzcGxheSA9ICJub25lIjsgdGguc3R5bGUuZGlzcGxheSA9ICJub25lIjsgfQogIGdvdG9WaWV3KCJkZXRhaWwiKTsKICBybShkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgidmlldy1kZXRhaWwiKSk7Cn0KZnVuY3Rpb24gcmVuZGVyUG9pbnQoaWQpewogIHZhciBwID0gZmluZFBvaW50KGlkKTsKICBpZiAoIXApIHJldHVybjsKICBjdXJDdHggPSB7IGtpbmQ6InBvaW50IiwgaWQ6aWQgfTsKICB2YXIgc3QgPSBwU3RhdGUoaWQpOwogIHN0LnJlYWQgPSB0cnVlOyBzYXZlU3RvcmUoKTsKICB2YXIgcGFydFRpdGxlID0gIiI7CiAgUEFSVFMuZm9yRWFjaChmdW5jdGlvbihwcCl7IGlmIChwcC5udW0gPT09IHAucGFydCkgcGFydFRpdGxlID0gcHAudGl0bGU7IH0pOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkZXRhaWxUaXRsZSIpLnRleHRDb250ZW50ID0gcC50aXRsZTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsU3ViIikudGV4dENvbnRlbnQgPSAocGFydFRpdGxlIHx8IHAuY2ggfHwgIiIpICsgIiDCtyBMZXZlbCAiICsgcC5sdlswXSArICIg4oCTIExldmVsICIgKyBwLmx2WzFdOwogIHZhciBodG1sID0gIiI7CiAgaHRtbCArPSAnPGRpdiBjbGFzcz0ic3RhdGUtcm93Ij4nICsKICAgICc8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9InRnbCcgKyAoc3QucmVhZCA/ICIgb24iIDogIiIpICsgJyIgZGF0YS10Z2w9InJlYWQiIGRhdGEtcGlkPSInICsgcC5pZCArICciPuW3sumYheivuzwvYnV0dG9uPicgKwogICAgJzxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0idGdsIGFjYycgKyAoc3QubWFzdGVyZWQgPyAiIG9uIiA6ICIiKSArICciIGRhdGEtdGdsPSJtYXN0ZXJlZCIgZGF0YS1waWQ9IicgKyBwLmlkICsgJyI+5bey5o6M5o+hPC9idXR0b24+JyArCiAgICAnPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJ0Z2wnICsgKHN0LmZhdiA/ICIgb24iIDogIiIpICsgJyIgZGF0YS10Z2w9ImZhdiIgZGF0YS1waWQ9IicgKyBwLmlkICsgJyI+4piFIOaUtuiXjzwvYnV0dG9uPicgKwogICAgJzxzcGFuIHN0eWxlPSJjb2xvcjp2YXIoLS1tdXRlZDIpO2ZvbnQtc2l6ZTouODJyZW0iPuaJk+W8gOacrOmhteiusOS4uuW3sumYheivu++8m+W3suaOjOaPoeivt+WBmuWujOmhteacq+iHqua1i+WQjuWGjeeCueS6ru+8jOS4jeimgeWPquaMiea1j+iniOWIpOWumuOAgjwvc3Bhbj48L2Rpdj4nOwogIGlmIChwLnBlbmRpbmcpIHsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PHA+PHNwYW4gY2xhc3M9ImJhZGdlIHdhcm4iPuW+heaMieaWsOe7k+aehOihpeWFqDwvc3Bhbj4g5pys6aG15bey5aWX55So5paw57uT5p6E5qih5p2/5bm25L+d55WZ5Y6f5pyJ6K6y6Kej77yb44CM5byV5YWl44CB5YmN572u55+l6K+G44CB55+l6K+G6IGU57O744CB6Ieq5rWL44CN5bCa5pyq6YCQ5p2h6KGl5YWo77yM5LiN6KaB5b2T5L2c5bey5a6M5oiQ44CCPC9wPjwvZGl2Pic7CiAgICBodG1sICs9ICc8ZGl2IGNsYXNzPSJrcC1zZWMiPjxoMz7kuIDjgIHlvJXlhaU8L2gzPjxwPuW+heihpeWFheOAgjwvcD48L2Rpdj4nOwogICAgaHRtbCArPSAnPGRpdiBjbGFzcz0ia3Atc2VjIj48aDM+5LqM44CB5q2j5byP5a6a5LmJ5LiO6YCa5L+X6Kej6YeK77yI546w5pyJ5YaF5a6577yJPC9oMz48cD4nICsgcC5ib2R5ICsgJzwvcD48L2Rpdj4nOwogICAgaHRtbCArPSAnPGRpdiBjbGFzcz0ia3Atc2VjIj48aDM+5LiJ44CB5YmN572u55+l6K+GPC9oMz48cD7lvoXooaXlhYXjgILlhYjlm57nnIvmnKznq6DmgLvop4jvvJo8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9ImtwLWxpbmsiIGRhdGEtcGFydD0iJyArIHAucGFydCArICciPuacrOeroOefpeivhueCueWIl+ihqDwvYnV0dG9uPjwvcD48L2Rpdj4nOwogICAgaHRtbCArPSAnPGRpdiBjbGFzcz0ia3Atc2VjIj48aDM+5Zub44CB55+l6K+G6IGU57O7PC9oMz48cD7lvoXooaXlhYXjgII8L3A+PC9kaXY+JzsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PGgzPuS6lOOAgeWIhuWxguWtpuS5oO+8iExldmVsIDDigJM177yJPC9oMz4nICsgbHZTdHJpcEhUTUwocCkgKyAnPC9kaXY+JzsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PGgzPuWFreOAgeamguW/teiHqua1izwvaDM+PHA+5b6F6KGl5YWF44CCPC9wPjwvZGl2Pic7CiAgfSBlbHNlIHsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PGgzPuS4gOOAgeW8leWFpe+8mui/meS4quefpeivhuS4uuS7gOS5iOS8muWHuueOsDwvaDM+JyArIHAuaW50cm8ubWFwKGZ1bmN0aW9uKHgpeyByZXR1cm4gIjxwPiIgKyB4ICsgIjwvcD4iOyB9KS5qb2luKCIiKSArICc8L2Rpdj4nOwogICAgdmFyIGQgPSBwLmRlZjsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PGgzPuS6jOOAgeato+W8j+WumuS5ieS4jumAmuS/l+ino+mHijwvaDM+JyArCiAgICAgICc8cD48Yj7pgJrkv5fop6Pph4rvvJo8L2I+JyArIGQucGxhaW4gKyAnPC9wPicgKwogICAgICAnPHA+PGI+5Lil6LCo5a6a5LmJ77yaPC9iPicgKyBkLnN0cmljdCArICc8L3A+JyArCiAgICAgICc8cD48Yj7mlbDlrabooajovr7vvJo8L2I+PC9wPjxkaXYgY2xhc3M9ImZvcm11bGEiPicgKyBkLm1hdGggKyAnPC9kaXY+JyArCiAgICAgICc8cCBzdHlsZT0ibWFyZ2luLXRvcDoxMnB4Ij48Yj7nrKblj7flkKvkuYnvvJo8L2I+PC9wPjx0YWJsZSBjbGFzcz0ic3ltdGFiIj4nICsgZC5zeW1ib2xzLm1hcChmdW5jdGlvbihzKXsgcmV0dXJuICc8dHI+PHRkPicgKyBzWzBdICsgJzwvdGQ+PHRkPicgKyBzWzFdICsgJzwvdGQ+PC90cj4nOyB9KS5qb2luKCIiKSArICc8L3RhYmxlPicgKwogICAgICAnPHA+PGI+5pWw5a2X5a6e5L6L77yaPC9iPicgKyBkLmV4ICsgJzwvcD4nICsKICAgICAgJzxwPjxiPuWHoOS9lSAvIOeJqeeQhuaEj+S5ie+8mjwvYj4nICsgZC5tZWFuaW5nICsgJzwvcD4nICsKICAgICAgJzxwPjxiPuWuueaYk+a3t+a3hueahOebuOi/keamguW/te+8mjwvYj4nICsgZC5jb25mdXNlICsgJzwvcD48L2Rpdj4nOwogICAgaHRtbCArPSAnPGRpdiBjbGFzcz0ia3Atc2VjIj48aDM+5LiJ44CB5YmN572u55+l6K+G77yI5YWI6KGl6b2Q5YaN5b6A5LiL77yJPC9oMz48cD4nICsKICAgICAgcC5wcmUubWFwKGZ1bmN0aW9uKGwpeyByZXR1cm4gbGlua0hUTUwobCk7IH0pLmpvaW4oIiDCtyAiKSArCiAgICAgICfvvIjngrnlvIDnnIvlr7nlupTop6Pph4rpobXvvIznlKjpobXpppbjgIzihpAg6L+U5Zue44CN5Zue5Yiw6L+Z6YeM44CC77yJPC9wPjwvZGl2Pic7CiAgICBodG1sICs9ICc8ZGl2IGNsYXNzPSJrcC1zZWMiPjxoMz7lm5vjgIHnn6Xor4bogZTns7s8L2gzPicgKyBwLmxpbmtzLm1hcChmdW5jdGlvbih4KXsgcmV0dXJuICI8cD4iICsgeCArICI8L3A+IjsgfSkuam9pbigiIikgKyAnPC9kaXY+JzsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PGgzPuS6lOOAgeWIhuWxguWtpuS5oO+8iExldmVsIDDigJM177yJPC9oMz4nICsgbHZTdHJpcEhUTUwocCkgKyAnPC9kaXY+JzsKICAgIGh0bWwgKz0gJzxkaXYgY2xhc3M9ImtwLXNlYyI+PGgzPuWFreOAgeamguW/teiHqua1i++8iOetlOmUmeWFiOeci+aPkOekuu+8jOS4jeebtOaOpee7meetlOahiO+8iTwvaDM+PGRpdiBpZD0ic2VsZlRlc3RCb3giPicgKyBzZWxmVGVzdEhUTUwocCkgKyAnPC9kaXY+PC9kaXY+JzsKICB9CiAgaHRtbCArPSAnPGRpdiBjbGFzcz0ia3Atc2VjIj48aDM+5oiR55qE56yU6K6w77yI5Y+q5a2Y5pys5py65rWP6KeI5Zmo77yJPC9oMz48ZGl2IGNsYXNzPSJub3RlLWVkIj4nICsKICAgICc8bGFiZWw+5oiR55qE55CG6KejPHRleHRhcmVhIHJvd3M9IjIiIGRhdGEtbmY9InUiIGRhdGEtcGlkPSInICsgcC5pZCArICciIHBsYWNlaG9sZGVyPSLnlKjoh6rlt7HnmoTor53lpI3ov7Dov5nkuKrnn6Xor4bngrkiPicgKyAoc3Qubm90ZS51IHx8ICIiKSArICc8L3RleHRhcmVhPjwvbGFiZWw+JyArCiAgICAnPGxhYmVsPui/mOayoeino+WGs+eahOeWkemXrjx0ZXh0YXJlYSByb3dzPSIyIiBkYXRhLW5mPSJxIiBkYXRhLXBpZD0iJyArIHAuaWQgKyAnIiBwbGFjZWhvbGRlcj0i5Y2h5L2P55qE5Zyw5pa55YaZ5Zyo6L+Z6YeMIj4nICsgKHN0Lm5vdGUucSB8fCAiIikgKyAnPC90ZXh0YXJlYT48L2xhYmVsPicgKwogICAgJzxsYWJlbD7plJnor6/ljp/lm6A8dGV4dGFyZWEgcm93cz0iMiIgZGF0YS1uZj0iZSIgZGF0YS1waWQ9IicgKyBwLmlkICsgJyIgcGxhY2Vob2xkZXI9IuWBmumUmeebuOWFs+mimOaXtu+8jOmUmeWcqOamguW/teOAgeWFrOW8j+OAgeadoeS7tui/mOaYr+iuoeeul++8nyI+JyArIChzdC5ub3RlLmUgfHwgIiIpICsgJzwvdGV4dGFyZWE+PC9sYWJlbD4nICsKICAgICc8bGFiZWw+5o6M5o+h56iL5bqm77yI6Ieq6K+E77yJPHNlbGVjdCBkYXRhLW5mPSJsZXZlbCIgZGF0YS1waWQ9IicgKyBwLmlkICsgJyI+JyArCiAgICAgIFsiIiwi5pyq5a2mIiwi5bey6ZiF6K+7Iiwi5Z+65pys55CG6KejIiwi5bey5o6M5o+hIiwi6ZyA5aSN5LmgIl0ubWFwKGZ1bmN0aW9uKG8peyByZXR1cm4gJzxvcHRpb24gdmFsdWU9IicgKyBvICsgJyInICsgKHN0LmxldmVsID09PSBvID8gIiBzZWxlY3RlZCIgOiAiIikgKyAnPicgKyAobyB8fCAi5pyq6K+EIikgKyAnPC9vcHRpb24+JzsgfSkuam9pbigiIikgKwogICAgJzwvc2VsZWN0PjwvbGFiZWw+PC9kaXY+PC9kaXY+JzsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsQm9keSIpLmlubmVySFRNTCA9IGh0bWw7CiAgdmFyIGYgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsRm9ybXVsYSIpLCBmaCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJkZXRhaWxGb3JtdWxhSCIpOwogIHZhciB0ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoImRldGFpbFRyYXAiKSwgdGggPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsVHJhcEgiKTsKICBmLnN0eWxlLmRpc3BsYXkgPSAibm9uZSI7IGZoLnN0eWxlLmRpc3BsYXkgPSAibm9uZSI7IHQuc3R5bGUuZGlzcGxheSA9ICJub25lIjsgdGguc3R5bGUuZGlzcGxheSA9ICJub25lIjsKICBnb3RvVmlldygiZGV0YWlsIik7CiAgcm0oZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZpZXctZGV0YWlsIikpOwp9CmZ1bmN0aW9uIG9wZW5Qb2ludChpZCl7CiAgaWYgKGN1ckN0eCkgbmF2U3RhY2sucHVzaChjdXJDdHgpOwogIHJlbmRlclBvaW50KGlkKTsKfQpmdW5jdGlvbiBvcGVuQ2hhcHRlckJ5TnVtKG51bSl7CiAgZm9yICh2YXIgaT0wO2k8UEFSVFMubGVuZ3RoO2krKykgaWYgKFBBUlRTW2ldLm51bSA9PT0gU3RyaW5nKG51bSkpIHsKICAgIGlmIChjdXJDdHgpIG5hdlN0YWNrLnB1c2goY3VyQ3R4KTsKICAgIHJlbmRlckNoYXB0ZXIoaSk7CiAgICByZXR1cm47CiAgfQp9Ci8qIOaOpeeuoeeroOiKgumhteS4jui/lOWbnumUriAqLwp3aW5kb3cub3BlbkRldGFpbCA9IGZ1bmN0aW9uKGkpeyBuYXZTdGFjayA9IFtdOyByZW5kZXJDaGFwdGVyKGkpOyB9Owp2YXIgZGJPbGQgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiZGV0YWlsQmFjayIpOwppZiAoZGJPbGQpIHsKICB2YXIgZGJOZXcgPSBkYk9sZC5jbG9uZU5vZGUodHJ1ZSk7CiAgZGJPbGQucGFyZW50Tm9kZS5yZXBsYWNlQ2hpbGQoZGJOZXcsIGRiT2xkKTsKICBkYk5ldy5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIGZ1bmN0aW9uKCl7CiAgICBpZiAobmF2U3RhY2subGVuZ3RoKSB7CiAgICAgIHZhciBjdHggPSBuYXZTdGFjay5wb3AoKTsKICAgICAgaWYgKGN0eC5raW5kID09PSAiY2hhcHRlciIpIHJlbmRlckNoYXB0ZXIoY3R4LmkpOyBlbHNlIHJlbmRlclBvaW50KGN0eC5pZCk7CiAgICB9IGVsc2UgZ290b1ZpZXcoImtub3dsZWRnZSIpOwogIH0pOwp9CgovKiAtLS0tLS0tLS0tIOamguW/teiHqua1i++8iOWIhuWxguaPkOekuu+8iSAtLS0tLS0tLS0tICovCmZ1bmN0aW9uIHNlbGZUZXN0SFRNTChwKXsKICB2YXIgc3QgPSBwU3RhdGUocC5pZCk7CiAgdmFyIGRvbmUgPSAwOwogIHZhciBodG1sID0gcC50ZXN0Lm1hcChmdW5jdGlvbih0cSwgcWkpewogICAgdmFyIHRzID0gc3QudGVzdFtxaV0gfHwge307CiAgICBpZiAodHMuc3QgPT09ICJvayIgfHwgdHMuc3QgPT09ICJyZXZlYWxlZCIpIGRvbmUrKzsKICAgIHZhciBvcHRzID0gdHEub3B0cy5tYXAoZnVuY3Rpb24ob3AsIG9pKXsKICAgICAgdmFyIGNscyA9ICJzdC1vcHQiOwogICAgICBpZiAodHMuc3QgPT09ICJvayIgJiYgb2kgPT09IHRxLmFucykgY2xzICs9ICIgcmlnaHQiOwogICAgICBpZiAodHMuc3QgPT09ICJyZXZlYWxlZCIgJiYgb2kgPT09IHRxLmFucykgY2xzICs9ICIgcmlnaHQiOwogICAgICBpZiAodHMubGFzdFdyb25nID09PSBvaSAmJiB0cy5zdCAhPT0gIm9rIikgY2xzICs9ICIgd3JvbmciOwogICAgICByZXR1cm4gJzxidXR0b24gdHlwZT0iYnV0dG9uIiBjbGFzcz0iJyArIGNscyArICciIGRhdGEtc3RxPSInICsgcC5pZCArICI6IiArIHFpICsgIjoiICsgb2kgKyAnIj4nICsgWyJBIiwiQiIsIkMiLCJEIl1bb2ldICsgIu+8jiIgKyBvcCArICc8L2J1dHRvbj4nOwogICAgfSkuam9pbigiIik7CiAgICB2YXIgaGludCA9ICIiOwogICAgaWYgKHRzLnN0ICE9PSAib2siKSB7CiAgICAgIGlmICh0cy5oaW50ID49IDEpIGhpbnQgKz0gJzxkaXYgY2xhc3M9InN0LWhpbnQgc2hvdyI+PGI+5o+Q56S6IDHvvJo8L2I+JyArIHRxLmgxICsgJzwvZGl2Pic7CiAgICAgIGlmICh0cy5oaW50ID49IDIpIGhpbnQgKz0gJzxkaXYgY2xhc3M9InN0LWhpbnQgc2hvdyI+PGI+5o+Q56S6IDLvvJo8L2I+JyArIHRxLmgyICsgJzwvZGl2Pic7CiAgICAgIGlmICh0cy5zdCA9PT0gInJldmVhbGVkIikgaGludCArPSAnPGRpdiBjbGFzcz0ic3QtaGludCBzaG93Ij48Yj7pkojlr7nmgKfooaXlhYXvvJo8L2I+JyArIHRxLmZpeCArICc8L2Rpdj4nOwogICAgICBlbHNlIGlmICh0cy5oaW50ID49IDIpIGhpbnQgKz0gJzxkaXYgc3R5bGU9Im1hcmdpbi10b3A6OHB4Ij48YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9Imdob3N0LWJ0biIgZGF0YS1zdGZpeD0iJyArIHAuaWQgKyAiOiIgKyBxaSArICciPueci+mSiOWvueaAp+ihpeWFhe+8iOWQjOaXtuWFrOW4g+etlOahiO+8iTwvYnV0dG9uPjwvZGl2Pic7CiAgICB9IGVsc2UgewogICAgICBoaW50ID0gJzxkaXYgY2xhc3M9InN0LWhpbnQgc2hvdyI+PGI+562U5a+55LqG44CCPC9iPicgKyB0cS5maXggKyAnPC9kaXY+JzsKICAgIH0KICAgIHJldHVybiAnPGRpdiBjbGFzcz0ic3QtcSI+PHAgY2xhc3M9InN0LXN0ZW0iPicgKyAocWkrMSkgKyAi77yOIiArIHRxLnEgKyAnPC9wPjxkaXYgY2xhc3M9InN0LW9wdHMiPicgKyBvcHRzICsgJzwvZGl2PicgKyBoaW50ICsgJzwvZGl2Pic7CiAgfSkuam9pbigiIik7CiAgaHRtbCArPSAnPHAgc3R5bGU9ImNvbG9yOnZhcigtLW11dGVkKTtmb250LXNpemU6LjlyZW0iPuiHqua1i+i/m+W6pu+8muW3suWujOaIkCAnICsgZG9uZSArICIgLyAiICsgcC50ZXN0Lmxlbmd0aCArICIg6aKYIiArCiAgICAoZG9uZSA9PT0gcC50ZXN0Lmxlbmd0aCA/ICLjgILlhajpg6jlrozmiJDvvIzlj6/ku6Xngrnkuq7kuIrmlrnjgIzlt7Lmjozmj6HjgI3jgIIiIDogIuOAguetlOmUmeS8muWFiOe7meWIhuWxguaPkOekuu+8jOaDs+a4healmuWGjeivleS4gOasoeOAgiIpICsgJzwvcD4nOwogIHJldHVybiBodG1sOwp9CmZ1bmN0aW9uIHJlZnJlc2hTZWxmVGVzdChwaWQpewogIHZhciBwID0gZmluZFBvaW50KHBpZCk7CiAgdmFyIGJveCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJzZWxmVGVzdEJveCIpOwogIGlmIChwICYmIGJveCkgeyBib3guaW5uZXJIVE1MID0gc2VsZlRlc3RIVE1MKHApOyBybShib3gpOyB9Cn0KCi8qID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0KICAg5Yi36aKY5oyC5o6l77ya6Zq+5bqmIC8g6aKY5Z6LIGNoaXBz44CB5YmN572u55+l6K+G6KGM44CB5q+P6aKY56yU6K6w44CB6ZSZ6aKY5pysCiAgID09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0gKi8KUVVJWi5mb3JFYWNoKGZ1bmN0aW9uKHEsIGkpeyBpZiAoIXEuX2lkKSBxLl9pZCA9ICJxIiArIGk7IH0pOwpmdW5jdGlvbiBxUHJlTGlzdChxKXsKICB2YXIgcyA9IChxLnN0ZW0gfHwgIiIpICsgIiAiICsgKHEuZXhwIHx8ICIiKTsKICB2YXIgb3V0ID0gW10sIHNlZW4gPSB7fTsKICBmdW5jdGlvbiBwdXNoKGl0ZW0peyB2YXIgayA9IGl0ZW0uaWQgfHwgKCJwYXJ0IiArIGl0ZW0ucGFydCk7IGlmICghc2VlbltrXSkgeyBzZWVuW2tdID0gMTsgb3V0LnB1c2goaXRlbSk7IH0gfQogIGlmICgv556s5b+DLy50ZXN0KHMpKSBwdXNoKHsgaWQ6InAxLWljIiwgdDoi6YCf5bqm556s5b+DIiB9KTsKICBpZiAoL+WkjeWQiOmTsOmTvi8udGVzdChzKSkgcHVzaCh7IGlkOiJwMS1jb21wIiwgdDoi5aSN5ZCI6ZOw6ZO+IiB9KTsKICBpZiAoL+WxgOmDqOiHqueUseW6pnzmu5rlrZAvLnRlc3QocykpIHB1c2goeyBpZDoicDEtbG9jYWwiLCB0OiLlsYDpg6joh6rnlLHluqYiIH0pOwogIGlmICgv6Jma57qm5p2fLy50ZXN0KHMpKSBwdXNoKHsgaWQ6InAxLXZpcnQiLCB0OiLomZrnuqbmnZ8iIH0pOwogIGlmICgv6Ieq55Sx5bqmLy50ZXN0KHMpKSBwdXNoKHsgaWQ6InAxLWRvZiIsIHQ6IuiHqueUseW6puWFrOW8jyBGID0gM24g4oiSIDJQTCDiiJIgUEgiIH0pOwogIGlmICgv6L+Q5Yqo5YmvfOi/kOWKqOeugOWbvnznroDlm74vLnRlc3QocykpIHB1c2goeyBpZDoicDEtcGFpciIsIHQ6Iui/kOWKqOWJr+S4jui/kOWKqOeugOWbviIgfSk7CiAgaWYgKCFvdXQubGVuZ3RoKSB7CiAgICB2YXIgbWFwID0gewogICAgICAi56ysIDEg56ugIOiHqueUseW6piI6W3sgaWQ6InAxLXBhaXIiLCB0OiLov5Dliqjlia/kuI7ov5DliqjnroDlm74iIH0sIHsgaWQ6InAxLWRvZiIsIHQ6IuiHqueUseW6puWFrOW8jyIgfV0sCiAgICAgICLnrKwgMiDnq6Ag6L+e5p2G5py65p6EIjpbeyBwYXJ0OiIyIiwgdDoiUGFydCAyIMK3IOW5s+mdouWbm+i/nuadhuacuuaehO+8iOadhumVv+adoeS7tiAvIOaApeWbniAvIOWOi+WKm+inkuS4juatu+eCue+8iSIgfV0sCiAgICAgICLnrKwgMyDnq6Ag5Ye46L2u5py65p6EIjpbeyBwYXJ0OiIzIiwgdDoiUGFydCAzIMK3IOWHuOi9ruacuuaehO+8iOi/kOWKqOinhOW+iyAvIOWPjei9rOazlSAvIOWOi+WKm+inku+8iSIgfV0sCiAgICAgICLnrKwgNCDnq6Ag6b2/6L2u5py65p6EIjpbeyBwYXJ0OiI0IiwgdDoiUGFydCA0IMK3IOm9v+i9ruacuuaehO+8iOWHoOS9leWPguaVsCAvIOWVruWQiOadoeS7tu+8iSIgfV0sCiAgICAgICLnrKwgNSDnq6Ag6L2u57O7IjpbeyBwYXJ0OiI1IiwgdDoiUGFydCA1IMK3IOm9v+i9ruezu++8iOWumui9tCAvIOWRqOi9rCAvIOi9rOWMluacuuaehOazle+8iSIgfV0KICAgIH07CiAgICAobWFwW3EuY2hdIHx8IFtdKS5mb3JFYWNoKHB1c2gpOwogIH0KICByZXR1cm4gb3V0Owp9CmZ1bmN0aW9uIHFEaWZmKHEpewogIGlmIChxLnR5cGUgPT09ICLorqHnrpciKSByZXR1cm4gIkxldmVsIDQgwrcg57u85ZCI6K6h566XIjsKICBpZiAocS50eXBlID09PSAi55S75Zu+IikgcmV0dXJuICJMZXZlbCAzIMK3IOS9nOWbvuW6lOeUqCI7CiAgdmFyIHMgPSBxLnNyYyB8fCAiIjsKICBpZiAoL+WIt+aLlOmrmHzliLfnnJ/popgvLnRlc3QocykpIHJldHVybiAiTGV2ZWwgMyDCtyDovoPpmr4iOwogIGlmICgv5Yi35Z+656GALy50ZXN0KHMpKSByZXR1cm4gIkxldmVsIDEgwrcg5Z+656GAIjsKICByZXR1cm4gIkxldmVsIDIgwrcg5Lit562JIjsKfQpmdW5jdGlvbiBhZGRXcm9uZyhxLCBzaWxlbnQpewogIGlmICghcSB8fCAhcS5faWQpIHJldHVybjsKICB2YXIgZXhpc3RzID0gc3RvcmUud3Jvbmcuc29tZShmdW5jdGlvbih3KXsgcmV0dXJuIHcuaWQgPT09IHEuX2lkOyB9KTsKICBpZiAoIWV4aXN0cykgewogICAgc3RvcmUud3JvbmcucHVzaCh7IGlkOnEuX2lkLCBjaDpxLmNoLCB0eXBlOnEudHlwZSwgc3RlbTpxLnN0ZW0sIHRzOkRhdGUubm93KCkgfSk7CiAgICBzYXZlU3RvcmUoKTsKICB9CiAgaWYgKCFzaWxlbnQpIHJlZnJlc2hXcm9uZ0J0bihxKTsKfQpmdW5jdGlvbiByZW1vdmVXcm9uZyhpZCl7CiAgc3RvcmUud3JvbmcgPSBzdG9yZS53cm9uZy5maWx0ZXIoZnVuY3Rpb24odyl7IHJldHVybiB3LmlkICE9PSBpZDsgfSk7CiAgc2F2ZVN0b3JlKCk7Cn0KZnVuY3Rpb24gaW5Xcm9uZyhpZCl7IHJldHVybiBzdG9yZS53cm9uZy5zb21lKGZ1bmN0aW9uKHcpeyByZXR1cm4gdy5pZCA9PT0gaWQ7IH0pOyB9CmZ1bmN0aW9uIHJlZnJlc2hXcm9uZ0J0bihxKXsKICB2YXIgYiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxV3JvbmdCdG4iKTsKICBpZiAoYiAmJiBxKSBiLnRleHRDb250ZW50ID0gaW5Xcm9uZyhxLl9pZCkgPyAi5bey5Zyo6ZSZ6aKY5pys77yI54K55q2k56e75Ye677yJIiA6ICLliqDlhaXplJnpopjmnKwiOwp9CnZhciBvcmlnU2hvd1F1ZXN0aW9uID0gd2luZG93LnNob3dRdWVzdGlvbjsKd2luZG93LnNob3dRdWVzdGlvbiA9IGZ1bmN0aW9uKCl7CiAgb3JpZ1Nob3dRdWVzdGlvbigpOwogIHZhciBxID0gcXVpeiAmJiBxdWl6Lmxpc3RbcXVpei5pZHhdOwogIGlmICghcSkgcmV0dXJuOwogIHZhciBtZXRhID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFNZXRhIik7CiAgdmFyIG1pZCA9IE1FVEhPRF9PRl9DSFtxLmNoXTsKICBtZXRhLmlubmVySFRNTCArPSAiPHNwYW4+IiArIHFEaWZmKHEpICsgIjwvc3Bhbj4iICsKICAgIChtaWQgPyAnPHNwYW4+6aKY5Z6L5pa55rOV77yaPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJrcC1saW5rIiBkYXRhLW1ldGhvZD0iJyArIG1pZCArICciPicgKyBtZXRob2RCeUlkKG1pZCkudGl0bGUgKyAnPC9idXR0b24+PC9zcGFuPicKICAgICAgICAgOiAnPHNwYW4+6aKY5Z6L5pa55rOV77ya5b6F6KGl5YWFPC9zcGFuPicpOwogIHZhciBwcmUgPSBxUHJlTGlzdChxKTsKICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicVByZSIpLmlubmVySFRNTCA9ICI8Yj7liY3nva7nn6Xor4Y8L2I+44CA6Kej6L+Z6YGT6aKY55yf5q2j6ZyA6KaB5YWI5Lya77yaIiArCiAgICAocHJlLmxlbmd0aCA/IHByZS5tYXAobGlua0hUTUwpLmpvaW4oIiDCtyAiKSA6ICLmnKznq6Dln7rnoYDmpoLlv7XvvIjop4Hnn6Xor4bngrnpobXvvIkiKTsKICB2YXIgbm90ZSA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxTm90ZSIpOwogIG5vdGUudmFsdWUgPSBzdG9yZS5xbm90ZXNbcS5faWRdIHx8ICIiOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxTm90ZVN0YXRlIikudGV4dENvbnRlbnQgPSAi6L+Z6YGT6aKY55qE56yU6K6w5Y+q5a2Y5Zyo5pys5py65rWP6KeI5ZmoIjsKICByZWZyZXNoV3JvbmdCdG4ocSk7CiAgcm0oZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInF1aXpQbGF5IikpOwp9OwpmdW5jdGlvbiBob29rV3Jvbmcob3JpZyl7CiAgcmV0dXJuIGZ1bmN0aW9uKCl7CiAgICB2YXIgYmVmb3JlID0gcXVpeiAmJiBxdWl6Lndyb25nID8gcXVpei53cm9uZy5sZW5ndGggOiAwOwogICAgdmFyIHIgPSBvcmlnLmFwcGx5KG51bGwsIGFyZ3VtZW50cyk7CiAgICBpZiAocXVpeiAmJiBxdWl6Lndyb25nICYmIHF1aXoud3JvbmcubGVuZ3RoID4gYmVmb3JlKSB7CiAgICAgIGFkZFdyb25nKHF1aXoud3JvbmdbcXVpei53cm9uZy5sZW5ndGggLSAxXS5xLCB0cnVlKTsKICAgICAgdmFyIHEgPSBxdWl6Lmxpc3RbcXVpei5pZHhdOwogICAgICByZWZyZXNoV3JvbmdCdG4ocSk7CiAgICB9CiAgICByZXR1cm4gcjsKICB9Owp9CndpbmRvdy5hbnN3ZXIgPSBob29rV3Jvbmcod2luZG93LmFuc3dlcik7CndpbmRvdy5jaGVja0NhbGMgPSBob29rV3Jvbmcod2luZG93LmNoZWNrQ2FsYyk7CndpbmRvdy5jaGVja0ZpbGwgPSBob29rV3Jvbmcod2luZG93LmNoZWNrRmlsbCk7CndpbmRvdy5zZWxmTWFya0RyYXcgPSBob29rV3Jvbmcod2luZG93LnNlbGZNYXJrRHJhdyk7CmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxV3JvbmdCdG4iKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIGZ1bmN0aW9uKCl7CiAgdmFyIHEgPSBxdWl6ICYmIHF1aXoubGlzdFtxdWl6LmlkeF07CiAgaWYgKCFxKSByZXR1cm47CiAgaWYgKGluV3JvbmcocS5faWQpKSByZW1vdmVXcm9uZyhxLl9pZCk7IGVsc2UgYWRkV3JvbmcocSk7CiAgcmVmcmVzaFdyb25nQnRuKHEpOwp9KTsKZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInFOb3RlIikuYWRkRXZlbnRMaXN0ZW5lcigiaW5wdXQiLCBmdW5jdGlvbigpewogIHZhciBxID0gcXVpeiAmJiBxdWl6Lmxpc3RbcXVpei5pZHhdOwogIGlmICghcSkgcmV0dXJuOwogIHN0b3JlLnFub3Rlc1txLl9pZF0gPSB0aGlzLnZhbHVlOwogIHNhdmVTdG9yZSgpOwogIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxTm90ZVN0YXRlIikudGV4dENvbnRlbnQgPSAi5bey5L+d5a2Y5Yiw5pys5py65rWP6KeI5ZmoIjsKfSk7CgovKiA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09CiAgIOmimOWei+aWueazlemhtSAvIOiAg+eCueaAu+e7k+mhtQogICA9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09ICovCmZ1bmN0aW9uIHJlbmRlck1ldGhvZHMoKXsKICB2YXIgYm94ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoIm1ldGhvZExpc3QiKTsKICBpZiAoIWJveCB8fCBib3guZGF0YXNldC5kb25lKSByZXR1cm47CiAgYm94LmRhdGFzZXQuZG9uZSA9ICIxIjsKICBib3guaW5uZXJIVE1MID0gTUVUSE9EUy5tYXAoZnVuY3Rpb24obSl7CiAgICByZXR1cm4gJzxkaXYgY2xhc3M9Im1ldGhvZC1jYXJkIiBpZD0ibWV0aG9kLScgKyBtLmlkICsgJyI+PGgzPicgKyBtLnRpdGxlICsgJzwvaDM+JyArCiAgICAgICc8cCBzdHlsZT0iY29sb3I6dmFyKC0tbXV0ZWQpIj4nICsgbS5jaCArICcgwrcg6ICD6K+V6auY6aKR6aKY5Z6LPC9wPicgKwogICAgICAnPGg0PumimOWei+ivhuWIq+eJueW+gTwvaDQ+PHA+JyArIG0ucmVjb2cgKyAnPC9wPicgKwogICAgICAnPGg0PuW4uOingeW3suefpeadoeS7tjwvaDQ+PHA+JyArIG0ua25vd24gKyAnPC9wPicgKwogICAgICAnPGg0PuW4uOingeaxguino+ebruaghzwvaDQ+PHA+JyArIG0uZ29hbCArICc8L3A+JyArCiAgICAgICc8aDQ+6Kej6aKY56qB56C05Y+jPC9oND48cD4nICsgbS5rZXkgKyAnPC9wPicgKwogICAgICAnPGg0Puagh+WHhuaAneiAg+i3r+W+hDwvaDQ+PG9sPicgKyBtLnBhdGgubWFwKGZ1bmN0aW9uKHMpeyByZXR1cm4gIjxsaT4iICsgcy5yZXBsYWNlKC9eXGQrXC5ccyovLCAiIikgKyAiPC9saT4iOyB9KS5qb2luKCIiKSArICc8L29sPicgKwogICAgICAnPGg0PuebuOWFs+WFrOW8j+S4juWumueQhjwvaDQ+JyArIG0uZm9ybXVsYXMubWFwKGZ1bmN0aW9uKGYpeyByZXR1cm4gJzxkaXYgY2xhc3M9ImZvcm11bGEiPicgKyBmICsgJzwvZGl2Pic7IH0pLmpvaW4oIiIpICsKICAgICAgJzxoND7mlrnms5XmiJDnq4vmnaHku7Y8L2g0PjxwPicgKyBtLmNvbmQgKyAnPC9wPicgKwogICAgICAnPGg0PuWIhuexu+iuqOiuujwvaDQ+PHA+JyArIG0uY2FzZXMgKyAnPC9wPicgKwogICAgICAnPGg0PuWFuOWei+S+i+mimDwvaDQ+PHA+JyArIG0uZXhhbXBsZSArICc8L3A+JyArCiAgICAgICc8aDQ+5bi46KeB6ZSZ6K+vPC9oND48dWw+JyArIG0uZXJyb3JzLm1hcChmdW5jdGlvbihzKXsgcmV0dXJuICI8bGk+IiArIHMgKyAiPC9saT4iOyB9KS5qb2luKCIiKSArICc8L3VsPicgKwogICAgICAnPGRpdiBjbGFzcz0icm93Ij48YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9InByaW1hcnkiIGRhdGEtcHJhY3RpY2U9IicgKyBtLmNoICsgJyI+57uD6L+Z5Liq6aKY5Z6LPC9idXR0b24+PC9kaXY+PC9kaXY+JzsKICB9KS5qb2luKCIiKTsKICBybShib3gpOwp9CmZ1bmN0aW9uIHJlbmRlclN1bW1hcnkoKXsKICB2YXIgYm94ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInN1bW1hcnlCb2R5Iik7CiAgaWYgKCFib3ggfHwgYm94LmRhdGFzZXQuZG9uZSkgcmV0dXJuOwogIGJveC5kYXRhc2V0LmRvbmUgPSAiMSI7CiAgYm94LmlubmVySFRNTCA9IFNVTU1BUllfSFRNTDsKICBybShib3gpOwp9CnZhciBzdW1CdG4gPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgic3VtUHJpbnRCdG4iKTsKaWYgKHN1bUJ0bikgc3VtQnRuLmFkZEV2ZW50TGlzdGVuZXIoImNsaWNrIiwgZnVuY3Rpb24oKXsgd2luZG93LnByaW50KCk7IH0pOwoKLyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICDlrabkuaDov5vluqbpobXvvJrplJnpopjmnKwgLyDoloTlvLHnn6Xor4bngrkgLyDnn6Xor4bngrnnirbmgIEKICAgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwpmdW5jdGlvbiB3ZWFrUG9pbnRzKCl7CiAgdmFyIHdlYWsgPSB7fTsKICBBTExfUE9JTlRTLmZvckVhY2goZnVuY3Rpb24ocCl7CiAgICB2YXIgc3QgPSBzdG9yZS5wb2ludHNbcC5pZF07CiAgICBpZiAoIXN0KSByZXR1cm47CiAgICB2YXIgYmFkID0gMDsKICAgIE9iamVjdC5rZXlzKHN0LnRlc3QgfHwge30pLmZvckVhY2goZnVuY3Rpb24oayl7IHZhciB0ID0gc3QudGVzdFtrXTsgaWYgKHQudHJpZXMgPiAwICYmIHQuc3QgIT09ICJvayIpIGJhZCsrOyB9KTsKICAgIGlmIChiYWQgPiAwKSB3ZWFrW3AuaWRdID0gIuiHqua1i+aciSAiICsgYmFkICsgIiDpopjmnKrnrZTlr7kiOwogIH0pOwogIHN0b3JlLndyb25nLmZvckVhY2goZnVuY3Rpb24odyl7CiAgICB2YXIgcSA9IG51bGw7CiAgICBRVUlaLmZvckVhY2goZnVuY3Rpb24oeCl7IGlmICh4Ll9pZCA9PT0gdy5pZCkgcSA9IHg7IH0pOwogICAgaWYgKCFxKSByZXR1cm47CiAgICBxUHJlTGlzdChxKS5mb3JFYWNoKGZ1bmN0aW9uKGwpewogICAgICBpZiAobC5pZCAmJiAhd2Vha1tsLmlkXSkgd2Vha1tsLmlkXSA9ICLplJnpopjmtonlj4rov5nkuKrnn6Xor4bngrkiOwogICAgfSk7CiAgfSk7CiAgcmV0dXJuIHdlYWs7Cn0KZnVuY3Rpb24gcmVuZGVyUmVjb3JkcygpewogIHZhciB3YiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJ3cm9uZ0Jvb2tMaXN0Iik7CiAgaWYgKHdiKSB7CiAgICB3Yi5pbm5lckhUTUwgPSBzdG9yZS53cm9uZy5sZW5ndGggPyBzdG9yZS53cm9uZy5tYXAoZnVuY3Rpb24odyl7CiAgICAgIHJldHVybiAnPGRpdiBjbGFzcz0icmVjLXJvdyI+PGRpdj48ZGl2IGNsYXNzPSJydCI+JyArIHcuY2ggKyAiIMK3ICIgKyB0eXBlTGFiZWwody50eXBlKSArICfpopg8L2Rpdj48ZGl2IGNsYXNzPSJyZCI+JyArIHcuc3RlbSArICc8L2Rpdj48L2Rpdj4nICsKICAgICAgICAnPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJnaG9zdC1idG4iIGRhdGEtZGVsd3Jvbmc9IicgKyB3LmlkICsgJyI+56e75Ye6PC9idXR0b24+PC9kaXY+JzsKICAgIH0pLmpvaW4oIiIpIDogJzxkaXYgY2xhc3M9InJlYy1yb3ciPjxkaXY+PGRpdiBjbGFzcz0icnQiPui/mOayoeaciemUmemimDwvZGl2PjxkaXYgY2xhc3M9InJkIj7liLfpopjnrZTplJnkvJroh6rliqjmlLbov5vmnaXvvIzkuZ/lj6/ku6XnrZTpopjml7bmiYvliqjngrnjgIzliqDlhaXplJnpopjmnKzjgI3jgII8L2Rpdj48L2Rpdj48L2Rpdj4nOwogIH0KICB2YXIgd2sgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgid2Vha0xpc3QiKTsKICBpZiAod2spIHsKICAgIHZhciB3ZWFrID0gd2Vha1BvaW50cygpOwogICAgdmFyIGlkcyA9IE9iamVjdC5rZXlzKHdlYWspOwogICAgd2suaW5uZXJIVE1MID0gaWRzLmxlbmd0aCA/IGlkcy5tYXAoZnVuY3Rpb24oaWQpewogICAgICB2YXIgcCA9IGZpbmRQb2ludChpZCk7CiAgICAgIGlmICghcCkgcmV0dXJuICIiOwogICAgICByZXR1cm4gJzxkaXYgY2xhc3M9InJlYy1yb3ciPjxkaXY+PGRpdiBjbGFzcz0icnQiPicgKyBwLnRpdGxlICsgJzwvZGl2PjxkaXYgY2xhc3M9InJkIj4nICsgd2Vha1tpZF0gKyAiIMK3ICIgKyAocC5wYXJ0ID09PSAiMSIgPyAiUGFydCAxIiA6ICJQYXJ0ICIgKyBwLnBhcnQpICsgJzwvZGl2PjwvZGl2PicgKwogICAgICAgICc8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgY2xhc3M9Imdob3N0LWJ0biIgZGF0YS1wb2ludD0iJyArIGlkICsgJyI+5Y676KGl6L+Z5Liq55+l6K+G54K5PC9idXR0b24+PC9kaXY+JzsKICAgIH0pLmpvaW4oIiIpIDogJzxkaXYgY2xhc3M9InJlYy1yb3ciPjxkaXY+PGRpdiBjbGFzcz0icnQiPuaaguacquWPkeeOsOiWhOW8seeCuTwvZGl2PjxkaXYgY2xhc3M9InJkIj7lgZrnn6Xor4bngrnoh6rmtYvmiJbliLfpopjlkI7vvIzov5nph4zkvJrmjInnrZTplJnorrDlvZXoh6rliqjliJflh7rpnIDopoHlm57lpLTooaXnmoTnn6Xor4bngrnjgII8L2Rpdj48L2Rpdj48L2Rpdj4nOwogIH0KICB2YXIgcHMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgicG9pbnRTdGF0ZUxpc3QiKTsKICBpZiAocHMpIHsKICAgIHBzLmlubmVySFRNTCA9IEFMTF9QT0lOVFMubWFwKGZ1bmN0aW9uKHApewogICAgICB2YXIgc3QgPSBzdG9yZS5wb2ludHNbcC5pZF0gfHwge307CiAgICAgIHJldHVybiAnPGRpdiBjbGFzcz0icmVjLXJvdyI+PGRpdj48ZGl2IGNsYXNzPSJydCI+JyArIHAudGl0bGUgKyAnPC9kaXY+PGRpdiBjbGFzcz0icmQiPicgKwogICAgICAgIChwLnBlbmRpbmcgPyAi5b6F5oyJ5paw57uT5p6E6KGl5YWoIMK3ICIgOiAiIikgKyAiTGV2ZWwgIiArIHAubHZbMF0gKyAiIOKAkyBMZXZlbCAiICsgcC5sdlsxXSArIChzdC5sZXZlbCA/ICIgwrcg6Ieq6K+E77yaIiArIHN0LmxldmVsIDogIiIpICsgJzwvZGl2PjwvZGl2PicgKwogICAgICAgICc8c3BhbiBjbGFzcz0icm93IiBzdHlsZT0iZ2FwOjZweCI+PGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJ0Z2wnICsgKHN0LnJlYWQgPyAiIG9uIiA6ICIiKSArICciIGRhdGEtdGdsPSJyZWFkIiBkYXRhLXBpZD0iJyArIHAuaWQgKyAnIj7lt7LpmIXor7s8L2J1dHRvbj4nICsKICAgICAgICAnPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJ0Z2wgYWNjJyArIChzdC5tYXN0ZXJlZCA/ICIgb24iIDogIiIpICsgJyIgZGF0YS10Z2w9Im1hc3RlcmVkIiBkYXRhLXBpZD0iJyArIHAuaWQgKyAnIj7lt7Lmjozmj6E8L2J1dHRvbj4nICsKICAgICAgICAnPGJ1dHRvbiB0eXBlPSJidXR0b24iIGNsYXNzPSJnaG9zdC1idG4iIGRhdGEtcG9pbnQ9IicgKyBwLmlkICsgJyI+5omT5byAPC9idXR0b24+PC9zcGFuPjwvZGl2Pic7CiAgICB9KS5qb2luKCIiKTsKICB9Cn0KdmFyIG9yaWdHb3RvVmlldyA9IHdpbmRvdy5nb3RvVmlldzsKd2luZG93LmdvdG9WaWV3ID0gZnVuY3Rpb24obmFtZSl7CiAgb3JpZ0dvdG9WaWV3KG5hbWUpOwogIGlmIChuYW1lID09PSAibm90ZXMiKSByZW5kZXJSZWNvcmRzKCk7CiAgaWYgKG5hbWUgPT09ICJtZXRob2RzIikgeyByZW5kZXJNZXRob2RzKCk7IH0KICBpZiAobmFtZSA9PT0gInN1bW1hcnkiKSB7IHJlbmRlclN1bW1hcnkoKTsgfQogIGlmIChuYW1lID09PSAiZGV0YWlsIikgcm0oZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZpZXctZGV0YWlsIikpOwp9OwoKLyogPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PQogICDlhajlsYDkuovku7blp5TmiZjvvJrnn6Xor4bngrnpk77mjqUgLyDoh6rmtYsgLyDnirbmgIHliIfmjaIgLyDnrJTorrAgLyDov4fmuKHkvovpopgKICAgPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PSAqLwpkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIGZ1bmN0aW9uKGUpewogIHZhciB0OwogIGlmICgodCA9IGUudGFyZ2V0LmNsb3Nlc3QoIltkYXRhLXBvaW50XSIpKSkgeyBvcGVuUG9pbnQodC5nZXRBdHRyaWJ1dGUoImRhdGEtcG9pbnQiKSk7IHJldHVybjsgfQogIGlmICgodCA9IGUudGFyZ2V0LmNsb3Nlc3QoIltkYXRhLXBhcnRdIikpKSB7CiAgICB2YXIgbnVtID0gdC5nZXRBdHRyaWJ1dGUoImRhdGEtcGFydCIpOwogICAgaWYgKGN1ckN0eCAmJiBjdXJDdHgua2luZCA9PT0gInBvaW50IikgeyAvKiDku47nn6Xor4bngrnpobXlm57nq6DmgLvop4ggKi8KICAgICAgbmF2U3RhY2sgPSBuYXZTdGFjay5maWx0ZXIoZnVuY3Rpb24oYyl7IHJldHVybiAhKGMua2luZCA9PT0gImNoYXB0ZXIiKTsgfSk7CiAgICB9CiAgICBvcGVuQ2hhcHRlckJ5TnVtKG51bSk7CiAgICByZXR1cm47CiAgfQogIGlmICgodCA9IGUudGFyZ2V0LmNsb3Nlc3QoIltkYXRhLW1ldGhvZF0iKSkpIHsKICAgIGdvdG9WaWV3KCJtZXRob2RzIik7CiAgICByZW5kZXJNZXRob2RzKCk7CiAgICB2YXIgbWlkID0gdC5nZXRBdHRyaWJ1dGUoImRhdGEtbWV0aG9kIik7CiAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCl7IHZhciBlbCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJtZXRob2QtIiArIG1pZCk7IGlmIChlbCkgZWwuc2Nyb2xsSW50b1ZpZXcoeyBiZWhhdmlvcjoic21vb3RoIiwgYmxvY2s6InN0YXJ0IiB9KTsgfSwgNjApOwogICAgcmV0dXJuOwogIH0KICBpZiAoKHQgPSBlLnRhcmdldC5jbG9zZXN0KCJbZGF0YS1wcmFjdGljZV0iKSkpIHsKICAgIHZhciBjaCA9IHQuZ2V0QXR0cmlidXRlKCJkYXRhLXByYWN0aWNlIik7CiAgICBnb3RvVmlldygicXVpeiIpOwogICAgdmFyIHNlbCA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxdWl6U2NvcGUiKTsKICAgIGlmIChzZWwpIHsgc2VsLnZhbHVlID0gY2g7IHNlbC5kaXNwYXRjaEV2ZW50KG5ldyBFdmVudCgiY2hhbmdlIikpOyB9CiAgICBzdGFydFF1aXooKTsKICAgIHJldHVybjsKICB9CiAgaWYgKCh0ID0gZS50YXJnZXQuY2xvc2VzdCgiW2RhdGEtdHJhbnNdIikpKSB7CiAgICB2YXIgcGFydHMgPSB0LmdldEF0dHJpYnV0ZSgiZGF0YS10cmFucyIpLnNwbGl0KCI6Iik7CiAgICB2YXIgcHQgPSBmaW5kUG9pbnQocGFydHNbMF0pOwogICAgaWYgKHB0KSB7CiAgICAgIGdvdG9WaWV3KCJxdWl6Iik7CiAgICAgIHZhciBzMiA9IGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJxdWl6U2NvcGUiKTsKICAgICAgaWYgKHMyICYmIHB0LmNoKSB7IHMyLnZhbHVlID0gcHQuY2g7IHMyLmRpc3BhdGNoRXZlbnQobmV3IEV2ZW50KCJjaGFuZ2UiKSk7IH0KICAgICAgdmFyIHR5ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInF1aXpUeXBlIik7CiAgICAgIGlmICh0eSkgdHkudmFsdWUgPSBwYXJzZUludChwYXJ0c1sxXSwgMTApID49IDMgPyAiX19hbGwiIDogIumAieaLqSI7CiAgICAgIHN0YXJ0UXVpeigpOwogICAgfQogICAgcmV0dXJuOwogIH0KICBpZiAoKHQgPSBlLnRhcmdldC5jbG9zZXN0KCJbZGF0YS1zdHFdIikpKSB7CiAgICB2YXIgc3AgPSB0LmdldEF0dHJpYnV0ZSgiZGF0YS1zdHEiKS5zcGxpdCgiOiIpOwogICAgdmFyIHBpZCA9IHNwWzBdLCBxaSA9IHBhcnNlSW50KHNwWzFdLCAxMCksIG9pID0gcGFyc2VJbnQoc3BbMl0sIDEwKTsKICAgIHZhciBwMiA9IGZpbmRQb2ludChwaWQpOwogICAgaWYgKCFwMiB8fCAhcDIudGVzdCkgcmV0dXJuOwogICAgdmFyIHN0MiA9IHBTdGF0ZShwaWQpOwogICAgdmFyIHRzID0gc3QyLnRlc3RbcWldIHx8IChzdDIudGVzdFtxaV0gPSB7IHRyaWVzOjAsIGhpbnQ6MCB9KTsKICAgIGlmICh0cy5zdCA9PT0gIm9rIikgcmV0dXJuOwogICAgaWYgKG9pID09PSBwMi50ZXN0W3FpXS5hbnMpIHsgdHMuc3QgPSAib2siOyB0cy5sYXN0V3JvbmcgPSAtMTsgfQogICAgZWxzZSB7IHRzLnRyaWVzID0gKHRzLnRyaWVzIHx8IDApICsgMTsgdHMuaGludCA9IE1hdGgubWluKDIsIHRzLnRyaWVzKTsgdHMubGFzdFdyb25nID0gb2k7IH0KICAgIHNhdmVTdG9yZSgpOwogICAgcmVmcmVzaFNlbGZUZXN0KHBpZCk7CiAgICByZXR1cm47CiAgfQogIGlmICgodCA9IGUudGFyZ2V0LmNsb3Nlc3QoIltkYXRhLXN0Zml4XSIpKSkgewogICAgdmFyIHNmID0gdC5nZXRBdHRyaWJ1dGUoImRhdGEtc3RmaXgiKS5zcGxpdCgiOiIpOwogICAgdmFyIHN0MyA9IHBTdGF0ZShzZlswXSk7CiAgICB2YXIgdHMzID0gc3QzLnRlc3RbcGFyc2VJbnQoc2ZbMV0sIDEwKV0gfHwgKHN0My50ZXN0W3BhcnNlSW50KHNmWzFdLCAxMCldID0geyB0cmllczowLCBoaW50OjIgfSk7CiAgICB0czMuc3QgPSAicmV2ZWFsZWQiOwogICAgc2F2ZVN0b3JlKCk7CiAgICByZWZyZXNoU2VsZlRlc3Qoc2ZbMF0pOwogICAgcmV0dXJuOwogIH0KICBpZiAoKHQgPSBlLnRhcmdldC5jbG9zZXN0KCJbZGF0YS10Z2xdIikpKSB7CiAgICB2YXIgcGlkMiA9IHQuZ2V0QXR0cmlidXRlKCJkYXRhLXBpZCIpOwogICAgdmFyIGtleSA9IHQuZ2V0QXR0cmlidXRlKCJkYXRhLXRnbCIpOwogICAgdmFyIHN0NCA9IHBTdGF0ZShwaWQyKTsKICAgIHN0NFtrZXldID0gIXN0NFtrZXldOwogICAgaWYgKGtleSA9PT0gIm1hc3RlcmVkIiAmJiBzdDQubWFzdGVyZWQpIHN0NC5yZWFkID0gdHJ1ZTsKICAgIHNhdmVTdG9yZSgpOwogICAgaWYgKGN1ckN0eCAmJiBjdXJDdHgua2luZCA9PT0gInBvaW50IiAmJiBjdXJDdHguaWQgPT09IHBpZDIpIHJlbmRlclBvaW50KHBpZDIpOwogICAgZWxzZSBpZiAoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoInZpZXctbm90ZXMiKS5jbGFzc0xpc3QuY29udGFpbnMoImFjdGl2ZSIpKSByZW5kZXJSZWNvcmRzKCk7CiAgICByZXR1cm47CiAgfQogIGlmICgodCA9IGUudGFyZ2V0LmNsb3Nlc3QoIltkYXRhLWRlbHdyb25nXSIpKSkgewogICAgcmVtb3ZlV3JvbmcodC5nZXRBdHRyaWJ1dGUoImRhdGEtZGVsd3JvbmciKSk7CiAgICByZW5kZXJSZWNvcmRzKCk7CiAgICByZXR1cm47CiAgfQp9KTsKZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcigiaW5wdXQiLCBmdW5jdGlvbihlKXsKICB2YXIgbmYgPSBlLnRhcmdldC5nZXRBdHRyaWJ1dGUgJiYgZS50YXJnZXQuZ2V0QXR0cmlidXRlKCJkYXRhLW5mIik7CiAgaWYgKCFuZikgcmV0dXJuOwogIHZhciBzdCA9IHBTdGF0ZShlLnRhcmdldC5nZXRBdHRyaWJ1dGUoImRhdGEtcGlkIikpOwogIGlmIChuZiA9PT0gImxldmVsIikgc3QubGV2ZWwgPSBlLnRhcmdldC52YWx1ZTsKICBlbHNlIHN0Lm5vdGVbbmZdID0gZS50YXJnZXQudmFsdWU7CiAgc2F2ZVN0b3JlKCk7Cn0pOwpkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJjaGFuZ2UiLCBmdW5jdGlvbihlKXsKICB2YXIgbmYgPSBlLnRhcmdldC5nZXRBdHRyaWJ1dGUgJiYgZS50YXJnZXQuZ2V0QXR0cmlidXRlKCJkYXRhLW5mIik7CiAgaWYgKG5mID09PSAibGV2ZWwiKSB7CiAgICB2YXIgc3QgPSBwU3RhdGUoZS50YXJnZXQuZ2V0QXR0cmlidXRlKCJkYXRhLXBpZCIpKTsKICAgIHN0LmxldmVsID0gZS50YXJnZXQudmFsdWU7CiAgICBzYXZlU3RvcmUoKTsKICB9Cn0pOwoKLyog6K6h566XIC8g5aGr56m655qE5qOA5p+l5oyJ6ZKu5Zyo5Y6f6ISa5pys5Lit55u05o6l57uR5a6a5LqG5Y6f5Ye95pWw5byV55So77yMCiAgIOWPpuWKoOWQjue9ruebkeWQrO+8iOWcqOacrOebkeWQrOaJp+ihjOaXtuWOn+ajgOafpeW3suWujOaIkO+8ieS/neivgemUmemimOaUtuW9lSAqLwpmdW5jdGlvbiBhZnRlckNoZWNrSG9vaygpewogIGlmICghcXVpeiB8fCAhcXVpei5hbnN3ZXJlZCB8fCAhcXVpei53cm9uZyB8fCAhcXVpei53cm9uZy5sZW5ndGgpIHJldHVybjsKICB2YXIgbGFzdCA9IHF1aXoud3JvbmdbcXVpei53cm9uZy5sZW5ndGggLSAxXTsKICB2YXIgcSA9IHF1aXoubGlzdFtxdWl6LmlkeF07CiAgaWYgKGxhc3QgJiYgbGFzdC5xID09PSBxKSB7IGFkZFdyb25nKHEsIHRydWUpOyByZWZyZXNoV3JvbmdCdG4ocSk7IH0KfQpkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgiY2FsY0NoZWNrIikuYWRkRXZlbnRMaXN0ZW5lcigiY2xpY2siLCBhZnRlckNoZWNrSG9vayk7CmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCJmaWxsQ2hlY2siKS5hZGRFdmVudExpc3RlbmVyKCJjbGljayIsIGFmdGVyQ2hlY2tIb29rKTsKCi8qIC0tLS0tLS0tLS0g5Yid5aeL5YyW77ya5riy5p+T5YWs5byP77yI5ZCr6Z2Z5oCB6aG177yJIC0tLS0tLS0tLS0gKi8Kcm0oZG9jdW1lbnQuYm9keSk7Cn0pKCk7Cg=="></script>
+<script>
+/* ================================================================
+   注：本文件曾以 base64 data URI 内嵌在 index.html 第 1967 行（见审计 P-4/L-9）；
+   Phase 1 起改回可读内联脚本，与主文件同一份源码，不再藏起来。
+   TokiLearn 第 1 阶段教学升级（考试导向）
+   - 知识点新结构：引入 → 定义与通俗解释 → 前置知识 → 知识联系
+   - Level 0–5 分层 + 过渡例题入口
+   - 题型方法页 / 考点总结页
+   - 自测（分层提示）+ 个人笔记 + 错题本 + 薄弱点 + 已阅读/已掌握
+   个人记录只存浏览器 localStorage 的独立键 md_learn_v1，
+   与原有 md_quiz_done / md_progress / md_gemini_* 互不覆盖。
+   ================================================================ */
+(function(){
+"use strict";
+
+/* ---------- 个人记录（独立数据区） ---------- */
+var LS_KEY = "md_learn_v1";
+var LS_VERSION = 2;
+var store = { v:LS_VERSION, points:{}, qnotes:{}, wrong:[], last:null };
+try {
+  var saved = JSON.parse(localStorage.getItem(LS_KEY) || "null");
+  if (saved) {
+    /* 迁移：v1 数据没有 v/last 字段，points/qnotes/wrong 原样保留，last 从空开始 */
+    if (saved.points) store.points = saved.points;
+    if (saved.qnotes) store.qnotes = saved.qnotes;
+    if (saved.wrong) store.wrong = saved.wrong;
+    if (saved.v === LS_VERSION && saved.last) store.last = saved.last;
+    /* 迁移落盘：v1 数据第一次加载即写回 v2（含 v 与 last 字段），旧数据原样保留 */
+    if (saved.v !== LS_VERSION) saveStore();
+  }
+} catch(e){}
+function saveStore(){ try { localStorage.setItem(LS_KEY, JSON.stringify(store)); } catch(e){} }
+function pState(id){
+  if (!store.points[id]) store.points[id] = { read:false, mastered:false, fav:false, level:"", note:{u:"",q:"",e:""}, test:{} };
+  return store.points[id];
+}
+
+/* ---------- 工具 ---------- */
+function rm(el){
+  if (window.renderMathInElement && el) {
+    try { renderMathInElement(el, { delimiters:[
+      { left:"\\[", right:"\\]", display:true },
+      { left:"\\(", right:"\\)", display:false }
+    ], throwOnError:false }); } catch(e){}
+  }
+}
+function linkHTML(l){
+  if (l.id) return '<button type="button" class="kp-link" data-point="' + l.id + '">' + l.t + '</button>';
+  return '<button type="button" class="kp-link" data-part="' + l.part + '">' + l.t + '</button>';
+}
+var LV_NAMES = ["Level 0 · 零基础认识","Level 1 · 基本理解","Level 2 · 单知识点应用","Level 3 · 知识联系","Level 4 · 综合习题","Level 5 · 迁移与拓展"];
+
+/* ================================================================
+   Part 1 六个核心知识点（新结构完整版）
+   内容依据 TaskPro 笔记与杨可桢《机械设计基础》第 7 版
+   ================================================================ */
+var POINTS = [
+{
+  id:"p1-pair", part:"1", ch:"第 1 章 自由度", title:"运动副与运动简图", lv:[0,2],
+  intro:[
+    "真实机器的零件形状千差万别：有弯的、带孔的、厚薄不一的。但研究一台机器「怎么动」时，零件的具体形状大多是干扰信息——真正决定运动的，只有构件之间怎样连接、能相对怎样动。",
+    "所以需要两个工具：先用「运动副」描述构件之间的连接（只看接触形式和允许的相对运动，不管零件长什么样）；再用「运动简图」把整台机器抽象成线条和符号，只保留决定运动的信息。后面所有计算（自由度、瞬心）都建立在这张简图上。"
+  ],
+  def:{
+    plain:"两个构件直接接触、还能相对动一动，这个连接就叫运动副。按接触的样子分两类：面接触的是低副（转动副、移动副），点或线接触的是高副（齿轮啮合、凸轮顶着推杆）。运动简图就是按比例只画决定运动的线条和符号的图。",
+    strict:"运动副：两构件直接接触并能产生一定相对运动的连接。按接触特性分为低副（面接触）与高副（点、线接触）。平面低副包括转动副（只允许相对转动）与移动副（只允许相对移动）。机构运动简图：用规定符号和线条按比例表示机构运动关系的简化图形。",
+    math:"一个作平面运动的自由构件有 \\(3\\) 个自由度。组成低副后保留 \\(1\\) 个自由度（引入 \\(2\\) 个约束），组成高副后保留 \\(2\\) 个自由度（引入 \\(1\\) 个约束）：\\[3-2=1 \\qquad 3-1=2\\]",
+    symbols:[["低副","面接触的运动副：转动副、移动副，各引入 2 个约束"],["高副","点或线接触的运动副，各引入 1 个约束"],["转动副符号","简图中用小圆表示，圆心是相对转动轴线"],["移动副符号","简图中把一构件画成滑块或导路形式"]],
+    ex:"门与门框之间是转动副（只能相对转）；抽屉与柜体之间是移动副（只能相对滑）；火车车轮与铁轨、齿轮与齿轮之间是高副（点、线接触）。",
+    meaning:"运动简图的意义是「只看运动、不看长相」：焊成刚性三角形的几根杆在简图里只算一个构件；高副在简图中要画出接触处的曲线轮廓。",
+    confuse:"运动副 ≠ 一切连接。螺栓把两块板拧死、不能相对运动，那是固定连接，不是运动副。「直接接触」和「能产生相对运动」两个条件缺一不可，判断题最爱在这句话上挖坑。"
+  },
+  pre:[ {t:"绪论：构件与零件的区别", part:"绪"} ],
+  links:[
+    "自由度公式里的 \\(P_L\\)、\\(P_H\\) 就是从简图上数出来的低副、高副个数——简图画错，后面全错。",
+    "复合铰链、速度瞬心的判断都先要认出每个运动副的类型和位置，所以本知识点是 Part 1 的地基。"
+  ],
+  test:[
+    { q:"判断：凡是两构件直接接触的连接都叫运动副。", opts:["正确","错误"], ans:1,
+      h1:"想想运动副定义里的两个条件：直接接触，还要……？",
+      h2:"螺栓拧死的两块板直接接触，但能相对运动吗？",
+      fix:"运动副要求「直接接触 + 能产生一定相对运动」两个条件同时成立。只接触不能动的是固定连接，不是运动副。" },
+    { q:"步骤补全：画机构运动简图时，焊成刚性三角形的三根杆应当算作（　）。", opts:["3 个构件","1 个构件","2 个构件","看情况再定"], ans:1,
+      h1:"简图只看「一起动」的单元——三根杆焊死后还能相对动吗？",
+      h2:"构件是最小的运动单元：永远一起动的整体只算一个。",
+      fix:"焊成刚性整体的几根杆之间没有相对运动，在简图里是一个构件。数活动构件数 n 时这是最常见的多算来源。" },
+    { q:"齿轮啮合处两轮齿的接触是点（线）接触，它属于（　）。", opts:["转动副","移动副","低副","高副"], ans:3,
+      h1:"低副和高副是按什么分的？看接触面积。",
+      h2:"面接触是低副；点、线接触是——？",
+      fix:"按接触形式分：面接触为低副（转动副、移动副），点或线接触为高副。齿轮啮合、凸轮与推杆接触都是高副，只引入 1 个约束。" },
+    { q:"概念判断：组成转动副的两构件，在接触处允许的相对运动是（　）。", opts:["只能相对移动","只能相对转动","既能转又能移","不能相对运动"], ans:1,
+      h1:"回想门绕门轴开合的画面。",
+      h2:"转动副的名字本身就提示了答案。",
+      fix:"转动副只允许两构件在平面内相对转动，引入 2 个约束；移动副只允许沿给定方向相对移动。" }
+  ]
+},
+{
+  id:"p1-dof", part:"1", ch:"第 1 章 自由度", title:"自由度公式 F = 3n − 2PL − PH", lv:[0,3],
+  intro:[
+    "拿到一个机构，先要回答两个问题：它到底能不能动？动起来之后，每个构件的位置是不是唯一确定的（给一个输入，输出就定死）？这两个问题都靠数「自由度」来回答。",
+    "自由度的意思是：要让机构里每个构件的位置都定下来，需要独立给定几个运动参数。需要 1 个，配 1 个原动件（比如一台电机）就够；需要 2 个，就得配 2 个原动件。"
+  ],
+  def:{
+    plain:"每个活动构件在平面里本来能有 3 种独立运动（左右、上下、转）。每装一个低副被管住 2 种，每装一个高副被管住 1 种。剩下的就是自由度 F。",
+    strict:"平面机构自由度：机构具有独立运动的数目。机构具有确定运动的条件是：自由度 \\(F>0\\)，且自由度数等于原动件数。",
+    math:"\\[F = 3n - 2P_L - P_H\\]推导：\\(n\\) 个活动构件互不连接时共有 \\(3n\\) 个自由度；每个低副引入 \\(2\\) 个约束，共减 \\(2P_L\\)；每个高副引入 \\(1\\) 个约束，共减 \\(P_H\\)。",
+    symbols:[["\\(F\\)","机构的自由度"],["\\(n\\)","活动构件数（不含机架！机架不算活动构件）"],["\\(P_L\\)","低副个数（转动副 + 移动副）"],["\\(P_H\\)","高副个数"]],
+    ex:"某机构 \\(n=5\\)、\\(P_L=7\\)、\\(P_H=0\\)，则 \\(F = 3\\times 5 - 2\\times 7 - 0 = 1\\)，配 1 个原动件运动就确定。",
+    meaning:"\\(F\\) 与原动件数的关系就是结论：相等 → 运动确定；原动件少于 \\(F\\) → 运动不确定（构件会乱晃）；原动件多于 \\(F\\) → 机构被憋住，最弱的构件会被损坏。\\(F \\le 0\\) 时机构根本不是机构，只是静定的或超静定的结构。",
+    confuse:"自由度公式 vs 机构能动的条件：算出 \\(F=1\\) 只说明自由度是 1，还要再核对原动件数也是 1，才能说运动确定。另外 \\(n\\) 是活动构件数，把机架数进去是最高频的错误。"
+  },
+  pre:[ {t:"运动副与运动简图", id:"p1-pair"} ],
+  links:[
+    "公式本身不难，难的是把 \\(n\\)、\\(P_L\\)、\\(P_H\\) 数对：复合铰链影响 \\(P_L\\)，局部自由度影响 \\(n\\)，虚约束影响副的计数——三类特殊情况都是为这个公式服务的。",
+    "Part 5 判断差动轮系（\\(F=2\\)）与行星轮系（\\(F=1\\)），用的还是这个公式和「F = 原动件数」的条件。"
+  ],
+  test:[
+    { q:"计算：活动构件数 \\(n=6\\)，低副 \\(P_L=8\\)，高副 \\(P_H=1\\)，自由度 \\(F\\) 为（　）。", opts:["0","1","2","3"], ans:1,
+      h1:"先写公式：\\(F = 3n - 2P_L - P_H\\)，再逐项代入。",
+      h2:"\\(3\\times 6 = 18\\)，\\(2\\times 8 = 16\\)，再减去高副的 1。",
+      fix:"\\(F = 3\\times 6 - 2\\times 8 - 1 = 1\\)。计算题的丢分点几乎都在代入前数错 n 和副的个数，而不是公式本身。" },
+    { q:"判断：机构的自由度大于 0，它就一定具有确定的运动。", opts:["正确","错误"], ans:1,
+      h1:"确定运动需要两个条件，题干只说了其中一个。",
+      h2:"还差一个关于「原动件数」的条件。",
+      fix:"确定运动的条件是 \\(F>0\\) 且 \\(F=\\) 原动件数。只满足 \\(F>0\\)，原动件给少了运动不确定，给多了会憋坏构件。" },
+    { q:"步骤补全：用公式算自由度时，\\(n\\) 应当数（　）。", opts:["全部构件（含机架）","活动构件（不含机架）","只数连杆","构件总数减 2"], ans:1,
+      h1:"机架是固定不动的，它有自由度可数吗？",
+      h2:"公式里的 3n 来自每个「能动」的构件的 3 个自由度。",
+      fix:"n 是活动构件数，机架不计入。整机共 K 个构件时，\\(n = K - 1\\)。" },
+    { q:"原因解释：原动件数小于自由度 F 时，机构的运动状态是（　）。", opts:["运动确定","不能运动","运动不确定","构件必损坏"], ans:2,
+      h1:"独立参数没给够，剩下的构件位置由谁决定？",
+      h2:"对比另一种情况：原动件多于 F 时才会憋坏构件。",
+      fix:"原动件数 < F：给定参数不足，构件位置不唯一，运动不确定；原动件数 > F：约束过剩，最弱构件可能损坏。两种情况判断题里经常对调出现。" }
+  ]
+},
+{
+  id:"p1-comp", part:"1", ch:"第 1 章 自由度", title:"复合铰链", lv:[1,3],
+  intro:[
+    "数运动副时最容易栽的坑：好几个构件挤在同一根销轴上转。图上看着只是一个铰链点，实际上藏着不止一个转动副。少数一个，自由度就多算 2 分，整道题错到底。"
+  ],
+  def:{
+    plain:"两个以上的构件在同一处用转动副连在一起，就叫复合铰链。数的时候记住一句话：几个构件汇交，就数构件数减 1 个转动副。",
+    strict:"复合铰链：两个以上构件同时在一处以转动副相连接所构成的铰链。\\(m\\) 个构件汇交于一处，构成的转动副数目为 \\(m-1\\) 个。",
+    math:"\\[\\text{该处转动副数} = m - 1\\]",
+    symbols:[["\\(m\\)","在同一处汇交的构件总数（机架也算一个）"]],
+    ex:"3 个构件在 A 点汇交 → 该处有 \\(3-1=2\\) 个转动副；4 个构件汇交 → 3 个转动副。",
+    meaning:"为什么减 1：第一个构件是「基准」，其余每个构件与它（或与前一个）各组成一个转动副，所以 m 个构件形成 m−1 对相对转动关系。",
+    confuse:"复合铰链 vs 普通铰链：只有两个构件在一处连接，就是普通转动副，数 1 个；三个及以上才叫复合铰链。汇交点若在简图上是同一根轴线才算，位置靠近但不在同一点的不算。"
+  },
+  pre:[ {t:"运动副与运动简图", id:"p1-pair"}, {t:"自由度公式", id:"p1-dof"} ],
+  links:[
+    "复合铰链直接改变 \\(P_L\\)：漏数一个转动副，\\(F\\) 就多算 2。自由度计算题的标准流程是先找复合铰链，再数副。",
+    "瞬心题里「图中 A 点处转动副的个数」问的也是同一件事。"
+  ],
+  test:[
+    { q:"三个构件在同一处组成复合铰链，该处转动副数目为（　）。", opts:["1","2","3","4"], ans:1,
+      h1:"套用规则：构件数减 1。",
+      h2:"\\(m=3\\) 时，\\(m-1\\) 等于多少？",
+      fix:"m 个构件汇交含 m−1 个转动副，3 个构件就是 2 个。把它误数成 3 个是判断题的经典错误说法。" },
+    { q:"判断：两个构件在同一处用转动副连接，也构成复合铰链。", opts:["正确","错误"], ans:1,
+      h1:"「复合」的门槛是几个构件？",
+      h2:"两个构件一处连接，数 1 个转动副，那是普通转动副。",
+      fix:"复合铰链要求两个以上（即至少 3 个）构件在同一处以转动副连接。两个构件只是普通转动副。" },
+    { q:"概念判断：数自由度时漏掉一个复合铰链处的 1 个转动副，算出的 F 会（　）。", opts:["偏大 2","偏小 2","偏大 1","不受影响"], ans:0,
+      h1:"一个低副在公式里对应减几？",
+      h2:"\\(F = 3n - 2P_L - P_H\\)：\\(P_L\\) 少 1，F 多——？",
+      fix:"每个低副减 2，\\(P_L\\) 少数 1 个，F 就偏大 2。复合铰链是自由度大题最常见的丢分点。" },
+    { q:"步骤补全：计算自由度前，先处理复合铰链的正确顺序是（　）。", opts:["先代入公式再修正","先找出全部复合铰链并按 m−1 计数，再代入公式","复合铰链不用管","把复合铰链按 1 个副计"], ans:1,
+      h1:"特殊情况（复合铰链、局部自由度、虚约束）应该在数数之前还是之后处理？",
+      h2:"TaskPro 笔记的口径：三类特殊情况先处理掉，再数构件和运动副。",
+      fix:"标准流程：先处理复合铰链、局部自由度、虚约束，再数 n、P_L、P_H 代入公式。顺序反了必然数错。" }
+  ]
+},
+{
+  id:"p1-local", part:"1", ch:"第 1 章 自由度", title:"局部自由度", lv:[1,3],
+  intro:[
+    "凸轮机构里，推杆顶端常装一个小滚子。滚子可以绕自己的轴原地打转，但它转不转，推杆照样按凸轮轮廓上下动——这个转动对机构的整体运动毫无影响，却会让自由度多算 1 个。不处理，F 就错。"
+  ],
+  def:{
+    plain:"局部自由度就是「某个构件自己多余的一个小运动」，不影响其他构件怎么动。最典型的就是滚子推杆里滚子的自转。算自由度时，把滚子和推杆看成一个整体（焊死）再数。",
+    strict:"局部自由度：机构中某些构件所具有的、不影响其他构件运动的自由度。计算自由度时应先将引入局部自由度的构件与其相连构件视为一个整体再计数。",
+    math:"滚子与推杆视为一体后：活动构件数减 \\(1\\)，同时少计滚子与推杆之间的 \\(1\\) 个转动副，\\(F\\) 的计算结果才正确。",
+    symbols:[["滚子","凸轮推杆顶端的小轮，与推杆以转动副连接"],["焊成一体","计算时的处理方法：滚子与推杆合并为一个构件"]],
+    ex:"滚子直动推杆凸轮机构：若把滚子单独算一个构件，会得到比真实值大 1 的 F；将滚子与推杆焊成一体后，F 与实际原动件数一致。",
+    meaning:"滚子不是白装的：它把推杆与凸轮之间的滑动摩擦变成滚动摩擦，减小磨损。局部自由度「对运动规律多余、对寿命有用」。",
+    confuse:"局部自由度 vs 虚约束：前者是多出来的「自由度」（构件多了一个不影响整体的运动），处理方法是合并构件；后者是多出来的「约束」，处理方法是除去重复的副。一字之差，处理相反。"
+  },
+  pre:[ {t:"自由度公式", id:"p1-dof"}, {t:"运动副与运动简图", id:"p1-pair"} ],
+  links:[
+    "局部自由度几乎总是和 Part 3 的滚子推杆凸轮绑在一起考：看到滚子，先想局部自由度。",
+    "它和复合铰链、虚约束并称自由度计算的「三类特殊情况」，做题时要在数数之前一次性处理完。"
+  ],
+  test:[
+    { q:"判断：机构中出现的局部自由度都是有害的，实际生产中应当避免。", opts:["正确","错误"], ans:1,
+      h1:"滚子把滑动摩擦变成滚动摩擦，这对磨损是好事还是坏事？",
+      h2:"局部自由度只是「算 F 时要处理」，不等于「设计上多余」。",
+      fix:"局部自由度（如滚子自转）能减小摩擦磨损，是有意设计的。说法把「计算时需合并处理」偷换成「有害应避免」，错误。" },
+    { q:"计算自由度时，对滚子推杆的滚子应（　）。", opts:["单独算一个构件","与推杆看成一体","直接删掉滚子不管","按高副处理"], ans:1,
+      h1:"滚子的自转影响推杆的运动规律吗？",
+      h2:"处理局部自由度的方法是把相关构件「焊」在一起。",
+      fix:"将滚子与推杆视为一个构件：n 减 1，同时少一个转动副，F 才正确。删掉不管会把高副接触关系也弄丢。" },
+    { q:"概念判断：局部自由度指的是（　）。", opts:["整个机构多余的约束","某些构件不影响其他构件运动的自由度","机架的自由度","原动件的自由度"], ans:1,
+      h1:"关键词是「局部」和「不影响整体」。",
+      h2:"「多余的约束」是另一个概念（虚约束），别选反。",
+      fix:"局部自由度是某些构件具有的、不影响其他构件运动的自由度；多余的约束叫虚约束，两者不要混。" },
+    { q:"判断：有高副存在的地方，可能出现局部自由度。", opts:["正确","错误"], ans:0,
+      h1:"最典型的局部自由度出现在哪里？滚子和凸轮之间是什么副？",
+      h2:"滚子与凸轮是点（线）接触——高副。",
+      fix:"滚子推杆凸轮机构中，滚子与凸轮组成高副，滚子的自转即局部自由度。所以有高副处确实可能有局部自由度，说法正确。" }
+  ]
+},
+{
+  id:"p1-virt", part:"1", ch:"第 1 章 自由度", title:"虚约束", lv:[1,3],
+  intro:[
+    "有些机构里，同一个约束被重复设置了两遍：比如一根轴用两个轴承支承，两个转动副其实只起到一个的约束作用。这种重复的约束如果照单全收，F 会被算小，甚至算出负数，明明能动的机构会被判成「不能动」。"
+  ],
+  def:{
+    plain:"虚约束就是重复了一遍、对运动不起独立作用的约束。算自由度之前先把它除去，剩下的才是真正管事的约束。",
+    strict:"虚约束：机构中对构件的运动不起独立约束作用的重复约束，常由构件间几何尺寸满足特殊条件而产生。计算自由度时应先除去虚约束再计数。",
+    math:"除去虚约束后再用 \\(F = 3n - 2P_L - P_H\\) 计算；不除去会使 \\(P_L\\) 或 \\(P_H\\) 偏大，\\(F\\) 偏小。",
+    symbols:[["轴线重合的多个转动副","只算 1 个，其余为虚约束（如一根轴的两个轴承）"],["导路平行的多个移动副","只算 1 个，其余为虚约束"],["对称部分","机构中传递运动不起独立作用的对称部分为虚约束"]],
+    ex:"两构件之间组成两个轴线重合的转动副：只计 1 个转动副，另 1 个是虚约束。图示对称机构中 AB 与 AC 对传递运动不起独立作用，含 1 个虚约束。",
+    meaning:"虚约束虽然「虚」，在真实机器里不能真的拆掉：它能增强机构刚性、改善受力、保证运动可靠（如双轴承支承）。它只是在「算自由度」这个环节里不重复计数。",
+    confuse:"虚约束 vs 局部自由度：虚约束是多算了约束（副数偏多），局部自由度是多算了自由度（构件的小运动）。另外判断题「虚约束对运动不起作用，所以实际中可以去掉」是错的——起不起独立约束作用，和能不能拆是两回事。"
+  },
+  pre:[ {t:"自由度公式", id:"p1-dof"}, {t:"运动副与运动简图", id:"p1-pair"} ],
+  links:[
+    "虚约束和复合铰链是一对镜像坑：复合铰链是「看着 1 个其实是 m−1 个」（容易少数），虚约束是「看着 2 个其实只算 1 个」（容易多数），都直接决定 \\(P_L\\)。",
+    "判断虚约束要看几何条件（重合、平行、轨迹重合、对称），这也是它常出现在选择题「下列哪种情况存在虚约束」里的原因。"
+  ],
+  test:[
+    { q:"判断：虚约束对运动不起作用，所以在实际生产中可以去掉。", opts:["正确","错误"], ans:1,
+      h1:"两个轴承支承一根轴，拆掉一个轴承，轴转起来会更稳还是更晃？",
+      h2:"「计算时不重复计数」和「实物可以拆除」是一回事吗？",
+      fix:"虚约束在计算自由度时除去，但实物中它起增强刚性、改善受力的作用，不能去掉。说法混淆了计算处理与结构设计，错误。" },
+    { q:"两个构件之间组成多个轴线（　）的转动副时，只有一个起约束作用，其余是虚约束。", opts:["交叉","重合","平行","垂直"], ans:1,
+      h1:"想一根轴被两个轴承支承的图：两个转动副的轴线是什么关系？",
+      h2:"轴线不在同一直线上的两个转动副，各管各的，不会重复。",
+      fix:"轴线重合的多个转动副只有一个真正起约束作用，其余为虚约束。同理，导路平行的多个移动副也只算一个。" },
+    { q:"概念判断：虚约束产生的原因是（　）。", opts:["构件数太多","构件间几何尺寸满足某些特殊条件","原动件太多","高副太多"], ans:1,
+      h1:"轴线重合、导路平行、轨迹重合——这些都是什么条件？",
+      h2:"它们都不是数量问题，而是位置与尺寸的特殊关系。",
+      fix:"虚约束由构件间几何尺寸满足特殊条件（重合、平行、轨迹重合、对称布置）而产生，所以识别虚约束要盯住几何关系。" },
+    { q:"步骤补全：机构中传递运动不起独立作用的对称部分，在计算自由度时应（　）。", opts:["照常计数","作为虚约束除去","算作局部自由度","算作复合铰链"], ans:1,
+      h1:"对称部分重复设置了同样的约束，属于哪类特殊情况？",
+      h2:"三类特殊情况里，「重复约束」对应的是哪一个？",
+      fix:"不起独立作用的对称部分是虚约束，计算前除去。它不是局部自由度（那是构件的独立小运动），也不是复合铰链（那是多构件汇交）。" }
+  ]
+},
+{
+  id:"p1-ic", part:"1", ch:"第 1 章 自由度", title:"速度瞬心", lv:[2,4],
+  intro:[
+    "求机构中某点的速度，硬算往往很绕。有个偷懒但严谨的办法：任意两个构件在某一瞬间的相对运动，都可以看成绕某一个点的纯转动。这个点就是速度瞬心。找到瞬心，复杂的平面运动瞬间变成简单的定轴转动，速度按到瞬心的距离成比例，一下就能算。"
+  ],
+  def:{
+    plain:"速度瞬心是两个构件在同一瞬间绝对速度完全相同的那个重合点。绕着它看，一个构件相对另一个构件就像在纯转动。",
+    strict:"速度瞬心：互作平面相对运动的两构件在任一瞬时，其相对运动可看作绕某一重合点的转动，该重合点即两构件的速度瞬心，它是两构件上绝对速度相同的重合点。两构件之一为静止构件（机架）时称绝对瞬心，两者都在运动时称相对瞬心。",
+    math:"由 \\(K\\) 个构件（含机架）组成的机构，瞬心总数为\\[N = \\frac{K(K-1)}{2}\\]三心定理：互作平面运动的三个构件共有三个瞬心，且三者位于同一直线上。",
+    symbols:[["\\(P_{ij}\\)","构件 i 与构件 j 的瞬心的记号"],["\\(N\\)","机构全部瞬心的个数"],["绝对瞬心","与机架的瞬心，其绝对速度为 0"],["相对瞬心","两运动构件之间的瞬心，速度相同但不为 0"]],
+    ex:"含 4 个构件的机构，瞬心数 \\(N = 4\\times(4-1)/2 = 6\\) 个。",
+    meaning:"找瞬心的方法：两构件以转动副连接，铰链点就是瞬心；以移动副连接，瞬心在垂直于导路方向的无穷远处；以高副连接，瞬心在接触点的公法线上，具体位置再用三心定理与另外两个已知瞬心连线求交点。",
+    confuse:"瞬心是「速度相同」的点，不是「速度为 0」的点——只有绝对瞬心（相对机架）速度才为 0。判断题把两者偷换是高频坑。另外三心定理说的是三瞬心「共线」，说成「不在同一直线上」就是错的。"
+  },
+  pre:[ {t:"运动副与运动简图", id:"p1-pair"} ],
+  links:[
+    "瞬心的求法完全依赖运动副类型：转动副、移动副直接定，高副要靠三心定理，所以它和「运动副」是同一节里的一对知识。",
+    "瞬心法是后续速度分析的基础方法：先数清瞬心总数（组合数公式），再逐个定位，避免漏找。"
+  ],
+  test:[
+    { q:"由 K 个构件组成的机构，瞬心个数为（　）。", opts:["\\(N=K(K-1)/2\\)","\\(N=K(K+1)/2\\)","\\(N=(K-1)/2\\)","\\(N=K^2\\)"], ans:0,
+      h1:"瞬心是「每两个构件配一对」，这是组合问题：从 K 个里取 2 个。",
+      h2:"从 K 个构件中任取 2 个的组合数怎么写？",
+      fix:"每两个构件有一个瞬心，\\(N = C_K^2 = K(K-1)/2\\)。K=4 时 N=6，可用这个特例验算公式。" },
+    { q:"判断：不通过运动副直接相连的三个构件共有三个瞬心，这三个瞬心不在同一直线上。", opts:["正确","错误"], ans:1,
+      h1:"回忆三心定理的原话：三个瞬心位于……？",
+      h2:"题干把定理的结论反过来说了。",
+      fix:"三心定理：三个瞬心位于同一直线上。题干说「不在同一直线上」，与定理相反，错误。这条定理正是求高副瞬心位置的工具。" },
+    { q:"概念判断：关于速度瞬心，正确的是（　）。", opts:["两构件上绝对速度为 0 的重合点","两构件上绝对速度相同的重合点","两构件都是运动的称绝对瞬心","一构件静止的称相对瞬心"], ans:1,
+      h1:"先逐项排除：速度为 0 的只是其中一种特殊情况。",
+      h2:"再检查后两项：绝对/相对的划分标准是不是说反了？",
+      fix:"瞬心是绝对速度相同的重合点；一构件静止（与机架的瞬心）称绝对瞬心，两构件都在运动称相对瞬心。后两项正好说反。" },
+    { q:"步骤补全：求两构件以高副相连时的瞬心位置，第一步是（　）。", opts:["直接取接触点为瞬心","先确定瞬心在接触点的公法线上，再用三心定理定位","取两构件中点","瞬心在无穷远处"], ans:1,
+      h1:"高副接触时，两构件沿公法线方向的相对速度分量必须相等，瞬心只能落在哪条线上？",
+      h2:"只知道在哪条线上还不够，还要靠另外两个瞬心的连线交出来。",
+      fix:"高副瞬心必在接触点公法线上，再用三心定理（与另两个已知瞬心的连线）求交点定位。接触点本身一般不是瞬心（存在相对滑动）。" }
+  ]
+}
+];
+
+/* ================================================================
+   Part 2–5 与绪论：套用同一结构模板，保留现有讲解内容，
+   未补全的部分如实标注「待按新结构补全」，不标记为已完成。
+   ================================================================ */
+var CH_OF_PART = { "绪":"绪论", "2":"第 2 章 连杆机构", "3":"第 3 章 凸轮机构", "4":"第 4 章 齿轮机构", "5":"第 5 章 轮系" };
+var LV_OF_PART = { "绪":[0,1], "2":[0,3], "3":[0,3], "4":[0,4], "5":[0,4] };
+var PENDING = [];
+if (typeof DETAILS !== "undefined") {
+  Object.keys(DETAILS).forEach(function(num){
+    if (num === "待") return;
+    if (num === "1") return; /* Part 1 已由上方六个新结构完整版知识点覆盖，不再生成待补条目；原讲解仍在章节页「章节速览」里保留 */
+    DETAILS[num].forEach(function(sec, k){
+      PENDING.push({
+        id:"x" + num + "-" + k, part:num, ch:CH_OF_PART[num] || "", title:sec[0],
+        lv:LV_OF_PART[num] || [0,2], pending:true, body:sec[1]
+      });
+    });
+  });
+}
+var ALL_POINTS = POINTS.concat(PENDING);
+function findPoint(id){ for (var i=0;i<ALL_POINTS.length;i++) if (ALL_POINTS[i].id === id) return ALL_POINTS[i]; return null; }
+function partPoints(num){ return ALL_POINTS.filter(function(p){ return p.part === String(num); }); }
+
+/* ================================================================
+   题型方法（4 种考试高频题型）
+   ================================================================ */
+var METHODS = [
+{
+  id:"m-dof", title:"自由度计算", ch:"第 1 章 自由度",
+  recog:"题干给出机构简图（或文字描述的构件与运动副），要求计算自由度 F，并判断机构是否具有确定运动、需要几个原动件。简图题、文字计数题都属于这一类。",
+  known:"简图中的构件数、各类运动副的位置与类型；有时直接给 n、P_L、P_H 的数值让你代入。",
+  goal:"求 F 的数值；进一步判断 F 与原动件数的关系（确定 / 不确定 / 损坏）。",
+  key:"先处理三类特殊情况再数数：复合铰链（m−1）、局部自由度（滚子焊成一体）、虚约束（先除去）。多数错误不是公式错，而是数错。",
+  path:["1. 数活动构件数 n（总数减机架；滚子与推杆先合并）。","2. 逐点找复合铰链：m 个构件汇交按 m−1 个转动副计入 P_L。","3. 识别并除去虚约束（轴线重合的转动副、导路平行的移动副、不起独立作用的对称部分）。","4. 数低副 P_L 与高副 P_H。","5. 代入 F = 3n − 2P_L − P_H。","6. 若题目问运动是否确定，再与原动件数比较。"],
+  formulas:["\\(F = 3n - 2P_L - P_H\\)","复合铰链：转动副数 \\(= m - 1\\)","确定运动条件：\\(F > 0\\) 且 \\(F =\\) 原动件数"],
+  cond:"公式只适用于平面机构；n 必须是活动构件数；所有特殊情况必须在计数前处理完。",
+  cases:"F > 0 且等于原动件数 → 运动确定；F > 0 但原动件不足 → 运动不确定；原动件多于 F → 最弱构件可能损坏；F ≤ 0 → 不是能动的机构（结构）。",
+  example:"例：n = 7、P_L = 10、P_H = 0 的机构，\\(F = 3\\times 7 - 2\\times 10 = 1\\)，需要 1 个原动件才有确定运动。做题时先在图上逐个标出运动副再数，避免漏数复合铰链。",
+  errors:["把机架数进 n；复合铰链按 1 个副计；滚子单独算一个构件；虚约束照单全收；公式里高副前写成加号。"]
+},
+{
+  id:"m-fourbar", title:"铰链四杆机构设计（类型判定 + 图解法）", ch:"第 2 章 连杆机构",
+  recog:"给出四杆长度问机构类型（曲柄摇杆 / 双曲柄 / 双摇杆），或给行程速比系数 K、极位夹角 θ 互求，或给出连杆（连架杆）的若干位置要求用图解法设计四杆机构。",
+  known:"四杆长度；或极位夹角 / K 值；或连杆的 2–3 个给定位置、连架杆的对应位置。",
+  goal:"判定机构类型；求 K 或 θ；图解求出固定铰链中心与各杆长度。",
+  key:"类型判定只抓两点：先验杆长条件，再看最短杆站在哪个位置。图解设计的突破口是「垂直平分线」——固定铰链到动铰链的距离不变，所以在垂分线上。",
+  path:["1. 类型题：验 l_min + l_max ≤ 其余两杆之和。","2. 满足杆长条件后看最短杆位置：为机架 → 双曲柄；为连架杆 → 曲柄摇杆；为连杆 → 双摇杆。不满足 → 双摇杆。","3. K 与 θ 互求：K = (180° + θ) / (180° − θ)，或反解 θ。","4. 图解设计（连杆三位置）：画出三个位置，连接对应点，作连线的垂直平分线，交点即固定铰链中心。","5. 图解设计（连架杆对应位置）：用刚化反转法把各位置归一，再作垂分线求交点。","6. 量取杆长并验算类型与行程要求。"],
+  formulas:["杆长条件：\\(l_{min} + l_{max} \\le l_3 + l_4\\)","\\(K = \\dfrac{180^{\\circ} + \\theta}{180^{\\circ} - \\theta}\\)","压力角与传动角：\\(\\alpha + \\gamma = 90^{\\circ}\\)；死点时 \\(\\gamma = 0\\)"],
+  cond:"杆长条件是曲柄存在的必要条件，不是充分条件——还必须最短杆为连架杆或机架。图解法依赖作图精度，考试按步骤给分，垂分线必须画出。",
+  cases:"按最短杆位置分四类讨论（见标准路径第 2 步）；死点只在从动件与连杆共线、且该从动件为原动件一侧时出现：摇杆主动有死点，曲柄主动无死点。",
+  example:"例：θ = 36° 时 \\(K = (180+36)/(180-36) = 216/144 = 1.5\\)。反过来给 K 求 θ 时，先由 K 解出 θ 再判断急回程度：K > 1（即 θ > 0）才有急回。",
+  errors:["只验杆长条件就下结论，不看最短杆位置；把死点与自锁混为一谈；K 与 θ 公式分子分母写反；图解法忘作垂直平分线、直接量距离凑铰链。"]
+},
+{
+  id:"m-gear", title:"齿轮几何参数计算", ch:"第 4 章 齿轮机构",
+  recog:"给出模数 m、齿数 z（有时给压力角 α、变位系数），要求分度圆、基圆、齿顶高、齿根高、中心距等几何量，或判断两轮能否正确啮合、是否根切。",
+  known:"m、z₁、z₂；标准齿轮默认 h_a* = 1、c* = 0.25、α = 20°。",
+  goal:"求 d、d_b、h_a、h_f、a 等尺寸；判断啮合条件与根切。",
+  key:"一切计算从 d = mz 出发：先有分度圆，其余尺寸都是 m 的倍数或由 d 派生。啮合问题先查「模数相等、压力角相等」。",
+  path:["1. 由 d = mz 求分度圆直径。","2. 基圆 d_b = d·cosα（只与 d、α 有关）。","3. 齿顶高 h_a = h_a*·m = m；齿根高 h_f = (h_a* + c*)m = 1.25m。","4. 标准中心距 a = m(z₁ + z₂)/2。","5. 啮合判断：m₁ = m₂ 且 α₁ = α₂（斜齿轮看法面参数与螺旋角）。","6. 根切判断：标准直齿 z < 17 会根切，可用正变位避免。"],
+  formulas:["\\(d = mz\\)","\\(d_b = d \\cos\\alpha\\)","\\(h_a = h_a^{*} m\\)，\\(h_f = (h_a^{*} + c^{*}) m\\)","\\(a = \\dfrac{m(z_1 + z_2)}{2}\\)","不根切最少齿数 \\(z_{min} = 17\\)（标准直齿，\\(h_a^{*}=1, \\alpha=20^{\\circ}\\)）","连续传动条件：重合度 \\(\\varepsilon_{\\alpha} \\ge 1\\)"],
+  cond:"以上公式针对标准直齿圆柱齿轮；变位齿轮的分度圆、基圆不变，但齿厚、齿顶高、齿根高要按变位系数修正；斜齿轮要用端面 / 法面参数换算，不要直接套。",
+  cases:"标准安装时分度圆与节圆重合；中心距大于标准值时节圆大于分度圆、啮合角大于压力角，但传动比不变（可分性）。",
+  example:"例：m = 4 mm、z = 30，则 d = 120 mm，h_f = 1.25 × 4 = 5 mm；与 z₂ = 24 的轮配对时 a = 4 × (30 + 24)/2 = 108 mm。",
+  errors:["把齿根高算成 m（漏掉顶隙 c*m）；基圆直径误用齿顶圆；啮合条件只写模数相等漏掉压力角；把 17 齿套到斜齿轮或变位齿轮上。"]
+},
+{
+  id:"m-train", title:"轮系传动比计算", ch:"第 5 章 轮系",
+  recog:"多个齿轮组成的轮系，给各轮齿数，求首末轮传动比大小与转向；或已知某轮转速求另一轮转速。出现「系杆 / 行星轮」字样即含周转轮系。",
+  known:"各齿轮齿数、啮合顺序；哪个构件是系杆、哪个轮固定。",
+  goal:"求传动比的数值与首末轮转向关系（同向 / 反向）。",
+  key:"先分型再动手：全部轴线固定 → 定轴公式连乘；有行星轮 → 转化机构法；混合轮系必须先拆成定轴部分与周转部分分别列式、联立求解，绝不能一个公式套到底。",
+  path:["1. 判类型：定轴 / 周转 / 混合。","2. 定轴：i = ±(从动轮齿数连乘)/(主动轮齿数连乘)，符号按外啮合次数 (−1)^m 定（平面轮系）。","3. 周转：给整个轮系加 −ω_H 把系杆固定，写转化轮系传动比 i^H 的式子。","4. 把已知转速（固定轮 ω = 0 等）代入转化式求解。","5. 混合轮系：分别对定轴段、周转段列式，用中间轮转速联立。","6. 最后单独判断首末轮转向并写明。"],
+  formulas:["定轴轮系：\\(i = \\pm \\dfrac{\\text{从动轮齿数连乘}}{\\text{主动轮齿数连乘}}\\)","转化机构法：\\(i_{13}^{H} = \\dfrac{\\omega_1 - \\omega_H}{\\omega_3 - \\omega_H} = -\\dfrac{z_3}{z_1}\\)（示例，按具体啮合定符号）","行星轮系 \\(F = 1\\)，差动轮系 \\(F = 2\\)"],
+  cond:"(−1)^m 定符号只适用于各轴平行的平面定轴轮系；空间轮系转向要用图上画箭头的方法。转化公式中的齿数比符号按转化后的定轴轮系判断。",
+  cases:"行星轮系（一个中心轮固定）代入 ω_固定 = 0 求解；差动轮系有两个输入，必须两个原动件转速都已知才能解；惰轮只改转向不改传动比大小。",
+  example:"例：定轴轮系 z₁=18、z₂=36、z₃=20、z₄=50（两对外啮合，2、3 同轴），i₁₄ = (36×50)/(18×20) = 5，两次外啮合符号为正，首末轮同向。",
+  errors:["周转轮系直接套定轴连乘公式；转化公式里 ω 减 ω_H 写漏或写错对象；行星轮齿数没约去就代入（大小式中它会约去，但转向判断要用）；混合轮系不拆分。"]
+}
+];
+function methodById(id){ for (var i=0;i<METHODS.length;i++) if (METHODS[i].id === id) return METHODS[i]; return null; }
+var METHOD_OF_CH = { "第 1 章 自由度":"m-dof", "第 2 章 连杆机构":"m-fourbar", "第 4 章 齿轮机构":"m-gear", "第 5 章 轮系":"m-train" };
+
+/* ================================================================
+   考点总结：Part 1 完整版；其余章节目录 + 待补充
+   ================================================================ */
+var SUMMARY_HTML =
+ '<div class="sum-sec"><h3>Part 1 · 平面机构运动分析（完整版）</h3>' +
+ '<h4>考点 1 · 运动副与运动简图</h4>' +
+ '<p>运动副是两构件直接接触并能产生一定相对运动的连接。按接触形式分：低副（面接触，包括转动副与移动副，各引入 2 个约束）和高副（点、线接触，引入 1 个约束）。一个作平面运动的自由构件有 3 个自由度。</p>' +
+ '<p>画运动简图只保留决定运动的信息：按比例画线条与规定符号，转动副用小圆表示，高副画出接触处曲线轮廓，机架画剖面线；焊成刚性整体的几根杆算一个构件。</p>' +
+ '<h4>考点 2 · 自由度公式的推导（不跳步）</h4>' +
+ '<p>第一步：\\(n\\) 个活动构件若互不连接，每个在平面内有 3 个自由度（两个移动、一个转动），共 \\(3n\\) 个。</p>' +
+ '<p>第二步：每组成一个低副，两构件间只剩 1 个相对自由度，即引入 2 个约束，\\(P_L\\) 个低副共引入 \\(2P_L\\) 个约束。</p>' +
+ '<p>第三步：每组成一个高副，保留 2 个相对自由度，即引入 1 个约束，\\(P_H\\) 个高副共引入 \\(P_H\\) 个约束。</p>' +
+ '<p>第四步：总自由度 = 初始自由度 − 约束总数：</p>\\[F = 3n - 2P_L - P_H\\]' +
+ '<p>结论的使用：机构具有确定运动的条件是 \\(F > 0\\) 且 \\(F\\) 等于原动件数。原动件少于 \\(F\\) 则运动不确定；多于 \\(F\\) 则约束过剩，最弱构件可能损坏。</p>' +
+ '<h4>考点 3 · 三类特殊情况（数数前先处理）</h4>' +
+ '<ul><li><b>复合铰链</b>：\\(m\\) 个构件在同一处以转动副连接，含 \\(m-1\\) 个转动副。原理：第一个构件作基准，其余每个构件各与它组成一个转动副。</li>' +
+ '<li><b>局部自由度</b>：某些构件不影响其他构件运动的自由度，典型是滚子推杆中滚子的自转（作用是把滑动摩擦变滚动摩擦、减小磨损）。处理：滚子与推杆视为一体后再计数。</li>' +
+ '<li><b>虚约束</b>：对运动不起独立约束作用的重复约束，由几何尺寸满足特殊条件产生：轴线重合的多个转动副只算一个、导路平行的多个移动副只算一个、轨迹重合、传递运动不起独立作用的对称部分。处理：计算前除去；但实物中起增强刚性、改善受力的作用，不能拆除。</li></ul>' +
+ '<h4>考点 4 · 速度瞬心</h4>' +
+ '<p>速度瞬心是两构件上绝对速度相同的重合点；与机架的瞬心是绝对瞬心（速度为 0），两运动构件之间的是相对瞬心。瞬心总数推导：每两个构件配一个瞬心，从 \\(K\\) 个构件中取 2 个的组合数为</p>\\[N = \\frac{K(K-1)}{2}\\]' +
+ '<p>定位方法：转动副的瞬心在铰链点；移动副的瞬心在垂直导路方向的无穷远处；高副的瞬心在接触点公法线上，再由三心定理（互作平面运动的三个构件的三个瞬心位于同一直线上）与已知瞬心连线求交点确定。</p>' +
+ '<h4>本章自查顺序</h4>' +
+ '<ol><li>简图认副：每个运动副的类型对不对？</li><li>特殊情况：复合铰链、局部自由度、虚约束处理完没有？</li><li>数 n、P_L、P_H 代入公式。</li><li>问确定运动时，补上与原动件数的比较。</li><li>瞬心题先用组合数公式数总数，再逐个定位。</li></ol>' +
+ '</div>' +
+ '<div class="sum-sec"><h3>其余章节目录（待补充）</h3>' +
+ '<p>以下章节的考点总结尚未按完整推导版补全，先列目录，不要当作已完成：</p><ul>' +
+ '<li>绪论 —— 待补充（现有内容见知识点页）</li>' +
+ '<li>Part 2 · 平面四连杆机构 —— 待补充（杆长条件、急回、压力角与死点、图解法设计）</li>' +
+ '<li>Part 3 · 凸轮机构 —— 待补充（运动规律与冲击、反转法、压力角与基圆）</li>' +
+ '<li>Part 4 · 齿轮机构 —— 待补充（几何参数、啮合条件、重合度、根切与变位）</li>' +
+ '<li>Part 5 · 齿轮系 —— 待补充（定轴 / 周转 / 混合轮系传动比）</li>' +
+ '<li>后续章节（连接、齿轮传动、蜗杆、带链传动、轴、轴承等）—— TaskPro 笔记未写到，待补充</li></ul></div>';
+
+/* ================================================================
+   知识点页渲染：章节总览 → 知识点新结构页（带返回栈）
+   ================================================================ */
+var curCtx = null; /* {kind:"chapter", i} | {kind:"point", id} */
+function partOf(i){ return PARTS[i]; }
+function statusBadges(p){
+  var st = store.points[p.id];
+  var b = "";
+  if (p.pending) b += '<span class="badge warn">待按新结构补全</span>';
+  if (st && st.fav) b += '<span class="badge acc">★ 已收藏</span>';
+  if (st && st.mastered) b += '<span class="badge ok">已掌握</span>';
+  else if (st && st.read) b += '<span class="badge">已阅读</span>';
+  return b;
+}
+function lvStripHTML(p){
+  var cells = LV_NAMES.map(function(n, i){
+    var on = i >= p.lv[0] && i <= p.lv[1];
+    return '<div class="lv-cell' + (on ? " on" : "") + '"><b>Level ' + i + '</b>' + n.split("· ")[1] + '</div>';
+  }).join("");
+  var trans = "";
+  for (var l = p.lv[0]; l < p.lv[1]; l++) {
+    trans += '<button type="button" class="ghost-btn" data-trans="' + p.id + ":" + l + '">过渡例题 L' + l + ' → L' + (l+1) + '</button>';
+  }
+  return '<div class="lv-strip">' + cells + '</div>' +
+    (trans ? '<div class="trans-row"><span style="color:var(--muted);font-size:.88rem">层级之间先练过渡例题，再往上走：</span>' + trans + '</div>' : "");
+}
+function renderChapter(i){
+  var p = partOf(i);
+  curCtx = { kind:"chapter", i:i };
+  document.getElementById("detailTitle").textContent = p.title;
+  document.getElementById("detailSub").textContent = p.sub;
+  var pts = partPoints(p.num);
+  var html = "";
+  if (pts.length) {
+    html += '<div class="kp-sec"><h3>本章知识点（点开逐个学）</h3><div class="pt-list">' +
+      pts.map(function(pt){
+        return '<button type="button" class="pt-card" data-point="' + pt.id + '"><span class="pt-t">' + pt.title +
+          '<small>Level ' + pt.lv[0] + ' – Level ' + pt.lv[1] + (pt.pending ? " · 内容待按新结构补全" : " · 新结构完整版") + '</small></span>' +
+          '<span class="pt-badges">' + statusBadges(pt) + '</span></button>';
+      }).join("") + '</div></div>';
+  }
+  var secs = (typeof DETAILS !== "undefined" && DETAILS[p.num]) || [];
+  if (secs.length) {
+    html += '<div class="kp-sec"><h3>章节速览（原有讲解）</h3>' + secs.map(function(s){
+      return '<div class="detail-sec"><h3>' + s[0] + '</h3><p>' + s[1] + '</p></div>';
+    }).join("") + '</div>';
+  }
+  document.getElementById("detailBody").innerHTML = html;
+  var f = document.getElementById("detailFormula"), fh = document.getElementById("detailFormulaH");
+  var t = document.getElementById("detailTrap"), th = document.getElementById("detailTrapH");
+  if (p.formula) { f.innerHTML = p.formula; f.style.display = ""; fh.style.display = ""; } else { f.style.display = "none"; fh.style.display = "none"; }
+  if (p.trap) { t.textContent = p.trap; t.style.display = ""; th.style.display = ""; } else { t.style.display = "none"; th.style.display = "none"; }
+  showView("detail");
+  rm(document.getElementById("view-detail"));
+}
+function renderPoint(id){
+  var p = findPoint(id);
+  if (!p) return;
+  curCtx = { kind:"point", id:id };
+  var st = pState(id);
+  st.read = true;
+  store.last = { id:id, ts:Date.now() };
+  saveStore();
+  var partTitle = "";
+  PARTS.forEach(function(pp){ if (pp.num === p.part) partTitle = pp.title; });
+  document.getElementById("detailTitle").textContent = p.title;
+  document.getElementById("detailSub").textContent = (partTitle || p.ch || "") + " · Level " + p.lv[0] + " – Level " + p.lv[1];
+  var html = "";
+  html += '<div class="state-row">' +
+    '<button type="button" class="tgl' + (st.read ? " on" : "") + '" data-tgl="read" data-pid="' + p.id + '">已阅读</button>' +
+    '<button type="button" class="tgl acc' + (st.mastered ? " on" : "") + '" data-tgl="mastered" data-pid="' + p.id + '">已掌握</button>' +
+    '<button type="button" class="tgl' + (st.fav ? " on" : "") + '" data-tgl="fav" data-pid="' + p.id + '">★ 收藏</button>' +
+    '<span style="color:var(--muted2);font-size:.82rem">打开本页记为已阅读；已掌握请做完页末自测后再点亮，不要只按浏览判定。</span></div>';
+  if (p.pending) {
+    html += '<div class="kp-sec"><p><span class="badge warn">待按新结构补全</span> 本页已套用新结构模板并保留原有讲解；「引入、前置知识、知识联系、自测」尚未逐条补全，不要当作已完成。</p></div>';
+    html += '<div class="kp-sec"><h3>一、引入</h3><p>待补充。</p></div>';
+    html += '<div class="kp-sec"><h3>二、正式定义与通俗解释（现有内容）</h3><p>' + p.body + '</p></div>';
+    html += '<div class="kp-sec"><h3>三、前置知识</h3><p>待补充。先回看本章总览：<button type="button" class="kp-link" data-part="' + p.part + '">本章知识点列表</button></p></div>';
+    html += '<div class="kp-sec"><h3>四、知识联系</h3><p>待补充。</p></div>';
+    html += '<div class="kp-sec"><h3>五、分层学习（Level 0–5）</h3>' + lvStripHTML(p) + '</div>';
+    html += '<div class="kp-sec"><h3>六、概念自测</h3><p>待补充。</p></div>';
+  } else {
+    html += '<div class="kp-sec"><h3>一、引入：这个知识为什么会出现</h3>' + p.intro.map(function(x){ return "<p>" + x + "</p>"; }).join("") + '</div>';
+    var d = p.def;
+    html += '<div class="kp-sec"><h3>二、正式定义与通俗解释</h3>' +
+      '<p><b>通俗解释：</b>' + d.plain + '</p>' +
+      '<p><b>严谨定义：</b>' + d.strict + '</p>' +
+      '<p><b>数学表达：</b></p><div class="formula">' + d.math + '</div>' +
+      '<p style="margin-top:12px"><b>符号含义：</b></p><table class="symtab">' + d.symbols.map(function(s){ return '<tr><td>' + s[0] + '</td><td>' + s[1] + '</td></tr>'; }).join("") + '</table>' +
+      '<p><b>数字实例：</b>' + d.ex + '</p>' +
+      '<p><b>几何 / 物理意义：</b>' + d.meaning + '</p>' +
+      '<p><b>容易混淆的相近概念：</b>' + d.confuse + '</p></div>';
+    html += '<div class="kp-sec"><h3>三、前置知识（先补齐再往下）</h3><p>' +
+      p.pre.map(function(l){ return linkHTML(l); }).join(" · ") +
+      '（点开看对应解释页，用页首「← 返回」回到这里。）</p></div>';
+    html += '<div class="kp-sec"><h3>四、知识联系</h3>' + p.links.map(function(x){ return "<p>" + x + "</p>"; }).join("") + '</div>';
+    html += '<div class="kp-sec"><h3>五、分层学习（Level 0–5）</h3>' + lvStripHTML(p) + '</div>';
+    html += '<div class="kp-sec"><h3>六、概念自测（答错先看提示，不直接给答案）</h3><div id="selfTestBox">' + selfTestHTML(p) + '</div></div>';
+  }
+  html += '<div class="kp-sec"><h3>我的笔记（只存本机浏览器）</h3><div class="note-ed">' +
+    '<label>我的理解<textarea rows="2" data-nf="u" data-pid="' + p.id + '" placeholder="用自己的话复述这个知识点">' + (st.note.u || "") + '</textarea></label>' +
+    '<label>还没解决的疑问<textarea rows="2" data-nf="q" data-pid="' + p.id + '" placeholder="卡住的地方写在这里">' + (st.note.q || "") + '</textarea></label>' +
+    '<label>错误原因<textarea rows="2" data-nf="e" data-pid="' + p.id + '" placeholder="做错相关题时，错在概念、公式、条件还是计算？">' + (st.note.e || "") + '</textarea></label>' +
+    '<label>掌握程度（自评）<select data-nf="level" data-pid="' + p.id + '">' +
+      ["","未学","已阅读","基本理解","已掌握","需复习"].map(function(o){ return '<option value="' + o + '"' + (st.level === o ? " selected" : "") + '>' + (o || "未评") + '</option>'; }).join("") +
+    '</select></label></div></div>';
+  document.getElementById("detailBody").innerHTML = html;
+  var f = document.getElementById("detailFormula"), fh = document.getElementById("detailFormulaH");
+  var t = document.getElementById("detailTrap"), th = document.getElementById("detailTrapH");
+  f.style.display = "none"; fh.style.display = "none"; t.style.display = "none"; th.style.display = "none";
+  showView("detail");
+  rm(document.getElementById("view-detail"));
+}
+function openPoint(id){ go("#/learning/point/" + encodeURIComponent(id)); }
+function openChapterByNum(num){
+  for (var i=0;i<PARTS.length;i++) if (PARTS[i].num === String(num)) {
+    go("#/learning/chapter/" + encodeURIComponent(PARTS[i].num));
+    return;
+  }
+}
+/* 章节卡片入口：走 hash 路由（返回栈由浏览器历史承担，不再用内存 navStack；旧的 fillDetail 系统已删） */
+window.openDetail = function(i){ go("#/learning/chapter/" + encodeURIComponent(PARTS[i].num)); };
+window.renderChapter = renderChapter;
+window.renderChapterByNum = openChapterByNum;
+
+/* ---------- 概念自测（分层提示） ---------- */
+function selfTestHTML(p){
+  var st = pState(p.id);
+  var done = 0;
+  var html = p.test.map(function(tq, qi){
+    var ts = st.test[qi] || {};
+    if (ts.st === "ok" || ts.st === "revealed") done++;
+    var opts = tq.opts.map(function(op, oi){
+      var cls = "st-opt";
+      if (ts.st === "ok" && oi === tq.ans) cls += " right";
+      if (ts.st === "revealed" && oi === tq.ans) cls += " right";
+      if (ts.lastWrong === oi && ts.st !== "ok") cls += " wrong";
+      return '<button type="button" class="' + cls + '" data-stq="' + p.id + ":" + qi + ":" + oi + '">' + ["A","B","C","D"][oi] + "．" + op + '</button>';
+    }).join("");
+    var hint = "";
+    if (ts.st !== "ok") {
+      if (ts.hint >= 1) hint += '<div class="st-hint show"><b>提示 1：</b>' + tq.h1 + '</div>';
+      if (ts.hint >= 2) hint += '<div class="st-hint show"><b>提示 2：</b>' + tq.h2 + '</div>';
+      if (ts.st === "revealed") hint += '<div class="st-hint show"><b>针对性补充：</b>' + tq.fix + '</div>';
+      else if (ts.hint >= 2) hint += '<div style="margin-top:8px"><button type="button" class="ghost-btn" data-stfix="' + p.id + ":" + qi + '">看针对性补充（同时公布答案）</button></div>';
+    } else {
+      hint = '<div class="st-hint show"><b>答对了。</b>' + tq.fix + '</div>';
+    }
+    return '<div class="st-q"><p class="st-stem">' + (qi+1) + "．" + tq.q + '</p><div class="st-opts">' + opts + '</div>' + hint + '</div>';
+  }).join("");
+  html += '<p style="color:var(--muted);font-size:.9rem">自测进度：已完成 ' + done + " / " + p.test.length + " 题" +
+    (done === p.test.length ? "。全部完成，可以点亮上方「已掌握」。" : "。答错会先给分层提示，想清楚再试一次。") + '</p>';
+  return html;
+}
+function refreshSelfTest(pid){
+  var p = findPoint(pid);
+  var box = document.getElementById("selfTestBox");
+  if (p && box) { box.innerHTML = selfTestHTML(p); rm(box); }
+}
+
+/* ================================================================
+   刷题挂接：难度 / 题型 chips、前置知识行、每题笔记、错题本
+   ================================================================ */
+QUIZ.forEach(function(q, i){ if (!q._id) q._id = "q" + i; });
+function qPreList(q){
+  var s = (q.stem || "") + " " + (q.exp || "");
+  var out = [], seen = {};
+  function push(item){ var k = item.id || ("part" + item.part); if (!seen[k]) { seen[k] = 1; out.push(item); } }
+  if (/瞬心/.test(s)) push({ id:"p1-ic", t:"速度瞬心" });
+  if (/复合铰链/.test(s)) push({ id:"p1-comp", t:"复合铰链" });
+  if (/局部自由度|滚子/.test(s)) push({ id:"p1-local", t:"局部自由度" });
+  if (/虚约束/.test(s)) push({ id:"p1-virt", t:"虚约束" });
+  if (/自由度/.test(s)) push({ id:"p1-dof", t:"自由度公式 F = 3n − 2PL − PH" });
+  if (/运动副|运动简图|简图/.test(s)) push({ id:"p1-pair", t:"运动副与运动简图" });
+  if (!out.length) {
+    var map = {
+      "第 1 章 自由度":[{ id:"p1-pair", t:"运动副与运动简图" }, { id:"p1-dof", t:"自由度公式" }],
+      "第 2 章 连杆机构":[{ part:"2", t:"Part 2 · 平面四连杆机构（杆长条件 / 急回 / 压力角与死点）" }],
+      "第 3 章 凸轮机构":[{ part:"3", t:"Part 3 · 凸轮机构（运动规律 / 反转法 / 压力角）" }],
+      "第 4 章 齿轮机构":[{ part:"4", t:"Part 4 · 齿轮机构（几何参数 / 啮合条件）" }],
+      "第 5 章 轮系":[{ part:"5", t:"Part 5 · 齿轮系（定轴 / 周转 / 转化机构法）" }]
+    };
+    (map[q.ch] || []).forEach(push);
+  }
+  return out;
+}
+function qDiff(q){
+  if (q.type === "计算") return "Level 4 · 综合计算";
+  if (q.type === "画图") return "Level 3 · 作图应用";
+  var s = q.src || "";
+  if (/刷拔高|刷真题/.test(s)) return "Level 3 · 较难";
+  if (/刷基础/.test(s)) return "Level 1 · 基础";
+  return "Level 2 · 中等";
+}
+function addWrong(q, silent){
+  if (!q || !q._id) return;
+  var exists = store.wrong.some(function(w){ return w.id === q._id; });
+  if (!exists) {
+    store.wrong.push({ id:q._id, ch:q.ch, type:q.type, stem:q.stem, ts:Date.now() });
+    saveStore();
+  }
+  if (!silent) refreshWrongBtn(q);
+}
+function removeWrong(id){
+  store.wrong = store.wrong.filter(function(w){ return w.id !== id; });
+  saveStore();
+}
+function inWrong(id){ return store.wrong.some(function(w){ return w.id === id; }); }
+function refreshWrongBtn(q){
+  var b = document.getElementById("qWrongBtn");
+  if (b && q) b.textContent = inWrong(q._id) ? "已在错题本（点此移出）" : "加入错题本";
+}
+var origShowQuestion = window.showQuestion;
+window.showQuestion = function(){
+  origShowQuestion();
+  var q = quiz && quiz.list[quiz.idx];
+  if (!q) return;
+  var meta = document.getElementById("qMeta");
+  var mid = METHOD_OF_CH[q.ch];
+  meta.innerHTML += "<span>" + qDiff(q) + "</span>" +
+    (mid ? '<span>题型方法：<button type="button" class="kp-link" data-method="' + mid + '">' + methodById(mid).title + '</button></span>'
+         : '<span>题型方法：待补充</span>');
+  var pre = qPreList(q);
+  document.getElementById("qPre").innerHTML = "<b>前置知识</b>　解这道题真正需要先会：" +
+    (pre.length ? pre.map(linkHTML).join(" · ") : "本章基础概念（见知识点页）");
+  var note = document.getElementById("qNote");
+  note.value = store.qnotes[q._id] || "";
+  document.getElementById("qNoteState").textContent = "这道题的笔记只存在本机浏览器";
+  refreshWrongBtn(q);
+  rm(document.getElementById("quizPlay"));
+};
+function hookWrong(orig){
+  return function(){
+    var before = quiz && quiz.wrong ? quiz.wrong.length : 0;
+    var r = orig.apply(null, arguments);
+    if (quiz && quiz.wrong && quiz.wrong.length > before) {
+      addWrong(quiz.wrong[quiz.wrong.length - 1].q, true);
+      var q = quiz.list[quiz.idx];
+      refreshWrongBtn(q);
+    }
+    return r;
+  };
+}
+window.answer = hookWrong(window.answer);
+window.checkCalc = hookWrong(window.checkCalc);
+window.checkFill = hookWrong(window.checkFill);
+window.selfMarkDraw = hookWrong(window.selfMarkDraw);
+document.getElementById("qWrongBtn").addEventListener("click", function(){
+  var q = quiz && quiz.list[quiz.idx];
+  if (!q) return;
+  if (inWrong(q._id)) removeWrong(q._id); else addWrong(q);
+  refreshWrongBtn(q);
+});
+document.getElementById("qNote").addEventListener("input", function(){
+  var q = quiz && quiz.list[quiz.idx];
+  if (!q) return;
+  store.qnotes[q._id] = this.value;
+  saveStore();
+  document.getElementById("qNoteState").textContent = "已保存到本机浏览器";
+});
+
+/* ================================================================
+   题型方法页 / 考点总结页
+   ================================================================ */
+function renderMethods(){
+  var box = document.getElementById("methodList");
+  if (!box || box.dataset.done) return;
+  box.dataset.done = "1";
+  box.innerHTML = METHODS.map(function(m){
+    return '<div class="method-card" id="method-' + m.id + '"><h3>' + m.title + '</h3>' +
+      '<p style="color:var(--muted)">' + m.ch + ' · 考试高频题型</p>' +
+      '<h4>题型识别特征</h4><p>' + m.recog + '</p>' +
+      '<h4>常见已知条件</h4><p>' + m.known + '</p>' +
+      '<h4>常见求解目标</h4><p>' + m.goal + '</p>' +
+      '<h4>解题突破口</h4><p>' + m.key + '</p>' +
+      '<h4>标准思考路径</h4><ol>' + m.path.map(function(s){ return "<li>" + s.replace(/^\d+\.\s*/, "") + "</li>"; }).join("") + '</ol>' +
+      '<h4>相关公式与定理</h4>' + m.formulas.map(function(f){ return '<div class="formula">' + f + '</div>'; }).join("") +
+      '<h4>方法成立条件</h4><p>' + m.cond + '</p>' +
+      '<h4>分类讨论</h4><p>' + m.cases + '</p>' +
+      '<h4>典型例题</h4><p>' + m.example + '</p>' +
+      '<h4>常见错误</h4><ul>' + m.errors.map(function(s){ return "<li>" + s + "</li>"; }).join("") + '</ul>' +
+      '<div class="row"><button type="button" class="primary" data-practice="' + m.ch + '">练这个题型</button></div></div>';
+  }).join("");
+  rm(box);
+}
+function renderSummary(){
+  var box = document.getElementById("summaryBody");
+  if (!box || box.dataset.done) return;
+  box.dataset.done = "1";
+  box.innerHTML = SUMMARY_HTML;
+  rm(box);
+}
+var sumBtn = document.getElementById("sumPrintBtn");
+if (sumBtn) sumBtn.addEventListener("click", function(){ window.print(); });
+
+/* ================================================================
+   学习进度页：错题本 / 薄弱知识点 / 知识点状态
+   ================================================================ */
+function weakPoints(){
+  var weak = {};
+  ALL_POINTS.forEach(function(p){
+    var st = store.points[p.id];
+    if (!st) return;
+    var bad = 0;
+    Object.keys(st.test || {}).forEach(function(k){ var t = st.test[k]; if (t.tries > 0 && t.st !== "ok") bad++; });
+    if (bad > 0) weak[p.id] = "自测有 " + bad + " 题未答对";
+  });
+  store.wrong.forEach(function(w){
+    var q = null;
+    QUIZ.forEach(function(x){ if (x._id === w.id) q = x; });
+    if (!q) return;
+    qPreList(q).forEach(function(l){
+      if (l.id && !weak[l.id]) weak[l.id] = "错题涉及这个知识点";
+    });
+  });
+  return weak;
+}
+function renderRecords(){
+  var wb = document.getElementById("wrongBookList");
+  if (wb) {
+    wb.innerHTML = store.wrong.length ? store.wrong.map(function(w){
+      return '<div class="rec-row"><div><div class="rt">' + w.ch + " · " + typeLabel(w.type) + '题</div><div class="rd">' + w.stem + '</div></div>' +
+        '<button type="button" class="ghost-btn" data-delwrong="' + w.id + '">移出</button></div>';
+    }).join("") : '<div class="rec-row"><div><div class="rt">还没有错题</div><div class="rd">刷题答错会自动收进来，也可以答题时手动点「加入错题本」。</div></div></div>';
+  }
+  var wk = document.getElementById("weakList");
+  if (wk) {
+    var weak = weakPoints();
+    var ids = Object.keys(weak);
+    wk.innerHTML = ids.length ? ids.map(function(id){
+      var p = findPoint(id);
+      if (!p) return "";
+      return '<div class="rec-row"><div><div class="rt">' + p.title + '</div><div class="rd">' + weak[id] + " · " + (p.part === "1" ? "Part 1" : "Part " + p.part) + '</div></div>' +
+        '<button type="button" class="ghost-btn" data-point="' + id + '">去补这个知识点</button></div>';
+    }).join("") : '<div class="rec-row"><div><div class="rt">暂未发现薄弱点</div><div class="rd">做知识点自测或刷题后，这里会按答错记录自动列出需要回头补的知识点。</div></div></div>';
+  }
+  var ps = document.getElementById("pointStateList");
+  if (ps) {
+    ps.innerHTML = ALL_POINTS.map(function(p){
+      var st = store.points[p.id] || {};
+      return '<div class="rec-row"><div><div class="rt">' + p.title + '</div><div class="rd">' +
+        (p.pending ? "待按新结构补全 · " : "") + "Level " + p.lv[0] + " – Level " + p.lv[1] + (st.level ? " · 自评：" + st.level : "") + '</div></div>' +
+        '<span class="row" style="gap:6px"><button type="button" class="tgl' + (st.read ? " on" : "") + '" data-tgl="read" data-pid="' + p.id + '">已阅读</button>' +
+        '<button type="button" class="tgl acc' + (st.mastered ? " on" : "") + '" data-tgl="mastered" data-pid="' + p.id + '">已掌握</button>' +
+        '<button type="button" class="ghost-btn" data-point="' + p.id + '">打开</button></span></div>';
+    }).join("");
+  }
+}
+var origGotoView = window.gotoView;
+window.gotoView = function(name){
+  origGotoView(name);
+  if (name === "review") renderRecords();
+  if (name === "methods") { renderMethods(); }
+  if (name === "summary") { renderSummary(); }
+  if (name === "detail") rm(document.getElementById("view-detail"));
+};
+
+/* ================================================================
+   全局事件委托：知识点链接 / 自测 / 状态切换 / 笔记 / 过渡例题
+   ================================================================ */
+document.addEventListener("click", function(e){
+  var t;
+  if ((t = e.target.closest("[data-point]"))) { openPoint(t.getAttribute("data-point")); return; }
+  if ((t = e.target.closest("[data-part]"))) {
+    openChapterByNum(t.getAttribute("data-part"));
+    return;
+  }
+  if ((t = e.target.closest("[data-method]"))) {
+    gotoView("methods");
+    renderMethods();
+    var mid = t.getAttribute("data-method");
+    setTimeout(function(){ var el = document.getElementById("method-" + mid); if (el) el.scrollIntoView({ behavior:"smooth", block:"start" }); }, 60);
+    return;
+  }
+  if ((t = e.target.closest("[data-practice]"))) {
+    var ch = t.getAttribute("data-practice");
+    gotoView("quiz");
+    var sel = document.getElementById("quizScope");
+    if (sel) { sel.value = ch; sel.dispatchEvent(new Event("change")); }
+    startQuiz();
+    return;
+  }
+  if ((t = e.target.closest("[data-trans]"))) {
+    var parts = t.getAttribute("data-trans").split(":");
+    var pt = findPoint(parts[0]);
+    if (pt) {
+      gotoView("quiz");
+      var s2 = document.getElementById("quizScope");
+      if (s2 && pt.ch) { s2.value = pt.ch; s2.dispatchEvent(new Event("change")); }
+      var ty = document.getElementById("quizType");
+      if (ty) ty.value = parseInt(parts[1], 10) >= 3 ? "__all" : "选择";
+      startQuiz();
+    }
+    return;
+  }
+  if ((t = e.target.closest("[data-stq]"))) {
+    var sp = t.getAttribute("data-stq").split(":");
+    var pid = sp[0], qi = parseInt(sp[1], 10), oi = parseInt(sp[2], 10);
+    var p2 = findPoint(pid);
+    if (!p2 || !p2.test) return;
+    var st2 = pState(pid);
+    var ts = st2.test[qi] || (st2.test[qi] = { tries:0, hint:0 });
+    if (ts.st === "ok") return;
+    if (oi === p2.test[qi].ans) { ts.st = "ok"; ts.lastWrong = -1; }
+    else { ts.tries = (ts.tries || 0) + 1; ts.hint = Math.min(2, ts.tries); ts.lastWrong = oi; }
+    saveStore();
+    refreshSelfTest(pid);
+    return;
+  }
+  if ((t = e.target.closest("[data-stfix]"))) {
+    var sf = t.getAttribute("data-stfix").split(":");
+    var st3 = pState(sf[0]);
+    var ts3 = st3.test[parseInt(sf[1], 10)] || (st3.test[parseInt(sf[1], 10)] = { tries:0, hint:2 });
+    ts3.st = "revealed";
+    saveStore();
+    refreshSelfTest(sf[0]);
+    return;
+  }
+  if ((t = e.target.closest("[data-tgl]"))) {
+    var pid2 = t.getAttribute("data-pid");
+    var key = t.getAttribute("data-tgl");
+    var st4 = pState(pid2);
+    st4[key] = !st4[key];
+    if (key === "mastered" && st4.mastered) st4.read = true;
+    saveStore();
+    if (curCtx && curCtx.kind === "point" && curCtx.id === pid2) renderPoint(pid2);
+    else if (document.getElementById("view-review").classList.contains("active")) renderRecords();
+    return;
+  }
+  if ((t = e.target.closest("[data-delwrong]"))) {
+    removeWrong(t.getAttribute("data-delwrong"));
+    renderRecords();
+    return;
+  }
+});
+document.addEventListener("input", function(e){
+  var nf = e.target.getAttribute && e.target.getAttribute("data-nf");
+  if (!nf) return;
+  var st = pState(e.target.getAttribute("data-pid"));
+  if (nf === "level") st.level = e.target.value;
+  else st.note[nf] = e.target.value;
+  saveStore();
+});
+document.addEventListener("change", function(e){
+  var nf = e.target.getAttribute && e.target.getAttribute("data-nf");
+  if (nf === "level") {
+    var st = pState(e.target.getAttribute("data-pid"));
+    st.level = e.target.value;
+    saveStore();
+  }
+});
+
+/* 计算 / 填空的检查按钮在原脚本中直接绑定了原函数引用，
+   另加后置监听（在本监听执行时原检查已完成）保证错题收录 */
+function afterCheckHook(){
+  if (!quiz || !quiz.answered || !quiz.wrong || !quiz.wrong.length) return;
+  var last = quiz.wrong[quiz.wrong.length - 1];
+  var q = quiz.list[quiz.idx];
+  if (last && last.q === q) { addWrong(q, true); refreshWrongBtn(q); }
+}
+document.getElementById("calcCheck").addEventListener("click", afterCheckHook);
+document.getElementById("fillCheck").addEventListener("click", afterCheckHook);
+
+/* ================================================================
+   学习首页（Overview，最小诚实版）：只用本机真实数据，不编数字
+   ================================================================ */
+function fmtDate(ts){
+  var d = new Date(ts);
+  return d.getFullYear() + " 年 " + (d.getMonth() + 1) + " 月 " + d.getDate() + " 日";
+}
+function renderOverview(){
+  var d = new Date();
+  var wk = ["星期日","星期一","星期二","星期三","星期四","星期五","星期六"][d.getDay()];
+  var today = document.getElementById("ovDate");
+  if (today) today.textContent = "今天是 " + fmtDate(d.getTime()) + " " + wk + "。";
+  var cont = document.getElementById("ovContinue");
+  if (cont) {
+    var next = null, resumed = null;
+    ALL_POINTS.forEach(function(p){
+      var st = store.points[p.id];
+      if (st && st.mastered) return;
+      if (st && st.read) { if (!resumed) resumed = p; }
+      else if (!next) next = p;
+    });
+    var target = resumed || next;
+    if (target) {
+      var st2 = store.points[target.id] || {};
+      cont.innerHTML = '<div class="rec-row"><div><div class="rt">' + target.title + '</div><div class="rd">' +
+        (st2.read ? "上次学到这里，还没掌握，继续把它学完。" : "还没学过，从这里开始。") + " · " + (target.ch || "") + '</div></div>' +
+        '<button type="button" class="primary" data-point="' + target.id + '">继续学习</button></div>';
+    } else {
+      cont.innerHTML = '<div class="rec-row"><div><div class="rt">全部 ' + ALL_POINTS.length + ' 个知识点都已掌握</div><div class="rd">可以去刷题巩固，或等后续章节补上。</div></div></div>';
+    }
+  }
+  var rec = document.getElementById("ovRecent");
+  if (rec) {
+    var lp = store.last ? findPoint(store.last.id) : null;
+    if (lp) {
+      rec.innerHTML = '<div class="rec-row"><div><div class="rt">' + lp.title + '</div><div class="rd">最近一次打开：' + fmtDate(store.last.ts) + " · " + (lp.ch || "") + '</div></div>' +
+        '<button type="button" class="ghost-btn" data-point="' + lp.id + '">打开</button></div>';
+    } else {
+      rec.innerHTML = '<div class="rec-row"><div><div class="rt">暂无数据</div><div class="rd">打开一个知识点后，这里会显示你最近学的内容。</div></div></div>';
+    }
+  }
+  var rev = document.getElementById("ovReview");
+  if (rev) {
+    var wn = store.wrong.length;
+    var wkn = Object.keys(weakPoints()).length;
+    if (wn === 0 && wkn === 0) {
+      rev.innerHTML = '<div class="rec-row"><div><div class="rt">错题本是空的</div><div class="rd">还没有错题和薄弱点，继续保持。</div></div></div>';
+    } else {
+      rev.innerHTML = '<div class="rec-row"><div><div class="rt">待复习：错题 ' + wn + ' 道 · 薄弱知识点 ' + wkn + ' 个</div><div class="rd">错题答错自动收进错题本，薄弱点按自测和错题自动生成。</div></div>' +
+        '<button type="button" class="primary" data-route="#/review">去复习中心</button></div>';
+    }
+  }
+}
+function renderSubjects(){
+  var box = document.getElementById("subjList");
+  if (!box) return;
+  var done = 0, read = 0;
+  ALL_POINTS.forEach(function(p){
+    var st = store.points[p.id] || {};
+    if (st.mastered) done++;
+    else if (st.read) read++;
+  });
+  var prog = null;
+  try { prog = JSON.parse(localStorage.getItem("md_progress") || "null"); } catch(e){}
+  var drawProg = (prog && typeof prog.drawing === "number") ? prog.drawing : 0;
+  box.innerHTML =
+    '<article class="chap"><button class="chap-head" type="button" data-route="#/learning">' +
+      '<span class="chap-num">设</span>' +
+      '<span class="t">机械设计<small>' + ALL_POINTS.length + " 个知识点（" + POINTS.length + " 个完整版 · " + PENDING.length + " 个待补充）· " + QUIZ.length + " 道题 · " + METHODS.length + " 种题型方法 · 已掌握 " + done + " 个 · 已阅读 " + read + ' 个</small></span>' +
+      '<span class="chap-go">进入学习 ›</span></button></article>' +
+    '<article class="chap"><button class="chap-head" type="button" data-route="#/subjects/drawing">' +
+      '<span class="chap-num" style="color:var(--accent2)">图</span>' +
+      '<span class="t">机械制图（英语）<small>未开始 · 看课进度 ' + drawProg + ' / 12（手动记录）· 内容后续再加</small></span>' +
+      '<span class="chap-go">查看学科空间 ›</span></button></article>';
+}
+
+/* ---------- 供 hash 路由调用的渲染入口 ---------- */
+window.renderPoint = renderPoint;
+window.renderMethods = renderMethods;
+window.renderSummary = renderSummary;
+window.renderRecords = renderRecords;
+window.renderOverview = renderOverview;
+window.renderSubjects = renderSubjects;
+
+/* ---------- 初始化：渲染公式（含静态页），再按当前 hash 进路由 ---------- */
+rm(document.body);
+route();
+})();
+</script>
 </body>
 </html>
