@@ -101,7 +101,7 @@ main{width:min(1040px,calc(100% - 36px));margin:0 auto;padding:calc(104px + env(
 .view{display:none}.view.active{display:block}
 /* section heads — editorial numbering */
 .sec-head{position:relative;display:flex;align-items:flex-end;gap:16px;margin:52px 0 8px;padding-bottom:14px;border-bottom:1px solid var(--line)}
-#view-learning .sec-head,#view-overview .sec-head,#view-subjects .sec-head,#view-review .sec-head,#view-analytics .sec-head,#view-settings .sec-head{margin-top:10px}
+#view-learning .sec-head,#view-overview .sec-head,#view-review .sec-head,#view-analytics .sec-head,#view-settings .sec-head{margin-top:10px}
 .sec-head h2{font-family:Inter,"Noto Sans SC","Source Han Sans SC",sans-serif;font-size:var(--text-display);font-weight:700;margin:0;line-height:1.2;color:var(--ink)}
 /* knowledge tools */
 .tools{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 20px}
@@ -111,11 +111,12 @@ main{width:min(1040px,calc(100% - 36px));margin:0 auto;padding:calc(104px + env(
 .search input::placeholder{color:var(--muted2)}
 .ghost-btn{border:1px solid var(--line);background:transparent;color:var(--ink2);border-radius:var(--radius-pill);padding:8px 18px;font-size:.87rem;font-weight:700}
 .ghost-btn:hover{border-color:var(--ink);color:var(--ink);background:var(--warm)}
-/* chapters — aligned grid, uniform large radius, two columns on wide screens */
-#chapList{display:grid;gap:16px;grid-template-columns:1fr;align-items:start}
-.chap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden}
+/* chapters — independent columns: expanding one column never moves the other */
+#chapList{column-count:1}
+.chap{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);overflow:hidden;break-inside:avoid;margin-bottom:16px}
 @media(min-width:860px){
-  #chapList{grid-template-columns:1fr 1fr;gap:18px}
+  #chapList{column-count:2;column-gap:18px}
+  #chapList .chap{margin-bottom:18px}
 }
 .chap-head{width:100%;display:flex;align-items:center;gap:16px;text-align:left;background:transparent;border:0;color:var(--ink);padding:18px 20px;min-height:3.6rem}
 .chap-head:hover{background:var(--bg)}
@@ -140,7 +141,7 @@ select:hover{border-color:var(--line-dark)}
 .primary:hover{background:var(--accent2);border-color:var(--accent2)}
 .progress{height:var(--progress-h);background:var(--warm);border-radius:var(--radius-pill);overflow:hidden;margin:16px 0 8px}
 .progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
-.qmeta{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.qmeta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
 .qmeta span{font-size:.73rem;padding:5px 11px;border-radius:var(--radius-pill);background:var(--warm);border:1px solid var(--line);color:var(--ink2)}
 .qmeta .src{background:transparent;color:var(--muted);border-style:dashed}
 .qstem{font-size:1.07rem;font-weight:700;line-height:1.8;margin:4px 0 18px;color:var(--ink)}
@@ -267,7 +268,12 @@ main{padding-bottom:156px}
 @media(min-width:1600px){.brand-btn{font-size:1.38rem}}
 @media(max-width:680px){.brand-btn{font-size:1.05rem}}
 /* knowledge cards → detail page */
-.chap-go{flex:none;color:var(--accent2);font-size:.85rem;font-weight:700;white-space:nowrap}
+.chap-go{display:inline-block;transition:transform .25s;flex:none;color:var(--accent2);font-size:.85rem;font-weight:700;white-space:nowrap}
+.chap.open .chap-go{transform:rotate(180deg)}
+.chap-body{padding:2px 18px 16px}
+.chap-body .pt-list{gap:8px;margin:0}
+.chap-body .pt-card{padding:12px 14px;border-radius:14px}
+.chap-more{display:block;width:100%;text-align:right;background:transparent;border:0;color:var(--accent2);font-weight:700;font-size:.85rem;padding:8px 2px 0;cursor:pointer}
 #view-detail .sec-head{margin-top:22px}
 .detail-h4{margin:26px 0 8px;font-size:.74rem;letter-spacing:.14em;color:var(--muted);font-weight:700}
 .detail-sec{margin:0 0 24px}
@@ -291,10 +297,10 @@ main{padding-bottom:156px}
 .fig-note b{color:var(--accent2)}
 /* blurred bottom bar (its own bar only) + AI button floating independently above it */
 .botbar{position:fixed;left:0;right:0;bottom:0;z-index:140;display:flex;align-items:center;justify-content:center;padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:var(--bot-bg);border-top:1px solid var(--glass-line);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);color:var(--muted);font-size:.86rem;font-weight:700;letter-spacing:.02em;line-height:1.4;text-align:center}
-.ai-fab{position:fixed;left:50%;right:auto;transform:translateX(-50%);bottom:calc(64px + env(safe-area-inset-bottom));z-index:150;width:4.6rem;height:2.7rem;min-height:2.7rem;border-radius:var(--radius-pill);background:var(--fab-bg);border-color:var(--fab-bg);color:var(--fab-ink);font-size:1.02rem;font-weight:800;letter-spacing:.07em;box-shadow:0 10px 24px rgba(0,0,0,.32)}
+.ai-fab{position:fixed;left:auto;right:18px;transform:none;bottom:calc(18px + env(safe-area-inset-bottom));z-index:150;width:4.6rem;height:2.7rem;min-height:2.7rem;border-radius:var(--radius-pill);background:var(--fab-bg);border-color:var(--fab-bg);color:var(--fab-ink);font-size:1.02rem;font-weight:800;letter-spacing:.07em;box-shadow:0 10px 24px rgba(0,0,0,.32)}
 .ai-fab:hover{background:var(--fab-bg-hover);border-color:var(--fab-bg-hover);color:var(--fab-ink)}
-/* AI panel — springs from the bottom-centre button up to the middle of the screen */
-.ai-panel{left:50%;top:50%;right:auto;bottom:auto;width:min(430px,calc(100vw - 32px));max-height:min(640px,calc(100dvh - 108px));display:none;opacity:0;pointer-events:none;transform:translate(-50%,48vh) scale(.1);transform-origin:50% 100%;border-radius:var(--radius-lg);transition:transform 1s cubic-bezier(.3,1.45,.45,1),opacity .3s ease}
+/* AI panel — springs from the bottom-right button up to the middle of the screen */
+.ai-panel{left:50%;top:50%;right:auto;bottom:auto;width:min(430px,calc(100vw - 32px));max-height:min(640px,calc(100dvh - 108px));display:none;opacity:0;pointer-events:none;transform:translate(38vw,44vh) scale(.1);transform-origin:100% 100%;border-radius:var(--radius-lg);transition:transform 1s cubic-bezier(.3,1.45,.45,1),opacity .3s ease}
 .ai-panel.shown{display:flex}
 .ai-panel.open{opacity:1;pointer-events:auto;transform:translate(-50%,-50%) scale(1)}
 .ai-key{display:none;border-bottom:0;border-top:1px dashed var(--line)}
@@ -348,15 +354,15 @@ main{padding-bottom:156px}
 .qtools textarea{width:100%;font:inherit;font-weight:700;font-size:.92rem;line-height:1.8;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:10px 14px;resize:vertical}
 .qtools textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
 /* Phase 4：刷题体验（顶栏/计时器/多选/反馈 8 步/结算统计/画板补齐）——只复用现有色板变量，不新增配色 */
-.quiz-top{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:.88rem;margin-bottom:6px}
+.quiz-top{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:.88rem;margin-bottom:6px}
 .quiz-top b{color:var(--ink2)}
 .opt.selected{border-color:var(--accent);background:var(--accent-soft);font-weight:700;color:var(--ink)}
 .fig-img{margin:0 0 16px}
 .fig-img img{display:block;max-width:min(560px,100%);height:auto;border:1px solid var(--line);border-radius:12px;background:var(--bg)}
 .fig-img figcaption{color:var(--muted);font-size:var(--text-caption);margin-top:6px;line-height:1.7}
-.exp8 p{margin:8px 0}
-.exp8 p b{color:var(--ink)}
-.exp-src{color:var(--muted2);font-size:var(--text-caption)}
+.exp8 p{margin:0 0 18px;line-height:2}
+.exp8 p b{display:block;margin-bottom:4px;color:var(--ink)}
+.exp-src{display:block;margin-top:6px;padding-top:10px;border-top:1px dashed var(--line);color:var(--muted2);font-size:var(--text-caption)}
 .exp-badge{display:inline-block;font-size:.78rem;padding:3px 10px;border-radius:var(--radius-pill);border:1px solid var(--line);color:var(--muted);margin-bottom:8px}
 .fill-blank{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
 .fill-blank input{font-family:var(--font-mono);font:inherit;font-weight:700;font-size:.94rem;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:9px 12px;min-width:7rem}
@@ -374,7 +380,7 @@ main{padding-bottom:156px}
 .stat-grid .stat span{color:var(--muted);font-size:.84rem}
 .fb-reason{margin-top:10px}
 .fb-reason select{font:inherit;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:7px 10px}
-.quiz-nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;margin-top:18px}
+.quiz-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(64px + env(safe-area-inset-bottom));z-index:145;width:min(920px,calc(100vw - 32px));display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:0;padding:8px 10px;background:var(--bot-bg);border:1px solid var(--glass-line);border-radius:var(--radius-pill);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:var(--shadow-lg)}
 .quiz-nav .row{margin-top:0}
 /* Phase 5：知识点页 13 项模板新增样式（只用现有变量，不新增颜色） */
 .demo-svg{display:block;width:100%;max-width:560px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin:6px auto}
@@ -414,6 +420,14 @@ main{padding-bottom:156px}
 .rec-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:start;padding:14px 18px;background:var(--card);border:1px solid var(--line);border-radius:18px}
 .rec-row .rt{font-weight:700;font-size:.93rem;line-height:1.7;color:var(--ink)}
 .rec-row .rd{color:var(--muted);font-size:.83rem;line-height:1.7;margin-top:2px}
+#wrongBookList .rec-row .rd{margin-top:8px}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 16px 16px;text-align:center}
+.stat .sl{color:var(--muted);font-size:.92rem;margin-bottom:4px}
+.stat .sv{font-size:3rem;line-height:1.15;font-weight:400}
+.stat .sv small{font-size:1.1rem;color:var(--muted);font-weight:400}
+.stat .sc{color:var(--muted2);font-size:.8rem;line-height:1.6;margin-top:6px}
+@media(min-width:860px){.stat-grid{grid-template-columns:repeat(4,1fr)}}
 .method-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:26px;margin:0 0 20px}
 .method-card>h3{font-size:1.3rem;font-weight:800;margin:0 0 6px;line-height:1.35}
 .method-card h4{margin:20px 0 6px;font-size:.78rem;letter-spacing:.12em;color:var(--accent2);font-weight:800}
@@ -545,7 +559,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <div class="spacer"></div>
   <nav class="topnav" aria-label="主导航">
     <button type="button" data-route="#/overview" class="on">首页</button>
-    <button type="button" data-route="#/subjects">科目</button>
     <button type="button" data-route="#/learning">学习</button>
     <button type="button" data-route="#/practice">刷题</button>
     <button type="button" data-route="#/review">复习</button>
@@ -561,7 +574,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
 <nav class="drawer" id="navDrawer" aria-label="导航菜单" aria-hidden="true">
   <div class="drawer-head"><span>导航</span><button type="button" id="drawerClose" aria-label="关闭导航菜单">✕</button></div>
     <button type="button" data-route="#/overview" class="on">首页</button>
-    <button type="button" data-route="#/subjects">科目</button>
     <button type="button" data-route="#/learning">学习</button>
     <button type="button" data-route="#/practice">刷题</button>
     <button type="button" data-route="#/review">复习</button>
@@ -603,11 +615,6 @@ button:disabled{opacity:.55;cursor:not-allowed}
       </div>
     </div>
   </section>
-  <section class="view" id="view-subjects">
-    <div class="sec-head"><h2>我的科目</h2></div>
-    <p style="color:var(--muted);line-height:1.9;margin:0 0 24px">每个科目有独立的学习空间。下面数字都是站内真实数据。</p>
-    <div id="subjList" style="display:grid;gap:16px"></div>
-  </section>
   <section class="view" id="view-learning">
     <div class="tools">
       <label class="search"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.8-3.8"/></svg><input id="chapSearch" type="search" placeholder="搜章节或关键词，如：自由度 / 轴承 / 自锁" aria-label="搜索章节" /></label>
@@ -642,7 +649,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
       <div class="rec-row"><div><div class="rt">零件图</div><div class="rd">视图选择、剖视图、断面图、尺寸与公差标注。</div></div></div>
       <div class="rec-row"><div><div class="rt">装配图</div><div class="rd">装配图的表达方法、尺寸种类、零件序号与明细栏。</div></div></div>
     </div>
-    <div class="row"><button class="primary" type="button" data-route="#/learning">先去学机械设计</button><button class="ghost-btn" type="button" data-route="#/subjects">回科目列表</button></div>
+    <div class="row"><button class="primary" type="button" data-route="#/learning">先去学机械设计</button></div>
   </section>
   <section class="view" id="view-practice">
     <div class="quiz-prog">
@@ -660,7 +667,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
     </div>
     <div class="quiz-card" id="quizPlay" hidden>
       <div class="quiz-top"><span>科目：<b id="qSubject">机械设计</b> · 章节：<b id="qChapter"></b></span><span id="qTimer">用时 00:00</span></div>
-      <div class="row" style="justify-content:space-between"><span id="qCount" style="color:var(--muted);font-size:.88rem"></span><span id="qScore" style="color:var(--muted);font-size:.88rem"></span></div>
+      <div class="row" style="justify-content:center;gap:16px"><span id="qCount" style="color:var(--muted);font-size:.88rem"></span><span id="qScore" style="color:var(--muted);font-size:.88rem"></span></div>
       <div class="progress"><i id="qBar"></i></div>
       <div class="qmeta" id="qMeta"></div><div class="qstem" id="qStem"></div><div class="pre-line" id="qPre"></div><div class="fig-note" id="qFig" hidden></div><figure class="fig-img" id="qFigImg" hidden><img id="qFigPic" alt="题目图" /><figcaption id="qFigCap"></figcaption></figure><div class="opts" id="qOpts"></div>
       <div class="row" id="multiBar" hidden><button class="primary" id="multiSubmit" type="button">提交答案</button><span style="color:var(--muted);font-size:.88rem">多选题：点选项可多选，选完点“提交答案”。</span></div>
@@ -1380,9 +1387,9 @@ var QUIZ = [
 ];
 
 /* ============ 路由：全部视图走 location.hash（刷新不丢位置、后退可用、可分享链接） ============ */
-var NAV_FOR_VIEW = { overview:"overview", subjects:"subjects", learning:"learning", detail:"learning", drawing:"subjects", practice:"practice", review:"review", analytics:"analytics", settings:"settings", methods:"learning", summary:"learning" };
+var NAV_FOR_VIEW = { overview:"overview", learning:"learning", detail:"learning", drawing:"", practice:"practice", review:"review", analytics:"analytics", settings:"settings", methods:"learning", summary:"learning" };
 /* 旧的视图名 -> 新路由（供原有代码的 gotoView("knowledge"|"methods"|"quiz"|"summary"|"notes"|"drawing") 调用） */
-var OLD_VIEW_TO_ROUTE = { knowledge:"#/learning", methods:"#/learning/methods", quiz:"#/practice", summary:"#/learning/summary", notes:"#/review", drawing:"#/subjects/drawing", detail:"#/learning" };
+var OLD_VIEW_TO_ROUTE = { knowledge:"#/learning", methods:"#/learning/methods", quiz:"#/practice", summary:"#/learning/summary", notes:"#/review", drawing:"#/drawing", detail:"#/learning" };
 var hashSteps = 0; /* 本次打开页面后经 hash 变化产生的历史步数；用于判断返回键能否安全后退 */
 var curSubject = "design";
 function showView(name){
@@ -1462,16 +1469,15 @@ function route(){
     updateBrand();
     return;
   }
-  if (seg === "subjects" && parts[1] === "drawing") {
+  if (seg === "drawing") {
     curSubject = "drawing"; showView("drawing"); updateBrand();
     return;
   }
-  if (seg === "overview" || seg === "subjects" || seg === "learning" || seg === "practice" || seg === "review" || seg === "analytics" || seg === "settings") {
-    if (seg !== "subjects") curSubject = "design";
+  if (seg === "overview" || seg === "learning" || seg === "practice" || seg === "review" || seg === "analytics" || seg === "settings") {
+    curSubject = "design";
     if (seg === "review" && window.renderRecords) window.renderRecords();
     if (seg === "analytics" && window.renderAnalytics) window.renderAnalytics();
     if (seg === "overview" && window.renderOverview) window.renderOverview();
-    if (seg === "subjects" && window.renderSubjects) window.renderSubjects();
     showView(seg);
     updateBrand();
     return;
@@ -1553,7 +1559,7 @@ document.querySelectorAll(".brand-menu button").forEach(function(b){
   b.addEventListener("click", function(){
     brandWrap.classList.remove("open");
     brandBtn.setAttribute("aria-expanded", "false");
-    go(b.getAttribute("data-subject") === "drawing" ? "#/subjects/drawing" : "#/learning");
+    go(b.getAttribute("data-subject") === "drawing" ? "#/drawing" : "#/learning");
   });
 });
 
@@ -1664,12 +1670,35 @@ function renderParts(filter){
     var card = document.createElement("article");
     card.className = "chap";
     card.innerHTML =
-      '<button class="chap-head" type="button">' +
+      '<button class="chap-head" type="button" aria-expanded="false">' +
         '<span class="chap-num">' + p.num + '</span>' +
         '<span class="t">' + p.title + '<small>' + p.sub + '</small></span>' +
-        '<span class="chap-go">详细介绍 ›</span>' +
-      '</button>';
-    card.querySelector(".chap-head").addEventListener("click", function(){ openDetail(i); });
+        '<span class="chap-go">⌄</span>' +
+      '</button>' +
+      '<div class="chap-body" hidden></div>';
+    card.querySelector(".chap-head").addEventListener("click", function(){
+      var body = card.querySelector(".chap-body");
+      if (!body.dataset.built) {
+        var pts = window.partPoints(p.num);
+        var html = "";
+        if (pts.length) {
+          html += '<div class="pt-list">' + pts.map(function(pt){
+            return '<button type="button" class="pt-card" data-point="' + pt.id + '"><span class="pt-t">' + pt.title +
+              '<small>Level ' + pt.lv[0] + ' – Level ' + pt.lv[1] + (pt.pending ? " · 内容待按新结构补全" : " · 新结构完整版") + '</small></span>' +
+              '<span class="pt-badges">' + window.statusBadges(pt) + '</span></button>';
+          }).join("") + '</div>';
+        } else {
+          html += '<p style="color:var(--muted);font-size:.88rem;line-height:1.8;margin:4px 0 8px">本章知识点正在按新结构补全，先看详细介绍里的章节速览。</p>';
+        }
+        html += '<button type="button" class="chap-more">详细介绍 ›</button>';
+        body.innerHTML = html;
+        body.dataset.built = "1";
+        body.querySelector(".chap-more").addEventListener("click", function(){ openDetail(i); });
+      }
+      var isOpen = card.classList.toggle("open");
+      body.hidden = !isOpen;
+      card.querySelector(".chap-head").setAttribute("aria-expanded", isOpen ? "true" : "false");
+    });
     chapList.appendChild(card);
   });
   /* 未完待续：搜不到且本卡也不匹配时不显示本卡；“无结果”提示只在两者都不显示时出现 */
@@ -4302,6 +4331,7 @@ if (typeof P13 !== "undefined") {
 var ALL_POINTS = POINTS.concat(PENDING);
 function findPoint(id){ for (var i=0;i<ALL_POINTS.length;i++) if (ALL_POINTS[i].id === id) return ALL_POINTS[i]; return null; }
 function partPoints(num){ return ALL_POINTS.filter(function(p){ return p.part === String(num); }); }
+window.partPoints = partPoints; /* 章节下拉展开（第一段脚本的 renderParts）要跨 IIFE 调用 */
 
 /* ================================================================
    题型方法（4 种考试高频题型）
@@ -4412,6 +4442,7 @@ function statusBadges(p){
   else if (s !== "unlearned") b += '<span class="badge">' + STATUS_LABEL[s] + '</span>';
   return b;
 }
+window.statusBadges = statusBadges; /* 章节下拉展开（第一段脚本的 renderParts）要跨 IIFE 调用 */
 function curLevelHint(p){
   /* 根据 Phase 3 的 6 态，诚实地推导“当前建议的 Level”；标注为建议，不写死成进度。 */
   var s = pointStatus(p.id);
@@ -5596,42 +5627,23 @@ function renderOverview(){
         '<button type="button" class="primary" data-route="#/practice">去刷题</button></div>';
     }
   }
-  /* 今日学习计划：五项全部来自真实数据，没有的写暂无 */
+  /* 今日学习计划：四项大数字，全部来自真实数据，没有的写暂无 */
   var td = document.getElementById("ovToday");
   if (td) {
-    var todayWrong = store.wrong.filter(function(w){ return isToday(w.ts); }).length;
-    var lastToday = !!(store.last && isToday(store.last.ts));
-    var rows = "";
-    var taskBits = [];
-    if (target) taskBits.push("继续学习《" + target.title + "》");
-    if (wn > 0) taskBits.push("复习错题 " + wn + " 道");
-    if (weakIds.length > 0) taskBits.push("补薄弱知识点 " + weakIds.length + " 个");
-    rows += '<div class="rec-row"><div><div class="rt">今日学习任务</div><div class="rd">' +
-      (taskBits.length ? taskBits.join("；") + "。" : "今天还没开始，先从继续学习开始。") + '</div></div>' +
-      (target ? '<button type="button" class="primary" data-point="' + target.id + '">开始</button>'
-              : '<button type="button" class="primary" data-route="#/practice">去刷题</button>') + '</div>';
-    rows += '<div class="rec-row"><div><div class="rt">已完成任务</div><div class="rd">' +
-      "累计已掌握 " + pc.done + " / " + pc.total + " 个知识点。" +
-      ((todayWrong > 0 || lastToday)
-        ? "今天已有学习活动（" + (todayWrong > 0 ? "新增错题 " + todayWrong + " 道" : "") + (todayWrong > 0 && lastToday ? "、" : "") + (lastToday ? "打开了知识点" : "") + "），但本站不记每项任务的完成时间，今天完成了几项算不出来。"
-        : "今天还没有学习活动。") + '</div></div></div>';
-    var leftBits = [];
-    if (pc.left > 0) leftBits.push("未掌握知识点 " + pc.left + " 个");
-    if (wn > 0) leftBits.push("待复习错题 " + wn + " 道");
-    if (weakIds.length > 0) leftBits.push("薄弱知识点 " + weakIds.length + " 个");
-    rows += '<div class="rec-row"><div><div class="rt">剩余任务</div><div class="rd">' +
-      (leftBits.length ? leftBits.join(" · ") + "。" : "没有剩余任务。") + '</div></div></div>';
     var dToday = daySummary(dayKey(Date.now()));
     var gp = goalProgress();
-    rows += '<div class="rec-row"><div><div class="rt">学习时长</div><div class="rd">' +
-      (dToday.sec > 0
-        ? "今天已累计学习 " + Math.round(dToday.sec / 60) + " 分钟（页面打开且可见时计时，自 Phase 6 起记录；之前的日子没有时长数据）。"
-        : "今天还没有累计学习时长——打开页面后开始计时（自 Phase 6 起记录；之前的日子没有时长数据）。") + '</div></div></div>';
-    rows += '<div class="rec-row"><div><div class="rt">今日目标完成度</div><div class="rd">' +
-      (gp.pct == null
-        ? '暂无今日目标——去<a href="#/analytics">学习分析</a>设定今日目标。'
-        : goalProgressText(gp) + ' <a href="#/analytics">去学习分析调整</a>') + '</div></div></div>';
-    td.innerHTML = rows;
+    var mins = Math.round(dToday.sec / 60);
+    var leftBits = [];
+    if (wn > 0) leftBits.push("错题 " + wn + " 道");
+    if (weakIds.length > 0) leftBits.push("薄弱 " + weakIds.length + " 个");
+    var goalCell = gp.pct == null
+      ? '<div class="stat"><div class="sl">今日目标</div><div class="sv">–</div><div class="sc">暂无今日目标，去<a href="#/analytics">学习分析</a>设定</div></div>'
+      : '<div class="stat"><div class="sl">今日目标</div><div class="sv">' + gp.pct + '<small>%</small></div><div class="sc">' + goalProgressText(gp) + '</div></div>';
+    td.innerHTML = '<div class="stat-grid">' +
+      '<div class="stat"><div class="sl">已完成</div><div class="sv">' + pc.done + '</div><div class="sc">累计已掌握 ' + pc.done + ' / ' + pc.total + ' 个知识点</div></div>' +
+      '<div class="stat"><div class="sl">剩余</div><div class="sv">' + pc.left + '</div><div class="sc">未掌握 ' + pc.left + ' 个知识点' + (leftBits.length ? " · " + leftBits.join(" · ") : "") + '</div></div>' +
+      '<div class="stat"><div class="sl">学习时长</div><div class="sv">' + mins + '<small> min</small></div><div class="sc">今日累计学习时长</div></div>' +
+      goalCell + '</div>';
   }
   /* 科目概览：机械设计用真实数据；机械制图明确标注“未开始” */
   var sj = document.getElementById("ovSubjects");
@@ -5650,7 +5662,7 @@ function renderOverview(){
       (target ? '<button type="button" class="primary" data-point="' + target.id + '">继续学习</button>'
               : '<button type="button" class="primary" data-route="#/practice">去刷题</button>') + '</div>';
     cards += '<div class="rec-row"><div><div class="rt">机械制图</div><div class="rd">未开始 · 看课进度 ' + drawProg + ' / 12（手动记录）· 知识点和题目后续再加</div></div>' +
-      '<button type="button" class="ghost-btn" data-route="#/subjects/drawing">查看学科空间</button></div>';
+      '<button type="button" class="ghost-btn" data-route="#/drawing">查看学科空间</button></div>';
     sj.innerHTML = cards;
   }
   /* 待处理任务：每类有才显示，没有就不显示，不为填满而编 */
@@ -5720,30 +5732,6 @@ function renderOverview(){
     rec.innerHTML = items;
   }
 }
-function renderSubjects(){
-  var box = document.getElementById("subjList");
-  if (!box) return;
-  var done = 0, read = 0;
-  ALL_POINTS.forEach(function(p){
-    var st = store.points[p.id] || {};
-    if (st.mastered) done++;
-    else if (st.read) read++;
-  });
-  var prog = null;
-  try { prog = JSON.parse(localStorage.getItem("md_progress") || "null"); } catch(e){}
-  var drawProg = (prog && typeof prog.drawing === "number") ? prog.drawing : 0;
-  box.innerHTML =
-    '<article class="chap"><button class="chap-head" type="button" data-route="#/learning">' +
-      '<span class="chap-num">设</span>' +
-      '<span class="t">机械设计<small>' + ALL_POINTS.length + " 个知识点（" + ALL_POINTS.filter(function(p){ return !p.pending; }).length + " 个完整版 · " + ALL_POINTS.filter(function(p){ return !!p.pending; }).length + " 个待补充）· " + QUIZ.length + " 道题 · " + METHODS.length + " 种题型方法 · 已掌握 " + done + " 个 · 已阅读 " + read + ' 个</small></span>' +
-      '<span class="chap-go">进入学习 ›</span></button></article>' +
-    '<article class="chap"><button class="chap-head" type="button" data-route="#/subjects/drawing">' +
-      '<span class="chap-num" style="color:var(--accent2)">图</span>' +
-      '<span class="t">机械制图<small>未开始 · 看课进度 ' + drawProg + ' / 12（手动记录）· 内容后续再加</small></span>' +
-      '<span class="chap-go">查看学科空间 ›</span></button></article>';
-}
-
-
 /* ---------- Phase 6：学习分析（只用真实记录算，口径写在页面上） ---------- */
 function anStat(t, v, d){
   return '<div class="an-stat"><b>' + v + '</b><span>' + t + '</span><div class="an-note">' + d + '</div></div>';
@@ -5997,7 +5985,6 @@ window.renderMethods = renderMethods;
 window.renderSummary = renderSummary;
 window.renderRecords = renderRecords;
 window.renderOverview = renderOverview;
-window.renderSubjects = renderSubjects;
 window.renderAnalytics = renderAnalytics;
 window.rm = rm; /* Phase 6：第一段脚本的反馈渲染也要用 rm() 渲染 KaTeX */
 
