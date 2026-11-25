@@ -5749,6 +5749,22 @@ function renderOverview(){
 function anStat(t, v, d){
   return '<div class="an-stat"><b>' + v + '</b><span>' + t + '</span><div class="an-note">' + d + '</div></div>';
 }
+/* Batch 4d：分析页数据栏不显示公式——只留标题文字，公式去详情页看。
+   标题运行时的 LaTeX 是 \(...\) / \[...\]，这里把整段去掉并收掉多余空格。 */
+function plainTitle(t){
+  var BS = String.fromCharCode(92); /* 反斜杠：用字符码取，避免字面量转义层数出错 */
+  var s = String(t || ""), out = "", i = 0;
+  while (i < s.length) {
+    var a = s.indexOf(BS + "(", i), b = s.indexOf(BS + "[", i), j = -1, close = "";
+    if (a >= 0 && (b < 0 || a < b)) { j = a; close = BS + ")"; }
+    else if (b >= 0) { j = b; close = BS + "]"; }
+    if (j < 0) { out += s.slice(i); break; }
+    out += s.slice(i, j);
+    var e = s.indexOf(close, j + 2);
+    i = (e < 0) ? s.length : e + 2;
+  }
+  return out.replace(/\s{2,}/g, " ").trim();
+}
 function quizStatsAll(){
   var qd = null;
   try { qd = window.mdQuizDone ? window.mdQuizDone() : null; } catch(e){}
@@ -5928,14 +5944,14 @@ function renderAnalytics(){
       return { p:p, n: st.reviews || 0 };
     }).filter(function(x){ return x.n > 0; }).sort(function(a, b){ return b.n - a.n; }).slice(0, 5);
     var revRows = topReviews.map(function(x){
-      return "<tr><td>" + esc(x.p.title) + "</td><td>" + x.n + " 次</td><td>" + esc(STATUS_LABEL[pointStatus(x.p.id)] || "") + "</td></tr>";
+      return "<tr><td><button type=\"button\" class=\"kp-link\" data-point=\"" + x.p.id + "\">" + esc(plainTitle(x.p.title)) + "</button></td><td>" + x.n + " 次</td><td>" + esc(STATUS_LABEL[pointStatus(x.p.id)] || "") + "</td></tr>";
     }).join("");
     pt.innerHTML = '<div class="g-title">知识点分析</div>' +
       '<div class="an-grid">' +
       anStat("已掌握", pc.mastered + " 个", "共 " + pc.total + " 个知识点") +
       anStat("待掌握", (pc.total - pc.mastered) + " 个", "未学习 " + pc.unlearned + " · 学习中 " + pc.reading + " · 已阅读 " + pc.read + " · 待自测 " + pc.toTest + " · 需要复习 " + pc.review) +
-      anStat("薄弱知识点", weakIds.length + " 个", weakList.length ? weakList.slice(0, 3).map(function(p){ return p.title; }).join("、") : "暂无薄弱知识点") +
-      anStat("复习次数最多", topReviews.length ? topReviews[0].p.title + " × " + topReviews[0].n : "暂无", "自 Phase 6 起记录") +
+      anStat("薄弱知识点", weakIds.length + " 个", weakList.length ? weakList.slice(0, 3).map(function(p){ return '<button type="button" class="kp-link" data-point="' + p.id + '">' + esc(plainTitle(p.title)) + '</button>'; }).join("、") : "暂无薄弱知识点") +
+      anStat("复习次数最多", topReviews.length ? esc(plainTitle(topReviews[0].p.title)) + " × " + topReviews[0].n : "暂无", topReviews.length ? '自 Phase 6 起记录 <button type="button" class="kp-link" data-point="' + topReviews[0].p.id + '">了解 ›</button>' : "自 Phase 6 起记录") +
       '</div>' +
       '<p class="an-note">薄弱判定与复习中心一致（自测或错题未清）。复习次数 = 打开已掌握 / 薄弱知识点 + 重练相关错题答对，自 Phase 6 起记录，之前没有该数据。</p>' +
       (revRows ? '<table class="an-table"><thead><tr><th>知识点</th><th>复习次数</th><th>状态</th></tr></thead><tbody>' + revRows + '</tbody></table>' : '<p class="an-note">还没有复习记录：打开一个已掌握或薄弱的知识点、或重练错题答对后，这里会出现次数。</p>');
