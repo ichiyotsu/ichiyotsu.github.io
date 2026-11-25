@@ -41,7 +41,7 @@
   --radius-sm:10px; --radius-md:14px; --radius-lg:24px; --radius-pill:999px;
   --space-1:6px; --space-2:10px; --space-3:16px; --space-4:24px;
   --text-display:clamp(1.55rem,3vw,1.95rem); --text-heading:1.14rem; --text-body:.96rem; --text-caption:.82rem;
-  --font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --font-mono:Inter,"Noto Sans SC","Source Han Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
   --control-h:2.75rem; --progress-h:6px;
 }
 :root[data-theme="light"]{
@@ -72,10 +72,11 @@
   --radius-sm:10px; --radius-md:14px; --radius-lg:24px; --radius-pill:999px;
   --space-1:6px; --space-2:10px; --space-3:16px; --space-4:24px;
   --text-display:clamp(1.55rem,3vw,1.95rem); --text-heading:1.14rem; --text-body:.96rem; --text-caption:.82rem;
-  --font-mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+  --font-mono:Inter,"Noto Sans SC","Source Han Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;
   --control-h:2.75rem; --progress-h:6px;
 }
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{margin:0;color:var(--ink);background:var(--bg);font-family:Inter,"Noto Sans SC","Source Han Sans SC",system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;font-weight:400;line-height:1.8;-webkit-font-smoothing:antialiased}
 button,[role="button"],select,input,summary{min-height:2.25rem}
@@ -141,8 +142,8 @@ select:hover{border-color:var(--line-dark)}
 .primary:hover{background:var(--accent2);border-color:var(--accent2)}
 .progress{height:var(--progress-h);background:var(--warm);border-radius:var(--radius-pill);overflow:hidden;margin:16px 0 8px}
 .progress i{display:block;height:100%;background:var(--accent);width:0;transition:width .3s}
-.qmeta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
-.qmeta span{font-size:.73rem;padding:5px 11px;border-radius:var(--radius-pill);background:var(--warm);border:1px solid var(--line);color:var(--ink2)}
+.qmeta{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;align-items:center;margin-bottom:14px}
+.qmeta span{font-size:.73rem;line-height:1.5;white-space:nowrap;padding:5px 11px;border-radius:var(--radius-pill);background:var(--warm);border:1px solid var(--line);color:var(--ink2)}
 .qmeta .src{background:transparent;color:var(--muted);border-style:dashed}
 .qstem{font-size:1.07rem;font-weight:700;line-height:1.8;margin:4px 0 18px;color:var(--ink)}
 .opts{display:grid;gap:10px}
@@ -380,8 +381,10 @@ main{padding-bottom:156px}
 .stat-grid .stat span{color:var(--muted);font-size:.84rem}
 .fb-reason{margin-top:10px}
 .fb-reason select{font:inherit;font-weight:700;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:var(--radius-sm);padding:7px 10px}
-.quiz-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(64px + env(safe-area-inset-bottom));z-index:145;width:min(920px,calc(100vw - 32px));display:flex;gap:8px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:0;padding:8px 10px;background:var(--bot-bg);border:1px solid var(--glass-line);border-radius:var(--radius-pill);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:var(--shadow-lg)}
-.quiz-nav .row{margin-top:0}
+.quiz-nav{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(64px + env(safe-area-inset-bottom));z-index:145;width:min(920px,calc(100vw - 32px));display:flex;gap:6px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-top:0;padding:8px 16px;background:var(--bot-bg);border:1px solid var(--glass-line);border-radius:var(--radius-pill);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:var(--shadow-lg)}
+.quiz-nav .row{margin-top:0;gap:6px}
+.quiz-nav .primary{padding:10px 18px}
+.quiz-nav .ghost-btn{padding:8px 13px}
 /* Phase 5：知识点页 13 项模板新增样式（只用现有变量，不新增颜色） */
 .demo-svg{display:block;width:100%;max-width:560px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin:6px auto}
 .demo-svg text{font-size:13px}
@@ -448,10 +451,12 @@ main{padding-bottom:156px}
   .method-card,.rec-row,.pt-card{border-color:#bbb;break-inside:avoid}
 }
 /* Phase 6：学习分析页（只用现有变量，不新增颜色） */
-.an-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:6px 0}
-.an-stat{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--card)}
-.an-stat b{font-family:var(--font-mono);display:block;font-size:1.25rem}
-.an-stat span{color:var(--muted2);font-size:.85rem}
+.an-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:6px 0}
+@media(min-width:860px){.an-grid{grid-template-columns:repeat(4,1fr)}}
+.an-stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:20px 16px 16px;text-align:center}
+.an-stat b{font-family:var(--font-mono);display:block;font-size:2rem;line-height:1.15;font-weight:400}
+.an-stat span{display:block;color:var(--muted);font-size:.92rem;margin-top:6px}
+.an-stat .an-note{display:block;color:var(--muted2);font-size:.8rem;line-height:1.6;margin:8px 0 0}
 .an-note{color:var(--muted2);font-size:var(--text-caption);line-height:1.7;margin:6px 0}
 .an-table{width:100%;border-collapse:collapse;font-size:.88rem;margin:6px 0}
 .an-table th,.an-table td{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left}
