@@ -428,7 +428,7 @@ main{padding-bottom:156px}
 .sum-sec p{margin:0 0 10px}
 .sum-sec ul,.sum-sec ol{margin:0 0 10px;padding-left:1.25em}
 @media print{
-  .topbar,.botbar,.ai-fab,.ai-panel,.sidenav,.drawer,.drawer-backdrop,.rail,.nav-menu-btn,.print-hide{display:none!important}
+  .topbar,.botbar,.ai-fab,.ai-panel,.drawer,.drawer-backdrop,.rail,.nav-menu-btn,.print-hide{display:none!important}
   body{background:#fff;color:#000}
   main{padding:0;width:100%}
   .method-card,.rec-row,.pt-card{border-color:#bbb;break-inside:avoid}
@@ -484,24 +484,13 @@ button:disabled{opacity:.55;cursor:not-allowed}
 /* —— 组件规范：Tooltip（data-tip，真实落点：主题按钮与汉堡按钮） —— */
 [data-tip]{position:relative}
 [data-tip]:hover::after,[data-tip]:focus-visible::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);background:var(--toast-bg);color:var(--toast-ink);font-size:var(--text-caption);font-weight:700;line-height:1.5;white-space:nowrap;padding:6px 10px;border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);z-index:60;pointer-events:none}
-/* —— 布局：顶栏导航收进侧边栏/抽屉，顶栏只留品牌与主题切换（修审计 U-1） —— */
-.topnav{display:none}
+/* —— 布局：导航在顶栏（桌面）/抽屉（移动端），无左侧边栏 —— */
 .nav-menu-btn{display:none;flex:none;width:2.75rem;height:2.75rem;min-height:2.75rem;border-radius:var(--radius-pill);border:0;background:transparent;color:var(--bar-ink);place-items:center;padding:0;font-size:1.15rem}
 .nav-menu-btn:hover{color:var(--accent)}
-.sidenav{display:none}
 .rail{display:none}
 @media(max-width:1023px){
+  .topnav{display:none}
   .nav-menu-btn{display:grid}
-}
-@media(min-width:1024px){
-  .topbar{left:calc(50% + 124px);width:calc(100% - 280px - 28px);max-width:880px}
-  main{margin-left:280px;margin-right:24px;width:auto;max-width:1040px}
-  .sidenav{display:flex;flex-direction:column;gap:4px;position:fixed;left:16px;top:calc(100px + env(safe-area-inset-top));bottom:24px;width:232px;z-index:40;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-3) var(--space-2);box-shadow:var(--shadow-sm)}
-  .sidenav-label{font-size:var(--text-caption);letter-spacing:.14em;color:var(--muted);font-weight:700;padding:var(--space-1) var(--space-2)}
-  .sidenav button{display:block;width:100%;text-align:left;border:0;background:transparent;color:var(--nav-ink);border-radius:var(--radius-md);padding:10px 14px;font-size:.92rem;font-weight:700;white-space:nowrap;min-height:2.75rem}
-  .sidenav button:hover{color:var(--bar-ink);background:var(--warm)}
-  .sidenav button.on{background:var(--nav-on-bg);color:var(--nav-on-ink)}
-  .sidenav-foot{margin-top:auto;font-size:var(--text-caption);color:var(--muted2);padding:var(--space-1) var(--space-2);line-height:1.6}
 }
 /* —— 布局：移动端抽屉 —— */
 .drawer{position:fixed;left:0;top:0;bottom:0;width:min(300px,84vw);z-index:180;background:var(--card);border-right:1px solid var(--line);padding:calc(18px + env(safe-area-inset-top)) var(--space-3) calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:4px;transform:translateX(-105%);transition:transform .3s ease;box-shadow:var(--shadow-lg)}
@@ -521,13 +510,13 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .rail .ghost-btn{margin-top:var(--space-2);width:100%}
 @media(min-width:1600px){
   .rail{display:block;position:fixed;right:24px;top:calc(104px + env(safe-area-inset-top));width:272px;z-index:40;background:var(--card);border:1px solid var(--line);border-radius:var(--radius-lg);padding:var(--space-3);box-shadow:var(--shadow-sm)}
-  main{margin-right:320px}
-  .topbar{left:calc(50% - 20px);width:calc(100% - 280px - 320px - 28px)}
+  main{margin-right:320px;max-width:1040px}
+  .topbar{left:calc(50% - 40px);width:calc(100% - 320px - 28px)}
 }
 
 /* Phase 9：交互反馈——Active 态 / 补 Hover / 视图切换过渡 / 全局 Toast（只补反馈，不改配色与布局） */
 /* —— Active 态：所有按钮按下时轻微下沉（与 :hover 互补；之前全站 :active 为 0） —— */
-.primary:active,.ghost-btn:active,.opt:active,.tool:active,.nav-btn:active,.tgl:active,.tag:active,.step-btn:active,.ai-quick-btn:active,.doc-btn:active,.chap-head:active,.sidenav button:active,.drawer>button:active{transform:translateY(1px)}
+.primary:active,.ghost-btn:active,.opt:active,.tool:active,.nav-btn:active,.tgl:active,.tag:active,.step-btn:active,.ai-quick-btn:active,.doc-btn:active,.chap-head:active,.drawer>button:active{transform:translateY(1px)}
 /* —— 补 Hover：之前无 :hover 的交互控件（.tool/.nav-btn/.tgl/.tag/.ai-quick-btn） —— */
 .tool:hover{background:var(--warm);color:var(--ink)}
 .nav-btn:hover{border-color:var(--accent);color:var(--ink)}
@@ -540,7 +529,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
 /* —— 全局 Toast：复用 .toast 的颜色与圆角，只改定位（fixed 居中底部，盖掉 .toast 的 absolute/top） —— */
 #globalToast{position:fixed;left:50%;top:auto;bottom:calc(84px + env(safe-area-inset-bottom));transform:translate(-50%,8px);z-index:200}
 #globalToast.show{opacity:1;transform:translate(-50%,0)}
-@media(prefers-reduced-motion:reduce){.view.active{animation:none}.primary:active,.ghost-btn:active,.opt:active,.tool:active,.nav-btn:active,.tgl:active,.tag:active,.step-btn:active,.ai-quick-btn:active,.doc-btn:active,.chap-head:active,.sidenav button:active,.drawer>button:active{transform:none}}
+@media(prefers-reduced-motion:reduce){.view.active{animation:none}.primary:active,.ghost-btn:active,.opt:active,.tool:active,.nav-btn:active,.tgl:active,.tag:active,.step-btn:active,.ai-quick-btn:active,.doc-btn:active,.chap-head:active,.drawer>button:active{transform:none}}
 </style>
 </head>
 <body>
@@ -555,40 +544,29 @@ button:disabled{opacity:.55;cursor:not-allowed}
   <button type="button" class="nav-menu-btn" id="navMenuBtn" aria-label="打开导航菜单" aria-expanded="false" data-tip="打开导航菜单">☰</button>
   <div class="spacer"></div>
   <nav class="topnav" aria-label="主导航">
-    <button type="button" data-route="#/overview" class="on">Overview</button>
-    <button type="button" data-route="#/subjects">Subjects</button>
-    <button type="button" data-route="#/learning">Learning</button>
-    <button type="button" data-route="#/practice">Practice</button>
-    <button type="button" data-route="#/review">Review</button>
-    <button type="button" data-route="#/analytics">Analytics</button>
-    <button type="button" data-route="#/settings">Settings</button>
+    <button type="button" data-route="#/overview" class="on">首页</button>
+    <button type="button" data-route="#/subjects">科目</button>
+    <button type="button" data-route="#/learning">学习</button>
+    <button type="button" data-route="#/practice">刷题</button>
+    <button type="button" data-route="#/review">复习</button>
+    <button type="button" data-route="#/analytics">分析</button>
+    <button type="button" data-route="#/settings">设置</button>
   </nav>
   <button type="button" class="theme-toggle" id="themeToggle" aria-label="切换到浅色模式" title="切换深浅模式" data-tip="切换深浅模式">
     <svg class="icon-sun" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
     <svg class="icon-moon" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
   </button>
 </header>
-<aside class="sidenav" id="sideNav" aria-label="主导航">
-  <div class="sidenav-label">导航</div>
-    <button type="button" data-route="#/overview" class="on">Overview</button>
-    <button type="button" data-route="#/subjects">Subjects</button>
-    <button type="button" data-route="#/learning">Learning</button>
-    <button type="button" data-route="#/practice">Practice</button>
-    <button type="button" data-route="#/review">Review</button>
-    <button type="button" data-route="#/analytics">Analytics</button>
-    <button type="button" data-route="#/settings">Settings</button>
-  <div class="sidenav-foot">TokiLearn · 机械设计基础</div>
-</aside>
 <div class="drawer-backdrop" id="drawerBackdrop" hidden></div>
 <nav class="drawer" id="navDrawer" aria-label="导航菜单" aria-hidden="true">
   <div class="drawer-head"><span>导航</span><button type="button" id="drawerClose" aria-label="关闭导航菜单">✕</button></div>
-    <button type="button" data-route="#/overview" class="on">Overview</button>
-    <button type="button" data-route="#/subjects">Subjects</button>
-    <button type="button" data-route="#/learning">Learning</button>
-    <button type="button" data-route="#/practice">Practice</button>
-    <button type="button" data-route="#/review">Review</button>
-    <button type="button" data-route="#/analytics">Analytics</button>
-    <button type="button" data-route="#/settings">Settings</button>
+    <button type="button" data-route="#/overview" class="on">首页</button>
+    <button type="button" data-route="#/subjects">科目</button>
+    <button type="button" data-route="#/learning">学习</button>
+    <button type="button" data-route="#/practice">刷题</button>
+    <button type="button" data-route="#/review">复习</button>
+    <button type="button" data-route="#/analytics">分析</button>
+    <button type="button" data-route="#/settings">设置</button>
 </nav>
 <main>
   <section class="view active" id="view-overview">
@@ -648,10 +626,10 @@ button:disabled{opacity:.55;cursor:not-allowed}
     <p class="trap" id="detailTrap"></p>
   </section>
   <section class="view" id="view-drawing">
-    <div class="sec-head"><h2>机械制图（英语）</h2><span class="badge warn">未开始</span></div>
+    <div class="sec-head"><h2>机械制图</h2><span class="badge warn">未开始</span></div>
     <div class="note-hero">
       <h3>这个科目还没开始</h3>
-      <p style="color:var(--muted);line-height:1.9;margin:0">知识点和题目后续再往里加。看课进度记在「学习分析」页里：机械制图（英语）0 / 12（手动记录）。</p>
+      <p style="color:var(--muted);line-height:1.9;margin:0">知识点和题目后续再往里加。看课进度记在「学习分析」页里：机械制图0 / 12（手动记录）。</p>
     </div>
     <div class="group">
       <div class="g-title">学科总览</div>
@@ -797,7 +775,7 @@ button:disabled{opacity:.55;cursor:not-allowed}
       <div class="prog-title">看课进度</div>
       <p style="color:var(--muted2);font-size:.85rem;line-height:1.8;margin:0 0 6px">看课进度是手动记录的（点 + / −），不是系统算出来的；打开知识点、做自测、刷题不会自动改它。</p>
       <div class="prog-row"><span class="prog-name">机械设计</span><div class="progress"><i id="lpDesignBar"></i></div><span class="prog-num" id="lpDesignText">7 / 42</span><span class="step-group"><button type="button" class="step-btn" id="lpDesignMinus" aria-label="机械设计进度减一">−</button><button type="button" class="step-btn" id="lpDesignPlus" aria-label="机械设计进度加一">+</button></span></div>
-      <div class="prog-row"><span class="prog-name">机械制图（英语）</span><div class="progress"><i id="lpDrawBar"></i></div><span class="prog-num" id="lpDrawText">0 / 12</span><span class="step-group"><button type="button" class="step-btn" id="lpDrawMinus" aria-label="机械制图进度减一">−</button><button type="button" class="step-btn" id="lpDrawPlus" aria-label="机械制图进度加一">+</button></span></div>
+      <div class="prog-row"><span class="prog-name">机械制图</span><div class="progress"><i id="lpDrawBar"></i></div><span class="prog-num" id="lpDrawText">0 / 12</span><span class="step-group"><button type="button" class="step-btn" id="lpDrawMinus" aria-label="机械制图进度减一">−</button><button type="button" class="step-btn" id="lpDrawPlus" aria-label="机械制图进度加一">+</button></span></div>
     </div>
     <div class="note-hero">
       <h3>TaskPro 机械设计</h3>
@@ -1412,7 +1390,7 @@ function showView(name){
   var el = document.getElementById("view-" + name);
   if (el) el.classList.add("active");
   var nav = NAV_FOR_VIEW[name] || name;
-  document.querySelectorAll(".topnav button, .sidenav button, .drawer button").forEach(function(b){
+  document.querySelectorAll(".topnav button, .drawer button").forEach(function(b){
     b.classList.toggle("on", b.getAttribute("data-route") === "#/" + nav);
   });
   if (typeof closeNavDrawer === "function") closeNavDrawer();
@@ -1550,7 +1528,7 @@ if (themeToggle2) themeToggle2.addEventListener("click", function(){
 });
 updateThemeUI();
 
-/* ============ 顶栏品牌下拉：机械设计 / 机械制图（英语） ============ */
+/* ============ 顶栏品牌下拉：机械设计 / 机械制图 ============ */
 var brandWrap = document.getElementById("brandWrap");
 var brandBtn = document.getElementById("brandBtn");
 brandBtn.addEventListener("click", function(e){
@@ -5671,7 +5649,7 @@ function renderOverview(){
       "最近学习：" + lastTxt + '</div></div>' +
       (target ? '<button type="button" class="primary" data-point="' + target.id + '">继续学习</button>'
               : '<button type="button" class="primary" data-route="#/practice">去刷题</button>') + '</div>';
-    cards += '<div class="rec-row"><div><div class="rt">机械制图（英语）</div><div class="rd">未开始 · 看课进度 ' + drawProg + ' / 12（手动记录）· 知识点和题目后续再加</div></div>' +
+    cards += '<div class="rec-row"><div><div class="rt">机械制图</div><div class="rd">未开始 · 看课进度 ' + drawProg + ' / 12（手动记录）· 知识点和题目后续再加</div></div>' +
       '<button type="button" class="ghost-btn" data-route="#/subjects/drawing">查看学科空间</button></div>';
     sj.innerHTML = cards;
   }
@@ -5761,7 +5739,7 @@ function renderSubjects(){
       '<span class="chap-go">进入学习 ›</span></button></article>' +
     '<article class="chap"><button class="chap-head" type="button" data-route="#/subjects/drawing">' +
       '<span class="chap-num" style="color:var(--accent2)">图</span>' +
-      '<span class="t">机械制图（英语）<small>未开始 · 看课进度 ' + drawProg + ' / 12（手动记录）· 内容后续再加</small></span>' +
+      '<span class="t">机械制图<small>未开始 · 看课进度 ' + drawProg + ' / 12（手动记录）· 内容后续再加</small></span>' +
       '<span class="chap-go">查看学科空间 ›</span></button></article>';
 }
 
