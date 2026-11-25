@@ -109,6 +109,12 @@ html[data-theme="dark"] .apple-hero h1 em { color: #98989d; }
   padding: 0;
 }
 
+.plan-head,
+.plan-list {
+  max-width: 64rem;
+  margin-inline: auto;
+}
+
 .plan-row {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
