@@ -267,6 +267,8 @@ main{padding-bottom:156px}
 @media(max-width:680px){.brand-btn{font-size:1.05rem}}
 /* knowledge cards → detail page */
 .chap-go{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--muted);flex:none;transition:transform .25s}
+.chap-go-text{color:var(--accent2);font-weight:700;font-size:var(--text-caption);flex:none;white-space:nowrap} /* Batch 4c：后续章节卡片的“详细介绍 ›”是文字链，不是圆形箭头 */
+.chap.open{background:var(--bg)} /* Batch 4c：展开的整张卡统一成 hover 黑底，头和身体不再两截 */
 .chap.open .chap-go{transform:rotate(180deg)}
 .chap-body{padding:2px 18px 16px}
 .chap-body .pt-list{gap:8px;margin:0}
@@ -1694,7 +1696,6 @@ function renderParts(filter){
         }
         html += '<button type="button" class="chap-more">详细介绍 ›</button>';
         body.innerHTML = html;
-        if (window.rm) window.rm(body); /* Batch 4b：章节下拉里的知识点标题含 KaTeX 公式，需渲染 */
         body.dataset.built = "1";
         body.querySelector(".chap-more").addEventListener("click", function(){ openDetail(i); });
       }
@@ -1713,7 +1714,7 @@ function renderParts(filter){
       '<button class="chap-head" type="button">' +
         '<span class="chap-num" style="color:var(--accent2)">待</span>' +
         '<span class="t">后续章节<small>杨可桢《机械设计基础》（第 7 版）目录</small></span>' +
-        '<span class="chap-go">详细介绍 ›</span>' +
+        '<span class="chap-go-text">详细介绍 ›</span>' +
       '</button>';
     pend.querySelector(".chap-head").addEventListener("click", function(){ openPendingDetail(); });
     chapList.appendChild(pend);
@@ -3183,7 +3184,6 @@ wirePadTools(quizPad, "quizPad");
       if(aiCtx){
         ctxRow.hidden = false;
         if(ctxText) ctxText.textContent = "当前上下文：" + aiCtx.label;
-        if (window.rm && ctxRow) window.rm(ctxRow); /* Batch 4b：上下文标签里的知识点标题含 KaTeX 公式，需渲染 */
       } else {
         ctxRow.hidden = true;
       }
@@ -5283,7 +5283,6 @@ function renderRecords(){
         '<button type="button" class="ghost-btn" data-point="' + p.id + '">打开</button></span></div>';
     }).join("");
   }
-  rm(document.getElementById("view-review")); /* Batch 4b：复习页列表里的标题含 KaTeX 公式，需渲染 */
 }
 var origGotoView = window.gotoView;
 window.gotoView = function(name){
@@ -5745,7 +5744,6 @@ function renderOverview(){
     }
     rec.innerHTML = items;
   }
-  rm(document.getElementById("view-overview")); /* Batch 4b：首页列表里的标题含 KaTeX 公式，需渲染 */
 }
 /* ---------- Phase 6：学习分析（只用真实记录算，口径写在页面上） ---------- */
 function anStat(t, v, d){
@@ -5992,7 +5990,6 @@ function renderAnalytics(){
       if (typeof window.showGlobalToast === "function") window.showGlobalToast(ok ? "今日目标已清除。" : "清除失败：浏览器拒绝写入，今日目标还在。");
     });
   }
-  rm(document.getElementById("view-analytics")); /* Batch 4b：分析页表格/大数字卡里的标题含 KaTeX 公式，需渲染 */
 }
 
 /* ---------- 供 hash 路由调用的渲染入口 ---------- */
@@ -6003,6 +6000,50 @@ window.renderRecords = renderRecords;
 window.renderOverview = renderOverview;
 window.renderAnalytics = renderAnalytics;
 window.rm = rm; /* Phase 6：第一段脚本的反馈渲染也要用 rm() 渲染 KaTeX */
+
+/* ---------- Batch 4c：KaTeX 全局渲染（不再逐视图补 rm()） ----------
+   MutationObserver 监听 document.body 的新增节点：凡含 \(...\) / \[...\] 的，
+   统一调 rm() 渲染；之后任何新插进来的内容（章节下拉、复习列表、AI 面板等）
+   都自动渲染，不用再逐处打补丁。KaTeX 自身产物（.katex / script / style）
+   跳过；rm() 自身幂等（渲染过的不含分隔符，降级提示只插一次），不会死循环。 */
+(function installGlobalMath(){
+  if (!window.MutationObserver || !document.body) return;
+  var rendering = false;
+  function hasMath(el){
+    if (!el || el.nodeType !== 1) return false;
+    var t = el.textContent || "";
+    return t.indexOf("\\(") >= 0 || t.indexOf("\\[") >= 0;
+  }
+  function skipped(el){
+    var n = el;
+    while (n) {
+      if (n.nodeType === 1) {
+        var tag = (n.tagName || "").toUpperCase();
+        if (tag === "SCRIPT" || tag === "STYLE" || tag === "NOSCRIPT") return true;
+        if (n.classList && n.classList.contains("katex")) return true;
+      }
+      n = n.parentNode;
+    }
+    return false;
+  }
+  var obs = new MutationObserver(function(muts){
+    if (rendering) return;
+    var targets = [];
+    for (var i = 0; i < muts.length; i++) {
+      var nodes = muts[i].addedNodes;
+      for (var j = 0; j < nodes.length; j++) {
+        var node = nodes[j];
+        if (node.nodeType !== 1 || skipped(node)) continue;
+        if (hasMath(node)) targets.push(node);
+      }
+    }
+    if (!targets.length) return;
+    rendering = true;
+    try { targets.forEach(function(el){ rm(el); }); } finally { rendering = false; }
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+  rm(document.body); /* 首屏已有的公式也渲染一次 */
+})();
 
 
 /* ================================================================
